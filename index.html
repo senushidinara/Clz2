@@ -1675,20 +1675,103 @@
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM Content Loaded - Initializing NeuroX...');
+
             // Set initial timer display
             updateTimerDisplay();
-            
+
+            // Add event listeners for all buttons that don't have onclick handlers
+            const initializeEventListeners = () => {
+                // Navigation tabs
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        const page = tab.getAttribute('data-page');
+                        if (page) {
+                            navigateToPage(page);
+                        }
+                    });
+                });
+
+                // Quick action buttons on home page
+                document.querySelectorAll('.quick-actions .btn').forEach(btn => {
+                    if (!btn.onclick) {
+                        btn.addEventListener('click', () => {
+                            console.log('Quick action button clicked');
+                        });
+                    }
+                });
+
+                // Challenge cards
+                document.querySelectorAll('.challenge-card').forEach(card => {
+                    if (!card.onclick) {
+                        card.addEventListener('click', () => {
+                            const type = card.querySelector('.challenge-title')?.textContent.toLowerCase().includes('memory') ? 'memory' :
+                                         card.querySelector('.challenge-title')?.textContent.toLowerCase().includes('speed') ? 'speed' : 'logic';
+                            openChallenge(type);
+                        });
+                    }
+                });
+
+                // Focus mode cards
+                document.querySelectorAll('#focus .card-grid .card').forEach(card => {
+                    if (!card.onclick) {
+                        card.addEventListener('click', () => {
+                            const title = card.querySelector('h4')?.textContent.toLowerCase();
+                            if (title?.includes('deep')) selectFocusMode('deep');
+                            else if (title?.includes('light')) selectFocusMode('light');
+                            else if (title?.includes('relax')) selectFocusMode('relax');
+                        });
+                    }
+                });
+
+                // Sleep tips expansion
+                const sleepTipsElement = document.querySelector('#sleep [onclick="expandSleepTips()"]');
+                if (sleepTipsElement && !sleepTipsElement.onclick) {
+                    sleepTipsElement.addEventListener('click', expandSleepTips);
+                }
+
+                console.log('Event listeners initialized');
+            };
+
+            // Initialize event listeners
+            initializeEventListeners();
+
             // Add some initial animations
             setTimeout(() => {
-                document.querySelector('.hero-title').style.animation = 'fadeInUp 0.8s ease-out';
-                document.querySelector('.hero-subtitle').style.animation = 'fadeInUp 0.8s ease-out 0.2s both';
+                const heroTitle = document.querySelector('.hero-title');
+                const heroSubtitle = document.querySelector('.hero-subtitle');
+                if (heroTitle) heroTitle.style.animation = 'fadeInUp 0.8s ease-out';
+                if (heroSubtitle) heroSubtitle.style.animation = 'fadeInUp 0.8s ease-out 0.2s both';
             }, 500);
+
+            // Test all functions to ensure they're accessible
+            const testFunctions = () => {
+                const functions = [
+                    'navigateToPage', 'startBrainScan', 'joinChallenge', 'openChallenge',
+                    'startChallenge', 'showLeaderboard', 'trackSleep', 'expandSleepTips',
+                    'viewSleepHistory', 'startFocusSession', 'selectFocusMode', 'showBrainInfo',
+                    'closeModal', 'showToast'
+                ];
+
+                functions.forEach(funcName => {
+                    if (typeof window[funcName] !== 'function') {
+                        console.error(`Function ${funcName} is not accessible globally`);
+                    } else {
+                        console.log(`✓ Function ${funcName} is ready`);
+                    }
+                });
+            };
+
+            testFunctions();
+            console.log('NeuroX initialization complete!');
         });
 
         // Add some dynamic background animations
         setInterval(() => {
             const bg = document.getElementById('animatedBg');
-            bg.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
+            if (bg) {
+                bg.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
+            }
         }, 5000);
     </script>
 </body>
