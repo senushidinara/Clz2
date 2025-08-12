@@ -1215,9 +1215,428 @@
 
         function startChallenge(type) {
             console.log('Starting challenge:', type);
-            alert('Starting ' + type + ' challenge!');
             closeModal('challengeModal');
-            showToast("Challenge Started!");
+
+            // Create fullscreen game interface
+            const gameContainer = document.createElement('div');
+            gameContainer.id = 'gameContainer';
+            gameContainer.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                z-index: 2000; display: flex; flex-direction: column;
+                align-items: center; justify-content: center; color: white;
+                animation: fadeIn 0.5s ease;
+            `;
+
+            // Add video background
+            const video = document.createElement('div');
+            video.style.cssText = `
+                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.3), rgba(0,0,0,0.7)),
+                           url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="brain" patternUnits="userSpaceOnUse" width="20" height="20"><circle cx="10" cy="10" r="3" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23brain)"/></svg>');
+                opacity: 0.8; animation: pulse 3s ease-in-out infinite;
+            `;
+            gameContainer.appendChild(video);
+
+            // Game content
+            const gameContent = document.createElement('div');
+            gameContent.style.cssText = `
+                position: relative; z-index: 10; text-align: center;
+                max-width: 800px; padding: 2rem;
+            `;
+
+            if (type === 'memory') {
+                startMemoryGame(gameContent);
+            } else if (type === 'speed') {
+                startSpeedGame(gameContent);
+            } else if (type === 'logic') {
+                startLogicGame(gameContent);
+            }
+
+            // Close button
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '✕ Exit Game';
+            closeBtn.style.cssText = `
+                position: absolute; top: 2rem; right: 2rem;
+                background: rgba(255,255,255,0.2); color: white;
+                border: 2px solid white; padding: 1rem 2rem;
+                border-radius: 12px; cursor: pointer; font-size: 1rem;
+                transition: all 0.3s ease;
+            `;
+            closeBtn.onmouseover = () => closeBtn.style.background = 'rgba(255,255,255,0.3)';
+            closeBtn.onmouseout = () => closeBtn.style.background = 'rgba(255,255,255,0.2)';
+            closeBtn.onclick = () => {
+                document.body.removeChild(gameContainer);
+                showToast("Game exited");
+            };
+
+            gameContainer.appendChild(gameContent);
+            gameContainer.appendChild(closeBtn);
+            document.body.appendChild(gameContainer);
+        }
+
+        function startMemoryGame(container) {
+            container.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    🧠 Memory Challenge
+                </h1>
+                <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+                    Watch the sequence, then repeat it!
+                </p>
+                <div id="memoryGrid" style="
+                    display: grid; grid-template-columns: repeat(3, 1fr);
+                    gap: 1rem; max-width: 300px; margin: 0 auto 3rem;
+                "></div>
+                <div id="memoryStatus" style="font-size: 1.5rem; margin-bottom: 2rem;">
+                    Get ready...
+                </div>
+                <button id="memoryStart" style="
+                    background: linear-gradient(45deg, #ff6b6b, #ffa500);
+                    color: white; border: none; padding: 1rem 3rem;
+                    border-radius: 12px; font-size: 1.3rem; cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    transition: transform 0.2s ease;
+                " onmouseover="this.style.transform='scale(1.05)'"
+                   onmouseout="this.style.transform='scale(1)'">
+                    🚀 Start Game
+                </button>
+            `;
+
+            let sequence = [];
+            let playerSequence = [];
+            let level = 1;
+            let showingSequence = false;
+
+            // Create grid
+            const grid = container.querySelector('#memoryGrid');
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.style.cssText = `
+                    width: 80px; height: 80px; background: rgba(255,255,255,0.3);
+                    border-radius: 12px; cursor: pointer; display: flex;
+                    align-items: center; justify-content: center; font-size: 2rem;
+                    transition: all 0.3s ease; border: 2px solid transparent;
+                `;
+                cell.dataset.index = i;
+                cell.onclick = () => {
+                    if (!showingSequence) {
+                        playerSequence.push(i);
+                        cell.style.background = 'rgba(0,255,0,0.8)';
+                        setTimeout(() => cell.style.background = 'rgba(255,255,255,0.3)', 200);
+                        checkSequence();
+                    }
+                };
+                grid.appendChild(cell);
+            }
+
+            container.querySelector('#memoryStart').onclick = startRound;
+
+            function startRound() {
+                sequence = [];
+                playerSequence = [];
+                for (let i = 0; i < level + 2; i++) {
+                    sequence.push(Math.floor(Math.random() * 9));
+                }
+                showSequence();
+            }
+
+            function showSequence() {
+                showingSequence = true;
+                container.querySelector('#memoryStatus').textContent = `Level ${level} - Watch carefully!`;
+                container.querySelector('#memoryStart').style.display = 'none';
+
+                sequence.forEach((cellIndex, i) => {
+                    setTimeout(() => {
+                        const cell = grid.children[cellIndex];
+                        cell.style.background = 'rgba(255,255,0,0.9)';
+                        cell.style.transform = 'scale(1.1)';
+                        setTimeout(() => {
+                            cell.style.background = 'rgba(255,255,255,0.3)';
+                            cell.style.transform = 'scale(1)';
+                        }, 400);
+
+                        if (i === sequence.length - 1) {
+                            setTimeout(() => {
+                                showingSequence = false;
+                                container.querySelector('#memoryStatus').textContent = 'Now repeat the sequence!';
+                            }, 600);
+                        }
+                    }, i * 600);
+                });
+            }
+
+            function checkSequence() {
+                const currentIndex = playerSequence.length - 1;
+                if (playerSequence[currentIndex] !== sequence[currentIndex]) {
+                    container.querySelector('#memoryStatus').innerHTML = `
+                        ❌ Wrong! Final Score: Level ${level}<br>
+                        <button onclick="location.reload()" style="
+                            background: #ff4757; color: white; border: none;
+                            padding: 1rem 2rem; border-radius: 8px; margin-top: 1rem;
+                            cursor: pointer;
+                        ">Try Again</button>
+                    `;
+                    createConfetti();
+                    return;
+                }
+
+                if (playerSequence.length === sequence.length) {
+                    level++;
+                    container.querySelector('#memoryStatus').innerHTML = `
+                        ✅ Correct! Level ${level} unlocked!<br>
+                        <button onclick="startRound()" style="
+                            background: #2ed573; color: white; border: none;
+                            padding: 1rem 2rem; border-radius: 8px; margin-top: 1rem;
+                            cursor: pointer;
+                        ">Next Level</button>
+                    `;
+
+                    setTimeout(() => {
+                        container.querySelector('#memoryStart').style.display = 'inline-block';
+                        container.querySelector('#memoryStart').textContent = `Level ${level}`;
+                        container.querySelector('#memoryStart').onclick = startRound;
+                    }, 2000);
+                }
+            }
+        }
+
+        function startSpeedGame(container) {
+            container.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    ⚡ Speed Challenge
+                </h1>
+                <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">
+                    Click the targets as fast as you can!
+                </p>
+                <div id="speedStats" style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold;">0</div>
+                        <div style="opacity: 0.8;">Score</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold;">30</div>
+                        <div style="opacity: 0.8;">Time</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold;">0ms</div>
+                        <div style="opacity: 0.8;">Avg Time</div>
+                    </div>
+                </div>
+                <div id="speedGame" style="
+                    position: relative; width: 500px; height: 400px;
+                    background: rgba(0,0,0,0.3); border-radius: 20px;
+                    margin: 0 auto 3rem; overflow: hidden;
+                    border: 3px solid rgba(255,255,255,0.3);
+                "></div>
+                <button id="speedStart" style="
+                    background: linear-gradient(45deg, #ffa500, #ff6b6b);
+                    color: white; border: none; padding: 1rem 3rem;
+                    border-radius: 12px; font-size: 1.3rem; cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                ">⚡ Start Speed Test</button>
+            `;
+
+            let score = 0;
+            let timeLeft = 30;
+            let gameActive = false;
+            let reactionTimes = [];
+            let targetStartTime = 0;
+
+            const gameArea = container.querySelector('#speedGame');
+            const startBtn = container.querySelector('#speedStart');
+            const stats = container.querySelector('#speedStats').children;
+
+            startBtn.onclick = startSpeedTest;
+
+            function startSpeedTest() {
+                gameActive = true;
+                score = 0;
+                timeLeft = 30;
+                reactionTimes = [];
+                startBtn.style.display = 'none';
+
+                const timer = setInterval(() => {
+                    timeLeft--;
+                    stats[1].firstElementChild.textContent = timeLeft;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        endGame();
+                    }
+                }, 1000);
+
+                spawnTarget();
+            }
+
+            function spawnTarget() {
+                if (!gameActive) return;
+
+                const target = document.createElement('div');
+                target.style.cssText = `
+                    position: absolute; width: 60px; height: 60px;
+                    background: radial-gradient(circle, #ff6b6b, #ff4757);
+                    border-radius: 50%; cursor: pointer;
+                    box-shadow: 0 0 20px rgba(255,107,107,0.6);
+                    animation: targetPulse 0.5s ease-in-out infinite alternate;
+                    border: 3px solid white;
+                `;
+
+                target.style.left = Math.random() * (gameArea.offsetWidth - 60) + 'px';
+                target.style.top = Math.random() * (gameArea.offsetHeight - 60) + 'px';
+
+                targetStartTime = Date.now();
+
+                target.onclick = () => {
+                    const reactionTime = Date.now() - targetStartTime;
+                    reactionTimes.push(reactionTime);
+                    score++;
+
+                    // Update stats
+                    stats[0].firstElementChild.textContent = score;
+                    const avgTime = reactionTimes.reduce((a, b) => a + b) / reactionTimes.length;
+                    stats[2].firstElementChild.textContent = Math.round(avgTime) + 'ms';
+
+                    target.remove();
+
+                    // Spawn next target
+                    setTimeout(() => spawnTarget(), Math.random() * 1000 + 500);
+                };
+
+                gameArea.appendChild(target);
+
+                // Remove target if not clicked in time
+                setTimeout(() => {
+                    if (target.parentNode) {
+                        target.remove();
+                        setTimeout(() => spawnTarget(), 500);
+                    }
+                }, 3000);
+            }
+
+            function endGame() {
+                gameActive = false;
+                gameArea.innerHTML = `
+                    <div style="
+                        display: flex; flex-direction: column; align-items: center;
+                        justify-content: center; height: 100%; font-size: 1.5rem;
+                    ">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                        <div>Final Score: ${score}</div>
+                        <div style="font-size: 1rem; margin-top: 1rem; opacity: 0.8;">
+                            Average Reaction: ${reactionTimes.length ? Math.round(reactionTimes.reduce((a, b) => a + b) / reactionTimes.length) : 0}ms
+                        </div>
+                    </div>
+                `;
+                createConfetti();
+            }
+        }
+
+        function startLogicGame(container) {
+            container.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    🧩 Logic Challenge
+                </h1>
+                <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">
+                    Solve the pattern puzzles!
+                </p>
+                <div id="logicPuzzle" style="
+                    background: rgba(255,255,255,0.1); border-radius: 20px;
+                    padding: 3rem; margin: 0 auto 3rem; max-width: 600px;
+                    border: 2px solid rgba(255,255,255,0.3);
+                "></div>
+                <div id="logicOptions" style="
+                    display: grid; grid-template-columns: repeat(4, 1fr);
+                    gap: 1rem; max-width: 400px; margin: 0 auto 2rem;
+                "></div>
+                <div id="logicStatus" style="font-size: 1.5rem; margin-bottom: 2rem;">
+                    Find the missing pattern!
+                </div>
+            `;
+
+            let currentPuzzle = 0;
+            let score = 0;
+
+            const puzzles = [
+                {
+                    pattern: ['🔴', '🟡', '🔵', '🔴', '🟡', '?'],
+                    options: ['🔵', '🟢', '🔴', '🟡'],
+                    answer: 0
+                },
+                {
+                    pattern: ['⭐', '⭐⭐', '⭐⭐⭐', '?'],
+                    options: ['⭐⭐⭐⭐', '⭐', '⭐⭐', '⭐⭐⭐⭐⭐'],
+                    answer: 0
+                },
+                {
+                    pattern: ['🔺', '🔻', '🔺', '🔻', '?'],
+                    options: ['🔺', '🔻', '🔹', '🔸'],
+                    answer: 0
+                }
+            ];
+
+            showPuzzle();
+
+            function showPuzzle() {
+                const puzzle = puzzles[currentPuzzle];
+                const puzzleDiv = container.querySelector('#logicPuzzle');
+                const optionsDiv = container.querySelector('#logicOptions');
+
+                puzzleDiv.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                        ${puzzle.pattern.map(item => `
+                            <div style="
+                                width: 80px; height: 80px; display: flex;
+                                align-items: center; justify-content: center;
+                                font-size: 2rem; background: rgba(255,255,255,0.2);
+                                border-radius: 12px; border: 2px solid rgba(255,255,255,0.4);
+                                ${item === '?' ? 'background: rgba(255,255,0,0.3); animation: pulse 2s infinite;' : ''}
+                            ">${item}</div>
+                        `).join('')}
+                    </div>
+                `;
+
+                optionsDiv.innerHTML = puzzle.options.map((option, index) => `
+                    <div onclick="selectAnswer(${index})" style="
+                        width: 80px; height: 80px; display: flex;
+                        align-items: center; justify-content: center;
+                        font-size: 2rem; background: rgba(255,255,255,0.2);
+                        border-radius: 12px; cursor: pointer;
+                        border: 2px solid rgba(255,255,255,0.4);
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.4)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.2)'">${option}</div>
+                `).join('');
+            }
+
+            window.selectAnswer = function(selectedIndex) {
+                const puzzle = puzzles[currentPuzzle];
+                const statusDiv = container.querySelector('#logicStatus');
+
+                if (selectedIndex === puzzle.answer) {
+                    score++;
+                    currentPuzzle++;
+
+                    if (currentPuzzle < puzzles.length) {
+                        statusDiv.innerHTML = `✅ Correct! Score: ${score}/${puzzles.length}`;
+                        setTimeout(() => {
+                            showPuzzle();
+                            statusDiv.textContent = 'Find the missing pattern!';
+                        }, 2000);
+                    } else {
+                        statusDiv.innerHTML = `
+                            🎉 Puzzle Complete!<br>
+                            Final Score: ${score}/${puzzles.length}<br>
+                            <small style="opacity: 0.8;">You're a logic master!</small>
+                        `;
+                        createConfetti();
+                    }
+                } else {
+                    statusDiv.innerHTML = `❌ Wrong answer! Score: ${score}/${puzzles.length}`;
+                    setTimeout(() => {
+                        statusDiv.textContent = 'Try again!';
+                    }, 2000);
+                }
+            };
         }
 
         function joinChallenge() {
