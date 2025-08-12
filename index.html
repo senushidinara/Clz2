@@ -1085,15 +1085,83 @@
         <!-- Focus Page -->
         <div class="page" id="focus">
             <div class="card">
-                <h2>Guided Focus Sessions</h2>
-                <div style="position: relative; height: 200px; background: linear-gradient(135deg, rgba(255,245,186,0.3) 0%, rgba(251,233,132,0.2) 100%); border-radius: 12px; overflow: hidden;">
-                    <!-- Video placeholder with moving gradients -->
-                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%); animation: gradientMove 3s ease-in-out infinite;"></div>
+                <h2>🧘‍♀️ Meditation & Focus Studio</h2>
+                <div class="meditation-video-container" style="position: relative; height: 300px; border-radius: 12px; overflow: hidden; margin-bottom: 2rem;">
+                    <!-- Animated Nature Background -->
+                    <div class="nature-bg active" id="natureBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                        background:
+                            radial-gradient(ellipse at top, rgba(135, 206, 235, 0.8), transparent),
+                            radial-gradient(ellipse at bottom, rgba(34, 139, 34, 0.6), transparent),
+                            linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #32CD32 100%);
+                        animation: gentleWaves 8s ease-in-out infinite;
+                    ">
+                        <!-- Floating clouds -->
+                        <div style="position: absolute; top: 10%; left: 10%; width: 60px; height: 30px; background: rgba(255,255,255,0.7); border-radius: 50px; animation: float 6s ease-in-out infinite;"></div>
+                        <div style="position: absolute; top: 20%; right: 15%; width: 80px; height: 40px; background: rgba(255,255,255,0.6); border-radius: 50px; animation: float 8s ease-in-out infinite reverse;"></div>
+
+                        <!-- Animated trees -->
+                        <div style="position: absolute; bottom: 20%; left: 20%; font-size: 3rem; color: #228B22; animation: sway 4s ease-in-out infinite;">🌲</div>
+                        <div style="position: absolute; bottom: 15%; right: 25%; font-size: 2.5rem; color: #228B22; animation: sway 5s ease-in-out infinite reverse;">🌳</div>
+
+                        <!-- Sun/Moon -->
+                        <div style="position: absolute; top: 15%; right: 20%; font-size: 3rem; animation: pulse 3s ease-in-out infinite;">☀️</div>
+                    </div>
+
+                    <!-- Ocean Background -->
+                    <div class="ocean-bg" id="oceanBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
+                        background:
+                            radial-gradient(ellipse at center top, rgba(135, 206, 235, 0.9), transparent),
+                            linear-gradient(135deg, #4682B4 0%, #87CEEB 50%, #B0E0E6 100%);
+                        animation: oceanWaves 6s ease-in-out infinite;
+                    ">
+                        <!-- Animated waves -->
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 30%; background: linear-gradient(90deg, rgba(70,130,180,0.8) 0%, rgba(135,206,235,0.6) 50%, rgba(176,224,230,0.8) 100%); border-radius: 50% 50% 0 0; animation: wave1 4s ease-in-out infinite;"></div>
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20%; background: linear-gradient(90deg, rgba(176,224,230,0.7) 0%, rgba(135,206,235,0.5) 50%, rgba(70,130,180,0.7) 100%); border-radius: 50% 50% 0 0; animation: wave2 3s ease-in-out infinite reverse;"></div>
+
+                        <!-- Seagulls -->
+                        <div style="position: absolute; top: 30%; left: 30%; color: white; font-size: 1.5rem; animation: fly 10s linear infinite;">🕊️</div>
+                    </div>
+
+                    <!-- Mountain Background -->
+                    <div class="mountain-bg" id="mountainBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
+                        background:
+                            linear-gradient(135deg, #4169E1 0%, #9370DB 30%, #8B4513 70%, #2F4F4F 100%);
+                        animation: mountainMist 10s ease-in-out infinite;
+                    ">
+                        <!-- Mountain peaks -->
+                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 4rem; color: #696969; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰️</div>
+                        <div style="position: absolute; bottom: 20%; right: 20%; font-size: 3.5rem; color: #808080; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🏔️</div>
+
+                        <!-- Stars -->
+                        <div style="position: absolute; top: 20%; left: 20%; color: white; font-size: 1rem; animation: twinkle 2s ease-in-out infinite;">✨</div>
+                        <div style="position: absolute; top: 15%; right: 30%; color: white; font-size: 0.8rem; animation: twinkle 3s ease-in-out infinite reverse;">⭐</div>
+                    </div>
+                </div>
+
+                <div class="meditation-controls" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+                    <button onclick="changeMeditationBg('nature')" class="bg-btn active" data-bg="nature" style="
+                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
+                        background: linear-gradient(45deg, #32CD32, #98FB98); color: white;
+                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(50,205,50,0.3);
+                    ">🌿 Forest</button>
+                    <button onclick="changeMeditationBg('ocean')" class="bg-btn" data-bg="ocean" style="
+                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
+                        background: linear-gradient(45deg, #4682B4, #87CEEB); color: white;
+                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(70,130,180,0.3);
+                    ">🌊 Ocean</button>
+                    <button onclick="changeMeditationBg('mountain')" class="bg-btn" data-bg="mountain" style="
+                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
+                        background: linear-gradient(45deg, #4169E1, #9370DB); color: white;
+                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(65,105,225,0.3);
+                    ">🏔️ Mountain</button>
                 </div>
             </div>
 
             <div class="card">
-                <h3>Pomodoro Timer</h3>
+                <h3>🎯 Enhanced Pomodoro Timer</h3>
                 <div class="timer-circle">
                     <svg>
                         <circle cx="100" cy="100" r="90" class="timer-bg" stroke-dasharray="565" stroke-dashoffset="0"></circle>
@@ -1109,16 +1177,122 @@
                 </div>
             </div>
 
+            <div class="card">
+                <h3>🧘‍♀️ Meditation Techniques</h3>
+                <div class="meditation-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+
+                    <div class="meditation-card" onclick="startMeditation('breathwork')" style="
+                        background: linear-gradient(135deg, rgba(255,182,193,0.8), rgba(255,218,185,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(255,182,193,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="breathing-animation" style="
+                            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                            width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.7);
+                            border-radius: 50%; animation: breathingPulse 4s ease-in-out infinite;
+                        "></div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #8B4513;">🫁 Breathwork</h4>
+                        <p style="text-align: center; color: #654321; font-size: 0.9rem;">4-7-8 breathing technique for relaxation</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">5-15 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('bodyscan')" style="
+                        background: linear-gradient(135deg, rgba(173,216,230,0.8), rgba(175,238,238,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(173,216,230,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="body-scan-animation" style="
+                            position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+                            width: 30px; height: 80px; background: linear-gradient(180deg, rgba(255,255,255,0.8), transparent);
+                            animation: bodyScanMove 3s ease-in-out infinite;
+                        "></div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #4682B4;">🧘‍♂️ Body Scan</h4>
+                        <p style="text-align: center; color: #2F4F4F; font-size: 0.9rem;">Progressive muscle relaxation</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">10-20 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('mindfulness')" style="
+                        background: linear-gradient(135deg, rgba(221,160,221,0.8), rgba(238,130,238,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(221,160,221,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="mindfulness-ripple" style="
+                            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                            width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.6);
+                            border-radius: 50%; animation: rippleEffect 3s ease-out infinite;
+                        "></div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #8B008B;">🌸 Mindfulness</h4>
+                        <p style="text-align: center; color: #663366; font-size: 0.9rem;">Present moment awareness practice</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">5-30 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('visualization')" style="
+                        background: linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,228,181,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(255,215,0,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="visualization-glow" style="
+                            position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
+                            width: 50px; height: 30px; background: radial-gradient(circle, rgba(255,255,255,0.8), transparent);
+                            border-radius: 50%; animation: glowPulse 2s ease-in-out infinite;
+                        "></div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #B8860B;">✨ Visualization</h4>
+                        <p style="text-align: center; color: #8B7500; font-size: 0.9rem;">Guided imagery for peace</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">10-25 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('lovingkindness')" style="
+                        background: linear-gradient(135deg, rgba(255,192,203,0.8), rgba(255,182,193,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(255,192,203,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="heart-pulse" style="
+                            position: absolute; top: 40%; left: 50%; transform: translateX(-50%);
+                            font-size: 2rem; color: rgba(255,255,255,0.8); animation: heartBeat 1.5s ease-in-out infinite;
+                        ">💖</div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #C71585;">💝 Loving Kindness</h4>
+                        <p style="text-align: center; color: #8B1538; font-size: 0.9rem;">Compassion and self-love practice</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">15-30 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('walking')" style="
+                        background: linear-gradient(135deg, rgba(152,251,152,0.8), rgba(144,238,144,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(152,251,152,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="walking-steps" style="
+                            position: absolute; top: 50%; left: 20%;
+                            color: rgba(255,255,255,0.8); font-size: 1.5rem; animation: walkingMotion 2s ease-in-out infinite;
+                        ">👣</div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">🚶‍♀️ Walking</h4>
+                        <p style="text-align: center; color: #006400; font-size: 0.9rem;">Mindful movement meditation</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">Any duration</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card-grid">
-                <div class="card" onclick="selectFocusMode('deep')">
+                <div class="card enhanced-focus-card" onclick="selectFocusMode('deep')" style="
+                    background: linear-gradient(135deg, rgba(139,69,19,0.1), rgba(160,82,45,0.1));
+                    border: 2px solid rgba(139,69,19,0.3);
+                ">
+                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">🔥</div>
                     <h4>Deep Work</h4>
                     <p>Intensive 50-minute sessions for complex tasks</p>
                 </div>
-                <div class="card" onclick="selectFocusMode('light')">
+                <div class="card enhanced-focus-card" onclick="selectFocusMode('light')" style="
+                    background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,228,181,0.1));
+                    border: 2px solid rgba(255,215,0,0.3);
+                ">
+                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">✨</div>
                     <h4>Light Focus</h4>
                     <p>25-minute sessions for routine activities</p>
                 </div>
-                <div class="card" onclick="selectFocusMode('relax')">
+                <div class="card enhanced-focus-card" onclick="selectFocusMode('relax')" style="
+                    background: linear-gradient(135deg, rgba(173,216,230,0.1), rgba(175,238,238,0.1));
+                    border: 2px solid rgba(173,216,230,0.3);
+                ">
+                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">🌸</div>
                     <h4>Relax Mode</h4>
                     <p>Gentle background ambience for calm focus</p>
                 </div>
