@@ -1426,6 +1426,63 @@
             }
         }
 
+        // ============ UTILITY FUNCTIONS ============
+        function showToast(message) {
+            console.log('Showing toast:', message);
+            try {
+                const toast = document.getElementById('toast');
+                if (toast) {
+                    toast.textContent = message;
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                } else {
+                    console.error('Toast element not found');
+                    // Fallback: create temporary toast
+                    const tempToast = document.createElement('div');
+                    tempToast.style.cssText = `
+                        position: fixed;
+                        top: 100px;
+                        right: 2rem;
+                        background: var(--challenges-color);
+                        color: var(--black);
+                        padding: 1rem 2rem;
+                        border-radius: 12px;
+                        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                        z-index: 1001;
+                        animation: slideInFromRight 0.3s ease;
+                    `;
+                    tempToast.textContent = message;
+                    document.body.appendChild(tempToast);
+
+                    setTimeout(() => {
+                        if (tempToast.parentNode) {
+                            tempToast.remove();
+                        }
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error('Toast error:', error);
+                alert(message); // Ultimate fallback
+            }
+        }
+
+        function closeModal(modalId) {
+            console.log('Closing modal:', modalId);
+            try {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('active');
+                    console.log('Modal closed:', modalId);
+                } else {
+                    console.error('Modal not found:', modalId);
+                }
+            } catch (error) {
+                console.error('Close modal error:', error);
+            }
+        }
+
         function startChallenge(type) {
             console.log('Starting challenge:', type);
             try {
