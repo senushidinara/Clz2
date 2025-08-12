@@ -1264,11 +1264,13 @@
 
         // Challenge Functions
         function joinChallenge() {
+            console.log('Joining challenge...');
             createConfetti();
             showToast("Challenge Joined!");
         }
 
         function createConfetti() {
+            console.log('Creating confetti...');
             for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
@@ -1277,22 +1279,33 @@
                     confetti.style.animationDelay = Math.random() * 3 + 's';
                     confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
                     document.body.appendChild(confetti);
-                    
+
                     setTimeout(() => {
-                        confetti.remove();
+                        if (confetti.parentNode) {
+                            confetti.remove();
+                        }
                     }, 5000);
                 }, i * 100);
             }
         }
 
         function showToast(message) {
+            console.log('Showing toast:', message);
             const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            if (toast) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            } else {
+                console.error('Toast element not found');
+            }
         }
+
+        // Make functions globally accessible
+        window.joinChallenge = joinChallenge;
+        window.showToast = showToast;
 
         function openChallenge(type) {
             const modal = document.getElementById('challengeModal');
