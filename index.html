@@ -1058,12 +1058,28 @@
         <!-- Home Page -->
         <div class="page active" id="home">
             <div class="video-container">
-                <div class="video-bg" style="background: radial-gradient(circle, rgba(167,199,231,0.3) 0%, rgba(155,184,224,0.2) 100%); position: relative;">
-                    <!-- Simulated neurons -->
-                    <div style="position: absolute; top: 20%; left: 10%; width: 4px; height: 4px; background: white; border-radius: 50%; animation: twinkle 1.5s infinite;"></div>
-                    <div style="position: absolute; top: 60%; left: 30%; width: 3px; height: 3px; background: white; border-radius: 50%; animation: twinkle 2s infinite; animation-delay: 0.5s;"></div>
-                    <div style="position: absolute; top: 40%; left: 70%; width: 5px; height: 5px; background: white; border-radius: 50%; animation: twinkle 1.8s infinite; animation-delay: 1s;"></div>
-                    <div style="position: absolute; top: 80%; left: 50%; width: 4px; height: 4px; background: white; border-radius: 50%; animation: twinkle 2.2s infinite; animation-delay: 1.5s;"></div>
+                <div class="video-bg" style="
+                    background:
+                        radial-gradient(circle at 20% 80%, rgba(167,199,231,0.4) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(155,184,224,0.4) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(142,169,217,0.3) 0%, transparent 50%),
+                        linear-gradient(135deg, rgba(167,199,231,0.2) 0%, rgba(155,184,224,0.3) 100%);
+                    position: relative; animation: gentleWaves 12s ease-in-out infinite;
+                ">
+                    <!-- Enhanced neural network simulation -->
+                    <div style="position: absolute; top: 20%; left: 10%; width: 6px; height: 6px; background: rgba(255,255,255,0.9); border-radius: 50%; animation: neuronPulse 2s infinite; box-shadow: 0 0 10px rgba(255,255,255,0.5);"></div>
+                    <div style="position: absolute; top: 60%; left: 30%; width: 4px; height: 4px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: neuronPulse 2.5s infinite; animation-delay: 0.5s; box-shadow: 0 0 8px rgba(255,255,255,0.4);"></div>
+                    <div style="position: absolute; top: 40%; left: 70%; width: 8px; height: 8px; background: rgba(255,255,255,0.9); border-radius: 50%; animation: neuronPulse 1.8s infinite; animation-delay: 1s; box-shadow: 0 0 12px rgba(255,255,255,0.6);"></div>
+                    <div style="position: absolute; top: 80%; left: 50%; width: 5px; height: 5px; background: rgba(255,255,255,0.85); border-radius: 50%; animation: neuronPulse 2.2s infinite; animation-delay: 1.5s; box-shadow: 0 0 9px rgba(255,255,255,0.5);"></div>
+                    <div style="position: absolute; top: 30%; left: 50%; width: 7px; height: 7px; background: rgba(255,255,255,0.7); border-radius: 50%; animation: neuronPulse 3s infinite; animation-delay: 2s; box-shadow: 0 0 11px rgba(255,255,255,0.4);"></div>
+
+                    <!-- Neural connections -->
+                    <div style="position: absolute; top: 20%; left: 10%; width: 20%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0.3), transparent); animation: connectionPulse 3s ease-in-out infinite;"></div>
+                    <div style="position: absolute; top: 40%; left: 30%; width: 40%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: connectionPulse 4s ease-in-out infinite; animation-delay: 1s;"></div>
+
+                    <!-- Floating brain waves -->
+                    <div style="position: absolute; top: 10%; right: 15%; font-size: 2rem; color: rgba(255,255,255,0.6); animation: float 6s ease-in-out infinite;">🧠</div>
+                    <div style="position: absolute; bottom: 20%; left: 20%; font-size: 1.5rem; color: rgba(255,255,255,0.5); animation: float 8s ease-in-out infinite reverse;">⚡</div>
                 </div>
             </div>
 
