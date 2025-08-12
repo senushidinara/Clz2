@@ -3,358 +3,2730 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroMind Elite | Reliable & Functional Edition</title>
+    <title>NeuroX - Cognitive Training Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
-    <!-- 
-      IMPORTANT NOTE: This app requires an internet connection for two essential libraries below.
-      If the charts or scores do not appear, please ensure you are connected to the internet.
-    -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-
     <style>
         :root {
-            --primary: #00a8ff; --primary-light: #4ddbff; --secondary: #e056fd; --tertiary: #7bed9f;
-            --dark: #1e272e; --darker: #191f24; --card-bg: rgba(45, 52, 54, 0.6); --glass: rgba(255, 255, 255, 0.08);
-            --text: #d2dae2; --text-muted: #808e9b; --success: #2ed573; --warning: #ffb142; --danger: #ff4757;
-            --border: rgba(255, 255, 255, 0.15);
+            /* Pastel Tab Colors */
+            --home-color: #A7C7E7;
+            --dashboard-color: #B9E0D8;
+            --challenges-color: #FBC4AB;
+            --sleep-color: #EAD7D1;
+            --focus-color: #FFF5BA;
+            
+            /* Base Colors */
+            --white: #ffffff;
+            --black: #2d2d2d;
+            --gray-light: #f8f9fa;
+            --gray-medium: #6c757d;
+            --gray-dark: #495057;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            
+            /* Gradients */
+            --home-gradient: linear-gradient(135deg, #A7C7E7 0%, #9BB8E0 50%, #8FA9D9 100%);
+            --dashboard-gradient: linear-gradient(135deg, #B9E0D8 0%, #A5D6CC 50%, #91CCC0 100%);
+            --challenges-gradient: linear-gradient(135deg, #FBC4AB 0%, #F9B59F 50%, #F7A693 100%);
+            --sleep-gradient: linear-gradient(135deg, #EAD7D1 0%, #E4CAC3 50%, #DEBDB5 100%);
+            --focus-gradient: linear-gradient(135deg, #FFF5BA 0%, #FDEF9F 50%, #FBE984 100%);
         }
-        /* Using a system font for reliability - no external requests */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
-        body { background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-        .app-container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; margin-bottom: 2rem; border-bottom: 1px solid var(--border); }
-        .logo { display: flex; align-items: center; gap: 1rem; font-size: 2rem; font-weight: 700; }
-        .nav-tabs { display: flex; background: var(--glass); border-radius: 12px; padding: 0.5rem; margin-bottom: 2rem; backdrop-filter: blur(10px); flex-wrap: wrap; }
-        .tab-btn { flex: 1; padding: 1rem; background: transparent; border: none; color: var(--text); font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.75rem; min-width: 140px; }
-        .tab-btn:hover { background: rgba(255, 255, 255, 0.1); }
-        .tab-btn.active { background: var(--primary); box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4); }
-        .tab-content { display: none; animation: fadeIn 0.6s; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
-        .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; }
-        .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; font-size: 1.4rem; font-weight: 600; }
-        .card-body { padding: 1.5rem; }
-        .btn { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; margin: 0.5rem 0; }
-        .btn.primary { background: var(--primary); }
-        .btn:disabled { background: var(--text-muted); cursor: not-allowed; }
-        
-        #cognitive-score-chart-container { position: relative; height: 300px; }
-        .sub-scores-container { display: flex; justify-content: space-around; margin-top: 1.5rem; }
-        .sub-score { text-align: center; }
-        .sub-score .progress-bar { width: 100px; height: 8px; background: var(--glass); border-radius: 4px; margin: 0.5rem auto 0; overflow: hidden; }
-        .sub-score .progress-fill { height: 100%; width: 50%; background: var(--primary); transition: width 0.5s ease; }
-        .sub-score .memory { background: var(--secondary); }
-        .sub-score .resilience { background: var(--tertiary); }
-        
-        .memory-game-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 400px; margin: 1rem auto; perspective: 1000px; }
-        .memory-card { aspect-ratio: 1; position: relative; cursor: pointer; transform-style: preserve-3d; transition: transform 0.6s; }
-        .memory-card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 2rem;}
-        .memory-card-front { background: var(--glass); }
-        .memory-card-back { background: linear-gradient(135deg, var(--primary), var(--secondary)); transform: rotateY(180deg); }
-        .memory-card.is-flipped { transform: rotateY(180deg); }
-        .memory-card.is-matched { opacity: 0.5; }
-        #memory-game-overlay { position: absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); display:none; flex-direction:column; justify-content:center; align-items:center; z-index:10; }
 
-        .pulse-guide { animation: pulse-animation 1.5s infinite; }
-        @keyframes pulse-animation { 0% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(0, 168, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0); } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-light);
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            transition: all 0.8s ease;
+        }
+
+        .bg-home { background: var(--home-gradient); animation: gradientShift 8s ease-in-out infinite; }
+        .bg-dashboard { background: var(--dashboard-gradient); animation: gradientShift 8s ease-in-out infinite; }
+        .bg-challenges { background: var(--challenges-gradient); animation: gradientShift 8s ease-in-out infinite; }
+        .bg-sleep { background: var(--sleep-gradient); animation: gradientShift 8s ease-in-out infinite; }
+        .bg-focus { background: var(--focus-gradient); animation: gradientShift 8s ease-in-out infinite; }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 140px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            box-shadow: 0 2px 20px var(--shadow-light);
+            animation: fadeInDown 0.8s ease-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .top-nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 140px;
+            margin-bottom: 0;
+            min-height: calc(100vh - 140px);
+            padding: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Page Containers */
+        .page {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            background: var(--white);
+            color: var(--black);
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-primary {
+            background: var(--home-color);
+            color: var(--black);
+        }
+
+        .btn-dashboard {
+            background: var(--dashboard-color);
+            color: var(--black);
+        }
+
+        .btn-challenges {
+            background: var(--challenges-color);
+            color: var(--black);
+        }
+
+        .btn-sleep {
+            background: var(--sleep-color);
+            color: var(--black);
+        }
+
+        .btn-focus {
+            background: var(--focus-color);
+            color: var(--black);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 -2px 20px var(--shadow-light);
+            padding: 0 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 70px;
+            background: transparent;
+            color: var(--gray-medium);
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-tab.active {
+            animation: slideUp 0.4s ease-out;
+            color: var(--white);
+            transform: translateY(-5px);
+        }
+
+        .nav-tab.active.tab-home { background: var(--home-color); }
+        .nav-tab.active.tab-dashboard { background: var(--dashboard-color); }
+        .nav-tab.active.tab-challenges { background: var(--challenges-color); }
+        .nav-tab.active.tab-sleep { background: var(--sleep-color); }
+        .nav-tab.active.tab-focus { background: var(--focus-color); }
+
+        .nav-tab i {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab span {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .nav-tab:active i {
+            animation: bounce 0.3s ease;
+        }
+
+        /* Video Background for Home */
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        /* EEG Waveform Animation */
+        .eeg-container {
+            height: 200px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .eeg-wave {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--dashboard-color);
+            animation: waveMove 2s linear infinite;
+            transform-origin: left center;
+        }
+
+        .eeg-wave.growing {
+            animation: waveGrow 3s ease-in-out, waveMove 2s linear infinite;
+        }
+
+        @keyframes waveMove {
+            0% { transform: translateX(-100%) scaleY(1); }
+            25% { transform: translateX(-50%) scaleY(2); }
+            50% { transform: translateX(0%) scaleY(1.5); }
+            75% { transform: translateX(50%) scaleY(3); }
+            100% { transform: translateX(100%) scaleY(1); }
+        }
+
+        @keyframes waveGrow {
+            0% { transform: scaleY(1); }
+            50% { transform: scaleY(4); }
+            100% { transform: scaleY(2); }
+        }
+
+        /* Sleep Animation */
+        .sleep-scene {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(to bottom, #2c3e50 0%, #34495e 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .moon {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #f4f4f4;
+            border-radius: 50%;
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .star:nth-child(2) { top: 30px; left: 50px; width: 3px; height: 3px; animation-delay: 0.5s; }
+        .star:nth-child(3) { top: 60px; left: 150px; width: 2px; height: 2px; animation-delay: 1s; }
+        .star:nth-child(4) { top: 40px; left: 250px; width: 4px; height: 4px; animation-delay: 1.5s; }
+        .star:nth-child(5) { top: 80px; left: 100px; width: 2px; height: 2px; animation-delay: 2s; }
+
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(244, 244, 244, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(244, 244, 244, 0.8); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Focus Timer */
+        .timer-circle {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+        }
+
+        .timer-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .timer-circle circle {
+            fill: none;
+            stroke-width: 8;
+        }
+
+        .timer-bg {
+            stroke: rgba(0, 0, 0, 0.1);
+        }
+
+        .timer-progress {
+            stroke: var(--focus-color);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        .timer-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--challenges-color), var(--focus-color));
+            border-radius: 6px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.animated {
+            animation: progressFill 5s ease-in-out;
+        }
+
+        @keyframes progressFill {
+            0% { width: 0%; }
+            100% { width: var(--target-width, 100%); }
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideInFromBottom 0.4s ease;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-medium);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--black);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            background: var(--challenges-color);
+            color: var(--black);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Charts Placeholder */
+        .chart-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-medium);
+            font-weight: 500;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--challenges-color);
+            animation: confettiFall 3s linear infinite;
+            z-index: 999;
+        }
+
+        .confetti:nth-child(odd) { background: var(--focus-color); }
+        .confetti:nth-child(3n) { background: var(--dashboard-color); }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Game Animations */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes targetPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255,107,107,0.6);
+            }
+            100% {
+                transform: scale(1.2);
+                box-shadow: 0 0 30px rgba(255,107,107,0.9);
+            }
+        }
+
+        @keyframes gameIntro {
+            0% {
+                transform: scale(0.8) rotateY(180deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotateY(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes correctAnswer {
+            0% { background: rgba(0,255,0,0.8); transform: scale(1); }
+            50% { background: rgba(0,255,0,1); transform: scale(1.2); }
+            100% { background: rgba(0,255,0,0.8); transform: scale(1); }
+        }
+
+        @keyframes wrongAnswer {
+            0% { background: rgba(255,0,0,0.8); transform: translateX(0); }
+            25% { background: rgba(255,0,0,1); transform: translateX(-10px); }
+            75% { background: rgba(255,0,0,1); transform: translateX(10px); }
+            100% { background: rgba(255,0,0,0.8); transform: translateX(0); }
+        }
+
+        @keyframes scoreUpdate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); color: #ffd700; }
+            100% { transform: scale(1); }
+        }
+
+        /* Meditation Animations */
+        @keyframes gentleWaves {
+            0%, 100% {
+                background-position: 0% 50%;
+                filter: hue-rotate(0deg);
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: hue-rotate(10deg);
+            }
+        }
+
+        @keyframes oceanWaves {
+            0%, 100% {
+                background-position: 0% 50%;
+                filter: brightness(1);
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: brightness(1.1);
+            }
+        }
+
+        @keyframes mountainMist {
+            0%, 100% {
+                background-position: 0% 50%;
+                filter: contrast(1);
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: contrast(1.1);
+            }
+        }
+
+        @keyframes wave1 {
+            0%, 100% {
+                transform: translateX(-20%) scaleY(1);
+            }
+            50% {
+                transform: translateX(20%) scaleY(1.1);
+            }
+        }
+
+        @keyframes wave2 {
+            0%, 100% {
+                transform: translateX(20%) scaleY(1);
+            }
+            50% {
+                transform: translateX(-20%) scaleY(0.9);
+            }
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: rotate(-2deg);
+            }
+            50% {
+                transform: rotate(2deg);
+            }
+        }
+
+        @keyframes fly {
+            0% {
+                left: -10%;
+                top: 30%;
+            }
+            50% {
+                left: 50%;
+                top: 20%;
+            }
+            100% {
+                left: 110%;
+                top: 35%;
+            }
+        }
+
+        @keyframes breathingPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bodyScanMove {
+            0% {
+                top: 20%;
+                opacity: 0.8;
+            }
+            50% {
+                top: 50%;
+                opacity: 1;
+            }
+            100% {
+                top: 80%;
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                width: 40px;
+                height: 40px;
+                opacity: 1;
+            }
+            100% {
+                width: 120px;
+                height: 120px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.2);
+            }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.2);
+            }
+        }
+
+        @keyframes walkingMotion {
+            0%, 100% {
+                left: 20%;
+                opacity: 0.8;
+            }
+            50% {
+                left: 70%;
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced Card Hover Effects */
+        .meditation-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            filter: brightness(1.1);
+        }
+
+        .enhanced-focus-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Meditation Background Transitions */
+        .meditation-video-container .nature-bg,
+        .meditation-video-container .ocean-bg,
+        .meditation-video-container .mountain-bg {
+            transition: opacity 1s ease-in-out;
+        }
+
+        .bg-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+        }
+
+        /* Neural Network Animations */
+        @keyframes neuronPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        @keyframes connectionPulse {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scaleX(0.8);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scaleX(1.2);
+            }
+        }
+
+        /* Enhanced Chart Animations */
+        @keyframes chartLoad {
+            0% {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes dataFlow {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes brainGlow {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(185,224,216,0.4);
+                filter: brightness(1);
+            }
+            50% {
+                box-shadow: 0 15px 40px rgba(185,224,216,0.6);
+                filter: brightness(1.1);
+            }
+        }
+
+        @keyframes regionPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(10px); }
+            to { transform: translateY(-5px); }
+        }
+
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .nav-tab {
+                padding: 0.6rem 0.8rem;
+                min-width: 60px;
+            }
+
+            .nav-tab i {
+                font-size: 1.2rem;
+            }
+
+            .nav-tab span {
+                font-size: 0.7rem;
+            }
+
+            .timer-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .timer-text {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .nav-tab span {
+                display: none;
+            }
+
+            .bottom-nav {
+                height: 80px;
+            }
+
+            .main-content {
+                margin-bottom: 80px;
+            }
+        }
+
+        /* Specific Page Styles */
+        .hero-section {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--black);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-medium);
+            margin-bottom: 2rem;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .stat-label {
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px var(--shadow);
+        }
+
+        .challenge-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .challenge-description {
+            color: var(--gray-medium);
+            margin-bottom: 1rem;
+        }
+
+        .quote-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--gray-dark);
+            animation: fadeIn 1s ease;
+        }
+
+        /* Sleep Score Display */
+        .sleep-score {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .score-circle {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1rem;
+        }
+
+        .score-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .score-circle circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .score-bg {
+            stroke: rgba(0, 0, 0, 0.1);
+        }
+
+        .score-progress {
+            stroke: var(--sleep-color);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 2s ease;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        /* Letter by letter animation */
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--black);
+            white-space: nowrap;
+            animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--black); }
+        }
     </style>
 </head>
 <body>
-    <!-- 
-      AUDIO NOTE: Modern browsers will not play sound until you click on the page.
-      Click anywhere to enable the sound effects.
-    -->
-    <audio id="sfx-click" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
-    <audio id="sfx-success" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
-    <audio id="sfx-notify" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
-    <audio id="sfx-win" src="https://www.soundjay.com/misc/sounds/magic-chime-01.mp3" preload="auto"></audio>
-    <audio id="sfx-lose" src="https://www.soundjay.com/misc/sounds/fail-trombone-01.mp3" preload="auto"></audio>
+    <!-- Animated Background -->
+    <div class="animated-bg bg-home" id="animatedBg"></div>
 
-    <div class="app-container">
-        <header><div class="logo">🧠 NeuroMind Elite</div></header>
-        <nav class="nav-tabs">
-            <button class="tab-btn active" data-tab="dashboard">📈 Dashboard</button>
-            <button class="tab-btn" data-tab="training">🏋️ Training Hub</button>
-            <button class="tab-btn" data-tab="insights">💡 Insights</button>
-            <button class="tab-btn" data-tab="coach">🤖 AI Coach</button>
-        </nav>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="logo">NeuroX</div>
+        <div class="top-nav-tabs">
+            <div class="nav-tab active tab-home" onclick="navigateToPage('home')" data-page="home">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-tab tab-dashboard" onclick="navigateToPage('dashboard')" data-page="dashboard">
+                <i class="fas fa-brain"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-tab tab-challenges" onclick="navigateToPage('challenges')" data-page="challenges">
+                <i class="fas fa-trophy"></i>
+                <span>Challenges</span>
+            </div>
+            <div class="nav-tab tab-sleep" onclick="navigateToPage('sleep')" data-page="sleep">
+                <i class="fas fa-moon"></i>
+                <span>Sleep</span>
+            </div>
+            <div class="nav-tab tab-focus" onclick="navigateToPage('focus')" data-page="focus">
+                <i class="fas fa-bullseye"></i>
+                <span>Focus</span>
+            </div>
+        </div>
+    </div>
 
-        <div id="dashboard" class="tab-content active">
-             <div class="card">
-                <div class="card-header">Your Cognitive Score</div>
-                <div class="card-body">
-                    <div id="cognitive-score-chart-container"><canvas id="cognitiveScoreChart"></canvas></div>
-                    <div class="sub-scores-container">
-                        <div class="sub-score"><span>Focus</span><div class="progress-bar"><div id="focus-score-bar" class="progress-fill"></div></div></div>
-                        <div class="sub-score"><span>Memory</span><div class="progress-bar"><div id="memory-score-bar" class="progress-fill memory"></div></div></div>
-                        <div class="sub-score"><span>Resilience</span><div class="progress-bar"><div id="resilience-score-bar" class="progress-fill resilience"></div></div></div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Home Page -->
+        <div class="page active" id="home">
+            <div class="video-container">
+                <div class="video-bg" style="
+                    background:
+                        radial-gradient(circle at 20% 80%, rgba(167,199,231,0.4) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(155,184,224,0.4) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(142,169,217,0.3) 0%, transparent 50%),
+                        linear-gradient(135deg, rgba(167,199,231,0.2) 0%, rgba(155,184,224,0.3) 100%);
+                    position: relative; animation: gentleWaves 12s ease-in-out infinite;
+                ">
+                    <!-- Enhanced neural network simulation -->
+                    <div style="position: absolute; top: 20%; left: 10%; width: 6px; height: 6px; background: rgba(255,255,255,0.9); border-radius: 50%; animation: neuronPulse 2s infinite; box-shadow: 0 0 10px rgba(255,255,255,0.5);"></div>
+                    <div style="position: absolute; top: 60%; left: 30%; width: 4px; height: 4px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: neuronPulse 2.5s infinite; animation-delay: 0.5s; box-shadow: 0 0 8px rgba(255,255,255,0.4);"></div>
+                    <div style="position: absolute; top: 40%; left: 70%; width: 8px; height: 8px; background: rgba(255,255,255,0.9); border-radius: 50%; animation: neuronPulse 1.8s infinite; animation-delay: 1s; box-shadow: 0 0 12px rgba(255,255,255,0.6);"></div>
+                    <div style="position: absolute; top: 80%; left: 50%; width: 5px; height: 5px; background: rgba(255,255,255,0.85); border-radius: 50%; animation: neuronPulse 2.2s infinite; animation-delay: 1.5s; box-shadow: 0 0 9px rgba(255,255,255,0.5);"></div>
+                    <div style="position: absolute; top: 30%; left: 50%; width: 7px; height: 7px; background: rgba(255,255,255,0.7); border-radius: 50%; animation: neuronPulse 3s infinite; animation-delay: 2s; box-shadow: 0 0 11px rgba(255,255,255,0.4);"></div>
+
+                    <!-- Neural connections -->
+                    <div style="position: absolute; top: 20%; left: 10%; width: 20%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0.3), transparent); animation: connectionPulse 3s ease-in-out infinite;"></div>
+                    <div style="position: absolute; top: 40%; left: 30%; width: 40%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: connectionPulse 4s ease-in-out infinite; animation-delay: 1s;"></div>
+
+                    <!-- Floating brain waves -->
+                    <div style="position: absolute; top: 10%; right: 15%; font-size: 2rem; color: rgba(255,255,255,0.6); animation: float 6s ease-in-out infinite;">🧠</div>
+                    <div style="position: absolute; bottom: 20%; left: 20%; font-size: 1.5rem; color: rgba(255,255,255,0.5); animation: float 8s ease-in-out infinite reverse;">⚡</div>
+                </div>
+            </div>
+
+            <div class="hero-section">
+                <h1 class="hero-title">Welcome to NeuroX</h1>
+                <p class="hero-subtitle">Advanced cognitive training for peak mental performance</p>
+                
+                <div class="quick-actions">
+                    <button class="btn btn-dashboard" onclick="navigateToPage('dashboard')">
+                        <i class="fas fa-brain"></i>
+                        Start Brain Dashboard
+                    </button>
+                    <button class="btn btn-sleep" onclick="navigateToPage('sleep')">
+                        <i class="fas fa-moon"></i>
+                        Improve Sleep
+                    </button>
+                    <button class="btn btn-challenges" onclick="navigateToPage('challenges')">
+                        <i class="fas fa-trophy"></i>
+                        Daily Challenge
+                    </button>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-number">87</div>
+                    <div class="stat-label">Cognitive Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Days Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Pro</div>
+                    <div class="stat-label">Level</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div class="page" id="dashboard">
+            <div class="card">
+                <h2>🧠 Advanced Brain Activity Monitor</h2>
+                <div class="eeg-container" id="eegContainer" style="
+                    background:
+                        radial-gradient(circle at 30% 30%, rgba(185,224,216,0.3), transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(185,224,216,0.2), transparent 50%),
+                        linear-gradient(135deg, rgba(0,0,0,0.05), rgba(185,224,216,0.1));
+                    border: 2px solid rgba(185,224,216,0.3);
+                ">
+                    <div class="eeg-wave" style="background: linear-gradient(90deg, var(--dashboard-color), #4ECDC4, var(--dashboard-color));"></div>
+                    <!-- Multiple EEG waves -->
+                    <div style="position: absolute; top: 60%; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, rgba(185,224,216,0.6), transparent); animation: waveMove 3s linear infinite; animation-delay: 0.5s;"></div>
+                    <div style="position: absolute; top: 70%; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(185,224,216,0.4), transparent); animation: waveMove 4s linear infinite; animation-delay: 1s;"></div>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+                    <button class="btn btn-dashboard" onclick="startBrainScan()">
+                        <i class="fas fa-play"></i>
+                        Start Brain Scan
+                    </button>
+                    <div style="display: flex; align-items: center; background: rgba(185,224,216,0.2); padding: 0.5rem 1rem; border-radius: 8px;">
+                        <span style="color: #00C851; margin-right: 0.5rem;">●</span>
+                        <span style="font-size: 0.9rem;">Neural Activity: Optimal</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="card" style="background: linear-gradient(135deg, rgba(255,99,132,0.1), rgba(255,205,210,0.1)); border: 2px solid rgba(255,99,132,0.2);">
+                    <h3>📈 Memory Improvement</h3>
+                    <div class="chart-placeholder" style="
+                        background:
+                            linear-gradient(90deg, transparent, rgba(255,99,132,0.1), transparent),
+                            repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,99,132,0.1) 10px, rgba(255,99,132,0.1) 20px);
+                        animation: dataFlow 3s ease-in-out infinite;
+                    ">
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                            <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 1rem; color: #FF6384; animation: pulse 2s ease-in-out infinite;"></i>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: bold; color: #FF6384;">+23%</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">This week</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="background: linear-gradient(135deg, rgba(54,162,235,0.1), rgba(179,226,255,0.1)); border: 2px solid rgba(54,162,235,0.2);">
+                    <h3>🎯 Focus Levels</h3>
+                    <div class="chart-placeholder" style="
+                        background:
+                            linear-gradient(90deg, transparent, rgba(54,162,235,0.1), transparent),
+                            repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(54,162,235,0.1) 15px, rgba(54,162,235,0.1) 30px);
+                        animation: dataFlow 4s ease-in-out infinite reverse;
+                    ">
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                            <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 1rem; color: #36A2EB; animation: pulse 2s ease-in-out infinite; animation-delay: 0.5s;"></i>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: bold; color: #36A2EB;">87%</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">Current session</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🧠 Interactive 3D Brain Model</h3>
+                <div style="text-align: center; padding: 3rem;">
+                    <div style="position: relative; display: inline-block;">
+                        <!-- Enhanced 3D Brain -->
+                        <div style="
+                            width: 250px; height: 200px;
+                            background:
+                                radial-gradient(ellipse at 30% 30%, rgba(185,224,216,0.8), transparent 70%),
+                                radial-gradient(ellipse at 70% 70%, rgba(176,224,230,0.6), transparent 70%),
+                                linear-gradient(135deg, var(--dashboard-color), rgba(185,224,216,0.7));
+                            border-radius: 50% 50% 45% 45%;
+                            margin: 0 auto; position: relative; cursor: pointer;
+                            box-shadow: 0 10px 30px rgba(185,224,216,0.4);
+                            animation: brainGlow 4s ease-in-out infinite;
+                            transform-style: preserve-3d;
+                        " onclick="showBrainInfo('memory')">
+                            <!-- Brain regions with enhanced visuals -->
+                            <div style="
+                                position: absolute; top: 30%; left: 20%;
+                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(185,224,216,0.8));
+                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                                animation: regionPulse 3s ease-in-out infinite;
+                            " onclick="showBrainInfo('memory')">
+                                🧠 Memory
+                            </div>
+                            <div style="
+                                position: absolute; top: 20%; right: 20%;
+                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(135,206,235,0.8));
+                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                                animation: regionPulse 3s ease-in-out infinite; animation-delay: 1s;
+                            " onclick="showBrainInfo('focus')">
+                                🎯 Focus
+                            </div>
+                            <div style="
+                                position: absolute; bottom: 30%; left: 50%; transform: translateX(-50%);
+                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,182,193,0.8));
+                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                                animation: regionPulse 3s ease-in-out infinite; animation-delay: 2s;
+                            " onclick="showBrainInfo('emotion')">
+                                ❤️ Emotion
+                            </div>
+
+                            <!-- Neural activity indicators -->
+                            <div style="position: absolute; top: 10%; left: 30%; width: 8px; height: 8px; background: #00C851; border-radius: 50%; animation: neuronPulse 2s infinite;"></div>
+                            <div style="position: absolute; top: 40%; right: 25%; width: 6px; height: 6px; background: #FF6384; border-radius: 50%; animation: neuronPulse 2.5s infinite; animation-delay: 0.5s;"></div>
+                            <div style="position: absolute; bottom: 40%; left: 40%; width: 7px; height: 7px; background: #36A2EB; border-radius: 50%; animation: neuronPulse 1.8s infinite; animation-delay: 1s;"></div>
+                        </div>
+
+                        <!-- Brain wave visualization -->
+                        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #00C851;">Alpha</div>
+                                <div style="width: 60px; height: 4px; background: #00C851; border-radius: 2px; animation: waveMove 2s ease-in-out infinite;"></div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #FF6384;">Beta</div>
+                                <div style="width: 60px; height: 4px; background: #FF6384; border-radius: 2px; animation: waveMove 1.5s ease-in-out infinite; animation-delay: 0.5s;"></div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #36A2EB;">Theta</div>
+                                <div style="width: 60px; height: 4px; background: #36A2EB; border-radius: 2px; animation: waveMove 3s ease-in-out infinite; animation-delay: 1s;"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="training" class="tab-content">
-             <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Synaptic Pathway</div>
-                    <div class="card-body" style="position:relative; text-align:center;">
-                        <div id="memory-game-overlay">
-                            <h2 id="game-over-title" style="font-size: 2rem; margin-bottom: 1rem;">You Won!</h2>
-                            <button class="btn primary" id="restart-game-btn">Play Again</button>
-                        </div>
-                        <div id="memory-game-stats" style="display:flex; justify-content:space-around; margin-bottom:1rem;">
-                            <span>Time: <b id="game-time">30</b>s</span>
-                            <span>Moves: <b id="game-moves">0</b></span>
-                        </div>
-                        <div class="memory-game-board" id="memory-game-board"></div>
-                        <button class="btn primary" id="start-game-btn">▶️ Start Game</button>
-                    </div>
+        <!-- Challenges Page -->
+        <div class="page" id="challenges">
+            <div class="card">
+                <h2>Neuro Challenges</h2>
+                <p>Test your cognitive abilities with these engaging challenges</p>
+            </div>
+
+            <div class="challenge-card" onclick="openChallenge('memory')">
+                <div class="challenge-title">Memory Match Challenge</div>
+                <div class="challenge-description">Test your working memory with pattern matching</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%;"></div>
                 </div>
-                <div class="card">
-                    <div class="card-header">Logical Deduction</div>
-                    <div class="card-body" id="deduction-puzzle">
-                        <p>If all Bloops are Bleeps, and no Bleeps are Blips, which statement is definitely true?</p>
-                        <button class="btn primary option" data-correct="true">No Bloop is a Blip.</button>
-                        <button class="btn primary option" data-correct="false">Some Bleeps are Bloops.</button>
-                        <button class="btn primary option" data-correct="false">All Blips are Bloops.</button>
-                        <p id="puzzle-feedback" style="margin-top:1rem; font-weight:bold;"></p>
-                    </div>
+                <small>Progress: 65% Complete</small>
+            </div>
+
+            <div class="challenge-card" onclick="openChallenge('speed')">
+                <div class="challenge-title">Speed Processing</div>
+                <div class="challenge-description">React quickly to visual stimuli</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 40%;"></div>
                 </div>
-             </div>
+                <small>Progress: 40% Complete</small>
+            </div>
+
+            <div class="challenge-card" onclick="openChallenge('logic')">
+                <div class="challenge-title">Logic Puzzles</div>
+                <div class="challenge-description">Solve complex reasoning problems</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;"></div>
+                </div>
+                <small>Progress: 80% Complete</small>
+            </div>
+
+            <div class="card">
+                <h3>Leaderboard</h3>
+                <button class="btn btn-challenges" onclick="showLeaderboard()">
+                    <i class="fas fa-trophy"></i>
+                    View Leaderboard
+                </button>
+                <button class="btn btn-primary" onclick="joinChallenge()">
+                    <i class="fas fa-plus"></i>
+                    Join Challenge
+                </button>
+            </div>
         </div>
 
-        <div id="insights" class="tab-content">
+        <!-- Sleep Page -->
+        <div class="page" id="sleep">
+            <div class="card">
+                <h2>Sleep & Recovery</h2>
+                <div class="sleep-scene">
+                    <div class="moon"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="sleep-score">
+                    <h3>Last Night's Sleep Score</h3>
+                    <div class="score-circle">
+                        <svg>
+                            <circle cx="75" cy="75" r="65" class="score-bg" stroke-dasharray="408" stroke-dashoffset="0"></circle>
+                            <circle cx="75" cy="75" r="65" class="score-progress" stroke-dasharray="408" stroke-dashoffset="53" id="sleepScoreCircle"></circle>
+                        </svg>
+                        <div class="score-text" id="sleepScoreText">87/100</div>
+                    </div>
+                </div>
+                <button class="btn btn-sleep" onclick="trackSleep()">
+                    <i class="fas fa-moon"></i>
+                    Track Sleep Now
+                </button>
+            </div>
+
             <div class="card-grid">
                 <div class="card">
-                    <div class="card-header">Log Mood & Correlate</div>
-                    <div class="card-body">
-                        <p>Select your current mood to plot it against your live Cognitive Score.</p>
-                        <div class="mood-selector" id="mood-selector">
-                            <button class="mood-btn" data-mood="Happy">😊</button>
-                            <button class="mood-btn" data-mood="Neutral">😐</button>
-                            <button class="mood-btn" data-mood="Stressed">😟</button>
-                            <button class="mood-btn" data-mood="Tired">😴</button>
-                        </div>
+                    <h3>Sleep Stages</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie" style="font-size: 2rem; margin-right: 1rem;"></i>
+                        Hypnogram Chart
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">Mood / Performance Correlation</div>
-                    <div class="card-body"><canvas id="moodPerformanceChart" height="200"></canvas></div>
+                    <h3>Sleep Tips</h3>
+                    <div style="cursor: pointer;" onclick="expandSleepTips()">
+                        <p><i class="fas fa-lightbulb"></i> Click to view personalized sleep tips</p>
+                    </div>
                 </div>
             </div>
+
+            <div class="card">
+                <h3>Sleep History</h3>
+                <button class="btn btn-sleep" onclick="viewSleepHistory()">
+                    <i class="fas fa-history"></i>
+                    View Sleep History
+                </button>
+            </div>
         </div>
-        
-        <div id="coach" class="tab-content">
-             <div class="card">
-                <div class="card-header">Your Proactive AI Coach</div>
-                <div class="card-body" style="text-align: center;">
-                    <span id="coach-icon" style="font-size: 3rem; margin-bottom: 1rem; display:inline-block;">💡</span>
-                    <p id="coach-tip" style="font-size: 1.1rem; line-height: 1.6;">Welcome to NeuroMind Elite! Get started by logging your mood on the Insights tab.</p>
+
+        <!-- Focus Page -->
+        <div class="page" id="focus">
+            <div class="card">
+                <h2>🧘‍♀️ Meditation & Focus Studio</h2>
+                <div class="meditation-video-container" style="position: relative; height: 300px; border-radius: 12px; overflow: hidden; margin-bottom: 2rem;">
+                    <!-- Animated Nature Background -->
+                    <div class="nature-bg active" id="natureBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                        background:
+                            radial-gradient(ellipse at top, rgba(135, 206, 235, 0.8), transparent),
+                            radial-gradient(ellipse at bottom, rgba(34, 139, 34, 0.6), transparent),
+                            linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #32CD32 100%);
+                        animation: gentleWaves 8s ease-in-out infinite;
+                    ">
+                        <!-- Floating clouds -->
+                        <div style="position: absolute; top: 10%; left: 10%; width: 60px; height: 30px; background: rgba(255,255,255,0.7); border-radius: 50px; animation: float 6s ease-in-out infinite;"></div>
+                        <div style="position: absolute; top: 20%; right: 15%; width: 80px; height: 40px; background: rgba(255,255,255,0.6); border-radius: 50px; animation: float 8s ease-in-out infinite reverse;"></div>
+
+                        <!-- Animated trees -->
+                        <div style="position: absolute; bottom: 20%; left: 20%; font-size: 3rem; color: #228B22; animation: sway 4s ease-in-out infinite;">🌲</div>
+                        <div style="position: absolute; bottom: 15%; right: 25%; font-size: 2.5rem; color: #228B22; animation: sway 5s ease-in-out infinite reverse;">🌳</div>
+
+                        <!-- Sun/Moon -->
+                        <div style="position: absolute; top: 15%; right: 20%; font-size: 3rem; animation: pulse 3s ease-in-out infinite;">☀️</div>
+                    </div>
+
+                    <!-- Ocean Background -->
+                    <div class="ocean-bg" id="oceanBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
+                        background:
+                            radial-gradient(ellipse at center top, rgba(135, 206, 235, 0.9), transparent),
+                            linear-gradient(135deg, #4682B4 0%, #87CEEB 50%, #B0E0E6 100%);
+                        animation: oceanWaves 6s ease-in-out infinite;
+                    ">
+                        <!-- Animated waves -->
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 30%; background: linear-gradient(90deg, rgba(70,130,180,0.8) 0%, rgba(135,206,235,0.6) 50%, rgba(176,224,230,0.8) 100%); border-radius: 50% 50% 0 0; animation: wave1 4s ease-in-out infinite;"></div>
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20%; background: linear-gradient(90deg, rgba(176,224,230,0.7) 0%, rgba(135,206,235,0.5) 50%, rgba(70,130,180,0.7) 100%); border-radius: 50% 50% 0 0; animation: wave2 3s ease-in-out infinite reverse;"></div>
+
+                        <!-- Seagulls -->
+                        <div style="position: absolute; top: 30%; left: 30%; color: white; font-size: 1.5rem; animation: fly 10s linear infinite;">🕊️</div>
+                    </div>
+
+                    <!-- Mountain Background -->
+                    <div class="mountain-bg" id="mountainBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
+                        background:
+                            linear-gradient(135deg, #4169E1 0%, #9370DB 30%, #8B4513 70%, #2F4F4F 100%);
+                        animation: mountainMist 10s ease-in-out infinite;
+                    ">
+                        <!-- Mountain peaks -->
+                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 4rem; color: #696969; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰️</div>
+                        <div style="position: absolute; bottom: 20%; right: 20%; font-size: 3.5rem; color: #808080; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🏔️</div>
+
+                        <!-- Stars -->
+                        <div style="position: absolute; top: 20%; left: 20%; color: white; font-size: 1rem; animation: twinkle 2s ease-in-out infinite;">✨</div>
+                        <div style="position: absolute; top: 15%; right: 30%; color: white; font-size: 0.8rem; animation: twinkle 3s ease-in-out infinite reverse;">⭐</div>
+                    </div>
+                </div>
+
+                <div class="meditation-controls" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+                    <button onclick="changeMeditationBg('nature')" class="bg-btn active" data-bg="nature" style="
+                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
+                        background: linear-gradient(45deg, #32CD32, #98FB98); color: white;
+                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(50,205,50,0.3);
+                    ">🌿 Forest</button>
+                    <button onclick="changeMeditationBg('ocean')" class="bg-btn" data-bg="ocean" style="
+                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
+                        background: linear-gradient(45deg, #4682B4, #87CEEB); color: white;
+                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(70,130,180,0.3);
+                    ">🌊 Ocean</button>
+                    <button onclick="changeMeditationBg('mountain')" class="bg-btn" data-bg="mountain" style="
+                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
+                        background: linear-gradient(45deg, #4169E1, #9370DB); color: white;
+                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(65,105,225,0.3);
+                    ">🏔️ Mountain</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Enhanced Pomodoro Timer</h3>
+                <div class="timer-circle">
+                    <svg>
+                        <circle cx="100" cy="100" r="90" class="timer-bg" stroke-dasharray="565" stroke-dashoffset="0"></circle>
+                        <circle cx="100" cy="100" r="90" class="timer-progress" stroke-dasharray="565" stroke-dashoffset="565" id="timerProgress"></circle>
+                    </svg>
+                    <div class="timer-text" id="timerText">25:00</div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="btn btn-focus" onclick="startFocusSession()">
+                        <i class="fas fa-play"></i>
+                        Begin Focus Session
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🧘‍♀️ Meditation Techniques</h3>
+                <div class="meditation-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+
+                    <div class="meditation-card" onclick="startMeditation('breathwork')" style="
+                        background: linear-gradient(135deg, rgba(255,182,193,0.8), rgba(255,218,185,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(255,182,193,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="breathing-animation" style="
+                            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                            width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.7);
+                            border-radius: 50%; animation: breathingPulse 4s ease-in-out infinite;
+                        "></div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #8B4513;">🫁 Breathwork</h4>
+                        <p style="text-align: center; color: #654321; font-size: 0.9rem;">4-7-8 breathing technique for relaxation</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">5-15 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('bodyscan')" style="
+                        background: linear-gradient(135deg, rgba(173,216,230,0.8), rgba(175,238,238,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(173,216,230,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="body-scan-animation" style="
+                            position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+                            width: 30px; height: 80px; background: linear-gradient(180deg, rgba(255,255,255,0.8), transparent);
+                            animation: bodyScanMove 3s ease-in-out infinite;
+                        "></div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #4682B4;">🧘‍♂️ Body Scan</h4>
+                        <p style="text-align: center; color: #2F4F4F; font-size: 0.9rem;">Progressive muscle relaxation</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">10-20 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('mindfulness')" style="
+                        background: linear-gradient(135deg, rgba(221,160,221,0.8), rgba(238,130,238,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(221,160,221,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="mindfulness-ripple" style="
+                            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                            width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.6);
+                            border-radius: 50%; animation: rippleEffect 3s ease-out infinite;
+                        "></div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #8B008B;">🌸 Mindfulness</h4>
+                        <p style="text-align: center; color: #663366; font-size: 0.9rem;">Present moment awareness practice</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">5-30 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('visualization')" style="
+                        background: linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,228,181,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(255,215,0,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="visualization-glow" style="
+                            position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
+                            width: 50px; height: 30px; background: radial-gradient(circle, rgba(255,255,255,0.8), transparent);
+                            border-radius: 50%; animation: glowPulse 2s ease-in-out infinite;
+                        "></div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #B8860B;">✨ Visualization</h4>
+                        <p style="text-align: center; color: #8B7500; font-size: 0.9rem;">Guided imagery for peace</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">10-25 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('lovingkindness')" style="
+                        background: linear-gradient(135deg, rgba(255,192,203,0.8), rgba(255,182,193,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(255,192,203,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="heart-pulse" style="
+                            position: absolute; top: 40%; left: 50%; transform: translateX(-50%);
+                            font-size: 2rem; color: rgba(255,255,255,0.8); animation: heartBeat 1.5s ease-in-out infinite;
+                        ">💖</div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #C71585;">💝 Loving Kindness</h4>
+                        <p style="text-align: center; color: #8B1538; font-size: 0.9rem;">Compassion and self-love practice</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">15-30 minutes</div>
+                    </div>
+
+                    <div class="meditation-card" onclick="startMeditation('walking')" style="
+                        background: linear-gradient(135deg, rgba(152,251,152,0.8), rgba(144,238,144,0.8));
+                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+                        border: 2px solid rgba(152,251,152,0.5); position: relative; overflow: hidden;
+                    ">
+                        <div class="walking-steps" style="
+                            position: absolute; top: 50%; left: 20%;
+                            color: rgba(255,255,255,0.8); font-size: 1.5rem; animation: walkingMotion 2s ease-in-out infinite;
+                        ">👣</div>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">🚶‍♀️ Walking</h4>
+                        <p style="text-align: center; color: #006400; font-size: 0.9rem;">Mindful movement meditation</p>
+                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">Any duration</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="card enhanced-focus-card" onclick="selectFocusMode('deep')" style="
+                    background: linear-gradient(135deg, rgba(139,69,19,0.1), rgba(160,82,45,0.1));
+                    border: 2px solid rgba(139,69,19,0.3);
+                ">
+                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">🔥</div>
+                    <h4>Deep Work</h4>
+                    <p>Intensive 50-minute sessions for complex tasks</p>
+                </div>
+                <div class="card enhanced-focus-card" onclick="selectFocusMode('light')" style="
+                    background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,228,181,0.1));
+                    border: 2px solid rgba(255,215,0,0.3);
+                ">
+                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">✨</div>
+                    <h4>Light Focus</h4>
+                    <p>25-minute sessions for routine activities</p>
+                </div>
+                <div class="card enhanced-focus-card" onclick="selectFocusMode('relax')" style="
+                    background: linear-gradient(135deg, rgba(173,216,230,0.1), rgba(175,238,238,0.1));
+                    border: 2px solid rgba(173,216,230,0.3);
+                ">
+                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">🌸</div>
+                    <h4>Relax Mode</h4>
+                    <p>Gentle background ambience for calm focus</p>
+                </div>
+            </div>
+
+            <div class="quote-container">
+                <div class="quote-text" id="motivationalQuote">
+                    "The successful warrior is the average person with laser-like focus."
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Current Streak</h3>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; font-weight: 700; color: var(--focus-color); text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">5</div>
+                    <div style="color: var(--gray-medium);">Days of consistent focus training</div>
                 </div>
             </div>
         </div>
     </div>
 
+
+    <!-- Modals -->
+    <div class="modal" id="brainScanModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('brainScanModal')">&times;</button>
+            <h3>Brain Scan Analysis</h3>
+            <div class="eeg-container">
+                <div class="eeg-wave growing"></div>
+            </div>
+            <div id="analysisText" class="typewriter" style="margin-top: 1rem;">
+                Analyzing neural patterns...
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="challengeModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('challengeModal')">&times;</button>
+            <h3 id="challengeTitle">Challenge Rules</h3>
+            <div id="challengeContent">
+                <p>Complete the memory sequence as quickly as possible. You'll see a pattern of lights - repeat the sequence in the same order.</p>
+                <div style="margin: 2rem 0;">
+                    <strong>Instructions:</strong>
+                    <ul style="margin-left: 2rem; margin-top: 1rem;">
+                        <li>Watch the sequence carefully</li>
+                        <li>Wait for the "GO" signal</li>
+                        <li>Click the squares in the same order</li>
+                        <li>Try to beat your best time!</li>
+                    </ul>
+                </div>
+                <button class="btn btn-challenges" onclick="startChallenge()">
+                    <i class="fas fa-play"></i>
+                    Start Challenge
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="leaderboardModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('leaderboardModal')">&times;</button>
+            <h3>Global Leaderboard</h3>
+            <div style="margin: 1rem 0;">
+                <div style="display: flex; justify-content: space-between; padding: 1rem; background: var(--challenges-color); border-radius: 8px; margin-bottom: 0.5rem;">
+                    <span><i class="fas fa-trophy" style="color: gold;"></i> Alex_Neuro</span>
+                    <span>2,847 pts</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 1rem; background: rgba(0,0,0,0.05); border-radius: 8px; margin-bottom: 0.5rem;">
+                    <span><i class="fas fa-medal" style="color: silver;"></i> BrainMaster</span>
+                    <span>2,634 pts</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 1rem; background: rgba(0,0,0,0.05); border-radius: 8px; margin-bottom: 0.5rem;">
+                    <span><i class="fas fa-medal" style="color: #cd7f32;"></i> NeuroNinja</span>
+                    <span>2,521 pts</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 1rem; background: var(--focus-color); border-radius: 8px; margin-bottom: 0.5rem;">
+                    <span><strong>You</strong></span>
+                    <span><strong>2,340 pts</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="sleepHistoryModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('sleepHistoryModal')">&times;</button>
+            <h3>Sleep History</h3>
+            <div class="chart-placeholder" style="height: 250px;">
+                <i class="fas fa-chart-area" style="font-size: 2rem; margin-right: 1rem;"></i>
+                7-Day Sleep Pattern Analysis
+            </div>
+            <div style="margin-top: 1rem;">
+                <p><strong>Average Sleep Duration:</strong> 7.5 hours</p>
+                <p><strong>Sleep Efficiency:</strong> 89%</p>
+                <p><strong>Best Night:</strong> Tuesday (9.2 hours)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="brainInfoModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('brainInfoModal')">&times;</button>
+            <h3 id="brainRegionTitle">Brain Region</h3>
+            <div id="brainRegionContent">
+                Information about the selected brain region will appear here.
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Challenge Joined!</div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const app = {
-                state: { gameRunning: false, gameTimer: null, timeLeft: 30, moves: 0, flippedCards: [], matchedPairs: 0, soundEnabled: false },
-                scores: { cognitive: 50, focus: 50, memory: 50, resilience: 50 },
-                charts: {},
-                sfx: {},
-                methods: {
-                    playSound(sound) {
-                        if (!app.state.soundEnabled || !app.sfx[sound]) return;
-                        app.sfx[sound].currentTime = 0;
-                        app.sfx[sound].play();
-                    },
+        // Global variables
+        let activeTab = 'home';
+        let focusTimer = null;
+        let focusTime = 25 * 60;
+        let isTimerRunning = false;
 
-                    updateCognitiveScore(focusChange = 0, memoryChange = 0, resilienceChange = 0) {
-                        const clamp = (val) => Math.max(0, Math.min(100, val));
-                        app.scores.focus = clamp(app.scores.focus + focusChange);
-                        app.scores.memory = clamp(app.scores.memory + memoryChange);
-                        app.scores.resilience = clamp(app.scores.resilience + resilienceChange);
-                        app.scores.cognitive = Math.round(app.scores.focus * 0.4 + app.scores.memory * 0.4 + app.scores.resilience * 0.2);
-                        
-                        app.charts.cognitiveGauge.data.datasets[0].value = app.scores.cognitive;
-                        app.charts.cognitiveGauge.update();
-                        document.getElementById('focus-score-bar').style.width = `${app.scores.focus}%`;
-                        document.getElementById('memory-score-bar').style.width = `${app.scores.memory}%`;
-                        document.getElementById('resilience-score-bar').style.width = `${app.scores.resilience}%`;
-                        
-                        app.methods.checkScoresForCoach();
-                    },
+        // WORKING CHALLENGE FUNCTIONS
+        function openChallenge(type) {
+            console.log('Opening challenge:', type);
+            alert('Opening ' + type + ' challenge!');
 
-                    checkScoresForCoach() {
-                        if (app.scores.focus < 40) app.methods.updateCoach("Your focus seems low. Try the Logical Deduction puzzle to sharpen it!", "🧩");
-                        else if (app.scores.memory < 40) app.methods.updateCoach("Your memory score could use a boost. Play a round of Synaptic Pathway!", "🧠");
-                        else if (app.scores.resilience < 40) app.methods.updateCoach("Feeling a bit down? Logging your mood can help track patterns and build resilience.", "😊");
-                    },
-                    
-                    updateCoach(text, icon = '💡') {
-                        document.getElementById('coach-tip').textContent = text;
-                        document.getElementById('coach-icon').textContent = icon;
-                        app.methods.playSound('notify');
-                    },
+            const modal = document.getElementById('challengeModal');
+            const title = document.getElementById('challengeTitle');
+            const content = document.getElementById('challengeContent');
 
-                    logMoodAndPerformance(mood) {
-                        app.methods.playSound('success');
-                        const score = app.scores.cognitive;
-                        const chart = app.charts.moodPerformance;
-                        chart.data.labels.push(mood);
-                        chart.data.datasets[0].data.push(score);
-                        chart.update();
+            if (modal && title && content) {
+                const challenges = {
+                    memory: "🧠 Memory Match Challenge",
+                    speed: "⚡ Speed Processing Challenge",
+                    logic: "🧩 Logic Puzzle Challenge"
+                };
 
-                        let resilienceChange = 0;
-                        if(mood === 'Happy') resilienceChange = 5;
-                        if(mood === 'Tired' || mood === 'Stressed') resilienceChange = -5;
-                        app.methods.updateCognitiveScore(0, 0, resilienceChange);
-                        
-                        app.methods.updateCoach(`Mood logged as ${mood}. Tracking this helps build self-awareness.`);
-                    },
-                    
-                    startGame() {
-                        if(app.state.gameRunning) return;
-                        app.methods.playSound('click');
-                        app.state = {...app.state, gameRunning: true, timeLeft: 30, moves: 0, flippedCards: [], matchedPairs: 0};
-                        
-                        document.getElementById('game-time').textContent = app.state.timeLeft;
-                        document.getElementById('game-moves').textContent = app.state.moves;
-                        document.getElementById('memory-game-overlay').style.display = 'none';
+                title.textContent = challenges[type] || "Challenge";
+                content.innerHTML = `
+                    <p>Ready to start the ${type} challenge?</p>
+                    <button class="btn btn-challenges" onclick="startChallenge('${type}')">
+                        <i class="fas fa-play"></i> Start Challenge
+                    </button>
+                `;
+                modal.classList.add('active');
+            }
+        }
 
-                        const ICONS = ['⚛️', '🧠', '🧪', '🧬', '🔬', '🛰️', '🚀', '🤖'];
-                        const gameIcons = [...ICONS, ...ICONS].sort(() => 0.5 - Math.random());
-                        const board = document.getElementById('memory-game-board');
-                        board.innerHTML = '';
-                        gameIcons.forEach(icon => {
-                            const card = document.createElement('div');
-                            card.className = 'memory-card';
-                            card.dataset.icon = icon;
-                            card.innerHTML = `<div class="memory-card-face memory-card-front"></div><div class="memory-card-face memory-card-back">${icon}</div>`;
-                            card.addEventListener('click', app.methods.onCardClick);
-                            board.appendChild(card);
-                        });
+        function startChallenge(type) {
+            console.log('Starting challenge:', type);
+            closeModal('challengeModal');
 
-                        app.state.gameTimer = setInterval(() => {
-                            app.state.timeLeft--;
-                            document.getElementById('game-time').textContent = app.state.timeLeft;
-                            if(app.state.timeLeft <= 0) app.methods.endGame(false);
-                        }, 1000);
-                    },
+            // Create fullscreen game interface
+            const gameContainer = document.createElement('div');
+            gameContainer.id = 'gameContainer';
+            gameContainer.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                z-index: 2000; display: flex; flex-direction: column;
+                align-items: center; justify-content: center; color: white;
+                animation: fadeIn 0.5s ease;
+            `;
 
-                    onCardClick(e) {
-                        const clickedCard = e.currentTarget;
-                        if (app.state.flippedCards.length >= 2 || clickedCard.classList.contains('is-flipped')) return;
-                        
-                        app.methods.playSound('click');
-                        clickedCard.classList.add('is-flipped');
-                        app.state.flippedCards.push(clickedCard);
-                        
-                        if(app.state.flippedCards.length === 2) {
-                            app.state.moves++;
-                            document.getElementById('game-moves').textContent = app.state.moves;
-                            setTimeout(app.methods.checkForMatch, 700);
-                        }
-                    },
+            // Add animated video-like background
+            const video = document.createElement('div');
+            video.style.cssText = `
+                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background:
+                    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(120, 255, 198, 0.3) 0%, transparent 50%),
+                    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                opacity: 0.9;
+                animation: backgroundMove 10s ease-in-out infinite;
+            `;
 
-                    checkForMatch() {
-                        const [card1, card2] = app.state.flippedCards;
-                        if(card1.dataset.icon === card2.dataset.icon) {
-                            card1.classList.add('is-matched');
-                            card2.classList.add('is-matched');
-                            app.state.matchedPairs++;
-                            if(app.state.matchedPairs === 8) app.methods.endGame(true);
-                        } else {
-                            card1.classList.remove('is-flipped');
-                            card2.classList.remove('is-flipped');
-                        }
-                        app.state.flippedCards = [];
-                    },
+            // Add floating particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute; width: 4px; height: 4px;
+                    background: rgba(255,255,255,0.6); border-radius: 50%;
+                    left: ${Math.random() * 100}%; top: ${Math.random() * 100}%;
+                    animation: float ${3 + Math.random() * 4}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 2}s;
+                `;
+                video.appendChild(particle);
+            }
 
-                    endGame(won) {
-                        clearInterval(app.state.gameTimer);
-                        app.state.gameRunning = false;
-                        document.getElementById('memory-game-overlay').style.display = 'flex';
-                        const title = document.getElementById('game-over-title');
-                        
-                        if(won) {
-                            app.methods.playSound('win');
-                            title.textContent = "Victory!";
-                            app.methods.updateCognitiveScore(0, 15, 0);
-                            app.methods.updateCoach("Excellent work! Your memory score has increased significantly.", "🏆");
-                        } else {
-                            app.methods.playSound('lose');
-                            title.textContent = "Time's Up!";
-                            app.methods.updateCognitiveScore(0, -5, 0);
-                        }
+            gameContainer.appendChild(video);
+
+            // Add dynamic floating animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes backgroundMove {
+                    0%, 100% {
+                        background-position: 0% 50%, 100% 50%, 50% 0%, 0% 0%;
                     }
+                    50% {
+                        background-position: 100% 50%, 0% 50%, 50% 100%, 100% 100%;
+                    }
+                }
+                @keyframes float {
+                    0%, 100% {
+                        transform: translateY(0px) rotate(0deg);
+                        opacity: 0.6;
+                    }
+                    50% {
+                        transform: translateY(-20px) rotate(180deg);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Game content
+            const gameContent = document.createElement('div');
+            gameContent.style.cssText = `
+                position: relative; z-index: 10; text-align: center;
+                max-width: 800px; padding: 2rem;
+            `;
+
+            if (type === 'memory') {
+                startMemoryGame(gameContent);
+            } else if (type === 'speed') {
+                startSpeedGame(gameContent);
+            } else if (type === 'logic') {
+                startLogicGame(gameContent);
+            }
+
+            // Close button
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '✕ Exit Game';
+            closeBtn.style.cssText = `
+                position: absolute; top: 2rem; right: 2rem;
+                background: rgba(255,255,255,0.2); color: white;
+                border: 2px solid white; padding: 1rem 2rem;
+                border-radius: 12px; cursor: pointer; font-size: 1rem;
+                transition: all 0.3s ease;
+            `;
+            closeBtn.onmouseover = () => closeBtn.style.background = 'rgba(255,255,255,0.3)';
+            closeBtn.onmouseout = () => closeBtn.style.background = 'rgba(255,255,255,0.2)';
+            closeBtn.onclick = () => {
+                document.body.removeChild(gameContainer);
+                showToast("Game exited");
+            };
+
+            gameContainer.appendChild(gameContent);
+            gameContainer.appendChild(closeBtn);
+            document.body.appendChild(gameContainer);
+        }
+
+        function startMemoryGame(container) {
+            container.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    🧠 Memory Challenge
+                </h1>
+                <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+                    Watch the sequence, then repeat it!
+                </p>
+                <div id="memoryGrid" style="
+                    display: grid; grid-template-columns: repeat(3, 1fr);
+                    gap: 1rem; max-width: 300px; margin: 0 auto 3rem;
+                "></div>
+                <div id="memoryStatus" style="font-size: 1.5rem; margin-bottom: 2rem;">
+                    Get ready...
+                </div>
+                <button id="memoryStart" style="
+                    background: linear-gradient(45deg, #ff6b6b, #ffa500);
+                    color: white; border: none; padding: 1rem 3rem;
+                    border-radius: 12px; font-size: 1.3rem; cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    transition: transform 0.2s ease;
+                " onmouseover="this.style.transform='scale(1.05)'"
+                   onmouseout="this.style.transform='scale(1)'">
+                    🚀 Start Game
+                </button>
+            `;
+
+            let sequence = [];
+            let playerSequence = [];
+            let level = 1;
+            let showingSequence = false;
+
+            // Create grid
+            const grid = container.querySelector('#memoryGrid');
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.style.cssText = `
+                    width: 80px; height: 80px; background: rgba(255,255,255,0.3);
+                    border-radius: 12px; cursor: pointer; display: flex;
+                    align-items: center; justify-content: center; font-size: 2rem;
+                    transition: all 0.3s ease; border: 2px solid transparent;
+                `;
+                cell.dataset.index = i;
+                cell.onclick = () => {
+                    if (!showingSequence) {
+                        playerSequence.push(i);
+                        cell.style.background = 'rgba(0,255,0,0.8)';
+                        setTimeout(() => cell.style.background = 'rgba(255,255,255,0.3)', 200);
+                        checkSequence();
+                    }
+                };
+                grid.appendChild(cell);
+            }
+
+            container.querySelector('#memoryStart').onclick = startRound;
+
+            function startRound() {
+                sequence = [];
+                playerSequence = [];
+                for (let i = 0; i < level + 2; i++) {
+                    sequence.push(Math.floor(Math.random() * 9));
+                }
+                showSequence();
+            }
+
+            function showSequence() {
+                showingSequence = true;
+                container.querySelector('#memoryStatus').textContent = `Level ${level} - Watch carefully!`;
+                container.querySelector('#memoryStart').style.display = 'none';
+
+                sequence.forEach((cellIndex, i) => {
+                    setTimeout(() => {
+                        const cell = grid.children[cellIndex];
+                        cell.style.background = 'rgba(255,255,0,0.9)';
+                        cell.style.transform = 'scale(1.1)';
+                        setTimeout(() => {
+                            cell.style.background = 'rgba(255,255,255,0.3)';
+                            cell.style.transform = 'scale(1)';
+                        }, 400);
+
+                        if (i === sequence.length - 1) {
+                            setTimeout(() => {
+                                showingSequence = false;
+                                container.querySelector('#memoryStatus').textContent = 'Now repeat the sequence!';
+                            }, 600);
+                        }
+                    }, i * 600);
+                });
+            }
+
+            function checkSequence() {
+                const currentIndex = playerSequence.length - 1;
+                if (playerSequence[currentIndex] !== sequence[currentIndex]) {
+                    container.querySelector('#memoryStatus').innerHTML = `
+                        ❌ Wrong! Final Score: Level ${level}<br>
+                        <button onclick="location.reload()" style="
+                            background: #ff4757; color: white; border: none;
+                            padding: 1rem 2rem; border-radius: 8px; margin-top: 1rem;
+                            cursor: pointer;
+                        ">Try Again</button>
+                    `;
+                    createConfetti();
+                    return;
+                }
+
+                if (playerSequence.length === sequence.length) {
+                    level++;
+                    container.querySelector('#memoryStatus').innerHTML = `
+                        ✅ Correct! Level ${level} unlocked!<br>
+                        <button onclick="startRound()" style="
+                            background: #2ed573; color: white; border: none;
+                            padding: 1rem 2rem; border-radius: 8px; margin-top: 1rem;
+                            cursor: pointer;
+                        ">Next Level</button>
+                    `;
+
+                    setTimeout(() => {
+                        container.querySelector('#memoryStart').style.display = 'inline-block';
+                        container.querySelector('#memoryStart').textContent = `Level ${level}`;
+                        container.querySelector('#memoryStart').onclick = startRound;
+                    }, 2000);
+                }
+            }
+        }
+
+        function startSpeedGame(container) {
+            container.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    ⚡ Speed Challenge
+                </h1>
+                <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">
+                    Click the targets as fast as you can!
+                </p>
+                <div id="speedStats" style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold;">0</div>
+                        <div style="opacity: 0.8;">Score</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold;">30</div>
+                        <div style="opacity: 0.8;">Time</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold;">0ms</div>
+                        <div style="opacity: 0.8;">Avg Time</div>
+                    </div>
+                </div>
+                <div id="speedGame" style="
+                    position: relative; width: 500px; height: 400px;
+                    background: rgba(0,0,0,0.3); border-radius: 20px;
+                    margin: 0 auto 3rem; overflow: hidden;
+                    border: 3px solid rgba(255,255,255,0.3);
+                "></div>
+                <button id="speedStart" style="
+                    background: linear-gradient(45deg, #ffa500, #ff6b6b);
+                    color: white; border: none; padding: 1rem 3rem;
+                    border-radius: 12px; font-size: 1.3rem; cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                ">⚡ Start Speed Test</button>
+            `;
+
+            let score = 0;
+            let timeLeft = 30;
+            let gameActive = false;
+            let reactionTimes = [];
+            let targetStartTime = 0;
+
+            const gameArea = container.querySelector('#speedGame');
+            const startBtn = container.querySelector('#speedStart');
+            const stats = container.querySelector('#speedStats').children;
+
+            startBtn.onclick = startSpeedTest;
+
+            function startSpeedTest() {
+                gameActive = true;
+                score = 0;
+                timeLeft = 30;
+                reactionTimes = [];
+                startBtn.style.display = 'none';
+
+                const timer = setInterval(() => {
+                    timeLeft--;
+                    stats[1].firstElementChild.textContent = timeLeft;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        endGame();
+                    }
+                }, 1000);
+
+                spawnTarget();
+            }
+
+            function spawnTarget() {
+                if (!gameActive) return;
+
+                const target = document.createElement('div');
+                target.style.cssText = `
+                    position: absolute; width: 60px; height: 60px;
+                    background: radial-gradient(circle, #ff6b6b, #ff4757);
+                    border-radius: 50%; cursor: pointer;
+                    box-shadow: 0 0 20px rgba(255,107,107,0.6);
+                    animation: targetPulse 0.5s ease-in-out infinite alternate;
+                    border: 3px solid white;
+                `;
+
+                target.style.left = Math.random() * (gameArea.offsetWidth - 60) + 'px';
+                target.style.top = Math.random() * (gameArea.offsetHeight - 60) + 'px';
+
+                targetStartTime = Date.now();
+
+                target.onclick = () => {
+                    const reactionTime = Date.now() - targetStartTime;
+                    reactionTimes.push(reactionTime);
+                    score++;
+
+                    // Update stats
+                    stats[0].firstElementChild.textContent = score;
+                    const avgTime = reactionTimes.reduce((a, b) => a + b) / reactionTimes.length;
+                    stats[2].firstElementChild.textContent = Math.round(avgTime) + 'ms';
+
+                    target.remove();
+
+                    // Spawn next target
+                    setTimeout(() => spawnTarget(), Math.random() * 1000 + 500);
+                };
+
+                gameArea.appendChild(target);
+
+                // Remove target if not clicked in time
+                setTimeout(() => {
+                    if (target.parentNode) {
+                        target.remove();
+                        setTimeout(() => spawnTarget(), 500);
+                    }
+                }, 3000);
+            }
+
+            function endGame() {
+                gameActive = false;
+                gameArea.innerHTML = `
+                    <div style="
+                        display: flex; flex-direction: column; align-items: center;
+                        justify-content: center; height: 100%; font-size: 1.5rem;
+                    ">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                        <div>Final Score: ${score}</div>
+                        <div style="font-size: 1rem; margin-top: 1rem; opacity: 0.8;">
+                            Average Reaction: ${reactionTimes.length ? Math.round(reactionTimes.reduce((a, b) => a + b) / reactionTimes.length) : 0}ms
+                        </div>
+                    </div>
+                `;
+                createConfetti();
+            }
+        }
+
+        function startLogicGame(container) {
+            container.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    🧩 Logic Challenge
+                </h1>
+                <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">
+                    Solve the pattern puzzles!
+                </p>
+                <div id="logicPuzzle" style="
+                    background: rgba(255,255,255,0.1); border-radius: 20px;
+                    padding: 3rem; margin: 0 auto 3rem; max-width: 600px;
+                    border: 2px solid rgba(255,255,255,0.3);
+                "></div>
+                <div id="logicOptions" style="
+                    display: grid; grid-template-columns: repeat(4, 1fr);
+                    gap: 1rem; max-width: 400px; margin: 0 auto 2rem;
+                "></div>
+                <div id="logicStatus" style="font-size: 1.5rem; margin-bottom: 2rem;">
+                    Find the missing pattern!
+                </div>
+            `;
+
+            let currentPuzzle = 0;
+            let score = 0;
+
+            const puzzles = [
+                {
+                    pattern: ['🔴', '🟡', '🔵', '🔴', '🟡', '?'],
+                    options: ['🔵', '🟢', '🔴', '🟡'],
+                    answer: 0
                 },
-                
-                init() {
-                    if (typeof Chart === 'undefined' || typeof ChartDataLabels === 'undefined') {
-                        document.body.innerHTML = `<div style="text-align:center; padding: 50px; font-size:1.2rem;">
-                            <h1>Error</h1>
-                            <p>Could not load essential chart libraries. Please ensure you have an active internet connection and try reloading the page.</p>
-                        </div>`;
-                        return;
+                {
+                    pattern: ['⭐', '⭐⭐', '⭐⭐⭐', '?'],
+                    options: ['⭐⭐⭐⭐', '⭐', '⭐⭐', '⭐⭐⭐⭐⭐'],
+                    answer: 0
+                },
+                {
+                    pattern: ['🔺', '🔻', '🔺', '🔻', '?'],
+                    options: ['🔺', '🔻', '🔹', '🔸'],
+                    answer: 0
+                }
+            ];
+
+            showPuzzle();
+
+            function showPuzzle() {
+                const puzzle = puzzles[currentPuzzle];
+                const puzzleDiv = container.querySelector('#logicPuzzle');
+                const optionsDiv = container.querySelector('#logicOptions');
+
+                puzzleDiv.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                        ${puzzle.pattern.map(item => `
+                            <div style="
+                                width: 80px; height: 80px; display: flex;
+                                align-items: center; justify-content: center;
+                                font-size: 2rem; background: rgba(255,255,255,0.2);
+                                border-radius: 12px; border: 2px solid rgba(255,255,255,0.4);
+                                ${item === '?' ? 'background: rgba(255,255,0,0.3); animation: pulse 2s infinite;' : ''}
+                            ">${item}</div>
+                        `).join('')}
+                    </div>
+                `;
+
+                optionsDiv.innerHTML = puzzle.options.map((option, index) => `
+                    <div onclick="selectAnswer(${index})" style="
+                        width: 80px; height: 80px; display: flex;
+                        align-items: center; justify-content: center;
+                        font-size: 2rem; background: rgba(255,255,255,0.2);
+                        border-radius: 12px; cursor: pointer;
+                        border: 2px solid rgba(255,255,255,0.4);
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.4)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.2)'">${option}</div>
+                `).join('');
+            }
+
+            window.selectAnswer = function(selectedIndex) {
+                const puzzle = puzzles[currentPuzzle];
+                const statusDiv = container.querySelector('#logicStatus');
+
+                if (selectedIndex === puzzle.answer) {
+                    score++;
+                    currentPuzzle++;
+
+                    if (currentPuzzle < puzzles.length) {
+                        statusDiv.innerHTML = `✅ Correct! Score: ${score}/${puzzles.length}`;
+                        setTimeout(() => {
+                            showPuzzle();
+                            statusDiv.textContent = 'Find the missing pattern!';
+                        }, 2000);
+                    } else {
+                        statusDiv.innerHTML = `
+                            🎉 Puzzle Complete!<br>
+                            Final Score: ${score}/${puzzles.length}<br>
+                            <small style="opacity: 0.8;">You're a logic master!</small>
+                        `;
+                        createConfetti();
                     }
-                    
-                    ['click', 'success', 'notify', 'win', 'lose'].forEach(sfxKey => {
-                        app.sfx[sfxKey] = document.getElementById(`sfx-${sfxKey}`);
-                    });
-                    document.body.addEventListener('click', () => { app.state.soundEnabled = true }, { once: true });
-
-                    Chart.register(ChartDataLabels);
-                    const gaugeCtx = document.getElementById('cognitiveScoreChart').getContext('2d');
-                    app.charts.cognitiveGauge = new Chart(gaugeCtx, {
-                        type: 'doughnut',
-                        data: { datasets: [{ value: app.scores.cognitive, backgroundColor: [var(--primary), var(--glass)], borderWidth: 0, borderRadius: 20 }] },
-                        options: {
-                            circumference: 180, rotation: -90, cutout: '80%',
-                            plugins: { legend: { display: false }, tooltip: { enabled: false }, datalabels: { formatter: (value) => value, color: var(--text), font: { size: 40, weight: 'bold' } } }
-                        }
-                    });
-
-                    const moodPerfCtx = document.getElementById('moodPerformanceChart').getContext('2d');
-                    app.charts.moodPerformance = new Chart(moodPerfCtx, { type: 'line', data: { labels: [], datasets: [{ label: 'Cognitive Score', data: [], borderColor: var(--primary), tension: 0.1 }] }, options: { scales: { y: { beginAtZero: true, max: 100 } } } });
-
-                    document.querySelectorAll('.tab-btn').forEach(tab => tab.addEventListener('click', e => {
-                        app.methods.playSound('click');
-                        document.querySelector('.tab-btn.active').classList.remove('active');
-                        e.currentTarget.classList.add('active');
-                        document.querySelector('.tab-content.active').classList.remove('active');
-                        document.getElementById(e.currentTarget.dataset.tab).classList.add('active');
-                    }));
-
-                    document.querySelectorAll('#deduction-puzzle .option').forEach(btn => btn.addEventListener('click', e => {
-                        app.methods.playSound('click');
-                        const isCorrect = e.currentTarget.dataset.correct === 'true';
-                        document.getElementById('puzzle-feedback').textContent = isCorrect ? 'Correct!' : 'Incorrect.';
-                        document.getElementById('puzzle-feedback').style.color = isCorrect ? 'var(--success)' : 'var(--danger)';
-                        if (isCorrect) {
-                            app.methods.playSound('success');
-                            app.methods.updateCognitiveScore(10, 0, 0);
-                            e.currentTarget.parentNode.style.pointerEvents = 'none';
-                        }
-                    }));
-                    
-                    document.querySelectorAll('#mood-selector .mood-btn').forEach(btn => btn.addEventListener('click', e => {
-                        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected', 'pulse-guide'));
-                        e.currentTarget.classList.add('selected');
-                        app.methods.logMoodAndPerformance(e.currentTarget.dataset.mood);
-                    }));
-
-                    document.getElementById('start-game-btn').addEventListener('click', app.methods.startGame);
-                    document.getElementById('restart-game-btn').addEventListener('click', app.methods.startGame);
-
-                    app.methods.updateCognitiveScore();
-                    document.querySelector('#mood-selector .mood-btn').classList.add('pulse-guide');
+                } else {
+                    statusDiv.innerHTML = `❌ Wrong answer! Score: ${score}/${puzzles.length}`;
+                    setTimeout(() => {
+                        statusDiv.textContent = 'Try again!';
+                    }, 2000);
                 }
             };
-            
-            app.init();
+        }
+
+        function joinChallenge() {
+            console.log('Joining challenge');
+            alert('Challenge joined!');
+            createConfetti();
+            showToast("🎉 Challenge Joined!");
+        }
+
+        function showLeaderboard() {
+            console.log('Showing leaderboard');
+            alert('Opening leaderboard!');
+            const modal = document.getElementById('leaderboardModal');
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        function showToast(message) {
+            let toast = document.getElementById('toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast';
+                toast.style.cssText = `
+                    position: fixed; top: 150px; right: 2rem;
+                    background: #FBC4AB; color: #2d2d2d;
+                    padding: 1rem 2rem; border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                    z-index: 1001; transform: translateX(100%);
+                    transition: transform 0.3s ease;
+                `;
+                document.body.appendChild(toast);
+            }
+
+            toast.textContent = message;
+            toast.style.transform = 'translateX(0)';
+
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+            }, 3000);
+        }
+
+        function createConfetti() {
+            // Create celebration burst
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#a0e7e5'];
+                    const shapes = ['●', '▲', '■', '♦', '★', '♥'];
+
+                    confetti.style.cssText = `
+                        position: fixed; width: 15px; height: 15px;
+                        color: ${colors[Math.floor(Math.random() * colors.length)]};
+                        font-size: ${10 + Math.random() * 10}px; z-index: 999;
+                        left: ${Math.random() * 100}vw; top: -20px;
+                        animation: confettiFall ${2 + Math.random() * 2}s linear forwards;
+                        pointer-events: none; font-weight: bold;
+                    `;
+                    confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+
+            // Add screen flash effect
+            const flash = document.createElement('div');
+            flash.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+                z-index: 998; pointer-events: none;
+                animation: flash 0.5s ease-out;
+            `;
+            document.body.appendChild(flash);
+            setTimeout(() => flash.remove(), 500);
+
+            // Simulate sound effect with visual feedback
+            showSoundEffect('🎉 SUCCESS!');
+        }
+
+        function showSoundEffect(text) {
+            const soundEffect = document.createElement('div');
+            soundEffect.style.cssText = `
+                position: fixed; top: 50%; left: 50%;
+                transform: translate(-50%, -50%); z-index: 1000;
+                font-size: 3rem; font-weight: bold; color: #ffd700;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+                animation: soundBurst 1s ease-out forwards;
+                pointer-events: none;
+            `;
+            soundEffect.textContent = text;
+            document.body.appendChild(soundEffect);
+
+            setTimeout(() => soundEffect.remove(), 1000);
+
+            // Add sound wave rings
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const ring = document.createElement('div');
+                    ring.style.cssText = `
+                        position: fixed; top: 50%; left: 50%;
+                        transform: translate(-50%, -50%); z-index: 999;
+                        width: 100px; height: 100px; border-radius: 50%;
+                        border: 3px solid rgba(255,215,0,0.6);
+                        animation: soundWave 1s ease-out forwards;
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(ring);
+                    setTimeout(() => ring.remove(), 1000);
+                }, i * 200);
+            }
+        }
+
+        // Add more animation styles
+        const gameStyles = document.createElement('style');
+        gameStyles.textContent = `
+            @keyframes flash {
+                0% { opacity: 0; }
+                50% { opacity: 1; }
+                100% { opacity: 0; }
+            }
+            @keyframes soundBurst {
+                0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+                50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+                100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+            }
+            @keyframes soundWave {
+                0% {
+                    width: 100px; height: 100px;
+                    border-width: 3px; opacity: 0.6;
+                }
+                100% {
+                    width: 300px; height: 300px;
+                    border-width: 1px; opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(gameStyles);
+
+        function navigateToPage(page) {
+            console.log('Navigating to:', page);
+
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+            const targetTab = document.querySelector(`.nav-tab[data-page="${page}"]`);
+            const targetPage = document.getElementById(page);
+
+            if (targetTab && targetPage) {
+                targetTab.classList.add('active');
+                targetPage.classList.add('active');
+
+                const bg = document.getElementById('animatedBg');
+                if (bg) bg.className = `animated-bg bg-${page}`;
+
+                activeTab = page;
+                showToast(`Switched to ${page.charAt(0).toUpperCase() + page.slice(1)}`);
+            }
+        }
+
+        // Make all functions globally available
+        window.openChallenge = openChallenge;
+        window.startChallenge = startChallenge;
+        window.joinChallenge = joinChallenge;
+        window.showLeaderboard = showLeaderboard;
+        window.closeModal = closeModal;
+        window.showToast = showToast;
+        window.createConfetti = createConfetti;
+        window.navigateToPage = navigateToPage;
+
+        // Additional functions
+        function startBrainScan() {
+            console.log('Starting brain scan');
+            alert('Brain scan started!');
+            const modal = document.getElementById('brainScanModal');
+            if (modal) {
+                modal.classList.add('active');
+                showToast("🧠 Brain scan initiated!");
+            }
+        }
+
+        function trackSleep() {
+            console.log('Tracking sleep');
+            alert('Sleep tracking started!');
+            showToast("🌙 Sleep tracking started...");
+        }
+
+        function startFocusSession() {
+            console.log('Starting focus session');
+            alert('Focus session started!');
+            showToast("🎯 Focus session started!");
+        }
+
+        function selectFocusMode(mode) {
+            console.log('Focus mode:', mode);
+            alert('Focus mode: ' + mode);
+            showToast(`🎯 ${mode} mode activated`);
+        }
+
+        function expandSleepTips() {
+            console.log('Expanding sleep tips');
+            alert('Sleep tips expanded!');
+            showToast("💡 Sleep tips expanded!");
+        }
+
+        function closeSleepTips(button) {
+            console.log('Closing sleep tips');
+            if (button?.parentElement) {
+                button.parentElement.innerHTML = '<div style="cursor: pointer;" onclick="expandSleepTips()"><p><i class="fas fa-lightbulb"></i> Click to view personalized sleep tips</p></div>';
+            }
+        }
+
+        function viewSleepHistory() {
+            console.log('Viewing sleep history');
+            alert('Sleep history opened!');
+            const modal = document.getElementById('sleepHistoryModal');
+            if (modal) modal.classList.add('active');
+        }
+
+        function showBrainInfo(region) {
+            console.log('Brain info:', region);
+            alert('Brain info: ' + region);
+            const modal = document.getElementById('brainInfoModal');
+            if (modal) modal.classList.add('active');
+        }
+
+        // Meditation Functions
+        function changeMeditationBg(bgType) {
+            console.log('Changing meditation background to:', bgType);
+
+            // Hide all backgrounds
+            const backgrounds = ['natureBg', 'oceanBg', 'mountainBg'];
+            backgrounds.forEach(bgId => {
+                const bg = document.getElementById(bgId);
+                if (bg) bg.style.display = 'none';
+            });
+
+            // Show selected background
+            const selectedBg = document.getElementById(bgType + 'Bg');
+            if (selectedBg) selectedBg.style.display = 'block';
+
+            // Update button states
+            document.querySelectorAll('.bg-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.bg === bgType) btn.classList.add('active');
+            });
+
+            showToast(`🌟 ${bgType.charAt(0).toUpperCase() + bgType.slice(1)} background activated`);
+        }
+
+        function startMeditation(technique) {
+            console.log('Starting meditation:', technique);
+
+            // Create fullscreen meditation interface
+            const meditationContainer = document.createElement('div');
+            meditationContainer.id = 'meditationContainer';
+            meditationContainer.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                z-index: 2000; display: flex; flex-direction: column;
+                align-items: center; justify-content: center; color: white;
+                animation: fadeIn 1s ease;
+            `;
+
+            const techniques = {
+                breathwork: {
+                    title: '🫁 Breathwork Meditation',
+                    background: 'linear-gradient(135deg, #FF6B6B 0%, #FFB6C1 50%, #FFA07A 100%)',
+                    instructions: [
+                        '🔵 Inhale for 4 counts',
+                        '⏸️ Hold for 7 counts',
+                        '🔴 Exhale for 8 counts',
+                        '🔄 Repeat the cycle'
+                    ]
+                },
+                bodyscan: {
+                    title: '🧘‍♂️ Body Scan Meditation',
+                    background: 'linear-gradient(135deg, #4FC3F7 0%, #81C784 50%, #AED581 100%)',
+                    instructions: [
+                        '🧠 Start with your head',
+                        '👀 Notice any tension',
+                        '⬇️ Move down your body',
+                        '😌 Relax each part'
+                    ]
+                },
+                mindfulness: {
+                    title: '🌸 Mindfulness Meditation',
+                    background: 'linear-gradient(135deg, #BA68C8 0%, #CE93D8 50%, #E1BEE7 100%)',
+                    instructions: [
+                        '🎯 Focus on the present',
+                        '👁️ Observe your thoughts',
+                        '🍃 Let them pass by',
+                        '🧘‍♀️ Return to breath'
+                    ]
+                },
+                visualization: {
+                    title: '✨ Visualization Meditation',
+                    background: 'linear-gradient(135deg, #FFD54F 0%, #FFF176 50%, #FFEB3B 100%)',
+                    instructions: [
+                        '🌅 Imagine a peaceful place',
+                        '👁️ See the details clearly',
+                        '👂 Hear the sounds',
+                        '😊 Feel the serenity'
+                    ]
+                },
+                lovingkindness: {
+                    title: '💝 Loving Kindness Meditation',
+                    background: 'linear-gradient(135deg, #F8BBD9 0%, #FFB6C1 50%, #FFC0CB 100%)',
+                    instructions: [
+                        '💖 Send love to yourself',
+                        '👥 Extend to loved ones',
+                        '🌍 Include all beings',
+                        '☮️ Feel universal love'
+                    ]
+                },
+                walking: {
+                    title: '🚶‍♀️ Walking Meditation',
+                    background: 'linear-gradient(135deg, #81C784 0%, #A5D6A7 50%, #C8E6C9 100%)',
+                    instructions: [
+                        '👣 Feel each step',
+                        '🌬️ Sync with breathing',
+                        '👀 Stay present',
+                        '🧘‍♀️ Move mindfully'
+                    ]
+                }
+            };
+
+            const currentTechnique = techniques[technique];
+            meditationContainer.style.background = currentTechnique.background;
+
+            // Add floating particles for ambiance
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute; width: 3px; height: 3px;
+                    background: rgba(255,255,255,0.7); border-radius: 50%;
+                    left: ${Math.random() * 100}%; top: ${Math.random() * 100}%;
+                    animation: float ${4 + Math.random() * 6}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 3}s;
+                `;
+                meditationContainer.appendChild(particle);
+            }
+
+            // Meditation content
+            const content = document.createElement('div');
+            content.style.cssText = `
+                position: relative; z-index: 10; text-align: center;
+                max-width: 600px; padding: 3rem;
+                background: rgba(255,255,255,0.1); border-radius: 20px;
+                backdrop-filter: blur(20px);
+            `;
+
+            content.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                    ${currentTechnique.title}
+                </h1>
+                <div id="meditationTimer" style="
+                    font-size: 4rem; font-weight: bold; margin: 2rem 0;
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                ">5:00</div>
+                <div id="meditationInstructions" style="
+                    background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 15px; margin: 2rem 0;
+                ">
+                    ${currentTechnique.instructions.map(instruction => `
+                        <div style="margin: 1rem 0; font-size: 1.2rem;">${instruction}</div>
+                    `).join('')}
+                </div>
+                <div id="breathingGuide" style="
+                    width: 150px; height: 150px; margin: 2rem auto;
+                    border: 3px solid rgba(255,255,255,0.8); border-radius: 50%;
+                    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+                    animation: ${technique === 'breathwork' ? 'breathingPulse 4s ease-in-out infinite' : 'pulse 3s ease-in-out infinite'};
+                ">
+                    ${technique === 'breathwork' ? '🫁' : '🧘‍♀️'}
+                </div>
+                <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem;">
+                    <button onclick="startMeditationSession('${technique}')" style="
+                        background: rgba(255,255,255,0.3); color: white; border: 2px solid white;
+                        padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.5)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.3)'">
+                        🚀 Start Session
+                    </button>
+                    <button onclick="document.body.removeChild(document.getElementById('meditationContainer'))" style="
+                        background: rgba(255,255,255,0.2); color: white; border: 2px solid white;
+                        padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.4)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                        ✕ Close
+                    </button>
+                </div>
+            `;
+
+            meditationContainer.appendChild(content);
+            document.body.appendChild(meditationContainer);
+
+            showToast(`🧘‍♀️ ${currentTechnique.title} opened`);
+        }
+
+        function startMeditationSession(technique) {
+            console.log('Starting meditation session:', technique);
+            let timeLeft = 300; // 5 minutes
+
+            const timer = document.getElementById('meditationTimer');
+            const instructions = document.getElementById('meditationInstructions');
+
+            instructions.innerHTML = `
+                <div style="font-size: 1.5rem; color: rgba(255,255,255,0.9);">
+                    🧘‍♀️ Session in progress...<br>
+                    <small style="opacity: 0.8;">Focus on your ${technique} practice</small>
+                </div>
+            `;
+
+            const sessionInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(sessionInterval);
+                    instructions.innerHTML = `
+                        <div style="font-size: 1.5rem; color: rgba(255,255,255,0.9);">
+                            ✨ Session Complete! ✨<br>
+                            <small style="opacity: 0.8;">You've completed your ${technique} meditation</small>
+                        </div>
+                    `;
+                    createConfetti();
+                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
+                }
+            }, 1000);
+        }
+
+        // Make all functions global
+        window.startBrainScan = startBrainScan;
+        window.trackSleep = trackSleep;
+        window.startFocusSession = startFocusSession;
+        window.selectFocusMode = selectFocusMode;
+        window.expandSleepTips = expandSleepTips;
+        window.closeSleepTips = closeSleepTips;
+        window.viewSleepHistory = viewSleepHistory;
+        window.showBrainInfo = showBrainInfo;
+        window.changeMeditationBg = changeMeditationBg;
+        window.startMeditation = startMeditation;
+        window.startMeditationSession = startMeditationSession;
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 NeuroX Loading...');
+
+            // Test challenge functions
+            console.log('openChallenge:', typeof window.openChallenge);
+            console.log('startChallenge:', typeof window.startChallenge);
+            console.log('joinChallenge:', typeof window.joinChallenge);
+            console.log('showLeaderboard:', typeof window.showLeaderboard);
+
+            // Close modals when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.classList.remove('active');
+                }
+            });
+
+            setTimeout(function() {
+                showToast('🎉 NeuroX Ready! Navigation moved to top!');
+                console.log('🎉 READY - Try clicking challenge buttons now!');
+            }, 1000);
         });
     </script>
 </body>
