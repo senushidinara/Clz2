@@ -818,6 +818,28 @@
             }
         }
 
+        @keyframes brainGlow {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(185,224,216,0.4);
+                filter: brightness(1);
+            }
+            50% {
+                box-shadow: 0 15px 40px rgba(185,224,216,0.6);
+                filter: brightness(1.1);
+            }
+        }
+
+        @keyframes regionPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            }
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -2517,7 +2539,7 @@
                     instructions: [
                         '🧠 Start with your head',
                         '👀 Notice any tension',
-                        '⬇��� Move down your body',
+                        '⬇️ Move down your body',
                         '😌 Relax each part'
                     ]
                 },
