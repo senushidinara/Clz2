@@ -1170,40 +1170,134 @@
         <!-- Dashboard Page -->
         <div class="page" id="dashboard">
             <div class="card">
-                <h2>Brain Activity Monitor</h2>
-                <div class="eeg-container" id="eegContainer">
-                    <div class="eeg-wave"></div>
+                <h2>🧠 Advanced Brain Activity Monitor</h2>
+                <div class="eeg-container" id="eegContainer" style="
+                    background:
+                        radial-gradient(circle at 30% 30%, rgba(185,224,216,0.3), transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(185,224,216,0.2), transparent 50%),
+                        linear-gradient(135deg, rgba(0,0,0,0.05), rgba(185,224,216,0.1));
+                    border: 2px solid rgba(185,224,216,0.3);
+                ">
+                    <div class="eeg-wave" style="background: linear-gradient(90deg, var(--dashboard-color), #4ECDC4, var(--dashboard-color));"></div>
+                    <!-- Multiple EEG waves -->
+                    <div style="position: absolute; top: 60%; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, rgba(185,224,216,0.6), transparent); animation: waveMove 3s linear infinite; animation-delay: 0.5s;"></div>
+                    <div style="position: absolute; top: 70%; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(185,224,216,0.4), transparent); animation: waveMove 4s linear infinite; animation-delay: 1s;"></div>
                 </div>
-                <button class="btn btn-dashboard" onclick="startBrainScan()">
-                    <i class="fas fa-play"></i>
-                    Start Brain Scan
-                </button>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+                    <button class="btn btn-dashboard" onclick="startBrainScan()">
+                        <i class="fas fa-play"></i>
+                        Start Brain Scan
+                    </button>
+                    <div style="display: flex; align-items: center; background: rgba(185,224,216,0.2); padding: 0.5rem 1rem; border-radius: 8px;">
+                        <span style="color: #00C851; margin-right: 0.5rem;">●</span>
+                        <span style="font-size: 0.9rem;">Neural Activity: Optimal</span>
+                    </div>
+                </div>
             </div>
 
             <div class="card-grid">
-                <div class="card">
-                    <h3>Memory Improvement Over Time</h3>
-                    <div class="chart-placeholder">
-                        <i class="fas fa-chart-line" style="font-size: 2rem; margin-right: 1rem;"></i>
-                        Interactive Chart Loading...
+                <div class="card" style="background: linear-gradient(135deg, rgba(255,99,132,0.1), rgba(255,205,210,0.1)); border: 2px solid rgba(255,99,132,0.2);">
+                    <h3>📈 Memory Improvement</h3>
+                    <div class="chart-placeholder" style="
+                        background:
+                            linear-gradient(90deg, transparent, rgba(255,99,132,0.1), transparent),
+                            repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,99,132,0.1) 10px, rgba(255,99,132,0.1) 20px);
+                        animation: dataFlow 3s ease-in-out infinite;
+                    ">
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                            <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 1rem; color: #FF6384; animation: pulse 2s ease-in-out infinite;"></i>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: bold; color: #FF6384;">+23%</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">This week</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card">
-                    <h3>Focus Levels Today</h3>
-                    <div class="chart-placeholder">
-                        <i class="fas fa-chart-bar" style="font-size: 2rem; margin-right: 1rem;"></i>
-                        Real-time Data Updating...
+                <div class="card" style="background: linear-gradient(135deg, rgba(54,162,235,0.1), rgba(179,226,255,0.1)); border: 2px solid rgba(54,162,235,0.2);">
+                    <h3>🎯 Focus Levels</h3>
+                    <div class="chart-placeholder" style="
+                        background:
+                            linear-gradient(90deg, transparent, rgba(54,162,235,0.1), transparent),
+                            repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(54,162,235,0.1) 15px, rgba(54,162,235,0.1) 30px);
+                        animation: dataFlow 4s ease-in-out infinite reverse;
+                    ">
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                            <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 1rem; color: #36A2EB; animation: pulse 2s ease-in-out infinite; animation-delay: 0.5s;"></i>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: bold; color: #36A2EB;">87%</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">Current session</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="card">
-                <h3>Interactive Brain Diagram</h3>
-                <div style="text-align: center; padding: 2rem;">
+                <h3>🧠 Interactive 3D Brain Model</h3>
+                <div style="text-align: center; padding: 3rem;">
                     <div style="position: relative; display: inline-block;">
-                        <div style="width: 200px; height: 150px; background: linear-gradient(135deg, var(--dashboard-color), rgba(185,224,216,0.7)); border-radius: 50% 50% 45% 45%; margin: 0 auto; position: relative; cursor: pointer;" onclick="showBrainInfo('memory')">
-                            <div style="position: absolute; top: 30%; left: 20%; background: rgba(255,255,255,0.8); padding: 0.5rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer;" onclick="showBrainInfo('memory')">Memory</div>
-                            <div style="position: absolute; top: 20%; right: 20%; background: rgba(255,255,255,0.8); padding: 0.5rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer;" onclick="showBrainInfo('focus')">Focus</div>
+                        <!-- Enhanced 3D Brain -->
+                        <div style="
+                            width: 250px; height: 200px;
+                            background:
+                                radial-gradient(ellipse at 30% 30%, rgba(185,224,216,0.8), transparent 70%),
+                                radial-gradient(ellipse at 70% 70%, rgba(176,224,230,0.6), transparent 70%),
+                                linear-gradient(135deg, var(--dashboard-color), rgba(185,224,216,0.7));
+                            border-radius: 50% 50% 45% 45%;
+                            margin: 0 auto; position: relative; cursor: pointer;
+                            box-shadow: 0 10px 30px rgba(185,224,216,0.4);
+                            animation: brainGlow 4s ease-in-out infinite;
+                            transform-style: preserve-3d;
+                        " onclick="showBrainInfo('memory')">
+                            <!-- Brain regions with enhanced visuals -->
+                            <div style="
+                                position: absolute; top: 30%; left: 20%;
+                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(185,224,216,0.8));
+                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                                animation: regionPulse 3s ease-in-out infinite;
+                            " onclick="showBrainInfo('memory')">
+                                🧠 Memory
+                            </div>
+                            <div style="
+                                position: absolute; top: 20%; right: 20%;
+                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(135,206,235,0.8));
+                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                                animation: regionPulse 3s ease-in-out infinite; animation-delay: 1s;
+                            " onclick="showBrainInfo('focus')">
+                                🎯 Focus
+                            </div>
+                            <div style="
+                                position: absolute; bottom: 30%; left: 50%; transform: translateX(-50%);
+                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,182,193,0.8));
+                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                                animation: regionPulse 3s ease-in-out infinite; animation-delay: 2s;
+                            " onclick="showBrainInfo('emotion')">
+                                ❤️ Emotion
+                            </div>
+
+                            <!-- Neural activity indicators -->
+                            <div style="position: absolute; top: 10%; left: 30%; width: 8px; height: 8px; background: #00C851; border-radius: 50%; animation: neuronPulse 2s infinite;"></div>
+                            <div style="position: absolute; top: 40%; right: 25%; width: 6px; height: 6px; background: #FF6384; border-radius: 50%; animation: neuronPulse 2.5s infinite; animation-delay: 0.5s;"></div>
+                            <div style="position: absolute; bottom: 40%; left: 40%; width: 7px; height: 7px; background: #36A2EB; border-radius: 50%; animation: neuronPulse 1.8s infinite; animation-delay: 1s;"></div>
+                        </div>
+
+                        <!-- Brain wave visualization -->
+                        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #00C851;">Alpha</div>
+                                <div style="width: 60px; height: 4px; background: #00C851; border-radius: 2px; animation: waveMove 2s ease-in-out infinite;"></div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #FF6384;">Beta</div>
+                                <div style="width: 60px; height: 4px; background: #FF6384; border-radius: 2px; animation: waveMove 1.5s ease-in-out infinite; animation-delay: 0.5s;"></div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; color: #36A2EB;">Theta</div>
+                                <div style="width: 60px; height: 4px; background: #36A2EB; border-radius: 2px; animation: waveMove 3s ease-in-out infinite; animation-delay: 1s;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2423,7 +2517,7 @@
                     instructions: [
                         '🧠 Start with your head',
                         '👀 Notice any tension',
-                        '⬇️ Move down your body',
+                        '⬇��� Move down your body',
                         '😌 Relax each part'
                     ]
                 },
