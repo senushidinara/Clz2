@@ -1087,29 +1087,6 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <div class="nav-tab active tab-home" onclick="navigateToPage('home')" data-page="home">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </div>
-        <div class="nav-tab tab-dashboard" onclick="navigateToPage('dashboard')" data-page="dashboard">
-            <i class="fas fa-brain"></i>
-            <span>Dashboard</span>
-        </div>
-        <div class="nav-tab tab-challenges" onclick="navigateToPage('challenges')" data-page="challenges">
-            <i class="fas fa-trophy"></i>
-            <span>Challenges</span>
-        </div>
-        <div class="nav-tab tab-sleep" onclick="navigateToPage('sleep')" data-page="sleep">
-            <i class="fas fa-moon"></i>
-            <span>Sleep</span>
-        </div>
-        <div class="nav-tab tab-focus" onclick="navigateToPage('focus')" data-page="focus">
-            <i class="fas fa-bullseye"></i>
-            <span>Focus</span>
-        </div>
-    </div>
 
     <!-- Modals -->
     <div class="modal" id="brainScanModal">
@@ -1677,7 +1654,7 @@
                     showToast('🎉 NeuroX ready! All challenge buttons working!');
                     console.log('🎉 ALL SYSTEMS READY - Challenge buttons should work now!');
                 } else {
-                    showToast('⚠�� Some functions may not work properly');
+                    showToast('⚠️ Some functions may not work properly');
                 }
             }, 1000);
         });
