@@ -1176,6 +1176,246 @@
         let isTimerRunning = false;
         let quoteInterval = null;
 
+        // Make functions immediately available
+        window.navigateToPage = function(page) {
+            console.log('🔄 Navigating to:', page);
+            try {
+                document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+                const targetTab = document.querySelector(`.nav-tab[data-page="${page}"]`);
+                const targetPage = document.getElementById(page);
+
+                if (targetTab && targetPage) {
+                    targetTab.classList.add('active');
+                    targetPage.classList.add('active');
+
+                    const bg = document.getElementById('animatedBg');
+                    if (bg) bg.className = `animated-bg bg-${page}`;
+
+                    activeTab = page;
+                    showToast(`📱 Switched to ${page.charAt(0).toUpperCase() + page.slice(1)}`);
+                }
+            } catch (error) {
+                console.error('Navigation error:', error);
+            }
+        };
+
+        window.openChallenge = function(type) {
+            console.log('🎮 Opening challenge:', type);
+            try {
+                const modal = document.getElementById('challengeModal');
+                const title = document.getElementById('challengeTitle');
+                const content = document.getElementById('challengeContent');
+
+                if (!modal || !title || !content) {
+                    console.error('Challenge modal elements not found');
+                    showToast('❌ Challenge not available');
+                    return;
+                }
+
+                const challenges = {
+                    memory: {
+                        title: "🧠 Memory Match Challenge",
+                        description: "Test your working memory with sequence matching"
+                    },
+                    speed: {
+                        title: "⚡ Speed Processing Challenge",
+                        description: "React quickly to visual stimuli"
+                    },
+                    logic: {
+                        title: "🧩 Logic Puzzle Challenge",
+                        description: "Solve complex reasoning problems"
+                    }
+                };
+
+                const challenge = challenges[type] || challenges.memory;
+                title.textContent = challenge.title;
+                content.innerHTML = `
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">${challenge.description}</p>
+                    <div style="background: rgba(0,0,0,0.05); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
+                        <strong>📋 How to Play:</strong>
+                        <ul style="margin: 1rem 0; padding-left: 1.5rem; line-height: 1.6;">
+                            <li>Focus and concentrate on the task</li>
+                            <li>Try to beat your previous score</li>
+                            <li>Track your improvement over time</li>
+                            <li>Challenge yourself daily for best results</li>
+                        </ul>
+                    </div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-challenges" onclick="startChallenge('${type}')" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                            <i class="fas fa-play"></i>
+                            Start Challenge
+                        </button>
+                    </div>
+                `;
+
+                modal.classList.add('active');
+                showToast(`🎮 ${challenge.title} opened!`);
+                console.log('✅ Challenge modal opened successfully for:', type);
+            } catch (error) {
+                console.error('Open challenge error:', error);
+                showToast('❌ Error opening challenge');
+            }
+        };
+
+        window.startChallenge = function(type) {
+            console.log('🚀 Starting challenge:', type);
+            try {
+                closeModal('challengeModal');
+
+                const messages = {
+                    memory: "🧠 Memory Challenge Started! Watch the patterns carefully!",
+                    speed: "⚡ Speed Challenge Started! React as fast as you can!",
+                    logic: "🧩 Logic Challenge Started! Use your reasoning skills!"
+                };
+
+                showToast(messages[type] || "🎮 Challenge Started! Good luck!");
+
+                // Simulate challenge progress after 3 seconds
+                setTimeout(() => {
+                    createConfetti();
+                    showToast("🏆 Challenge completed! Great job!");
+
+                    // Update progress bar
+                    setTimeout(() => {
+                        const progressBars = document.querySelectorAll('#challenges .progress-fill');
+                        if (progressBars.length > 0) {
+                            const randomBar = progressBars[Math.floor(Math.random() * progressBars.length)];
+                            const currentWidth = parseInt(randomBar.style.width) || 0;
+                            const newWidth = Math.min(100, currentWidth + 15);
+                            randomBar.style.width = newWidth + '%';
+
+                            const progressText = randomBar.closest('.challenge-card').querySelector('small');
+                            if (progressText) {
+                                progressText.textContent = `Progress: ${newWidth}% Complete`;
+                            }
+                        }
+                    }, 1000);
+                }, 3000);
+
+                console.log('✅ Challenge started successfully');
+            } catch (error) {
+                console.error('Start challenge error:', error);
+                showToast('❌ Error starting challenge');
+            }
+        };
+
+        window.joinChallenge = function() {
+            console.log('🎉 Joining challenge...');
+            try {
+                createConfetti();
+                showToast("🎉 Challenge Joined Successfully!");
+
+                setTimeout(() => {
+                    const progressBars = document.querySelectorAll('#challenges .progress-fill');
+                    if (progressBars.length > 0) {
+                        const randomBar = progressBars[Math.floor(Math.random() * progressBars.length)];
+                        const currentWidth = parseInt(randomBar.style.width) || 0;
+                        const newWidth = Math.min(100, currentWidth + 10);
+                        randomBar.style.width = newWidth + '%';
+
+                        const progressText = randomBar.closest('.challenge-card').querySelector('small');
+                        if (progressText) {
+                            progressText.textContent = `Progress: ${newWidth}% Complete`;
+                        }
+                        showToast("📈 Progress updated!");
+                    }
+                }, 2000);
+
+                console.log('✅ Challenge joined successfully');
+            } catch (error) {
+                console.error('Join challenge error:', error);
+                showToast('❌ Error joining challenge');
+            }
+        };
+
+        window.showLeaderboard = function() {
+            console.log('🏆 Showing leaderboard...');
+            try {
+                const modal = document.getElementById('leaderboardModal');
+                if (modal) {
+                    modal.classList.add('active');
+                    showToast("🏆 Leaderboard loaded!");
+                    console.log('✅ Leaderboard modal opened');
+                } else {
+                    console.error('Leaderboard modal not found');
+                    showToast('❌ Leaderboard not available');
+                }
+            } catch (error) {
+                console.error('Leaderboard error:', error);
+                showToast('❌ Error showing leaderboard');
+            }
+        };
+
+        window.closeModal = function(modalId) {
+            console.log('❌ Closing modal:', modalId);
+            try {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('active');
+                    console.log('✅ Modal closed:', modalId);
+                } else {
+                    console.error('Modal not found:', modalId);
+                }
+            } catch (error) {
+                console.error('Close modal error:', error);
+            }
+        };
+
+        window.showToast = function(message) {
+            console.log('🍞 Toast:', message);
+            try {
+                let toast = document.getElementById('toast');
+                if (!toast) {
+                    // Create toast if it doesn't exist
+                    toast = document.createElement('div');
+                    toast.id = 'toast';
+                    toast.className = 'toast';
+                    document.body.appendChild(toast);
+                }
+
+                toast.textContent = message;
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+
+            } catch (error) {
+                console.error('Toast error:', error);
+                alert(message); // Fallback
+            }
+        };
+
+        window.createConfetti = function() {
+            console.log('🎊 Creating confetti...');
+            try {
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.left = Math.random() * 100 + 'vw';
+                        confetti.style.animationDelay = Math.random() * 3 + 's';
+                        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+
+                        const colors = ['#FBC4AB', '#A7C7E7', '#B9E0D8', '#EAD7D1', '#FFF5BA'];
+                        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                        document.body.appendChild(confetti);
+
+                        setTimeout(() => {
+                            if (confetti.parentNode) {
+                                confetti.remove();
+                            }
+                        }, 5000);
+                    }, i * 50);
+                }
+            } catch (error) {
+                console.error('Confetti error:', error);
+            }
+        };
+
         // ============ NAVIGATION FUNCTIONS ============
         function navigateToPage(page) {
             console.log('Navigating to:', page);
