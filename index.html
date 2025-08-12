@@ -1174,28 +1174,45 @@
         let focusTimer = null;
         let focusTime = 25 * 60; // 25 minutes in seconds
         let isTimerRunning = false;
+        let quoteInterval = null;
 
         // Navigation Function
         function navigateToPage(page) {
+            console.log('Navigating to:', page);
+
             // Remove active class from all tabs and pages
             document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            
+
             // Add active class to selected tab and page
-            document.querySelector(`.nav-tab[data-page="${page}"]`).classList.add('active');
-            document.getElementById(page).classList.add('active');
-            
-            // Update background
-            const bg = document.getElementById('animatedBg');
-            bg.className = `animated-bg bg-${page}`;
-            
-            activeTab = page;
-            
-            // Page-specific initializations
-            if (page === 'focus') {
-                startQuoteRotation();
+            const targetTab = document.querySelector(`.nav-tab[data-page="${page}"]`);
+            const targetPage = document.getElementById(page);
+
+            if (targetTab && targetPage) {
+                targetTab.classList.add('active');
+                targetPage.classList.add('active');
+
+                // Update background
+                const bg = document.getElementById('animatedBg');
+                if (bg) {
+                    bg.className = `animated-bg bg-${page}`;
+                }
+
+                activeTab = page;
+
+                // Page-specific initializations
+                if (page === 'focus') {
+                    startQuoteRotation();
+                }
+
+                console.log('Navigation successful to:', page);
+            } else {
+                console.error('Navigation failed - elements not found for:', page);
             }
         }
+
+        // Make navigation function globally accessible
+        window.navigateToPage = navigateToPage;
 
         // Brain Scan Function
         function startBrainScan() {
