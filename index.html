@@ -1308,55 +1308,74 @@
         window.showToast = showToast;
 
         function openChallenge(type) {
+            console.log('Opening challenge:', type);
             const modal = document.getElementById('challengeModal');
             const title = document.getElementById('challengeTitle');
             const content = document.getElementById('challengeContent');
-            
-            const challenges = {
-                memory: {
-                    title: "Memory Match Challenge",
-                    content: "Test your working memory by matching sequences of patterns. Watch the sequence, then repeat it in the same order."
-                },
-                speed: {
-                    title: "Speed Processing Challenge", 
-                    content: "React as quickly as possible to visual stimuli. The faster and more accurate you are, the higher your score."
-                },
-                logic: {
-                    title: "Logic Puzzle Challenge",
-                    content: "Solve complex reasoning problems using deductive logic. Each puzzle builds on the previous one."
-                }
-            };
-            
-            title.textContent = challenges[type].title;
-            content.innerHTML = `
-                <p>${challenges[type].content}</p>
-                <div style="margin: 2rem 0;">
-                    <strong>Instructions:</strong>
-                    <ul style="margin-left: 2rem; margin-top: 1rem;">
-                        <li>Read the challenge carefully</li>
-                        <li>Use logic and pattern recognition</li>
-                        <li>Try to improve your previous score</li>
-                        <li>Track your progress over time</li>
-                    </ul>
-                </div>
-                <button class="btn btn-challenges" onclick="startChallenge()">
-                    <i class="fas fa-play"></i>
-                    Start Challenge
-                </button>
-            `;
-            
-            modal.classList.add('active');
+
+            if (modal && title && content) {
+                const challenges = {
+                    memory: {
+                        title: "Memory Match Challenge",
+                        content: "Test your working memory by matching sequences of patterns. Watch the sequence, then repeat it in the same order."
+                    },
+                    speed: {
+                        title: "Speed Processing Challenge",
+                        content: "React as quickly as possible to visual stimuli. The faster and more accurate you are, the higher your score."
+                    },
+                    logic: {
+                        title: "Logic Puzzle Challenge",
+                        content: "Solve complex reasoning problems using deductive logic. Each puzzle builds on the previous one."
+                    }
+                };
+
+                const challenge = challenges[type] || challenges.memory;
+                title.textContent = challenge.title;
+                content.innerHTML = `
+                    <p>${challenge.content}</p>
+                    <div style="margin: 2rem 0;">
+                        <strong>Instructions:</strong>
+                        <ul style="margin-left: 2rem; margin-top: 1rem;">
+                            <li>Read the challenge carefully</li>
+                            <li>Use logic and pattern recognition</li>
+                            <li>Try to improve your previous score</li>
+                            <li>Track your progress over time</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-challenges" onclick="startChallenge()">
+                        <i class="fas fa-play"></i>
+                        Start Challenge
+                    </button>
+                `;
+
+                modal.classList.add('active');
+                console.log('Challenge modal opened for:', type);
+            } else {
+                console.error('Challenge modal elements not found');
+            }
         }
 
         function startChallenge() {
+            console.log('Starting challenge...');
             closeModal('challengeModal');
             showToast("Challenge Started! Good luck!");
         }
 
         function showLeaderboard() {
+            console.log('Showing leaderboard...');
             const modal = document.getElementById('leaderboardModal');
-            modal.classList.add('active');
+            if (modal) {
+                modal.classList.add('active');
+                console.log('Leaderboard modal opened');
+            } else {
+                console.error('Leaderboard modal not found');
+            }
         }
+
+        // Make functions globally accessible
+        window.openChallenge = openChallenge;
+        window.startChallenge = startChallenge;
+        window.showLeaderboard = showLeaderboard;
 
         // Sleep Functions
         function trackSleep() {
