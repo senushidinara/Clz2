@@ -1559,6 +1559,12 @@
 
         // Quote rotation for focus page
         function startQuoteRotation() {
+            console.log('Starting quote rotation...');
+            // Clear existing interval if any
+            if (quoteInterval) {
+                clearInterval(quoteInterval);
+            }
+
             const quotes = [
                 "The successful warrior is the average person with laser-like focus.",
                 "Concentration is the secret of strength in politics, in war, in trade, in short in all management of human affairs.",
@@ -1566,67 +1572,89 @@
                 "Focus on being productive instead of busy.",
                 "Where focus goes, energy flows and results show."
             ];
-            
+
             let currentQuote = 0;
-            
-            setInterval(() => {
+
+            quoteInterval = setInterval(() => {
                 if (activeTab === 'focus') {
                     currentQuote = (currentQuote + 1) % quotes.length;
                     const quoteElement = document.getElementById('motivationalQuote');
-                    quoteElement.style.animation = 'none';
-                    quoteElement.textContent = quotes[currentQuote];
-                    setTimeout(() => {
-                        quoteElement.style.animation = 'fadeIn 1s ease';
-                    }, 100);
+                    if (quoteElement) {
+                        quoteElement.style.animation = 'none';
+                        quoteElement.textContent = quotes[currentQuote];
+                        setTimeout(() => {
+                            quoteElement.style.animation = 'fadeIn 1s ease';
+                        }, 100);
+                    }
                 }
             }, 10000);
+
+            console.log('Quote rotation started');
         }
 
         // Brain diagram functions
         function showBrainInfo(region) {
+            console.log('Showing brain info for:', region);
             const modal = document.getElementById('brainInfoModal');
             const title = document.getElementById('brainRegionTitle');
             const content = document.getElementById('brainRegionContent');
-            
-            const regions = {
-                memory: {
-                    title: "Hippocampus - Memory Center",
-                    content: `
-                        <p>The hippocampus is crucial for forming new memories and learning. Located in the temporal lobe, it acts as a temporary storage area before information is transferred to long-term memory in the cortex.</p>
-                        <h4>Key Functions:</h4>
-                        <ul>
-                            <li>Formation of new memories</li>
-                            <li>Spatial navigation</li>
-                            <li>Learning and pattern recognition</li>
-                        </ul>
-                        <p><strong>Training Tip:</strong> Memory exercises and spatial puzzles can help strengthen hippocampal function.</p>
-                    `
-                },
-                focus: {
-                    title: "Prefrontal Cortex - Executive Control",
-                    content: `
-                        <p>The prefrontal cortex is responsible for executive functions including attention, decision-making, and working memory. It's often called the brain's "CEO".</p>
-                        <h4>Key Functions:</h4>
-                        <ul>
-                            <li>Sustained attention and focus</li>
-                            <li>Working memory</li>
-                            <li>Decision-making and planning</li>
-                            <li>Impulse control</li>
-                        </ul>
-                        <p><strong>Training Tip:</strong> Meditation, focus exercises, and cognitive training can enhance prefrontal cortex function.</p>
-                    `
-                }
-            };
-            
-            title.textContent = regions[region].title;
-            content.innerHTML = regions[region].content;
-            modal.classList.add('active');
+
+            if (modal && title && content) {
+                const regions = {
+                    memory: {
+                        title: "Hippocampus - Memory Center",
+                        content: `
+                            <p>The hippocampus is crucial for forming new memories and learning. Located in the temporal lobe, it acts as a temporary storage area before information is transferred to long-term memory in the cortex.</p>
+                            <h4>Key Functions:</h4>
+                            <ul>
+                                <li>Formation of new memories</li>
+                                <li>Spatial navigation</li>
+                                <li>Learning and pattern recognition</li>
+                            </ul>
+                            <p><strong>Training Tip:</strong> Memory exercises and spatial puzzles can help strengthen hippocampal function.</p>
+                        `
+                    },
+                    focus: {
+                        title: "Prefrontal Cortex - Executive Control",
+                        content: `
+                            <p>The prefrontal cortex is responsible for executive functions including attention, decision-making, and working memory. It's often called the brain's "CEO".</p>
+                            <h4>Key Functions:</h4>
+                            <ul>
+                                <li>Sustained attention and focus</li>
+                                <li>Working memory</li>
+                                <li>Decision-making and planning</li>
+                                <li>Impulse control</li>
+                            </ul>
+                            <p><strong>Training Tip:</strong> Meditation, focus exercises, and cognitive training can enhance prefrontal cortex function.</p>
+                        `
+                    }
+                };
+
+                const regionInfo = regions[region] || regions.memory;
+                title.textContent = regionInfo.title;
+                content.innerHTML = regionInfo.content;
+                modal.classList.add('active');
+                console.log('Brain info modal opened for:', region);
+            } else {
+                console.error('Brain info modal elements not found');
+            }
         }
 
         // Modal functions
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+            console.log('Closing modal:', modalId);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                console.log('Modal closed:', modalId);
+            } else {
+                console.error('Modal not found:', modalId);
+            }
         }
+
+        // Make functions globally accessible
+        window.showBrainInfo = showBrainInfo;
+        window.closeModal = closeModal;
 
         // Close modals when clicking outside
         document.addEventListener('click', (e) => {
