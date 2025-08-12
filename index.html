@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroMind Elite | Live Bio-Streaming</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary: #00a8ff; --primary-light: #4ddbff; --secondary: #e056fd; --tertiary: #7bed9f;
+            --dark: #1e272e; --darker: #191f24; --card-bg: rgba(45, 52, 54, 0.6); --glass: rgba(255, 255, 255, 0.08);
+            --text: #d2dae2; --text-muted: #808e9b; --success: #2ed573; --warning: #ffb142; --danger: #ff4757;
+            --border: rgba(255, 255, 255, 0.15);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        .app-container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
+        .tab-btn.active { background: var(--primary); box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4); }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 35px rgba(0,0,0,0.3); }
+        .card-header i { color: var(--primary); }
+        .btn { background: var(--primary); }
+        .btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0, 168, 255, 0.5); }
+        .btn-secondary { background: var(--secondary); }
+        .btn-secondary:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(224, 86, 253, 0.5); }
+        
+        header, .nav-tabs, .tab-content, .card-grid, .card, .card-header, .card-body, .btn { transition: all 0.3s ease; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; margin-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .logo { display: flex; align-items: center; gap: 1rem; font-size: 2rem; font-weight: 700; }
+        .logo i { color: var(--primary); animation: float 4s ease-in-out infinite; }
+        .nav-tabs { display: flex; background: var(--glass); border-radius: 12px; padding: 0.5rem; margin-bottom: 2rem; backdrop-filter: blur(10px); flex-wrap: wrap; }
+        .tab-btn { flex: 1; padding: 1rem; background: transparent; border: none; color: var(--text); font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.75rem; min-width: 140px; }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.1); }
+        .tab-content { display: none; animation: fadeIn 0.6s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; }
+        .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; font-size: 1.4rem; font-weight: 600; }
+        .card-body { padding: 1.5rem; }
+        .btn { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; margin: 0.5rem 0; }
+        .btn i { margin-right: 0.5rem; }
+        .btn:disabled { background: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
+        
+        /* Feature Styles */
+        .mood-selector { display: flex; justify-content: space-around; margin: 1rem 0; }
+        .mood-btn { background: transparent; border: 2px solid var(--glass); font-size: 2.5rem; padding: 0.5rem; border-radius: 50%; cursor: pointer; }
+        .mood-btn:hover { transform: scale(1.1); background: var(--glass); }
+        .mood-btn.selected { border-color: var(--success); }
+        
+        .community-feed .feed-item { display: flex; gap: 1rem; align-items: center; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 1rem; }
+        .feed-item i { font-size: 1.5rem; color: var(--secondary); }
+
+        #deduction-puzzle .option { display: block; width: 100%; text-align: left; margin-top: 0.5rem; }
+        #puzzle-feedback { margin-top: 1rem; font-weight: bold; }
+
+        #notification-toast { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1000; display: flex; align-items: center; gap: 1rem; transform: translateX(calc(100% + 30px)); transition: transform 0.5s ease-in-out; }
+        #notification-toast.show { transform: translateX(0); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body>
+    <audio id="sfx-click" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
+    <audio id="sfx-success" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
+    <audio id="sfx-notify" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
+    <audio id="sfx-challenge" src="https://www.soundjay.com/buttons/sounds/button-4.mp3" preload="auto"></audio>
+
+    <div class="app-container">
+        <header><div class="logo"><i class="fas fa-brain"></i> NeuroMind Elite</div></header>
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="dashboard"><i class="fas fa-home"></i> Dashboard</button>
+            <button class="tab-btn" data-tab="training"><i class="fas fa-tasks"></i> Training Hub</button>
+            <button class="tab-btn" data-tab="analysis"><i class="fas fa-wave-square"></i> Live Analysis</button>
+            <button class="tab-btn" data-tab="insights"><i class="fas fa-chart-pie"></i> Insights</button>
+            <button class="tab-btn" data-tab="community"><i class="fas fa-users"></i> Community</button>
+            <button class="tab-btn" data-tab="coach"><i class="fas fa-user-robot"></i> AI Coach</button>
+        </nav>
+
+        <div id="dashboard" class="tab-content active">
+             <div class="card-grid">
+                 <div class="card">
+                    <div class="card-header"><i class="fas fa-smile"></i> <h2>Daily Mood Check-in</h2></div>
+                    <div class="card-body">
+                        <p>Log your current mood to correlate with performance.</p>
+                        <div class="mood-selector">
+                            <button class="mood-btn" data-mood="Happy" data-score="90">😊</button>
+                            <button class="mood-btn" data-mood="Neutral" data-score="75">😐</button>
+                            <button class="mood-btn" data-mood="Stressed" data-score="60">😟</button>
+                            <button class="mood-btn" data-mood="Tired" data-score="50">😴</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card">
+                    <div class="card-header"><i class="fas fa-chart-line"></i> <h2>Mood & Performance</h2></div>
+                    <div class="card-body"><canvas id="moodPerformanceChart" height="200"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="training" class="tab-content">
+             <div class="card-grid">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-puzzle-piece"></i> <h2>Logical Deduction</h2></div>
+                    <div class="card-body" id="deduction-puzzle">
+                        <p>If all Zaps are Zips, and some Zips are Zops, which statement must be true?</p>
+                        <button class="btn option" data-correct="false">All Zaps are Zops.</button>
+                        <button class="btn option" data-correct="false">Some Zops are Zaps.</button>
+                        <button class="btn option" data-correct="true">We cannot be certain if any Zap is a Zop.</button>
+                        <p id="puzzle-feedback"></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-vr-cardboard"></i> <h2>AR/VR Module</h2></div>
+                    <div class="card-body">
+                        <p>Engage in immersive spatial reasoning puzzles and meditative environments. Requires a compatible headset.</p>
+                        <button class="btn btn-secondary" disabled><i class="fas fa-rocket"></i> Launch in VR</button>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+        <div id="analysis" class="tab-content">
+            <div class="card">
+                <div class="card-header"><i class="fas fa-broadcast-tower"></i><h2>Live EEG Stream (Simulated)</h2></div>
+                <div class="card-body">
+                    <p>Dominant Brainwave State: <b id="eeg-state-label" style="color: var(--tertiary);">Initializing...</b></p>
+                    <canvas id="eegChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div id="insights" class="tab-content">
+             <div class="card">
+                <div class="card-header"><i class="fas fa-bed"></i> <h2>Sleep Log Analysis</h2></div>
+                <div class="card-body">
+                    <p>Use our partner apps or wearables to sync sleep data for automated analysis. Manual logging coming soon.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="community" class="tab-content">
+            <div class="card">
+                <div class="card-header"><i class="fas fa-stream"></i> <h2>Community Live Feed</h2></div>
+                <div class="card-body community-feed" id="community-feed">
+                    <!-- Feed items will be injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <div id="coach" class="tab-content">
+             <div class="card">
+                <div class="card-header"><i class="fas fa-user-robot"></i> <h2>Your Proactive AI Coach</h2></div>
+                <div class="card-body" style="text-align: center;">
+                    <i id="coach-icon" class="fas fa-comment-dots" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                    <p id="coach-tip" style="font-size: 1.1rem; line-height: 1.6;">Welcome! Your live EEG data is streaming. Let's see what we can learn today.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="notification-toast"><i id="notification-icon" class="fas fa-bell"></i><p id="notification-text"></p></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Global State & Setup ---
+            const appState = { moodLogs: [], performanceScores: [] };
+            const sfx = {
+                click: new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3"),
+                success: new Audio("https://www.soundjay.com/buttons/sounds/button-09.mp3"),
+                notify: new Audio("https://www.soundjay.com/buttons/sounds/button-10.mp3"),
+                challenge: new Audio("https://www.soundjay.com/buttons/sounds/button-4.mp3"),
+            };
+            function playSound(sound) { sound.currentTime = 0; sound.play(); }
+
+            // --- Notification System ---
+            function showNotification(text, icon = 'fa-bell') {
+                playSound(sfx.notify);
+                document.getElementById('notification-text').textContent = text;
+                document.getElementById('notification-icon').className = `fas ${icon}`;
+                const toast = document.getElementById('notification-toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 4000);
+            }
+
+            // --- Tab Navigation ---
+            document.querySelectorAll('.tab-btn').forEach(tab => {
+                tab.addEventListener('click', e => {
+                    playSound(sfx.click);
+                    document.querySelector('.tab-btn.active').classList.remove('active');
+                    e.currentTarget.classList.add('active');
+                    document.querySelector('.tab-content.active').classList.remove('active');
+                    document.getElementById(e.currentTarget.dataset.tab).classList.add('active');
+                });
+            });
+            
+            // --- AI Coach ---
+            const coachTipEl = document.getElementById('coach-tip');
+            const coachIconEl = document.getElementById('coach-icon');
+            function updateCoachMessage(text, icon = 'fa-comment-dots') {
+                coachTipEl.textContent = text;
+                coachIconEl.className = `fas ${icon}`;
+            }
+
+            // --- Live EEG Stream (Simulated) ---
+            const eegCtx = document.getElementById('eegChart').getContext('2d');
+            const eegChart = new Chart(eegCtx, { type: 'line', data: { labels: Array(50).fill(''), datasets: [{ data: [], borderColor: var(--tertiary), borderWidth: 2, pointRadius: 0, tension: 0.4 }] }, options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false, min: -1, max: 1 } } } });
+            const eegStateLabel = document.getElementById('eeg-state-label');
+
+            const eegStates = {
+                RELAXED: { name: "RELAXED", color: var(--tertiary), tip: "Your Alpha waves are dominant. A perfect state for creative thinking or a mindfulness session.", icon: "fa-spa" },
+                FOCUSED: { name: "FOCUSED", color: var(--warning), tip: "High Beta wave activity detected! Your brain is primed for problem-solving. Try the deduction puzzle!", icon: "fa-bullseye" },
+                TIRED: { name: "TIRED", color: var(--secondary), tip: "Theta waves are increasing. You may be feeling drowsy. A short break could be beneficial.", icon: "fa-bed" },
+            };
+
+            let currentEEGState = eegStates.RELAXED;
+            let coachNotifiedForState = '';
+
+            function generateWave(baseFreq, amplitude, samples = 50) {
+                const wave = [];
+                for (let i = 0; i < samples; i++) {
+                    wave.push(Math.sin(i * baseFreq) * amplitude * (Math.random() * 0.2 + 0.9));
+                }
+                return wave;
+            }
+
+            setInterval(() => {
+                const stateKeys = Object.keys(eegStates);
+                const randomStateKey = stateKeys[Math.floor(Math.random() * stateKeys.length)];
+                currentEEGState = eegStates[randomStateKey];
+
+                let waveData;
+                if(currentEEGState === eegStates.FOCUSED) waveData = generateWave(1.2, 0.8); // Fast wave
+                else if (currentEEGState === eegStates.TIRED) waveData = generateWave(0.3, 0.6); // Slow wave
+                else waveData = generateWave(0.5, 1); // Alpha wave
+                
+                eegChart.data.datasets[0].data = waveData;
+                eegChart.data.datasets[0].borderColor = currentEEGState.color;
+                eegChart.update('none');
+                eegStateLabel.textContent = currentEEGState.name;
+                eegStateLabel.style.color = currentEEGState.color;
+
+                if (coachNotifiedForState !== currentEEGState.name) {
+                    updateCoachMessage(currentEEGState.tip, currentEEGState.icon);
+                    showNotification(`AI Coach: ${currentEEGState.tip}`, currentEEGState.icon);
+                    coachNotifiedForState = currentEEGState.name;
+                }
+            }, 4000);
+
+            // --- Dashboard: Mood & Performance ---
+            const moodPerfCtx = document.getElementById('moodPerformanceChart').getContext('2d');
+            const moodPerformanceChart = new Chart(moodPerfCtx, { type: 'line', data: { labels: [], datasets: [{ label: 'Cognitive Score', data: [], borderColor: var(--primary), tension: 0.1 }] }, options: { scales: { y: { beginAtZero: true, max: 100 } } } });
+
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    playSound(sfx.success);
+                    const mood = e.currentTarget.dataset.mood;
+                    const score = parseInt(e.currentTarget.dataset.score) + Math.floor(Math.random() * 10 - 5); // Add jitter
+                    
+                    appState.moodLogs.push(mood);
+                    appState.performanceScores.push(score);
+
+                    moodPerformanceChart.data.labels = appState.moodLogs;
+                    moodPerformanceChart.data.datasets[0].data = appState.performanceScores;
+                    moodPerformanceChart.update();
+                    
+                    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+                    e.currentTarget.classList.add('selected');
+                });
+            });
+
+            // --- Training Hub: Deduction Puzzle ---
+            document.querySelectorAll('#deduction-puzzle .option').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    playSound(sfx.click);
+                    const isCorrect = e.currentTarget.dataset.correct === 'true';
+                    const feedbackEl = document.getElementById('puzzle-feedback');
+                    feedbackEl.textContent = isCorrect ? 'Correct! This is a classic example of deductive reasoning.' : 'Not quite. The premises do not provide enough information to link Zaps and Zops.';
+                    feedbackEl.style.color = isCorrect ? var(--success) : var(--danger);
+                    if (isCorrect) playSound(sfx.success);
+                });
+            });
+            
+            // --- Community Feed ---
+            const feedContainer = document.getElementById('community-feed');
+            const feedData = [
+                { user: 'Alex', icon: 'fa-trophy', text: 'set a new high score in Synaptic Balance!', challenge: true },
+                { user: 'Jane', icon: 'fa-spa', text: 'completed a 7-day mindfulness streak.' },
+                { user: 'Sam', icon: 'fa-puzzle-piece', text: 'solved the weekly logic puzzle in under a minute!', challenge: true },
+                { user: 'Maria', icon: 'fa-brain', text: 'reached Level 5 in Focus Training.' },
+            ];
+
+            feedData.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'feed-item';
+                let html = `<div><i class="fas ${item.icon}"></i></div><div><p><b>${item.user}</b> ${item.text}</p>`;
+                if (item.challenge) {
+                    html += `<button class="btn btn-secondary btn-sm challenge-btn"><i class="fas fa-fist-raised"></i> Challenge</button>`;
+                }
+                html += `</div>`;
+                itemEl.innerHTML = html;
+                feedContainer.appendChild(itemEl);
+            });
+
+            feedContainer.addEventListener('click', e => {
+                if (e.target.classList.contains('challenge-btn')) {
+                    playSound(sfx.challenge);
+                    showNotification("Challenge sent!", "fa-fist-raised");
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
