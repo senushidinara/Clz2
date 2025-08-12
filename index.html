@@ -2309,6 +2309,214 @@
             if (modal) modal.classList.add('active');
         }
 
+        // Meditation Functions
+        function changeMeditationBg(bgType) {
+            console.log('Changing meditation background to:', bgType);
+
+            // Hide all backgrounds
+            const backgrounds = ['natureBg', 'oceanBg', 'mountainBg'];
+            backgrounds.forEach(bgId => {
+                const bg = document.getElementById(bgId);
+                if (bg) bg.style.display = 'none';
+            });
+
+            // Show selected background
+            const selectedBg = document.getElementById(bgType + 'Bg');
+            if (selectedBg) selectedBg.style.display = 'block';
+
+            // Update button states
+            document.querySelectorAll('.bg-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.bg === bgType) btn.classList.add('active');
+            });
+
+            showToast(`🌟 ${bgType.charAt(0).toUpperCase() + bgType.slice(1)} background activated`);
+        }
+
+        function startMeditation(technique) {
+            console.log('Starting meditation:', technique);
+
+            // Create fullscreen meditation interface
+            const meditationContainer = document.createElement('div');
+            meditationContainer.id = 'meditationContainer';
+            meditationContainer.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                z-index: 2000; display: flex; flex-direction: column;
+                align-items: center; justify-content: center; color: white;
+                animation: fadeIn 1s ease;
+            `;
+
+            const techniques = {
+                breathwork: {
+                    title: '🫁 Breathwork Meditation',
+                    background: 'linear-gradient(135deg, #FF6B6B 0%, #FFB6C1 50%, #FFA07A 100%)',
+                    instructions: [
+                        '🔵 Inhale for 4 counts',
+                        '⏸️ Hold for 7 counts',
+                        '🔴 Exhale for 8 counts',
+                        '🔄 Repeat the cycle'
+                    ]
+                },
+                bodyscan: {
+                    title: '🧘‍♂️ Body Scan Meditation',
+                    background: 'linear-gradient(135deg, #4FC3F7 0%, #81C784 50%, #AED581 100%)',
+                    instructions: [
+                        '🧠 Start with your head',
+                        '👀 Notice any tension',
+                        '⬇️ Move down your body',
+                        '😌 Relax each part'
+                    ]
+                },
+                mindfulness: {
+                    title: '🌸 Mindfulness Meditation',
+                    background: 'linear-gradient(135deg, #BA68C8 0%, #CE93D8 50%, #E1BEE7 100%)',
+                    instructions: [
+                        '🎯 Focus on the present',
+                        '👁️ Observe your thoughts',
+                        '🍃 Let them pass by',
+                        '🧘‍♀️ Return to breath'
+                    ]
+                },
+                visualization: {
+                    title: '✨ Visualization Meditation',
+                    background: 'linear-gradient(135deg, #FFD54F 0%, #FFF176 50%, #FFEB3B 100%)',
+                    instructions: [
+                        '🌅 Imagine a peaceful place',
+                        '👁️ See the details clearly',
+                        '👂 Hear the sounds',
+                        '😊 Feel the serenity'
+                    ]
+                },
+                lovingkindness: {
+                    title: '💝 Loving Kindness Meditation',
+                    background: 'linear-gradient(135deg, #F8BBD9 0%, #FFB6C1 50%, #FFC0CB 100%)',
+                    instructions: [
+                        '💖 Send love to yourself',
+                        '👥 Extend to loved ones',
+                        '🌍 Include all beings',
+                        '☮️ Feel universal love'
+                    ]
+                },
+                walking: {
+                    title: '🚶‍♀️ Walking Meditation',
+                    background: 'linear-gradient(135deg, #81C784 0%, #A5D6A7 50%, #C8E6C9 100%)',
+                    instructions: [
+                        '👣 Feel each step',
+                        '🌬️ Sync with breathing',
+                        '👀 Stay present',
+                        '🧘‍♀️ Move mindfully'
+                    ]
+                }
+            };
+
+            const currentTechnique = techniques[technique];
+            meditationContainer.style.background = currentTechnique.background;
+
+            // Add floating particles for ambiance
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute; width: 3px; height: 3px;
+                    background: rgba(255,255,255,0.7); border-radius: 50%;
+                    left: ${Math.random() * 100}%; top: ${Math.random() * 100}%;
+                    animation: float ${4 + Math.random() * 6}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 3}s;
+                `;
+                meditationContainer.appendChild(particle);
+            }
+
+            // Meditation content
+            const content = document.createElement('div');
+            content.style.cssText = `
+                position: relative; z-index: 10; text-align: center;
+                max-width: 600px; padding: 3rem;
+                background: rgba(255,255,255,0.1); border-radius: 20px;
+                backdrop-filter: blur(20px);
+            `;
+
+            content.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                    ${currentTechnique.title}
+                </h1>
+                <div id="meditationTimer" style="
+                    font-size: 4rem; font-weight: bold; margin: 2rem 0;
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                ">5:00</div>
+                <div id="meditationInstructions" style="
+                    background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 15px; margin: 2rem 0;
+                ">
+                    ${currentTechnique.instructions.map(instruction => `
+                        <div style="margin: 1rem 0; font-size: 1.2rem;">${instruction}</div>
+                    `).join('')}
+                </div>
+                <div id="breathingGuide" style="
+                    width: 150px; height: 150px; margin: 2rem auto;
+                    border: 3px solid rgba(255,255,255,0.8); border-radius: 50%;
+                    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+                    animation: ${technique === 'breathwork' ? 'breathingPulse 4s ease-in-out infinite' : 'pulse 3s ease-in-out infinite'};
+                ">
+                    ${technique === 'breathwork' ? '🫁' : '🧘‍♀️'}
+                </div>
+                <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem;">
+                    <button onclick="startMeditationSession('${technique}')" style="
+                        background: rgba(255,255,255,0.3); color: white; border: 2px solid white;
+                        padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.5)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.3)'">
+                        🚀 Start Session
+                    </button>
+                    <button onclick="document.body.removeChild(document.getElementById('meditationContainer'))" style="
+                        background: rgba(255,255,255,0.2); color: white; border: 2px solid white;
+                        padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.4)'"
+                       onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                        ✕ Close
+                    </button>
+                </div>
+            `;
+
+            meditationContainer.appendChild(content);
+            document.body.appendChild(meditationContainer);
+
+            showToast(`🧘‍♀️ ${currentTechnique.title} opened`);
+        }
+
+        function startMeditationSession(technique) {
+            console.log('Starting meditation session:', technique);
+            let timeLeft = 300; // 5 minutes
+
+            const timer = document.getElementById('meditationTimer');
+            const instructions = document.getElementById('meditationInstructions');
+
+            instructions.innerHTML = `
+                <div style="font-size: 1.5rem; color: rgba(255,255,255,0.9);">
+                    🧘‍♀️ Session in progress...<br>
+                    <small style="opacity: 0.8;">Focus on your ${technique} practice</small>
+                </div>
+            `;
+
+            const sessionInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(sessionInterval);
+                    instructions.innerHTML = `
+                        <div style="font-size: 1.5rem; color: rgba(255,255,255,0.9);">
+                            ✨ Session Complete! ✨<br>
+                            <small style="opacity: 0.8;">You've completed your ${technique} meditation</small>
+                        </div>
+                    `;
+                    createConfetti();
+                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
+                }
+            }, 1000);
+        }
+
         // Make all functions global
         window.startBrainScan = startBrainScan;
         window.trackSleep = trackSleep;
@@ -2318,6 +2526,9 @@
         window.closeSleepTips = closeSleepTips;
         window.viewSleepHistory = viewSleepHistory;
         window.showBrainInfo = showBrainInfo;
+        window.changeMeditationBg = changeMeditationBg;
+        window.startMeditation = startMeditation;
+        window.startMeditationSession = startMeditationSession;
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
