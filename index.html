@@ -1417,675 +1417,200 @@
             }
         };
 
-        // ============ NAVIGATION FUNCTIONS ============
-        function navigateToPage(page) {
-            console.log('Navigating to:', page);
-
-            try {
-                // Remove active class from all tabs and pages
-                document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-
-                // Add active class to selected tab and page
-                const targetTab = document.querySelector(`.nav-tab[data-page="${page}"]`);
-                const targetPage = document.getElementById(page);
-
-                if (targetTab && targetPage) {
-                    targetTab.classList.add('active');
-                    targetPage.classList.add('active');
-
-                    // Update background
-                    const bg = document.getElementById('animatedBg');
-                    if (bg) {
-                        bg.className = `animated-bg bg-${page}`;
-                    }
-
-                    activeTab = page;
-
-                    // Page-specific initializations
-                    if (page === 'focus') {
-                        startQuoteRotation();
-                    }
-
-                    showToast(`Switched to ${page.charAt(0).toUpperCase() + page.slice(1)} page`);
-                    console.log('Navigation successful to:', page);
-                } else {
-                    console.error('Navigation failed - elements not found for:', page);
-                }
-            } catch (error) {
-                console.error('Navigation error:', error);
-            }
-        }
-
-        // ============ DASHBOARD FUNCTIONS ============
-        function startBrainScan() {
-            console.log('Starting brain scan...');
+        // Add more essential functions
+        window.startBrainScan = function() {
+            console.log('🧠 Starting brain scan...');
             try {
                 const modal = document.getElementById('brainScanModal');
                 if (modal) {
                     modal.classList.add('active');
+                    showToast("🧠 Brain scan initiated!");
 
-                    // Animate the EEG wave
-                    const waves = modal.querySelectorAll('.eeg-wave');
-                    waves.forEach(wave => wave.classList.add('growing'));
-
-                    // Show immediate feedback
-                    showToast("Brain scan initiated!");
-
-                    // Simulate analysis text appearing letter by letter
                     setTimeout(() => {
                         const analysisText = document.getElementById('analysisText');
                         if (analysisText) {
                             const messages = [
                                 "Analyzing neural patterns...",
-                                "Detecting theta waves in hippocampus...",
-                                "Measuring prefrontal cortex activity...",
-                                "Analysis complete: Optimal cognitive state detected!"
+                                "Detecting theta waves...",
+                                "Measuring brain activity...",
+                                "Analysis complete! Optimal state detected!"
                             ];
 
                             let messageIndex = 0;
-                            const showNextMessage = () => {
+                            const showMessage = () => {
                                 if (messageIndex < messages.length) {
                                     analysisText.textContent = messages[messageIndex];
-                                    analysisText.style.width = '0';
-                                    analysisText.style.animation = 'none';
-                                    setTimeout(() => {
-                                        analysisText.style.animation = 'typewriter 2s steps(40, end)';
-                                        analysisText.style.width = '100%';
-                                    }, 100);
                                     messageIndex++;
-                                    setTimeout(showNextMessage, 2500);
+                                    setTimeout(showMessage, 2000);
                                 }
                             };
-                            showNextMessage();
+                            showMessage();
                         }
                     }, 500);
-                    console.log('Brain scan modal opened');
+
+                    console.log('✅ Brain scan started');
                 } else {
-                    console.error('Brain scan modal not found');
-                    showToast("Error: Brain scan modal not available");
+                    showToast('❌ Brain scan not available');
                 }
             } catch (error) {
                 console.error('Brain scan error:', error);
-                showToast("Error starting brain scan");
+                showToast('❌ Error starting brain scan');
             }
-        }
+        };
 
-        function showBrainInfo(region) {
-            console.log('Showing brain info for:', region);
+        window.trackSleep = function() {
+            console.log('😴 Tracking sleep...');
             try {
-                const modal = document.getElementById('brainInfoModal');
-                const title = document.getElementById('brainRegionTitle');
-                const content = document.getElementById('brainRegionContent');
+                showToast("🌙 Sleep tracking started...");
 
-                if (modal && title && content) {
-                    const regions = {
-                        memory: {
-                            title: "Hippocampus - Memory Center",
-                            content: `
-                                <p>The hippocampus is crucial for forming new memories and learning. Located in the temporal lobe, it acts as a temporary storage area before information is transferred to long-term memory in the cortex.</p>
-                                <h4>Key Functions:</h4>
-                                <ul>
-                                    <li>Formation of new memories</li>
-                                    <li>Spatial navigation</li>
-                                    <li>Learning and pattern recognition</li>
-                                </ul>
-                                <p><strong>Training Tip:</strong> Memory exercises and spatial puzzles can help strengthen hippocampal function.</p>
-                            `
-                        },
-                        focus: {
-                            title: "Prefrontal Cortex - Executive Control",
-                            content: `
-                                <p>The prefrontal cortex is responsible for executive functions including attention, decision-making, and working memory. It's often called the brain's "CEO".</p>
-                                <h4>Key Functions:</h4>
-                                <ul>
-                                    <li>Sustained attention and focus</li>
-                                    <li>Working memory</li>
-                                    <li>Decision-making and planning</li>
-                                    <li>Impulse control</li>
-                                </ul>
-                                <p><strong>Training Tip:</strong> Meditation, focus exercises, and cognitive training can enhance prefrontal cortex function.</p>
-                            `
-                        }
-                    };
+                // Animate score
+                let score = 0;
+                const targetScore = 87;
+                const scoreText = document.getElementById('sleepScoreText');
+                const scoreCircle = document.getElementById('sleepScoreCircle');
 
-                    const regionInfo = regions[region] || regions.memory;
-                    title.textContent = regionInfo.title;
-                    content.innerHTML = regionInfo.content;
-                    modal.classList.add('active');
-                    showToast(`Learning about ${regionInfo.title}`);
-                    console.log('Brain info modal opened for:', region);
-                } else {
-                    console.error('Brain info modal elements not found');
-                    showToast("Error: Brain info not available");
-                }
-            } catch (error) {
-                console.error('Brain info error:', error);
-                showToast("Error showing brain information");
-            }
-        }
-
-        // ============ CHALLENGE FUNCTIONS ============
-        function joinChallenge() {
-            console.log('Joining challenge...');
-            try {
-                createConfetti();
-                showToast("🎉 Challenge Joined Successfully!");
-
-                // Update progress on a random challenge
-                setTimeout(() => {
-                    const progressBars = document.querySelectorAll('#challenges .progress-fill');
-                    if (progressBars.length > 0) {
-                        const randomBar = progressBars[Math.floor(Math.random() * progressBars.length)];
-                        const currentWidth = parseInt(randomBar.style.width) || 0;
-                        const newWidth = Math.min(100, currentWidth + 10);
-                        randomBar.style.width = newWidth + '%';
-
-                        const progressText = randomBar.closest('.challenge-card').querySelector('small');
-                        if (progressText) {
-                            progressText.textContent = `Progress: ${newWidth}% Complete`;
-                        }
+                const interval = setInterval(() => {
+                    score += 3;
+                    if (score >= targetScore) {
+                        score = targetScore;
+                        clearInterval(interval);
+                        showToast("✅ Sleep analysis complete! Score: 87/100");
                     }
-                }, 1000);
 
-                console.log('Challenge joined successfully');
-            } catch (error) {
-                console.error('Join challenge error:', error);
-                showToast("Error joining challenge");
-            }
-        }
+                    if (scoreText) scoreText.textContent = `${score}/100`;
+                    if (scoreCircle) {
+                        const circumference = 408;
+                        const offset = circumference - (score / 100) * circumference;
+                        scoreCircle.style.strokeDashoffset = offset;
+                    }
+                }, 100);
 
-        function openChallenge(type) {
-            console.log('Opening challenge:', type);
-            try {
-                const modal = document.getElementById('challengeModal');
-                const title = document.getElementById('challengeTitle');
-                const content = document.getElementById('challengeContent');
-
-                if (modal && title && content) {
-                    const challenges = {
-                        memory: {
-                            title: "🧠 Memory Match Challenge",
-                            content: "Test your working memory by matching sequences of patterns. Watch the sequence, then repeat it in the same order.",
-                            instructions: [
-                                "Watch the pattern sequence carefully",
-                                "Wait for the sequence to complete",
-                                "Click the squares in the same order",
-                                "Try to beat your previous score!"
-                            ]
-                        },
-                        speed: {
-                            title: "⚡ Speed Processing Challenge",
-                            content: "React as quickly as possible to visual stimuli. The faster and more accurate you are, the higher your score.",
-                            instructions: [
-                                "Click targets as quickly as they appear",
-                                "Accuracy is as important as speed",
-                                "Avoid clicking false targets",
-                                "Improve your reaction time!"
-                            ]
-                        },
-                        logic: {
-                            title: "🧩 Logic Puzzle Challenge",
-                            content: "Solve complex reasoning problems using deductive logic. Each puzzle builds on the previous one.",
-                            instructions: [
-                                "Read each puzzle carefully",
-                                "Use logical reasoning to solve",
-                                "Look for patterns and connections",
-                                "Progress through increasing difficulty!"
-                            ]
-                        }
-                    };
-
-                    const challenge = challenges[type] || challenges.memory;
-                    title.textContent = challenge.title;
-                    content.innerHTML = `
-                        <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">${challenge.content}</p>
-                        <div style="background: rgba(0,0,0,0.05); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
-                            <strong>📋 How to Play:</strong>
-                            <ul style="margin: 1rem 0; padding-left: 1.5rem;">
-                                ${challenge.instructions.map(instruction => `<li style="margin: 0.5rem 0;">${instruction}</li>`).join('')}
-                            </ul>
-                        </div>
-                        <div style="text-align: center; margin-top: 2rem;">
-                            <button class="btn btn-challenges" onclick="startChallenge('${type}')" style="padding: 1rem 2rem; font-size: 1.1rem;">
-                                <i class="fas fa-play"></i>
-                                Start ${challenge.title.replace(/[🧠⚡🧩]/g, '').trim()}
-                            </button>
-                        </div>
-                    `;
-
-                    modal.classList.add('active');
-                    showToast(`Opening ${challenge.title.replace(/[🧠⚡🧩]/g, '').trim()}`);
-                    console.log('Challenge modal opened for:', type);
-                } else {
-                    console.error('Challenge modal elements not found');
-                    showToast("Error: Challenge not available");
-                }
-            } catch (error) {
-                console.error('Open challenge error:', error);
-                showToast("Error opening challenge");
-            }
-        }
-
-        // ============ UTILITY FUNCTIONS ============
-        function showToast(message) {
-            console.log('Showing toast:', message);
-            try {
-                const toast = document.getElementById('toast');
-                if (toast) {
-                    toast.textContent = message;
-                    toast.classList.add('show');
-                    setTimeout(() => {
-                        toast.classList.remove('show');
-                    }, 3000);
-                } else {
-                    console.error('Toast element not found');
-                    // Fallback: create temporary toast
-                    const tempToast = document.createElement('div');
-                    tempToast.style.cssText = `
-                        position: fixed;
-                        top: 100px;
-                        right: 2rem;
-                        background: var(--challenges-color);
-                        color: var(--black);
-                        padding: 1rem 2rem;
-                        border-radius: 12px;
-                        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-                        z-index: 1001;
-                        animation: slideInFromRight 0.3s ease;
-                    `;
-                    tempToast.textContent = message;
-                    document.body.appendChild(tempToast);
-
-                    setTimeout(() => {
-                        if (tempToast.parentNode) {
-                            tempToast.remove();
-                        }
-                    }, 3000);
-                }
-            } catch (error) {
-                console.error('Toast error:', error);
-                alert(message); // Ultimate fallback
-            }
-        }
-
-        function closeModal(modalId) {
-            console.log('Closing modal:', modalId);
-            try {
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.remove('active');
-                    console.log('Modal closed:', modalId);
-                } else {
-                    console.error('Modal not found:', modalId);
-                }
-            } catch (error) {
-                console.error('Close modal error:', error);
-            }
-        }
-
-        function startChallenge(type) {
-            console.log('Starting challenge:', type);
-            try {
-                closeModal('challengeModal');
-
-                const challengeMessages = {
-                    memory: "🧠 Memory Challenge Started! Focus and remember the pattern!",
-                    speed: "⚡ Speed Challenge Started! React as fast as you can!",
-                    logic: "🧩 Logic Challenge Started! Use your reasoning skills!"
-                };
-
-                showToast(challengeMessages[type] || "🎮 Challenge Started! Good luck!");
-
-                // Simulate challenge progress
-                setTimeout(() => {
-                    showToast("⭐ Great job! Challenge progress updated!");
-                }, 3000);
-
-                console.log('Challenge started successfully:', type);
-            } catch (error) {
-                console.error('Start challenge error:', error);
-                showToast("Error starting challenge");
-            }
-        }
-
-        function showLeaderboard() {
-            console.log('Showing leaderboard...');
-            try {
-                const modal = document.getElementById('leaderboardModal');
-                if (modal) {
-                    modal.classList.add('active');
-                    showToast("🏆 Leaderboard loaded!");
-                    console.log('Leaderboard modal opened');
-                } else {
-                    console.error('Leaderboard modal not found');
-                    showToast("Error: Leaderboard not available");
-                }
-            } catch (error) {
-                console.error('Leaderboard error:', error);
-                showToast("Error showing leaderboard");
-            }
-        }
-
-        function createConfetti() {
-            console.log('Creating confetti...');
-            try {
-                for (let i = 0; i < 30; i++) {
-                    setTimeout(() => {
-                        const confetti = document.createElement('div');
-                        confetti.className = 'confetti';
-                        confetti.style.left = Math.random() * 100 + 'vw';
-                        confetti.style.animationDelay = Math.random() * 3 + 's';
-                        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-
-                        // Random colors for confetti
-                        const colors = ['#FBC4AB', '#A7C7E7', '#B9E0D8', '#EAD7D1', '#FFF5BA'];
-                        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-                        document.body.appendChild(confetti);
-
-                        setTimeout(() => {
-                            if (confetti.parentNode) {
-                                confetti.remove();
-                            }
-                        }, 5000);
-                    }, i * 100);
-                }
-            } catch (error) {
-                console.error('Confetti error:', error);
-            }
-        }
-
-        // ============ SLEEP FUNCTIONS ============
-        function trackSleep() {
-            console.log('Tracking sleep...');
-            try {
-                const progressBar = document.createElement('div');
-                progressBar.className = 'progress-bar';
-                progressBar.innerHTML = '<div class="progress-fill animated" style="--target-width: 87%; animation: progressFill 5s ease-in-out; width: 87%;"></div>';
-
-                const sleepCard = document.querySelector('#sleep .sleep-score');
-                if (sleepCard && sleepCard.parentElement) {
-                    sleepCard.parentElement.appendChild(progressBar);
-                    showToast("🌙 Sleep tracking started...");
-
-                    // Animate score counting up
-                    let score = 0;
-                    const targetScore = 87;
-                    const scoreText = document.getElementById('sleepScoreText');
-                    const scoreCircle = document.getElementById('sleepScoreCircle');
-
-                    const interval = setInterval(() => {
-                        score += 3;
-                        if (score >= targetScore) {
-                            score = targetScore;
-                            clearInterval(interval);
-                        }
-
-                        if (scoreText) {
-                            scoreText.textContent = `${score}/100`;
-                        }
-
-                        // Update circle progress
-                        if (scoreCircle) {
-                            const circumference = 408;
-                            const offset = circumference - (score / 100) * circumference;
-                            scoreCircle.style.strokeDashoffset = offset;
-                        }
-                    }, 100);
-
-                    setTimeout(() => {
-                        if (progressBar.parentNode) {
-                            progressBar.remove();
-                        }
-                        showToast("✅ Sleep analysis complete! Score: " + targetScore + "/100");
-                    }, 5000);
-
-                    console.log('Sleep tracking started');
-                } else {
-                    console.error('Sleep card not found');
-                    showToast("Error: Sleep tracking not available");
-                }
+                console.log('✅ Sleep tracking started');
             } catch (error) {
                 console.error('Sleep tracking error:', error);
-                showToast("Error tracking sleep");
+                showToast('❌ Error tracking sleep');
             }
-        }
+        };
 
-        function expandSleepTips() {
-            console.log('Expanding sleep tips...');
-            try {
-                const tipsContent = `
-                    <h4 style="color: var(--sleep-color); margin-bottom: 1rem;">💡 Personalized Sleep Tips</h4>
-                    <div style="background: rgba(0,0,0,0.05); padding: 1.5rem; border-radius: 12px; margin: 1rem 0;">
-                        <ul style="margin: 0; padding-left: 1.5rem; line-height: 1.8;">
-                            <li>🕙 Your optimal bedtime is 10:30 PM based on your circadian rhythm</li>
-                            <li>🫁 Try the 4-7-8 breathing technique to fall asleep faster</li>
-                            <li>🌡️ Keep your bedroom temperature between 65-68°F (18-20°C)</li>
-                            <li>📱 Avoid screens 1 hour before your target bedtime</li>
-                            <li>🧘 Consider light stretching or meditation before bed</li>
-                            <li>☕ Avoid caffeine after 2 PM for better sleep quality</li>
-                        </ul>
-                    </div>
-                    <button class="btn btn-sleep" onclick="closeSleepTips(this)" style="margin-top: 1rem;">
-                        <i class="fas fa-times"></i>
-                        Close Tips
-                    </button>
-                `;
-
-                if (event && event.target) {
-                    event.target.innerHTML = tipsContent;
-                    showToast("💡 Sleep tips expanded!");
-                }
-            } catch (error) {
-                console.error('Expand sleep tips error:', error);
-                showToast("Error expanding sleep tips");
-            }
-        }
-
-        function closeSleepTips(button) {
-            try {
-                if (button && button.parentElement) {
-                    button.parentElement.innerHTML = '<div style="cursor: pointer;" onclick="expandSleepTips()"><p><i class="fas fa-lightbulb"></i> Click to view personalized sleep tips</p></div>';
-                    showToast("Sleep tips closed");
-                }
-            } catch (error) {
-                console.error('Close sleep tips error:', error);
-            }
-        }
-
-        function viewSleepHistory() {
-            console.log('Viewing sleep history...');
-            try {
-                const modal = document.getElementById('sleepHistoryModal');
-                if (modal) {
-                    modal.classList.add('active');
-                    showToast("📊 Sleep history loaded!");
-                    console.log('Sleep history modal opened');
-                } else {
-                    console.error('Sleep history modal not found');
-                    showToast("Error: Sleep history not available");
-                }
-            } catch (error) {
-                console.error('Sleep history error:', error);
-                showToast("Error viewing sleep history");
-            }
-        }
-
-        // ============ FOCUS FUNCTIONS ============
-        function startFocusSession() {
-            console.log('Starting focus session...');
+        window.startFocusSession = function() {
+            console.log('🎯 Starting focus session...');
             try {
                 if (isTimerRunning) {
-                    stopFocusSession();
+                    isTimerRunning = false;
+                    if (focusTimer) clearInterval(focusTimer);
+                    showToast("⏸️ Focus session stopped");
                     return;
                 }
 
                 isTimerRunning = true;
-                focusTime = 25 * 60; // Reset to 25 minutes
-
-                const button = event.target || document.querySelector('#focus .btn-focus');
-                if (button) {
-                    button.innerHTML = '<i class="fas fa-pause"></i> Pause Session';
-                }
-
+                focusTime = 25 * 60;
                 showToast("🎯 Focus session started! 25 minutes of deep work.");
 
                 focusTimer = setInterval(() => {
                     focusTime--;
-                    updateTimerDisplay();
+                    const minutes = Math.floor(focusTime / 60);
+                    const seconds = focusTime % 60;
+                    const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                    const timerText = document.getElementById('timerText');
+                    if (timerText) timerText.textContent = display;
 
                     if (focusTime <= 0) {
-                        stopFocusSession();
-                        showToast("🎉 Focus session complete! Great work!");
+                        clearInterval(focusTimer);
+                        isTimerRunning = false;
+                        showToast("🎉 Focus session complete!");
                         createConfetti();
                     }
                 }, 1000);
 
-                console.log('Focus session started');
+                console.log('✅ Focus session started');
             } catch (error) {
                 console.error('Focus session error:', error);
-                showToast("Error starting focus session");
+                showToast('❌ Error starting focus session');
             }
-        }
+        };
 
-        function stopFocusSession() {
-            console.log('Stopping focus session...');
-            try {
-                isTimerRunning = false;
-                if (focusTimer) {
-                    clearInterval(focusTimer);
-                    focusTimer = null;
-                }
+        window.selectFocusMode = function(mode) {
+            console.log('🎯 Selecting focus mode:', mode);
+            const modes = {
+                deep: "🔥 Deep Work mode - 50 minutes",
+                light: "✨ Light Focus mode - 25 minutes",
+                relax: "🌸 Relax mode - calm ambience"
+            };
+            showToast(modes[mode] || "🎯 Focus mode activated");
+        };
 
-                const button = document.querySelector('#focus .btn-focus');
-                if (button) {
-                    button.innerHTML = '<i class="fas fa-play"></i> Begin Focus Session';
-                }
-
-                // Reset timer display
-                focusTime = 25 * 60;
-                updateTimerDisplay();
-                showToast("⏸️ Focus session stopped");
-                console.log('Focus session stopped');
-            } catch (error) {
-                console.error('Stop focus session error:', error);
+        window.expandSleepTips = function() {
+            console.log('💡 Expanding sleep tips...');
+            const tipsContent = `
+                <h4 style="color: var(--sleep-color); margin-bottom: 1rem;">💡 Sleep Tips</h4>
+                <ul style="margin: 1rem 0; padding-left: 1.5rem; line-height: 1.8;">
+                    <li>🕙 Optimal bedtime: 10:30 PM</li>
+                    <li>🫁 Try 4-7-8 breathing technique</li>
+                    <li>🌡️ Keep bedroom 65-68°F</li>
+                    <li>📱 No screens 1 hour before bed</li>
+                    <li>🧘 Light stretching helps</li>
+                    <li>☕ No caffeine after 2 PM</li>
+                </ul>
+                <button class="btn btn-sleep" onclick="closeSleepTips(this)">
+                    <i class="fas fa-times"></i> Close Tips
+                </button>
+            `;
+            if (event?.target) {
+                event.target.innerHTML = tipsContent;
+                showToast("💡 Sleep tips expanded!");
             }
-        }
+        };
 
-        function updateTimerDisplay() {
-            try {
-                const minutes = Math.floor(focusTime / 60);
-                const seconds = focusTime % 60;
-                const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-                const timerText = document.getElementById('timerText');
-                if (timerText) {
-                    timerText.textContent = display;
-                }
-
-                // Update circle progress
-                const totalTime = 25 * 60;
-                const progress = (totalTime - focusTime) / totalTime;
-                const circumference = 565;
-                const offset = circumference - (progress * circumference);
-
-                const timerProgress = document.getElementById('timerProgress');
-                if (timerProgress) {
-                    timerProgress.style.strokeDashoffset = offset;
-                }
-            } catch (error) {
-                console.error('Update timer error:', error);
+        window.closeSleepTips = function(button) {
+            if (button?.parentElement) {
+                button.parentElement.innerHTML = '<div style="cursor: pointer;" onclick="expandSleepTips()"><p><i class="fas fa-lightbulb"></i> Click to view personalized sleep tips</p></div>';
+                showToast("Sleep tips closed");
             }
-        }
+        };
 
-        function selectFocusMode(mode) {
-            console.log('Selecting focus mode:', mode);
-            try {
-                const modes = {
-                    deep: "🔥 Deep Work mode activated - 50 minutes of intensive focus",
-                    light: "✨ Light Focus mode activated - 25 minutes of gentle concentration",
-                    relax: "🌸 Relax mode activated - calm background ambience"
+        window.viewSleepHistory = function() {
+            console.log('📊 Viewing sleep history...');
+            const modal = document.getElementById('sleepHistoryModal');
+            if (modal) {
+                modal.classList.add('active');
+                showToast("📊 Sleep history loaded!");
+            } else {
+                showToast('❌ Sleep history not available');
+            }
+        };
+
+        window.showBrainInfo = function(region) {
+            console.log('🧠 Showing brain info for:', region);
+            const modal = document.getElementById('brainInfoModal');
+            const title = document.getElementById('brainRegionTitle');
+            const content = document.getElementById('brainRegionContent');
+
+            if (modal && title && content) {
+                const regions = {
+                    memory: {
+                        title: "Hippocampus - Memory Center",
+                        content: `<p>The hippocampus is crucial for forming new memories and learning.</p>
+                                 <h4>Key Functions:</h4>
+                                 <ul><li>Formation of new memories</li><li>Spatial navigation</li><li>Learning patterns</li></ul>`
+                    },
+                    focus: {
+                        title: "Prefrontal Cortex - Executive Control",
+                        content: `<p>The prefrontal cortex manages executive functions like attention and decision-making.</p>
+                                 <h4>Key Functions:</h4>
+                                 <ul><li>Sustained attention</li><li>Working memory</li><li>Decision-making</li></ul>`
+                    }
                 };
 
-                showToast(modes[mode] || "🎯 Focus mode activated");
-
-                // Update focus time based on mode
-                if (mode === 'deep') {
-                    focusTime = 50 * 60;
-                } else if (mode === 'light') {
-                    focusTime = 25 * 60;
-                } else {
-                    focusTime = 15 * 60;
-                }
-
-                updateTimerDisplay();
-                console.log('Focus mode selected:', mode);
-            } catch (error) {
-                console.error('Select focus mode error:', error);
-                showToast("Error selecting focus mode");
+                const regionInfo = regions[region] || regions.memory;
+                title.textContent = regionInfo.title;
+                content.innerHTML = regionInfo.content;
+                modal.classList.add('active');
+                showToast(`🧠 Learning about ${regionInfo.title}`);
+            } else {
+                showToast('❌ Brain info not available');
             }
-        }
-
-        function startQuoteRotation() {
-            console.log('Starting quote rotation...');
-            try {
-                // Clear existing interval if any
-                if (quoteInterval) {
-                    clearInterval(quoteInterval);
-                }
-
-                const quotes = [
-                    "The successful warrior is the average person with laser-like focus.",
-                    "Concentration is the secret of strength.",
-                    "The art of being wise is knowing what to overlook.",
-                    "Focus on being productive instead of busy.",
-                    "Where focus goes, energy flows and results show.",
-                    "Single-tasking is the new superpower.",
-                    "Attention is the rarest and purest form of generosity."
-                ];
-
-                let currentQuote = 0;
-
-                quoteInterval = setInterval(() => {
-                    if (activeTab === 'focus') {
-                        currentQuote = (currentQuote + 1) % quotes.length;
-                        const quoteElement = document.getElementById('motivationalQuote');
-                        if (quoteElement) {
-                            quoteElement.style.animation = 'none';
-                            quoteElement.textContent = quotes[currentQuote];
-                            setTimeout(() => {
-                                quoteElement.style.animation = 'fadeIn 1s ease';
-                            }, 100);
-                        }
-                    }
-                }, 10000);
-
-                console.log('Quote rotation started');
-            } catch (error) {
-                console.error('Quote rotation error:', error);
-            }
-        }
-
-        // ============ MAKE ALL FUNCTIONS GLOBALLY ACCESSIBLE ============
-        window.navigateToPage = navigateToPage;
-        window.startBrainScan = startBrainScan;
-        window.showBrainInfo = showBrainInfo;
-        window.joinChallenge = joinChallenge;
-        window.openChallenge = openChallenge;
-        window.startChallenge = startChallenge;
-        window.showLeaderboard = showLeaderboard;
-        window.trackSleep = trackSleep;
-        window.expandSleepTips = expandSleepTips;
-        window.closeSleepTips = closeSleepTips;
-        window.viewSleepHistory = viewSleepHistory;
-        window.startFocusSession = startFocusSession;
-        window.stopFocusSession = stopFocusSession;
-        window.selectFocusMode = selectFocusMode;
-        window.showToast = showToast;
-        window.closeModal = closeModal;
-        window.createConfetti = createConfetti;
-        window.startQuoteRotation = startQuoteRotation;
+        };
 
         // ============ EVENT HANDLERS AND INITIALIZATION ============
 
