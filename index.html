@@ -551,6 +551,59 @@
             }
         }
 
+        /* Game Animations */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes targetPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255,107,107,0.6);
+            }
+            100% {
+                transform: scale(1.2);
+                box-shadow: 0 0 30px rgba(255,107,107,0.9);
+            }
+        }
+
+        @keyframes gameIntro {
+            0% {
+                transform: scale(0.8) rotateY(180deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotateY(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes correctAnswer {
+            0% { background: rgba(0,255,0,0.8); transform: scale(1); }
+            50% { background: rgba(0,255,0,1); transform: scale(1.2); }
+            100% { background: rgba(0,255,0,0.8); transform: scale(1); }
+        }
+
+        @keyframes wrongAnswer {
+            0% { background: rgba(255,0,0,0.8); transform: translateX(0); }
+            25% { background: rgba(255,0,0,1); transform: translateX(-10px); }
+            75% { background: rgba(255,0,0,1); transform: translateX(10px); }
+            100% { background: rgba(255,0,0,0.8); transform: translateX(0); }
+        }
+
+        @keyframes scoreUpdate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); color: #ffd700; }
+            100% { transform: scale(1); }
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
