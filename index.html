@@ -1216,53 +1216,113 @@
             }
         }
 
-        // Brain Scan Function
+        // ============ DASHBOARD FUNCTIONS ============
         function startBrainScan() {
             console.log('Starting brain scan...');
-            const modal = document.getElementById('brainScanModal');
-            if (modal) {
-                modal.classList.add('active');
+            try {
+                const modal = document.getElementById('brainScanModal');
+                if (modal) {
+                    modal.classList.add('active');
 
-                // Animate the EEG wave
-                const waves = modal.querySelectorAll('.eeg-wave');
-                waves.forEach(wave => wave.classList.add('growing'));
+                    // Animate the EEG wave
+                    const waves = modal.querySelectorAll('.eeg-wave');
+                    waves.forEach(wave => wave.classList.add('growing'));
 
-                // Simulate analysis text appearing letter by letter
-                setTimeout(() => {
-                    const analysisText = document.getElementById('analysisText');
-                    if (analysisText) {
-                        const messages = [
-                            "Analyzing neural patterns...",
-                            "Detecting theta waves in hippocampus...",
-                            "Measuring prefrontal cortex activity...",
-                            "Analysis complete: Optimal cognitive state detected!"
-                        ];
+                    // Show immediate feedback
+                    showToast("Brain scan initiated!");
 
-                        let messageIndex = 0;
-                        const showNextMessage = () => {
-                            if (messageIndex < messages.length) {
-                                analysisText.textContent = messages[messageIndex];
-                                analysisText.style.width = '0';
-                                analysisText.style.animation = 'none';
-                                setTimeout(() => {
-                                    analysisText.style.animation = 'typewriter 2s steps(40, end)';
-                                    analysisText.style.width = '100%';
-                                }, 100);
-                                messageIndex++;
-                                setTimeout(showNextMessage, 2500);
-                            }
-                        };
-                        showNextMessage();
-                    }
-                }, 500);
-                console.log('Brain scan modal opened');
-            } else {
-                console.error('Brain scan modal not found');
+                    // Simulate analysis text appearing letter by letter
+                    setTimeout(() => {
+                        const analysisText = document.getElementById('analysisText');
+                        if (analysisText) {
+                            const messages = [
+                                "Analyzing neural patterns...",
+                                "Detecting theta waves in hippocampus...",
+                                "Measuring prefrontal cortex activity...",
+                                "Analysis complete: Optimal cognitive state detected!"
+                            ];
+
+                            let messageIndex = 0;
+                            const showNextMessage = () => {
+                                if (messageIndex < messages.length) {
+                                    analysisText.textContent = messages[messageIndex];
+                                    analysisText.style.width = '0';
+                                    analysisText.style.animation = 'none';
+                                    setTimeout(() => {
+                                        analysisText.style.animation = 'typewriter 2s steps(40, end)';
+                                        analysisText.style.width = '100%';
+                                    }, 100);
+                                    messageIndex++;
+                                    setTimeout(showNextMessage, 2500);
+                                }
+                            };
+                            showNextMessage();
+                        }
+                    }, 500);
+                    console.log('Brain scan modal opened');
+                } else {
+                    console.error('Brain scan modal not found');
+                    showToast("Error: Brain scan modal not available");
+                }
+            } catch (error) {
+                console.error('Brain scan error:', error);
+                showToast("Error starting brain scan");
             }
         }
 
-        // Make function globally accessible
-        window.startBrainScan = startBrainScan;
+        function showBrainInfo(region) {
+            console.log('Showing brain info for:', region);
+            try {
+                const modal = document.getElementById('brainInfoModal');
+                const title = document.getElementById('brainRegionTitle');
+                const content = document.getElementById('brainRegionContent');
+
+                if (modal && title && content) {
+                    const regions = {
+                        memory: {
+                            title: "Hippocampus - Memory Center",
+                            content: `
+                                <p>The hippocampus is crucial for forming new memories and learning. Located in the temporal lobe, it acts as a temporary storage area before information is transferred to long-term memory in the cortex.</p>
+                                <h4>Key Functions:</h4>
+                                <ul>
+                                    <li>Formation of new memories</li>
+                                    <li>Spatial navigation</li>
+                                    <li>Learning and pattern recognition</li>
+                                </ul>
+                                <p><strong>Training Tip:</strong> Memory exercises and spatial puzzles can help strengthen hippocampal function.</p>
+                            `
+                        },
+                        focus: {
+                            title: "Prefrontal Cortex - Executive Control",
+                            content: `
+                                <p>The prefrontal cortex is responsible for executive functions including attention, decision-making, and working memory. It's often called the brain's "CEO".</p>
+                                <h4>Key Functions:</h4>
+                                <ul>
+                                    <li>Sustained attention and focus</li>
+                                    <li>Working memory</li>
+                                    <li>Decision-making and planning</li>
+                                    <li>Impulse control</li>
+                                </ul>
+                                <p><strong>Training Tip:</strong> Meditation, focus exercises, and cognitive training can enhance prefrontal cortex function.</p>
+                            `
+                        }
+                    };
+
+                    const regionInfo = regions[region] || regions.memory;
+                    title.textContent = regionInfo.title;
+                    content.innerHTML = regionInfo.content;
+                    modal.classList.add('active');
+                    showToast(`Learning about ${regionInfo.title}`);
+                    console.log('Brain info modal opened for:', region);
+                } else {
+                    console.error('Brain info modal elements not found');
+                    showToast("Error: Brain info not available");
+                }
+            } catch (error) {
+                console.error('Brain info error:', error);
+                showToast("Error showing brain information");
+            }
+        }
 
         // Challenge Functions
         function joinChallenge() {
