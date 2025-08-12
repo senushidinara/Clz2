@@ -1555,6 +1555,277 @@
             }
         }
 
+        // ============ SLEEP FUNCTIONS ============
+        function trackSleep() {
+            console.log('Tracking sleep...');
+            try {
+                const progressBar = document.createElement('div');
+                progressBar.className = 'progress-bar';
+                progressBar.innerHTML = '<div class="progress-fill animated" style="--target-width: 87%; animation: progressFill 5s ease-in-out; width: 87%;"></div>';
+
+                const sleepCard = document.querySelector('#sleep .sleep-score');
+                if (sleepCard && sleepCard.parentElement) {
+                    sleepCard.parentElement.appendChild(progressBar);
+                    showToast("🌙 Sleep tracking started...");
+
+                    // Animate score counting up
+                    let score = 0;
+                    const targetScore = 87;
+                    const scoreText = document.getElementById('sleepScoreText');
+                    const scoreCircle = document.getElementById('sleepScoreCircle');
+
+                    const interval = setInterval(() => {
+                        score += 3;
+                        if (score >= targetScore) {
+                            score = targetScore;
+                            clearInterval(interval);
+                        }
+
+                        if (scoreText) {
+                            scoreText.textContent = `${score}/100`;
+                        }
+
+                        // Update circle progress
+                        if (scoreCircle) {
+                            const circumference = 408;
+                            const offset = circumference - (score / 100) * circumference;
+                            scoreCircle.style.strokeDashoffset = offset;
+                        }
+                    }, 100);
+
+                    setTimeout(() => {
+                        if (progressBar.parentNode) {
+                            progressBar.remove();
+                        }
+                        showToast("✅ Sleep analysis complete! Score: " + targetScore + "/100");
+                    }, 5000);
+
+                    console.log('Sleep tracking started');
+                } else {
+                    console.error('Sleep card not found');
+                    showToast("Error: Sleep tracking not available");
+                }
+            } catch (error) {
+                console.error('Sleep tracking error:', error);
+                showToast("Error tracking sleep");
+            }
+        }
+
+        function expandSleepTips() {
+            console.log('Expanding sleep tips...');
+            try {
+                const tipsContent = `
+                    <h4 style="color: var(--sleep-color); margin-bottom: 1rem;">💡 Personalized Sleep Tips</h4>
+                    <div style="background: rgba(0,0,0,0.05); padding: 1.5rem; border-radius: 12px; margin: 1rem 0;">
+                        <ul style="margin: 0; padding-left: 1.5rem; line-height: 1.8;">
+                            <li>🕙 Your optimal bedtime is 10:30 PM based on your circadian rhythm</li>
+                            <li>🫁 Try the 4-7-8 breathing technique to fall asleep faster</li>
+                            <li>🌡️ Keep your bedroom temperature between 65-68°F (18-20°C)</li>
+                            <li>📱 Avoid screens 1 hour before your target bedtime</li>
+                            <li>🧘 Consider light stretching or meditation before bed</li>
+                            <li>☕ Avoid caffeine after 2 PM for better sleep quality</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-sleep" onclick="closeSleepTips(this)" style="margin-top: 1rem;">
+                        <i class="fas fa-times"></i>
+                        Close Tips
+                    </button>
+                `;
+
+                if (event && event.target) {
+                    event.target.innerHTML = tipsContent;
+                    showToast("💡 Sleep tips expanded!");
+                }
+            } catch (error) {
+                console.error('Expand sleep tips error:', error);
+                showToast("Error expanding sleep tips");
+            }
+        }
+
+        function closeSleepTips(button) {
+            try {
+                if (button && button.parentElement) {
+                    button.parentElement.innerHTML = '<div style="cursor: pointer;" onclick="expandSleepTips()"><p><i class="fas fa-lightbulb"></i> Click to view personalized sleep tips</p></div>';
+                    showToast("Sleep tips closed");
+                }
+            } catch (error) {
+                console.error('Close sleep tips error:', error);
+            }
+        }
+
+        function viewSleepHistory() {
+            console.log('Viewing sleep history...');
+            try {
+                const modal = document.getElementById('sleepHistoryModal');
+                if (modal) {
+                    modal.classList.add('active');
+                    showToast("📊 Sleep history loaded!");
+                    console.log('Sleep history modal opened');
+                } else {
+                    console.error('Sleep history modal not found');
+                    showToast("Error: Sleep history not available");
+                }
+            } catch (error) {
+                console.error('Sleep history error:', error);
+                showToast("Error viewing sleep history");
+            }
+        }
+
+        // ============ FOCUS FUNCTIONS ============
+        function startFocusSession() {
+            console.log('Starting focus session...');
+            try {
+                if (isTimerRunning) {
+                    stopFocusSession();
+                    return;
+                }
+
+                isTimerRunning = true;
+                focusTime = 25 * 60; // Reset to 25 minutes
+
+                const button = event.target || document.querySelector('#focus .btn-focus');
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-pause"></i> Pause Session';
+                }
+
+                showToast("🎯 Focus session started! 25 minutes of deep work.");
+
+                focusTimer = setInterval(() => {
+                    focusTime--;
+                    updateTimerDisplay();
+
+                    if (focusTime <= 0) {
+                        stopFocusSession();
+                        showToast("🎉 Focus session complete! Great work!");
+                        createConfetti();
+                    }
+                }, 1000);
+
+                console.log('Focus session started');
+            } catch (error) {
+                console.error('Focus session error:', error);
+                showToast("Error starting focus session");
+            }
+        }
+
+        function stopFocusSession() {
+            console.log('Stopping focus session...');
+            try {
+                isTimerRunning = false;
+                if (focusTimer) {
+                    clearInterval(focusTimer);
+                    focusTimer = null;
+                }
+
+                const button = document.querySelector('#focus .btn-focus');
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-play"></i> Begin Focus Session';
+                }
+
+                // Reset timer display
+                focusTime = 25 * 60;
+                updateTimerDisplay();
+                showToast("⏸️ Focus session stopped");
+                console.log('Focus session stopped');
+            } catch (error) {
+                console.error('Stop focus session error:', error);
+            }
+        }
+
+        function updateTimerDisplay() {
+            try {
+                const minutes = Math.floor(focusTime / 60);
+                const seconds = focusTime % 60;
+                const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                const timerText = document.getElementById('timerText');
+                if (timerText) {
+                    timerText.textContent = display;
+                }
+
+                // Update circle progress
+                const totalTime = 25 * 60;
+                const progress = (totalTime - focusTime) / totalTime;
+                const circumference = 565;
+                const offset = circumference - (progress * circumference);
+
+                const timerProgress = document.getElementById('timerProgress');
+                if (timerProgress) {
+                    timerProgress.style.strokeDashoffset = offset;
+                }
+            } catch (error) {
+                console.error('Update timer error:', error);
+            }
+        }
+
+        function selectFocusMode(mode) {
+            console.log('Selecting focus mode:', mode);
+            try {
+                const modes = {
+                    deep: "🔥 Deep Work mode activated - 50 minutes of intensive focus",
+                    light: "✨ Light Focus mode activated - 25 minutes of gentle concentration",
+                    relax: "🌸 Relax mode activated - calm background ambience"
+                };
+
+                showToast(modes[mode] || "🎯 Focus mode activated");
+
+                // Update focus time based on mode
+                if (mode === 'deep') {
+                    focusTime = 50 * 60;
+                } else if (mode === 'light') {
+                    focusTime = 25 * 60;
+                } else {
+                    focusTime = 15 * 60;
+                }
+
+                updateTimerDisplay();
+                console.log('Focus mode selected:', mode);
+            } catch (error) {
+                console.error('Select focus mode error:', error);
+                showToast("Error selecting focus mode");
+            }
+        }
+
+        function startQuoteRotation() {
+            console.log('Starting quote rotation...');
+            try {
+                // Clear existing interval if any
+                if (quoteInterval) {
+                    clearInterval(quoteInterval);
+                }
+
+                const quotes = [
+                    "The successful warrior is the average person with laser-like focus.",
+                    "Concentration is the secret of strength.",
+                    "The art of being wise is knowing what to overlook.",
+                    "Focus on being productive instead of busy.",
+                    "Where focus goes, energy flows and results show.",
+                    "Single-tasking is the new superpower.",
+                    "Attention is the rarest and purest form of generosity."
+                ];
+
+                let currentQuote = 0;
+
+                quoteInterval = setInterval(() => {
+                    if (activeTab === 'focus') {
+                        currentQuote = (currentQuote + 1) % quotes.length;
+                        const quoteElement = document.getElementById('motivationalQuote');
+                        if (quoteElement) {
+                            quoteElement.style.animation = 'none';
+                            quoteElement.textContent = quotes[currentQuote];
+                            setTimeout(() => {
+                                quoteElement.style.animation = 'fadeIn 1s ease';
+                            }, 100);
+                        }
+                    }
+                }, 10000);
+
+                console.log('Quote rotation started');
+            } catch (error) {
+                console.error('Quote rotation error:', error);
+            }
+        }
+
         function openChallenge(type) {
             console.log('Opening challenge:', type);
             const modal = document.getElementById('challengeModal');
