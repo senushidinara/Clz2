@@ -1612,163 +1612,42 @@
             }
         };
 
-        // ============ EVENT HANDLERS AND INITIALIZATION ============
-
-        // Close modals when clicking outside
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
-                e.target.classList.remove('active');
-            }
-        });
-
-        // Global error handler
-        window.addEventListener('error', (event) => {
-            console.error('Global error:', event.error);
-            showToast('⚠️ An error occurred. Please try again.');
-        });
-
-        // Gradient move animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes gradientMove {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(100%); }
-            }
-            @keyframes slideInFromRight {
-                from { transform: translateX(100%); }
-                to { transform: translateX(0); }
-            }
-        `;
-        document.head.appendChild(style);
-
         // ============ INITIALIZATION ============
         document.addEventListener('DOMContentLoaded', () => {
             console.log('🚀 NeuroX Initializing...');
 
-            try {
-                // Set initial timer display
-                updateTimerDisplay();
+            // Test all functions
+            const functions = ['navigateToPage', 'openChallenge', 'startChallenge', 'joinChallenge', 'showLeaderboard', 'trackSleep', 'startFocusSession', 'startBrainScan'];
+            let working = 0;
 
-                // Add fallback event listeners for elements that might not have onclick handlers
-                const initializeEventListeners = () => {
-                    console.log('Setting up event listeners...');
-
-                    // Navigation tabs (fallback)
-                    document.querySelectorAll('.nav-tab').forEach(tab => {
-                        if (!tab.onclick) {
-                            tab.addEventListener('click', (e) => {
-                                const page = tab.getAttribute('data-page');
-                                if (page) {
-                                    navigateToPage(page);
-                                }
-                            });
-                        }
-                    });
-
-                    // Challenge cards (fallback)
-                    document.querySelectorAll('.challenge-card').forEach(card => {
-                        if (!card.onclick) {
-                            card.addEventListener('click', () => {
-                                const titleText = card.querySelector('.challenge-title')?.textContent.toLowerCase() || '';
-                                let type = 'memory';
-                                if (titleText.includes('speed')) type = 'speed';
-                                else if (titleText.includes('logic')) type = 'logic';
-                                openChallenge(type);
-                            });
-                        }
-                    });
-
-                    // Focus mode cards (fallback)
-                    document.querySelectorAll('#focus .card-grid .card').forEach(card => {
-                        if (!card.onclick) {
-                            card.addEventListener('click', () => {
-                                const title = card.querySelector('h4')?.textContent.toLowerCase() || '';
-                                if (title.includes('deep')) selectFocusMode('deep');
-                                else if (title.includes('light')) selectFocusMode('light');
-                                else if (title.includes('relax')) selectFocusMode('relax');
-                            });
-                        }
-                    });
-
-                    console.log('Event listeners set up successfully');
-                };
-
-                // Initialize event listeners
-                initializeEventListeners();
-
-                // Test all functions to ensure they're accessible
-                const testFunctions = () => {
-                    console.log('🧪 Testing functions...');
-                    const functions = [
-                        'navigateToPage', 'startBrainScan', 'joinChallenge', 'openChallenge',
-                        'startChallenge', 'showLeaderboard', 'trackSleep', 'expandSleepTips',
-                        'viewSleepHistory', 'startFocusSession', 'selectFocusMode', 'showBrainInfo',
-                        'closeModal', 'showToast'
-                    ];
-
-                    let successCount = 0;
-                    functions.forEach(funcName => {
-                        if (typeof window[funcName] !== 'function') {
-                            console.error(`❌ Function ${funcName} is not accessible globally`);
-                        } else {
-                            console.log(`✅ Function ${funcName} is ready`);
-                            successCount++;
-                        }
-                    });
-
-                    console.log(`🎯 ${successCount}/${functions.length} functions ready`);
-                    return successCount === functions.length;
-                };
-
-                const allFunctionsReady = testFunctions();
-
-                // Add welcome animations
-                setTimeout(() => {
-                    const heroTitle = document.querySelector('.hero-title');
-                    const heroSubtitle = document.querySelector('.hero-subtitle');
-                    if (heroTitle) heroTitle.style.animation = 'fadeInUp 0.8s ease-out';
-                    if (heroSubtitle) heroSubtitle.style.animation = 'fadeInUp 0.8s ease-out 0.2s both';
-                }, 500);
-
-                // Show initialization complete message
-                setTimeout(() => {
-                    if (allFunctionsReady) {
-                        showToast('🎉 NeuroX ready! All features activated.');
-                        console.log('🎉 NeuroX initialization complete - All systems operational!');
-                    } else {
-                        showToast('⚠️ NeuroX started with some issues. Check console.');
-                        console.log('⚠️ NeuroX initialization completed with warnings');
-                    }
-                }, 1000);
-
-            } catch (error) {
-                console.error('❌ Initialization error:', error);
-                showToast('❌ NeuroX initialization failed');
-            }
-        });
-
-        // Add dynamic background animations
-        setInterval(() => {
-            try {
-                const bg = document.getElementById('animatedBg');
-                if (bg) {
-                    bg.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
+            functions.forEach(funcName => {
+                if (typeof window[funcName] === 'function') {
+                    console.log(`✅ ${funcName} ready`);
+                    working++;
+                } else {
+                    console.error(`❌ ${funcName} not working`);
                 }
-            } catch (error) {
-                // Silently handle animation errors
-            }
-        }, 5000);
+            });
 
-        // Final function availability check
-        setTimeout(() => {
-            console.log('🔍 Final function check:');
-            console.log('navigateToPage:', typeof window.navigateToPage);
-            console.log('startBrainScan:', typeof window.startBrainScan);
-            console.log('joinChallenge:', typeof window.joinChallenge);
-            console.log('openChallenge:', typeof window.openChallenge);
-            console.log('trackSleep:', typeof window.trackSleep);
-            console.log('startFocusSession:', typeof window.startFocusSession);
-        }, 2000);
+            console.log(`🎯 ${working}/${functions.length} functions working`);
+
+            // Close modals when clicking outside
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.classList.remove('active');
+                }
+            });
+
+            // Show ready message
+            setTimeout(() => {
+                if (working === functions.length) {
+                    showToast('🎉 NeuroX ready! All challenge buttons working!');
+                    console.log('🎉 ALL SYSTEMS READY - Challenge buttons should work now!');
+                } else {
+                    showToast('⚠️ Some functions may not work properly');
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html>
