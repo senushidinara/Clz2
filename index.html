@@ -1281,15 +1281,57 @@
                 animation: fadeIn 0.5s ease;
             `;
 
-            // Add video background
+            // Add animated video-like background
             const video = document.createElement('div');
             video.style.cssText = `
                 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.3), rgba(0,0,0,0.7)),
-                           url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="brain" patternUnits="userSpaceOnUse" width="20" height="20"><circle cx="10" cy="10" r="3" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23brain)"/></svg>');
-                opacity: 0.8; animation: pulse 3s ease-in-out infinite;
+                background:
+                    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(120, 255, 198, 0.3) 0%, transparent 50%),
+                    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                opacity: 0.9;
+                animation: backgroundMove 10s ease-in-out infinite;
             `;
+
+            // Add floating particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute; width: 4px; height: 4px;
+                    background: rgba(255,255,255,0.6); border-radius: 50%;
+                    left: ${Math.random() * 100}%; top: ${Math.random() * 100}%;
+                    animation: float ${3 + Math.random() * 4}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 2}s;
+                `;
+                video.appendChild(particle);
+            }
+
             gameContainer.appendChild(video);
+
+            // Add dynamic floating animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes backgroundMove {
+                    0%, 100% {
+                        background-position: 0% 50%, 100% 50%, 50% 0%, 0% 0%;
+                    }
+                    50% {
+                        background-position: 100% 50%, 0% 50%, 50% 100%, 100% 100%;
+                    }
+                }
+                @keyframes float {
+                    0%, 100% {
+                        transform: translateY(0px) rotate(0deg);
+                        opacity: 0.6;
+                    }
+                    50% {
+                        transform: translateY(-20px) rotate(180deg);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
 
             // Game content
             const gameContent = document.createElement('div');
