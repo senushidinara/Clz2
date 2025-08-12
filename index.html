@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroMind Elite | The Ultimate Cognitive Platform</title>
+    <title>NeuroMind Elite | Reliable & Functional Edition</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 
+      IMPORTANT NOTE: This app requires an internet connection for two essential libraries below.
+      If the charts or scores do not appear, please ensure you are connected to the internet.
+    -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
@@ -17,13 +19,12 @@
             --text: #d2dae2; --text-muted: #808e9b; --success: #2ed573; --warning: #ffb142; --danger: #ff4757;
             --border: rgba(255, 255, 255, 0.15);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        /* Using a system font for reliability - no external requests */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
         body { background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%); color: var(--text); min-height: 100vh; overflow-x: hidden; }
         .app-container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
-        header, .nav-tabs, .tab-content, .card, .btn { transition: all 0.3s ease; }
         header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; margin-bottom: 2rem; border-bottom: 1px solid var(--border); }
-        .logo { display: flex; align-items: center; gap: 1rem; font-size: 2rem; font-weight: 700; color: var(--text)}
-        .logo i { color: var(--primary); animation: float 4s ease-in-out infinite; }
+        .logo { display: flex; align-items: center; gap: 1rem; font-size: 2rem; font-weight: 700; }
         .nav-tabs { display: flex; background: var(--glass); border-radius: 12px; padding: 0.5rem; margin-bottom: 2rem; backdrop-filter: blur(10px); flex-wrap: wrap; }
         .tab-btn { flex: 1; padding: 1rem; background: transparent; border: none; color: var(--text); font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.75rem; min-width: 140px; }
         .tab-btn:hover { background: rgba(255, 255, 255, 0.1); }
@@ -34,17 +35,11 @@
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
         .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; }
         .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; font-size: 1.4rem; font-weight: 600; }
-        .card-header i { color: var(--primary); }
         .card-body { padding: 1.5rem; }
         .btn { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; margin: 0.5rem 0; }
-        .btn i { margin-right: 0.5rem; }
-        .btn:disabled { background: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
         .btn.primary { background: var(--primary); }
-        .btn.secondary { background: var(--secondary); }
-        .btn:hover:not(:disabled) { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0, 168, 255, 0.5); }
-        .btn.secondary:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(224, 86, 253, 0.5); }
+        .btn:disabled { background: var(--text-muted); cursor: not-allowed; }
         
-        /* --- Feature-Specific Best App Styles --- */
         #cognitive-score-chart-container { position: relative; height: 300px; }
         .sub-scores-container { display: flex; justify-content: space-around; margin-top: 1.5rem; }
         .sub-score { text-align: center; }
@@ -64,10 +59,13 @@
 
         .pulse-guide { animation: pulse-animation 1.5s infinite; }
         @keyframes pulse-animation { 0% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(0, 168, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0); } }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     </style>
 </head>
 <body>
+    <!-- 
+      AUDIO NOTE: Modern browsers will not play sound until you click on the page.
+      Click anywhere to enable the sound effects.
+    -->
     <audio id="sfx-click" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
     <audio id="sfx-success" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
     <audio id="sfx-notify" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
@@ -75,17 +73,17 @@
     <audio id="sfx-lose" src="https://www.soundjay.com/misc/sounds/fail-trombone-01.mp3" preload="auto"></audio>
 
     <div class="app-container">
-        <header><div class="logo"><i class="fas fa-brain"></i> NeuroMind Elite</div></header>
+        <header><div class="logo">🧠 NeuroMind Elite</div></header>
         <nav class="nav-tabs">
-            <button class="tab-btn active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
-            <button class="tab-btn" data-tab="training"><i class="fas fa-tasks"></i> Training Hub</button>
-            <button class="tab-btn" data-tab="insights"><i class="fas fa-chart-pie"></i> Insights</button>
-            <button class="tab-btn" data-tab="coach"><i class="fas fa-user-robot"></i> AI Coach</button>
+            <button class="tab-btn active" data-tab="dashboard">📈 Dashboard</button>
+            <button class="tab-btn" data-tab="training">🏋️ Training Hub</button>
+            <button class="tab-btn" data-tab="insights">💡 Insights</button>
+            <button class="tab-btn" data-tab="coach">🤖 AI Coach</button>
         </nav>
 
         <div id="dashboard" class="tab-content active">
              <div class="card">
-                <div class="card-header"><i class="fas fa-brain"></i> <h2>Your Cognitive Score</h2></div>
+                <div class="card-header">Your Cognitive Score</div>
                 <div class="card-body">
                     <div id="cognitive-score-chart-container"><canvas id="cognitiveScoreChart"></canvas></div>
                     <div class="sub-scores-container">
@@ -100,7 +98,7 @@
         <div id="training" class="tab-content">
              <div class="card-grid">
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-route"></i> <h2>Synaptic Pathway</h2></div>
+                    <div class="card-header">Synaptic Pathway</div>
                     <div class="card-body" style="position:relative; text-align:center;">
                         <div id="memory-game-overlay">
                             <h2 id="game-over-title" style="font-size: 2rem; margin-bottom: 1rem;">You Won!</h2>
@@ -111,16 +109,16 @@
                             <span>Moves: <b id="game-moves">0</b></span>
                         </div>
                         <div class="memory-game-board" id="memory-game-board"></div>
-                        <button class="btn primary" id="start-game-btn"><i class="fas fa-play"></i> Start Game</button>
+                        <button class="btn primary" id="start-game-btn">▶️ Start Game</button>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-puzzle-piece"></i> <h2>Logical Deduction</h2></div>
+                    <div class="card-header">Logical Deduction</div>
                     <div class="card-body" id="deduction-puzzle">
                         <p>If all Bloops are Bleeps, and no Bleeps are Blips, which statement is definitely true?</p>
-                        <button class="btn option" data-correct="true">No Bloop is a Blip.</button>
-                        <button class="btn option" data-correct="false">Some Bleeps are Bloops.</button>
-                        <button class="btn option" data-correct="false">All Blips are Bloops.</button>
+                        <button class="btn primary option" data-correct="true">No Bloop is a Blip.</button>
+                        <button class="btn primary option" data-correct="false">Some Bleeps are Bloops.</button>
+                        <button class="btn primary option" data-correct="false">All Blips are Bloops.</button>
                         <p id="puzzle-feedback" style="margin-top:1rem; font-weight:bold;"></p>
                     </div>
                 </div>
@@ -130,7 +128,7 @@
         <div id="insights" class="tab-content">
             <div class="card-grid">
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-smile-beam"></i> <h2>Log Mood & Correlate</h2></div>
+                    <div class="card-header">Log Mood & Correlate</div>
                     <div class="card-body">
                         <p>Select your current mood to plot it against your live Cognitive Score.</p>
                         <div class="mood-selector" id="mood-selector">
@@ -142,7 +140,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-chart-line"></i> <h2>Mood / Performance Correlation</h2></div>
+                    <div class="card-header">Mood / Performance Correlation</div>
                     <div class="card-body"><canvas id="moodPerformanceChart" height="200"></canvas></div>
                 </div>
             </div>
@@ -150,9 +148,9 @@
         
         <div id="coach" class="tab-content">
              <div class="card">
-                <div class="card-header"><i class="fas fa-user-robot"></i> <h2>Your Proactive AI Coach</h2></div>
+                <div class="card-header">Your Proactive AI Coach</div>
                 <div class="card-body" style="text-align: center;">
-                    <i id="coach-icon" class="fas fa-lightbulb" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                    <span id="coach-icon" style="font-size: 3rem; margin-bottom: 1rem; display:inline-block;">💡</span>
                     <p id="coach-tip" style="font-size: 1.1rem; line-height: 1.6;">Welcome to NeuroMind Elite! Get started by logging your mood on the Insights tab.</p>
                 </div>
             </div>
@@ -161,34 +159,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- The Central Application Object ---
             const app = {
-                // --- State & Data ---
-                state: {
-                    gameRunning: false,
-                    gameTimer: null,
-                    timeLeft: 30,
-                    moves: 0,
-                    flippedCards: [],
-                    matchedPairs: 0,
-                },
-                scores: {
-                    cognitive: 50,
-                    focus: 50,
-                    memory: 50,
-                    resilience: 50,
-                },
+                state: { gameRunning: false, gameTimer: null, timeLeft: 30, moves: 0, flippedCards: [], matchedPairs: 0, soundEnabled: false },
+                scores: { cognitive: 50, focus: 50, memory: 50, resilience: 50 },
                 charts: {},
-                sfx: {
-                    click: new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3"),
-                    success: new Audio("https://www.soundjay.com/buttons/sounds/button-09.mp3"),
-                    notify: new Audio("https://www.soundjay.com/buttons/sounds/button-10.mp3"),
-                    win: new Audio("https://www.soundjay.com/misc/sounds/magic-chime-01.mp3"),
-                    lose: new Audio("https://www.soundjay.com/misc/sounds/fail-trombone-01.mp3"),
-                },
-                // --- Core Methods & Logic ---
+                sfx: {},
                 methods: {
                     playSound(sound) {
+                        if (!app.state.soundEnabled || !app.sfx[sound]) return;
                         app.sfx[sound].currentTime = 0;
                         app.sfx[sound].play();
                     },
@@ -198,11 +176,8 @@
                         app.scores.focus = clamp(app.scores.focus + focusChange);
                         app.scores.memory = clamp(app.scores.memory + memoryChange);
                         app.scores.resilience = clamp(app.scores.resilience + resilienceChange);
-                        
-                        // Weighted average for the main score
                         app.scores.cognitive = Math.round(app.scores.focus * 0.4 + app.scores.memory * 0.4 + app.scores.resilience * 0.2);
                         
-                        // Update UI
                         app.charts.cognitiveGauge.data.datasets[0].value = app.scores.cognitive;
                         app.charts.cognitiveGauge.update();
                         document.getElementById('focus-score-bar').style.width = `${app.scores.focus}%`;
@@ -213,14 +188,14 @@
                     },
 
                     checkScoresForCoach() {
-                        if (app.scores.focus < 40) app.methods.updateCoach("Your focus seems low. Try the Logical Deduction puzzle to sharpen it!", "fa-puzzle-piece");
-                        else if (app.scores.memory < 40) app.methods.updateCoach("Your memory score could use a boost. Play a round of Synaptic Pathway!", "fa-route");
-                        else if (app.scores.resilience < 40) app.methods.updateCoach("Feeling a bit down? Logging your mood can help track patterns and build resilience.", "fa-smile-beam");
+                        if (app.scores.focus < 40) app.methods.updateCoach("Your focus seems low. Try the Logical Deduction puzzle to sharpen it!", "🧩");
+                        else if (app.scores.memory < 40) app.methods.updateCoach("Your memory score could use a boost. Play a round of Synaptic Pathway!", "🧠");
+                        else if (app.scores.resilience < 40) app.methods.updateCoach("Feeling a bit down? Logging your mood can help track patterns and build resilience.", "😊");
                     },
                     
-                    updateCoach(text, icon = 'fa-lightbulb') {
+                    updateCoach(text, icon = '💡') {
                         document.getElementById('coach-tip').textContent = text;
-                        document.getElementById('coach-icon').className = `fas ${icon}`;
+                        document.getElementById('coach-icon').textContent = icon;
                         app.methods.playSound('notify');
                     },
 
@@ -240,7 +215,6 @@
                         app.methods.updateCoach(`Mood logged as ${mood}. Tracking this helps build self-awareness.`);
                     },
                     
-                    // --- Memory Game Methods ---
                     startGame() {
                         if(app.state.gameRunning) return;
                         app.methods.playSound('click');
@@ -250,7 +224,7 @@
                         document.getElementById('game-moves').textContent = app.state.moves;
                         document.getElementById('memory-game-overlay').style.display = 'none';
 
-                        const ICONS = ['atom', 'brain', 'flask', 'dna', 'microscope', 'satellite', 'rocket', 'robot'];
+                        const ICONS = ['⚛️', '🧠', '🧪', '🧬', '🔬', '🛰️', '🚀', '🤖'];
                         const gameIcons = [...ICONS, ...ICONS].sort(() => 0.5 - Math.random());
                         const board = document.getElementById('memory-game-board');
                         board.innerHTML = '';
@@ -258,7 +232,7 @@
                             const card = document.createElement('div');
                             card.className = 'memory-card';
                             card.dataset.icon = icon;
-                            card.innerHTML = `<div class="memory-card-face memory-card-front"></div><div class="memory-card-face memory-card-back"><i class="fas fa-${icon}"></i></div>`;
+                            card.innerHTML = `<div class="memory-card-face memory-card-front"></div><div class="memory-card-face memory-card-back">${icon}</div>`;
                             card.addEventListener('click', app.methods.onCardClick);
                             board.appendChild(card);
                         });
@@ -308,19 +282,30 @@
                         if(won) {
                             app.methods.playSound('win');
                             title.textContent = "Victory!";
-                            app.methods.updateCognitiveScore(0, 15, 0); // Big memory boost
-                            app.methods.updateCoach("Excellent work! Your memory score has increased significantly.");
+                            app.methods.updateCognitiveScore(0, 15, 0);
+                            app.methods.updateCoach("Excellent work! Your memory score has increased significantly.", "🏆");
                         } else {
                             app.methods.playSound('lose');
                             title.textContent = "Time's Up!";
-                            app.methods.updateCognitiveScore(0, -5, 0); // Small penalty
+                            app.methods.updateCognitiveScore(0, -5, 0);
                         }
                     }
                 },
                 
-                // --- Initialization ---
                 init() {
-                    // --- Initialize Charts ---
+                    if (typeof Chart === 'undefined' || typeof ChartDataLabels === 'undefined') {
+                        document.body.innerHTML = `<div style="text-align:center; padding: 50px; font-size:1.2rem;">
+                            <h1>Error</h1>
+                            <p>Could not load essential chart libraries. Please ensure you have an active internet connection and try reloading the page.</p>
+                        </div>`;
+                        return;
+                    }
+                    
+                    ['click', 'success', 'notify', 'win', 'lose'].forEach(sfxKey => {
+                        app.sfx[sfxKey] = document.getElementById(`sfx-${sfxKey}`);
+                    });
+                    document.body.addEventListener('click', () => { app.state.soundEnabled = true }, { once: true });
+
                     Chart.register(ChartDataLabels);
                     const gaugeCtx = document.getElementById('cognitiveScoreChart').getContext('2d');
                     app.charts.cognitiveGauge = new Chart(gaugeCtx, {
@@ -328,20 +313,13 @@
                         data: { datasets: [{ value: app.scores.cognitive, backgroundColor: [var(--primary), var(--glass)], borderWidth: 0, borderRadius: 20 }] },
                         options: {
                             circumference: 180, rotation: -90, cutout: '80%',
-                            plugins: { legend: { display: false }, tooltip: { enabled: false },
-                                datalabels: {
-                                    formatter: (value) => value,
-                                    color: var(--text),
-                                    font: { size: 40, weight: 'bold' }
-                                }
-                            }
+                            plugins: { legend: { display: false }, tooltip: { enabled: false }, datalabels: { formatter: (value) => value, color: var(--text), font: { size: 40, weight: 'bold' } } }
                         }
                     });
 
                     const moodPerfCtx = document.getElementById('moodPerformanceChart').getContext('2d');
                     app.charts.moodPerformance = new Chart(moodPerfCtx, { type: 'line', data: { labels: [], datasets: [{ label: 'Cognitive Score', data: [], borderColor: var(--primary), tension: 0.1 }] }, options: { scales: { y: { beginAtZero: true, max: 100 } } } });
 
-                    // --- Initialize UI & Event Listeners ---
                     document.querySelectorAll('.tab-btn').forEach(tab => tab.addEventListener('click', e => {
                         app.methods.playSound('click');
                         document.querySelector('.tab-btn.active').classList.remove('active');
@@ -354,11 +332,11 @@
                         app.methods.playSound('click');
                         const isCorrect = e.currentTarget.dataset.correct === 'true';
                         document.getElementById('puzzle-feedback').textContent = isCorrect ? 'Correct!' : 'Incorrect.';
-                        document.getElementById('puzzle-feedback').style.color = isCorrect ? var(--success) : var(--danger);
+                        document.getElementById('puzzle-feedback').style.color = isCorrect ? 'var(--success)' : 'var(--danger)';
                         if (isCorrect) {
                             app.methods.playSound('success');
-                            app.methods.updateCognitiveScore(10, 0, 0); // Big focus boost
-                            e.currentTarget.parentNode.style.pointerEvents = 'none'; // Disable further clicks
+                            app.methods.updateCognitiveScore(10, 0, 0);
+                            e.currentTarget.parentNode.style.pointerEvents = 'none';
                         }
                     }));
                     
@@ -371,13 +349,11 @@
                     document.getElementById('start-game-btn').addEventListener('click', app.methods.startGame);
                     document.getElementById('restart-game-btn').addEventListener('click', app.methods.startGame);
 
-                    // --- Initial State ---
-                    app.methods.updateCognitiveScore(); // Initial render
-                    document.querySelector('#mood-selector .mood-btn').classList.add('pulse-guide'); // Guide user
+                    app.methods.updateCognitiveScore();
+                    document.querySelector('#mood-selector .mood-btn').classList.add('pulse-guide');
                 }
             };
             
-            // --- Run Application ---
             app.init();
         });
     </script>
