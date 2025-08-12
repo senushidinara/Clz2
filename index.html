@@ -1782,21 +1782,101 @@
         }
 
         function createConfetti() {
-            for (let i = 0; i < 30; i++) {
+            // Create celebration burst
+            for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
+                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#a0e7e5'];
+                    const shapes = ['●', '▲', '■', '♦', '★', '♥'];
+
                     confetti.style.cssText = `
-                        position: fixed; width: 10px; height: 10px;
-                        background: #FBC4AB; z-index: 999;
-                        left: ${Math.random() * 100}vw; top: -10px;
-                        animation: confettiFall 3s linear forwards;
+                        position: fixed; width: 15px; height: 15px;
+                        color: ${colors[Math.floor(Math.random() * colors.length)]};
+                        font-size: ${10 + Math.random() * 10}px; z-index: 999;
+                        left: ${Math.random() * 100}vw; top: -20px;
+                        animation: confettiFall ${2 + Math.random() * 2}s linear forwards;
+                        pointer-events: none; font-weight: bold;
                     `;
+                    confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
                     document.body.appendChild(confetti);
 
-                    setTimeout(() => confetti.remove(), 3000);
-                }, i * 100);
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+
+            // Add screen flash effect
+            const flash = document.createElement('div');
+            flash.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+                z-index: 998; pointer-events: none;
+                animation: flash 0.5s ease-out;
+            `;
+            document.body.appendChild(flash);
+            setTimeout(() => flash.remove(), 500);
+
+            // Simulate sound effect with visual feedback
+            showSoundEffect('🎉 SUCCESS!');
+        }
+
+        function showSoundEffect(text) {
+            const soundEffect = document.createElement('div');
+            soundEffect.style.cssText = `
+                position: fixed; top: 50%; left: 50%;
+                transform: translate(-50%, -50%); z-index: 1000;
+                font-size: 3rem; font-weight: bold; color: #ffd700;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+                animation: soundBurst 1s ease-out forwards;
+                pointer-events: none;
+            `;
+            soundEffect.textContent = text;
+            document.body.appendChild(soundEffect);
+
+            setTimeout(() => soundEffect.remove(), 1000);
+
+            // Add sound wave rings
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const ring = document.createElement('div');
+                    ring.style.cssText = `
+                        position: fixed; top: 50%; left: 50%;
+                        transform: translate(-50%, -50%); z-index: 999;
+                        width: 100px; height: 100px; border-radius: 50%;
+                        border: 3px solid rgba(255,215,0,0.6);
+                        animation: soundWave 1s ease-out forwards;
+                        pointer-events: none;
+                    `;
+                    document.body.appendChild(ring);
+                    setTimeout(() => ring.remove(), 1000);
+                }, i * 200);
             }
         }
+
+        // Add more animation styles
+        const gameStyles = document.createElement('style');
+        gameStyles.textContent = `
+            @keyframes flash {
+                0% { opacity: 0; }
+                50% { opacity: 1; }
+                100% { opacity: 0; }
+            }
+            @keyframes soundBurst {
+                0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+                50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+                100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+            }
+            @keyframes soundWave {
+                0% {
+                    width: 100px; height: 100px;
+                    border-width: 3px; opacity: 0.6;
+                }
+                100% {
+                    width: 300px; height: 300px;
+                    border-width: 1px; opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(gameStyles);
 
         function navigateToPage(page) {
             console.log('Navigating to:', page);
