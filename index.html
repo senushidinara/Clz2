@@ -2224,106 +2224,134 @@
         `;
         document.head.appendChild(style);
 
-        // Initialize app
+        // ============ INITIALIZATION ============
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM Content Loaded - Initializing NeuroX...');
+            console.log('🚀 NeuroX Initializing...');
 
-            // Set initial timer display
-            updateTimerDisplay();
+            try {
+                // Set initial timer display
+                updateTimerDisplay();
 
-            // Add event listeners for all buttons that don't have onclick handlers
-            const initializeEventListeners = () => {
-                // Navigation tabs
-                document.querySelectorAll('.nav-tab').forEach(tab => {
-                    tab.addEventListener('click', (e) => {
-                        const page = tab.getAttribute('data-page');
-                        if (page) {
-                            navigateToPage(page);
+                // Add fallback event listeners for elements that might not have onclick handlers
+                const initializeEventListeners = () => {
+                    console.log('Setting up event listeners...');
+
+                    // Navigation tabs (fallback)
+                    document.querySelectorAll('.nav-tab').forEach(tab => {
+                        if (!tab.onclick) {
+                            tab.addEventListener('click', (e) => {
+                                const page = tab.getAttribute('data-page');
+                                if (page) {
+                                    navigateToPage(page);
+                                }
+                            });
                         }
                     });
-                });
 
-                // Quick action buttons on home page
-                document.querySelectorAll('.quick-actions .btn').forEach(btn => {
-                    if (!btn.onclick) {
-                        btn.addEventListener('click', () => {
-                            console.log('Quick action button clicked');
-                        });
-                    }
-                });
+                    // Challenge cards (fallback)
+                    document.querySelectorAll('.challenge-card').forEach(card => {
+                        if (!card.onclick) {
+                            card.addEventListener('click', () => {
+                                const titleText = card.querySelector('.challenge-title')?.textContent.toLowerCase() || '';
+                                let type = 'memory';
+                                if (titleText.includes('speed')) type = 'speed';
+                                else if (titleText.includes('logic')) type = 'logic';
+                                openChallenge(type);
+                            });
+                        }
+                    });
 
-                // Challenge cards
-                document.querySelectorAll('.challenge-card').forEach(card => {
-                    if (!card.onclick) {
-                        card.addEventListener('click', () => {
-                            const type = card.querySelector('.challenge-title')?.textContent.toLowerCase().includes('memory') ? 'memory' :
-                                         card.querySelector('.challenge-title')?.textContent.toLowerCase().includes('speed') ? 'speed' : 'logic';
-                            openChallenge(type);
-                        });
-                    }
-                });
+                    // Focus mode cards (fallback)
+                    document.querySelectorAll('#focus .card-grid .card').forEach(card => {
+                        if (!card.onclick) {
+                            card.addEventListener('click', () => {
+                                const title = card.querySelector('h4')?.textContent.toLowerCase() || '';
+                                if (title.includes('deep')) selectFocusMode('deep');
+                                else if (title.includes('light')) selectFocusMode('light');
+                                else if (title.includes('relax')) selectFocusMode('relax');
+                            });
+                        }
+                    });
 
-                // Focus mode cards
-                document.querySelectorAll('#focus .card-grid .card').forEach(card => {
-                    if (!card.onclick) {
-                        card.addEventListener('click', () => {
-                            const title = card.querySelector('h4')?.textContent.toLowerCase();
-                            if (title?.includes('deep')) selectFocusMode('deep');
-                            else if (title?.includes('light')) selectFocusMode('light');
-                            else if (title?.includes('relax')) selectFocusMode('relax');
-                        });
-                    }
-                });
+                    console.log('Event listeners set up successfully');
+                };
 
-                // Sleep tips expansion
-                const sleepTipsElement = document.querySelector('#sleep [onclick="expandSleepTips()"]');
-                if (sleepTipsElement && !sleepTipsElement.onclick) {
-                    sleepTipsElement.addEventListener('click', expandSleepTips);
-                }
+                // Initialize event listeners
+                initializeEventListeners();
 
-                console.log('Event listeners initialized');
-            };
+                // Test all functions to ensure they're accessible
+                const testFunctions = () => {
+                    console.log('🧪 Testing functions...');
+                    const functions = [
+                        'navigateToPage', 'startBrainScan', 'joinChallenge', 'openChallenge',
+                        'startChallenge', 'showLeaderboard', 'trackSleep', 'expandSleepTips',
+                        'viewSleepHistory', 'startFocusSession', 'selectFocusMode', 'showBrainInfo',
+                        'closeModal', 'showToast'
+                    ];
 
-            // Initialize event listeners
-            initializeEventListeners();
+                    let successCount = 0;
+                    functions.forEach(funcName => {
+                        if (typeof window[funcName] !== 'function') {
+                            console.error(`❌ Function ${funcName} is not accessible globally`);
+                        } else {
+                            console.log(`✅ Function ${funcName} is ready`);
+                            successCount++;
+                        }
+                    });
 
-            // Add some initial animations
-            setTimeout(() => {
-                const heroTitle = document.querySelector('.hero-title');
-                const heroSubtitle = document.querySelector('.hero-subtitle');
-                if (heroTitle) heroTitle.style.animation = 'fadeInUp 0.8s ease-out';
-                if (heroSubtitle) heroSubtitle.style.animation = 'fadeInUp 0.8s ease-out 0.2s both';
-            }, 500);
+                    console.log(`🎯 ${successCount}/${functions.length} functions ready`);
+                    return successCount === functions.length;
+                };
 
-            // Test all functions to ensure they're accessible
-            const testFunctions = () => {
-                const functions = [
-                    'navigateToPage', 'startBrainScan', 'joinChallenge', 'openChallenge',
-                    'startChallenge', 'showLeaderboard', 'trackSleep', 'expandSleepTips',
-                    'viewSleepHistory', 'startFocusSession', 'selectFocusMode', 'showBrainInfo',
-                    'closeModal', 'showToast'
-                ];
+                const allFunctionsReady = testFunctions();
 
-                functions.forEach(funcName => {
-                    if (typeof window[funcName] !== 'function') {
-                        console.error(`Function ${funcName} is not accessible globally`);
+                // Add welcome animations
+                setTimeout(() => {
+                    const heroTitle = document.querySelector('.hero-title');
+                    const heroSubtitle = document.querySelector('.hero-subtitle');
+                    if (heroTitle) heroTitle.style.animation = 'fadeInUp 0.8s ease-out';
+                    if (heroSubtitle) heroSubtitle.style.animation = 'fadeInUp 0.8s ease-out 0.2s both';
+                }, 500);
+
+                // Show initialization complete message
+                setTimeout(() => {
+                    if (allFunctionsReady) {
+                        showToast('🎉 NeuroX ready! All features activated.');
+                        console.log('🎉 NeuroX initialization complete - All systems operational!');
                     } else {
-                        console.log(`✓ Function ${funcName} is ready`);
+                        showToast('⚠️ NeuroX started with some issues. Check console.');
+                        console.log('⚠️ NeuroX initialization completed with warnings');
                     }
-                });
-            };
+                }, 1000);
 
-            testFunctions();
-            console.log('NeuroX initialization complete!');
+            } catch (error) {
+                console.error('❌ Initialization error:', error);
+                showToast('❌ NeuroX initialization failed');
+            }
         });
 
-        // Add some dynamic background animations
+        // Add dynamic background animations
         setInterval(() => {
-            const bg = document.getElementById('animatedBg');
-            if (bg) {
-                bg.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
+            try {
+                const bg = document.getElementById('animatedBg');
+                if (bg) {
+                    bg.style.backgroundPosition = `${Math.random() * 100}% ${Math.random() * 100}%`;
+                }
+            } catch (error) {
+                // Silently handle animation errors
             }
         }, 5000);
+
+        // Final function availability check
+        setTimeout(() => {
+            console.log('🔍 Final function check:');
+            console.log('navigateToPage:', typeof window.navigateToPage);
+            console.log('startBrainScan:', typeof window.startBrainScan);
+            console.log('joinChallenge:', typeof window.joinChallenge);
+            console.log('openChallenge:', typeof window.openChallenge);
+            console.log('trackSleep:', typeof window.trackSleep);
+            console.log('startFocusSession:', typeof window.startFocusSession);
+        }, 2000);
     </script>
 </body>
 </html>
