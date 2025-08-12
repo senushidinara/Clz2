@@ -1473,65 +1473,89 @@
 
         // Focus Functions
         function startFocusSession() {
+            console.log('Starting focus session...');
             if (isTimerRunning) {
                 stopFocusSession();
                 return;
             }
-            
+
             isTimerRunning = true;
             focusTime = 25 * 60; // Reset to 25 minutes
-            
-            const button = event.target;
-            button.innerHTML = '<i class="fas fa-pause"></i> Pause Session';
-            
+
+            const button = event.target || document.querySelector('#focus .btn-focus');
+            if (button) {
+                button.innerHTML = '<i class="fas fa-pause"></i> Pause Session';
+            }
+
             focusTimer = setInterval(() => {
                 focusTime--;
                 updateTimerDisplay();
-                
+
                 if (focusTime <= 0) {
                     stopFocusSession();
                     showToast("Focus session complete! Great work!");
                 }
             }, 1000);
+
+            console.log('Focus session started');
         }
 
         function stopFocusSession() {
+            console.log('Stopping focus session...');
             isTimerRunning = false;
-            clearInterval(focusTimer);
-            
+            if (focusTimer) {
+                clearInterval(focusTimer);
+                focusTimer = null;
+            }
+
             const button = document.querySelector('#focus .btn-focus');
-            button.innerHTML = '<i class="fas fa-play"></i> Begin Focus Session';
-            
+            if (button) {
+                button.innerHTML = '<i class="fas fa-play"></i> Begin Focus Session';
+            }
+
             // Reset timer display
             focusTime = 25 * 60;
             updateTimerDisplay();
+            console.log('Focus session stopped');
         }
 
         function updateTimerDisplay() {
             const minutes = Math.floor(focusTime / 60);
             const seconds = focusTime % 60;
             const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            document.getElementById('timerText').textContent = display;
-            
+
+            const timerText = document.getElementById('timerText');
+            if (timerText) {
+                timerText.textContent = display;
+            }
+
             // Update circle progress
             const totalTime = 25 * 60;
             const progress = (totalTime - focusTime) / totalTime;
             const circumference = 565;
             const offset = circumference - (progress * circumference);
-            
-            document.getElementById('timerProgress').style.strokeDashoffset = offset;
+
+            const timerProgress = document.getElementById('timerProgress');
+            if (timerProgress) {
+                timerProgress.style.strokeDashoffset = offset;
+            }
         }
 
         function selectFocusMode(mode) {
+            console.log('Selecting focus mode:', mode);
             const modes = {
                 deep: "Deep Work mode activated - 50 minutes of intensive focus",
-                light: "Light Focus mode activated - 25 minutes of gentle concentration", 
+                light: "Light Focus mode activated - 25 minutes of gentle concentration",
                 relax: "Relax mode activated - calm background ambience"
             };
-            
-            showToast(modes[mode]);
+
+            showToast(modes[mode] || "Focus mode activated");
         }
+
+        // Make functions globally accessible
+        window.startFocusSession = startFocusSession;
+        window.stopFocusSession = stopFocusSession;
+        window.selectFocusMode = selectFocusMode;
 
         // Quote rotation for focus page
         function startQuoteRotation() {
