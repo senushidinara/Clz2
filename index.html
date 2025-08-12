@@ -1826,6 +1826,26 @@
             }
         }
 
+        // ============ MAKE ALL FUNCTIONS GLOBALLY ACCESSIBLE ============
+        window.navigateToPage = navigateToPage;
+        window.startBrainScan = startBrainScan;
+        window.showBrainInfo = showBrainInfo;
+        window.joinChallenge = joinChallenge;
+        window.openChallenge = openChallenge;
+        window.startChallenge = startChallenge;
+        window.showLeaderboard = showLeaderboard;
+        window.trackSleep = trackSleep;
+        window.expandSleepTips = expandSleepTips;
+        window.closeSleepTips = closeSleepTips;
+        window.viewSleepHistory = viewSleepHistory;
+        window.startFocusSession = startFocusSession;
+        window.stopFocusSession = stopFocusSession;
+        window.selectFocusMode = selectFocusMode;
+        window.showToast = showToast;
+        window.closeModal = closeModal;
+        window.createConfetti = createConfetti;
+        window.startQuoteRotation = startQuoteRotation;
+
         function openChallenge(type) {
             console.log('Opening challenge:', type);
             const modal = document.getElementById('challengeModal');
