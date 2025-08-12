@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroMind Elite | Reliable & Functional Edition</title>
+    <title>NeuroMind Elite | Advanced Cognitive Training Platform</title>
     
-    <!-- 
-      IMPORTANT NOTE: This app requires an internet connection for two essential libraries below.
-      If the charts or scores do not appear, please ensure you are connected to the internet.
-    -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
@@ -17,90 +13,255 @@
             --primary: #00a8ff; --primary-light: #4ddbff; --secondary: #e056fd; --tertiary: #7bed9f;
             --dark: #1e272e; --darker: #191f24; --card-bg: rgba(45, 52, 54, 0.6); --glass: rgba(255, 255, 255, 0.08);
             --text: #d2dae2; --text-muted: #808e9b; --success: #2ed573; --warning: #ffb142; --danger: #ff4757;
-            --border: rgba(255, 255, 255, 0.15);
+            --border: rgba(255, 255, 255, 0.15); --eeg-delta: #8e44ad; --eeg-theta: #3498db; --eeg-alpha: #2ecc71;
+            --eeg-beta: #f39c12; --eeg-gamma: #e74c3c;
         }
-        /* Using a system font for reliability - no external requests */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         body { background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%); color: var(--text); min-height: 100vh; overflow-x: hidden; }
         .app-container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
+        
         header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; margin-bottom: 2rem; border-bottom: 1px solid var(--border); }
         .logo { display: flex; align-items: center; gap: 1rem; font-size: 2rem; font-weight: 700; }
-        .nav-tabs { display: flex; background: var(--glass); border-radius: 12px; padding: 0.5rem; margin-bottom: 2rem; backdrop-filter: blur(10px); flex-wrap: wrap; }
-        .tab-btn { flex: 1; padding: 1rem; background: transparent; border: none; color: var(--text); font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.75rem; min-width: 140px; }
+        .user-stats { display: flex; gap: 1rem; font-size: 0.9rem; }
+        .stat-item { text-align: center; padding: 0.5rem; background: var(--glass); border-radius: 8px; }
+
+        .nav-tabs { display: flex; background: var(--glass); border-radius: 12px; padding: 0.5rem; margin-bottom: 2rem; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 0.25rem; }
+        .tab-btn { flex: 1; padding: 0.8rem 1rem; background: transparent; border: none; color: var(--text); font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; min-width: 120px; font-size: 0.85rem; }
         .tab-btn:hover { background: rgba(255, 255, 255, 0.1); }
         .tab-btn.active { background: var(--primary); box-shadow: 0 4px 15px rgba(0, 168, 255, 0.4); }
+
         .tab-content { display: none; animation: fadeIn 0.6s; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
-        .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; }
-        .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; font-size: 1.4rem; font-weight: 600; }
-        .card-body { padding: 1.5rem; }
-        .btn { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; margin: 0.5rem 0; }
-        .btn.primary { background: var(--primary); }
-        .btn:disabled { background: var(--text-muted); cursor: not-allowed; }
-        
-        #cognitive-score-chart-container { position: relative; height: 300px; }
-        .sub-scores-container { display: flex; justify-content: space-around; margin-top: 1.5rem; }
-        .sub-score { text-align: center; }
-        .sub-score .progress-bar { width: 100px; height: 8px; background: var(--glass); border-radius: 4px; margin: 0.5rem auto 0; overflow: hidden; }
-        .sub-score .progress-fill { height: 100%; width: 50%; background: var(--primary); transition: width 0.5s ease; }
-        .sub-score .memory { background: var(--secondary); }
-        .sub-score .resilience { background: var(--tertiary); }
-        
-        .memory-game-board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 400px; margin: 1rem auto; perspective: 1000px; }
-        .memory-card { aspect-ratio: 1; position: relative; cursor: pointer; transform-style: preserve-3d; transition: transform 0.6s; }
-        .memory-card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 2rem;}
-        .memory-card-front { background: var(--glass); }
-        .memory-card-back { background: linear-gradient(135deg, var(--primary), var(--secondary)); transform: rotateY(180deg); }
-        .memory-card.is-flipped { transform: rotateY(180deg); }
-        .memory-card.is-matched { opacity: 0.5; }
-        #memory-game-overlay { position: absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); display:none; flex-direction:column; justify-content:center; align-items:center; z-index:10; }
 
-        .pulse-guide { animation: pulse-animation 1.5s infinite; }
-        @keyframes pulse-animation { 0% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(0, 168, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0); } }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; backdrop-filter: blur(10px); }
+        .card-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: between; gap: 1rem; font-size: 1.4rem; font-weight: 600; }
+        .card-body { padding: 1.5rem; }
+        .card.full-width { grid-column: 1 / -1; }
+
+        .btn { padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; margin: 0.5rem 0.5rem 0.5rem 0; transition: all 0.3s; }
+        .btn.primary { background: var(--primary); color: white; }
+        .btn.secondary { background: var(--secondary); color: white; }
+        .btn.success { background: var(--success); color: white; }
+        .btn.danger { background: var(--danger); color: white; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .btn:disabled { background: var(--text-muted); cursor: not-allowed; transform: none; }
+
+        /* Assessment Tests Styles */
+        .test-container { text-align: center; position: relative; }
+        .reaction-test { width: 300px; height: 300px; margin: 2rem auto; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+        .reaction-test.waiting { background: var(--danger); }
+        .reaction-test.ready { background: var(--success); }
+        .reaction-test.clicked { background: var(--warning); }
+
+        .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 400px; margin: 2rem auto; }
+        .memory-item { aspect-ratio: 1; background: var(--glass); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; transition: all 0.3s; }
+        .memory-item:hover { background: var(--primary); }
+        .memory-item.highlighted { background: var(--secondary); }
+
+        .spatial-puzzle { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 300px; margin: 2rem auto; }
+        .puzzle-piece { aspect-ratio: 1; background: var(--glass); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: all 0.3s; }
+        .puzzle-piece.correct { background: var(--success); }
+        .puzzle-piece.incorrect { background: var(--danger); }
+
+        .attention-task { display: flex; justify-content: center; align-items: center; height: 200px; gap: 2rem; }
+        .attention-target { width: 60px; height: 60px; border-radius: 50%; background: var(--glass); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+        .attention-target.active { background: var(--primary); animation: pulse 1s infinite; }
+
+        /* Progress Tracking Styles */
+        .progress-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .progress-stat { background: var(--glass); padding: 1.5rem; border-radius: 12px; text-align: center; }
+        .progress-stat h3 { color: var(--primary); font-size: 2rem; margin-bottom: 0.5rem; }
+        .progress-chart { height: 300px; margin: 1rem 0; }
+
+        /* Meditation Styles */
+        .meditation-controls { text-align: center; margin: 2rem 0; }
+        .breathing-circle { width: 200px; height: 200px; border-radius: 50%; margin: 2rem auto; background: radial-gradient(circle, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; }
+        .breathing-circle.inhale { animation: breatheIn 4s ease-in-out infinite; }
+        .breathing-circle.exhale { animation: breatheOut 4s ease-in-out infinite; }
+        @keyframes breatheIn { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        @keyframes breatheOut { 0%, 100% { transform: scale(1.2); } 50% { transform: scale(0.8); } }
+
+        /* Sleep Tracking Styles */
+        .sleep-log { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .sleep-input { padding: 1rem; background: var(--glass); border-radius: 8px; border: 1px solid var(--border); color: var(--text); }
+        .sleep-phase { display: flex; justify-content: space-between; align-items: center; padding: 1rem; margin: 0.5rem 0; background: var(--glass); border-radius: 8px; }
+
+        /* EEG Visualization Styles */
+        .eeg-container { position: relative; height: 400px; background: var(--darker); border-radius: 12px; overflow: hidden; }
+        .brainwave { height: 60px; margin: 10px 0; position: relative; }
+        .wave-line { height: 100%; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: wave 2s linear infinite; }
+        .wave-delta { --wave-color: var(--eeg-delta); animation-duration: 3s; }
+        .wave-theta { --wave-color: var(--eeg-theta); animation-duration: 2.5s; }
+        .wave-alpha { --wave-color: var(--eeg-alpha); animation-duration: 2s; }
+        .wave-beta { --wave-color: var(--eeg-beta); animation-duration: 1.5s; }
+        .wave-gamma { --wave-color: var(--eeg-gamma); animation-duration: 1s; }
+        @keyframes wave { 0% { transform: translateX(-100%); } 100% { transform: translateX(100vw); } }
+
+        .brainwave-label { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-weight: 600; }
+
+        /* Mood Tracking Enhanced */
+        .mood-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .mood-btn { padding: 1rem; background: var(--glass); border: none; border-radius: 12px; font-size: 2rem; cursor: pointer; transition: all 0.3s; }
+        .mood-btn:hover { background: var(--primary); }
+        .mood-btn.selected { background: var(--secondary); }
+
+        /* Data Export */
+        .export-options { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
+        .data-summary { background: var(--glass); padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .pulse-guide { animation: pulse 1.5s infinite; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .app-container { padding: 1rem; }
+            .nav-tabs { flex-direction: column; }
+            .tab-btn { min-width: auto; }
+            .card-grid { grid-template-columns: 1fr; }
+            .user-stats { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
-    <!-- 
-      AUDIO NOTE: Modern browsers will not play sound until you click on the page.
-      Click anywhere to enable the sound effects.
-    -->
-    <audio id="sfx-click" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
-    <audio id="sfx-success" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
-    <audio id="sfx-notify" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
-    <audio id="sfx-win" src="https://www.soundjay.com/misc/sounds/magic-chime-01.mp3" preload="auto"></audio>
-    <audio id="sfx-lose" src="https://www.soundjay.com/misc/sounds/fail-trombone-01.mp3" preload="auto"></audio>
-
     <div class="app-container">
-        <header><div class="logo">🧠 NeuroMind Elite</div></header>
+        <header>
+            <div class="logo">🧠 NeuroMind Elite</div>
+            <div class="user-stats">
+                <div class="stat-item">
+                    <div>Cognitive Score</div>
+                    <div id="header-cognitive-score">75</div>
+                </div>
+                <div class="stat-item">
+                    <div>Sessions</div>
+                    <div id="header-sessions">12</div>
+                </div>
+                <div class="stat-item">
+                    <div>Streak</div>
+                    <div id="header-streak">5 days</div>
+                </div>
+            </div>
+        </header>
+
         <nav class="nav-tabs">
             <button class="tab-btn active" data-tab="dashboard">📈 Dashboard</button>
-            <button class="tab-btn" data-tab="training">🏋️ Training Hub</button>
+            <button class="tab-btn" data-tab="assessment">🧪 Assessment</button>
+            <button class="tab-btn" data-tab="training">🏋️ Training</button>
+            <button class="tab-btn" data-tab="progress">📊 Progress</button>
+            <button class="tab-btn" data-tab="meditation">🧘 Meditation</button>
+            <button class="tab-btn" data-tab="sleep">😴 Sleep</button>
+            <button class="tab-btn" data-tab="eeg">🧠 EEG</button>
             <button class="tab-btn" data-tab="insights">💡 Insights</button>
             <button class="tab-btn" data-tab="coach">🤖 AI Coach</button>
         </nav>
 
+        <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
-             <div class="card">
-                <div class="card-header">Your Cognitive Score</div>
-                <div class="card-body">
-                    <div id="cognitive-score-chart-container"><canvas id="cognitiveScoreChart"></canvas></div>
-                    <div class="sub-scores-container">
-                        <div class="sub-score"><span>Focus</span><div class="progress-bar"><div id="focus-score-bar" class="progress-fill"></div></div></div>
-                        <div class="sub-score"><span>Memory</span><div class="progress-bar"><div id="memory-score-bar" class="progress-fill memory"></div></div></div>
-                        <div class="sub-score"><span>Resilience</span><div class="progress-bar"><div id="resilience-score-bar" class="progress-fill resilience"></div></div></div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">Cognitive Score Overview</div>
+                    <div class="card-body">
+                        <div style="height: 300px; position: relative;">
+                            <canvas id="cognitiveScoreChart"></canvas>
+                        </div>
+                        <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+                            <div style="text-align: center;">
+                                <span>Focus</span>
+                                <div style="width: 100px; height: 8px; background: var(--glass); border-radius: 4px; margin: 0.5rem auto;">
+                                    <div id="focus-score-bar" style="height: 100%; width: 75%; background: var(--primary); border-radius: 4px;"></div>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <span>Memory</span>
+                                <div style="width: 100px; height: 8px; background: var(--glass); border-radius: 4px; margin: 0.5rem auto;">
+                                    <div id="memory-score-bar" style="height: 100%; width: 65%; background: var(--secondary); border-radius: 4px;"></div>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <span>Resilience</span>
+                                <div style="width: 100px; height: 8px; background: var(--glass); border-radius: 4px; margin: 0.5rem auto;">
+                                    <div id="resilience-score-bar" style="height: 100%; width: 80%; background: var(--tertiary); border-radius: 4px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Today's Summary</div>
+                    <div class="card-body">
+                        <div id="daily-summary">
+                            <p>🎯 <strong>Tests Completed:</strong> <span id="daily-tests">3</span></p>
+                            <p>⏱️ <strong>Training Time:</strong> <span id="daily-time">15 min</span></p>
+                            <p>🧘 <strong>Meditation:</strong> <span id="daily-meditation">5 min</span></p>
+                            <p>😊 <strong>Mood:</strong> <span id="daily-mood">Focused</span></p>
+                            <p>💤 <strong>Sleep:</strong> <span id="daily-sleep">7.5 hrs</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Assessment Tab -->
+        <div id="assessment" class="tab-content">
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">Reaction Time Test</div>
+                    <div class="card-body">
+                        <div class="test-container">
+                            <div id="reaction-circle" class="reaction-test waiting">Click when GREEN</div>
+                            <p id="reaction-result">Best: <span id="best-reaction">--</span>ms | Last: <span id="last-reaction">--</span>ms</p>
+                            <button class="btn primary" id="start-reaction-test">Start Test</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Memory Recall Test</div>
+                    <div class="card-body">
+                        <div class="test-container">
+                            <p id="memory-instructions">Watch the sequence, then repeat it</p>
+                            <div class="memory-grid" id="memory-test-grid"></div>
+                            <p id="memory-score">Score: <span id="memory-test-score">0</span> | Level: <span id="memory-level">1</span></p>
+                            <button class="btn primary" id="start-memory-test">Start Memory Test</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Spatial Reasoning</div>
+                    <div class="card-body">
+                        <div class="test-container">
+                            <p id="spatial-instructions">Find the pattern and complete the sequence</p>
+                            <div class="spatial-puzzle" id="spatial-puzzle"></div>
+                            <p id="spatial-score">Correct: <span id="spatial-correct">0</span> | Total: <span id="spatial-total">0</span></p>
+                            <button class="btn primary" id="start-spatial-test">Start Spatial Test</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Attention & Focus</div>
+                    <div class="card-body">
+                        <div class="test-container">
+                            <p id="attention-instructions">Click only the blue targets as they appear</p>
+                            <div class="attention-task" id="attention-task"></div>
+                            <p id="attention-score">Accuracy: <span id="attention-accuracy">--</span>% | Speed: <span id="attention-speed">--</span>ms</p>
+                            <button class="btn primary" id="start-attention-test">Start Attention Test</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Training Tab -->
         <div id="training" class="tab-content">
-             <div class="card-grid">
+            <div class="card-grid">
                 <div class="card">
                     <div class="card-header">Synaptic Pathway</div>
                     <div class="card-body" style="position:relative; text-align:center;">
-                        <div id="memory-game-overlay">
+                        <div id="memory-game-overlay" style="position: absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); display:none; flex-direction:column; justify-content:center; align-items:center; z-index:10;">
                             <h2 id="game-over-title" style="font-size: 2rem; margin-bottom: 1rem;">You Won!</h2>
                             <button class="btn primary" id="restart-game-btn">Play Again</button>
                         </div>
@@ -108,10 +269,29 @@
                             <span>Time: <b id="game-time">30</b>s</span>
                             <span>Moves: <b id="game-moves">0</b></span>
                         </div>
-                        <div class="memory-game-board" id="memory-game-board"></div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 400px; margin: 1rem auto; perspective: 1000px;" id="memory-game-board"></div>
                         <button class="btn primary" id="start-game-btn">▶️ Start Game</button>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">GABA/Glutamate Balance</div>
+                    <div class="card-body">
+                        <p>Exercises designed to promote neurotransmitter balance</p>
+                        <div style="text-align: center; margin: 2rem 0;">
+                            <div style="display: flex; justify-content: space-between; margin: 1rem 0;">
+                                <span>Relaxation (GABA)</span>
+                                <span>Focus (Glutamate)</span>
+                            </div>
+                            <div style="height: 20px; background: linear-gradient(90deg, var(--success) 0%, var(--glass) 50%, var(--primary) 100%); border-radius: 10px; position: relative;">
+                                <div id="neurotransmitter-indicator" style="width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 0; left: 50%; transform: translateX(-50%);"></div>
+                            </div>
+                        </div>
+                        <button class="btn secondary" id="gaba-exercise">GABA Boost Exercise</button>
+                        <button class="btn primary" id="glutamate-exercise">Glutamate Focus Exercise</button>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-header">Logical Deduction</div>
                     <div class="card-body" id="deduction-puzzle">
@@ -122,238 +302,900 @@
                         <p id="puzzle-feedback" style="margin-top:1rem; font-weight:bold;"></p>
                     </div>
                 </div>
-             </div>
+            </div>
         </div>
 
-        <div id="insights" class="tab-content">
+        <!-- Progress Tab -->
+        <div id="progress" class="tab-content">
+            <div class="progress-overview">
+                <div class="progress-stat">
+                    <h3 id="progress-sessions">24</h3>
+                    <p>Total Sessions</p>
+                </div>
+                <div class="progress-stat">
+                    <h3 id="progress-improvement">+15%</h3>
+                    <p>This Week</p>
+                </div>
+                <div class="progress-stat">
+                    <h3 id="progress-streak">8</h3>
+                    <p>Day Streak</p>
+                </div>
+                <div class="progress-stat">
+                    <h3 id="progress-time">2.5h</h3>
+                    <p>Total Time</p>
+                </div>
+            </div>
+
             <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">Log Mood & Correlate</div>
+                <div class="card full-width">
+                    <div class="card-header">Progress Over Time</div>
                     <div class="card-body">
-                        <p>Select your current mood to plot it against your live Cognitive Score.</p>
-                        <div class="mood-selector" id="mood-selector">
-                            <button class="mood-btn" data-mood="Happy">😊</button>
-                            <button class="mood-btn" data-mood="Neutral">😐</button>
-                            <button class="mood-btn" data-mood="Stressed">😟</button>
-                            <button class="mood-btn" data-mood="Tired">😴</button>
+                        <div class="progress-chart">
+                            <canvas id="progressChart"></canvas>
                         </div>
                     </div>
                 </div>
+
                 <div class="card">
-                    <div class="card-header">Mood / Performance Correlation</div>
-                    <div class="card-body"><canvas id="moodPerformanceChart" height="200"></canvas></div>
+                    <div class="card-header">Weekly Summary</div>
+                    <div class="card-body">
+                        <div id="weekly-stats">
+                            <p><strong>Best Performance:</strong> Tuesday (85 pts)</p>
+                            <p><strong>Most Improved:</strong> Memory (+12 pts)</p>
+                            <p><strong>Focus Time:</strong> 45 minutes</p>
+                            <p><strong>Tests Completed:</strong> 18</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Personal Records</div>
+                    <div class="card-body">
+                        <div id="personal-records">
+                            <p>🎯 <strong>Reaction Time:</strong> 245ms</p>
+                            <p>🧠 <strong>Memory Sequence:</strong> Level 8</p>
+                            <p>📐 <strong>Spatial Reasoning:</strong> 92% accuracy</p>
+                            <p>👁️ <strong>Attention Span:</strong> 3.2 minutes</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
+
+        <!-- Meditation Tab -->
+        <div id="meditation" class="tab-content">
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">Guided Breathing</div>
+                    <div class="card-body">
+                        <div class="meditation-controls">
+                            <div id="breathing-circle" class="breathing-circle">Breathe</div>
+                            <p id="breathing-instruction">Click start to begin</p>
+                            <button class="btn primary" id="start-breathing">Start Breathing Exercise</button>
+                            <button class="btn secondary" id="stop-breathing" style="display: none;">Stop</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Focus Meditation</div>
+                    <div class="card-body">
+                        <p>Brief meditation sessions to enhance cognitive performance</p>
+                        <div style="text-align: center; margin: 2rem 0;">
+                            <select id="meditation-duration" class="sleep-input" style="margin: 1rem;">
+                                <option value="300">5 minutes</option>
+                                <option value="600">10 minutes</option>
+                                <option value="900">15 minutes</option>
+                                <option value="1200">20 minutes</option>
+                            </select>
+                        </div>
+                        <button class="btn success" id="start-meditation">Start Focus Meditation</button>
+                        <div id="meditation-timer" style="display: none; text-align: center; margin-top: 1rem;">
+                            <h2 id="timer-display">05:00</h2>
+                            <p id="meditation-phase">Preparation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Stress Relief</div>
+                    <div class="card-body">
+                        <p>Quick stress reduction techniques</p>
+                        <button class="btn secondary" id="stress-relief-1">Progressive Muscle Relaxation</button>
+                        <button class="btn secondary" id="stress-relief-2">Mindful Observation</button>
+                        <button class="btn secondary" id="stress-relief-3">Body Scan</button>
+                        <div id="stress-relief-content" style="margin-top: 1rem; display: none;">
+                            <p id="stress-relief-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sleep Tab -->
+        <div id="sleep" class="tab-content">
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">Sleep Log</div>
+                    <div class="card-body">
+                        <div class="sleep-log">
+                            <input type="time" id="bedtime" class="sleep-input" placeholder="Bedtime">
+                            <input type="time" id="waketime" class="sleep-input" placeholder="Wake Time">
+                            <select id="sleep-quality" class="sleep-input">
+                                <option value="">Sleep Quality</option>
+                                <option value="poor">Poor</option>
+                                <option value="fair">Fair</option>
+                                <option value="good">Good</option>
+                                <option value="excellent">Excellent</option>
+                            </select>
+                            <input type="number" id="sleep-interruptions" class="sleep-input" placeholder="Wake-ups" min="0">
+                        </div>
+                        <button class="btn primary" id="log-sleep">Log Sleep Data</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Sleep Phase Analysis</div>
+                    <div class="card-body">
+                        <div id="sleep-phases">
+                            <div class="sleep-phase">
+                                <span>REM Sleep (Memory Consolidation)</span>
+                                <span id="rem-percentage">25%</span>
+                            </div>
+                            <div class="sleep-phase">
+                                <span>Deep Sleep (Physical Recovery)</span>
+                                <span id="deep-percentage">20%</span>
+                            </div>
+                            <div class="sleep-phase">
+                                <span>Light Sleep (Transition)</span>
+                                <span id="light-percentage">55%</span>
+                            </div>
+                        </div>
+                        <button class="btn secondary" id="analyze-sleep">Analyze Last Night</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Sleep Insights</div>
+                    <div class="card-body">
+                        <div id="sleep-insights">
+                            <h4>Recommendations:</h4>
+                            <ul>
+                                <li>Maintain consistent sleep schedule</li>
+                                <li>Optimize room temperature (65-68°F)</li>
+                                <li>Limit blue light 1 hour before bed</li>
+                                <li>Consider meditation before sleep</li>
+                            </ul>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <canvas id="sleepChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EEG Tab -->
+        <div id="eeg" class="tab-content">
+            <div class="card-grid">
+                <div class="card full-width">
+                    <div class="card-header">Simulated EEG Visualization</div>
+                    <div class="card-body">
+                        <div class="eeg-container" id="eeg-container">
+                            <div class="brainwave wave-delta">
+                                <div class="brainwave-label">Delta (0.5-4 Hz) - Deep Sleep</div>
+                                <div class="wave-line"></div>
+                            </div>
+                            <div class="brainwave wave-theta">
+                                <div class="brainwave-label">Theta (4-8 Hz) - Creativity</div>
+                                <div class="wave-line"></div>
+                            </div>
+                            <div class="brainwave wave-alpha">
+                                <div class="brainwave-label">Alpha (8-13 Hz) - Relaxed Focus</div>
+                                <div class="wave-line"></div>
+                            </div>
+                            <div class="brainwave wave-beta">
+                                <div class="brainwave-label">Beta (13-30 Hz) - Active Thinking</div>
+                                <div class="wave-line"></div>
+                            </div>
+                            <div class="brainwave wave-gamma">
+                                <div class="brainwave-label">Gamma (30+ Hz) - Peak Performance</div>
+                                <div class="wave-line"></div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <button class="btn primary" id="start-eeg">Start Simulation</button>
+                            <button class="btn secondary" id="stop-eeg">Stop</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Current State</div>
+                    <div class="card-body">
+                        <div id="eeg-state">
+                            <h3 id="current-eeg-state">Relaxed Focus</h3>
+                            <p>Dominant: Alpha waves</p>
+                            <p>Cognitive State: Optimal for learning</p>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <canvas id="eegStateChart" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Neurofeedback Training</div>
+                    <div class="card-body">
+                        <p>Train your brain to achieve desired states</p>
+                        <button class="btn success" id="alpha-training">Alpha Enhancement</button>
+                        <button class="btn primary" id="beta-training">Beta Focus Training</button>
+                        <button class="btn secondary" id="theta-training">Theta Creativity</button>
+                        <div id="neurofeedback-progress" style="margin-top: 1rem; display: none;">
+                            <p>Training Progress: <span id="training-progress">0%</span></p>
+                            <div style="width: 100%; height: 10px; background: var(--glass); border-radius: 5px;">
+                                <div id="training-bar" style="width: 0%; height: 100%; background: var(--success); border-radius: 5px; transition: width 0.3s;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Tab -->
+        <div id="insights" class="tab-content">
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">Enhanced Mood Tracking</div>
+                    <div class="card-body">
+                        <p>Log your current emotional state</p>
+                        <div class="mood-grid" id="mood-selector">
+                            <button class="mood-btn" data-mood="Energetic">⚡</button>
+                            <button class="mood-btn" data-mood="Happy">😊</button>
+                            <button class="mood-btn" data-mood="Calm">😌</button>
+                            <button class="mood-btn" data-mood="Focused">🎯</button>
+                            <button class="mood-btn" data-mood="Neutral">😐</button>
+                            <button class="mood-btn" data-mood="Tired">😴</button>
+                            <button class="mood-btn" data-mood="Stressed">😟</button>
+                            <button class="mood-btn" data-mood="Anxious">😰</button>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <label>Intensity (1-10):</label>
+                            <input type="range" id="mood-intensity" min="1" max="10" value="5" style="width: 100%; margin: 0.5rem 0;">
+                            <span id="intensity-value">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Mood-Performance Correlation</div>
+                    <div class="card-body">
+                        <div style="height: 300px;">
+                            <canvas id="moodPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Memory Tagging</div>
+                    <div class="card-body">
+                        <p>Tag important memories with emotional context</p>
+                        <textarea id="memory-description" placeholder="Describe the memory..." style="width: 100%; padding: 1rem; background: var(--glass); border: 1px solid var(--border); border-radius: 8px; color: var(--text); margin: 1rem 0;"></textarea>
+                        <div class="mood-grid">
+                            <button class="memory-emotion-btn" data-emotion="joy">😄</button>
+                            <button class="memory-emotion-btn" data-emotion="sadness">😢</button>
+                            <button class="memory-emotion-btn" data-emotion="fear">😨</button>
+                            <button class="memory-emotion-btn" data-emotion="anger">😠</button>
+                            <button class="memory-emotion-btn" data-emotion="surprise">😮</button>
+                            <button class="memory-emotion-btn" data-emotion="disgust">🤢</button>
+                        </div>
+                        <button class="btn primary" id="save-memory">Save Memory</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Data Export & Privacy</div>
+                    <div class="card-body">
+                        <p>Export your data while maintaining privacy</p>
+                        <div class="export-options">
+                            <button class="btn secondary" id="export-json">Export JSON</button>
+                            <button class="btn secondary" id="export-csv">Export CSV</button>
+                            <button class="btn secondary" id="export-pdf">Export PDF Report</button>
+                        </div>
+                        <div class="data-summary">
+                            <h4>Data Summary:</h4>
+                            <p>Sessions: <span id="export-sessions">24</span></p>
+                            <p>Test Results: <span id="export-tests">72</span></p>
+                            <p>Mood Logs: <span id="export-moods">18</span></p>
+                            <p>Sleep Records: <span id="export-sleep">15</span></p>
+                        </div>
+                        <button class="btn danger" id="clear-data">Clear All Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Coach Tab -->
         <div id="coach" class="tab-content">
-             <div class="card">
-                <div class="card-header">Your Proactive AI Coach</div>
-                <div class="card-body" style="text-align: center;">
-                    <span id="coach-icon" style="font-size: 3rem; margin-bottom: 1rem; display:inline-block;">💡</span>
-                    <p id="coach-tip" style="font-size: 1.1rem; line-height: 1.6;">Welcome to NeuroMind Elite! Get started by logging your mood on the Insights tab.</p>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">Personalized AI Coach</div>
+                    <div class="card-body" style="text-align: center;">
+                        <span id="coach-icon" style="font-size: 3rem; margin-bottom: 1rem; display:inline-block;">🤖</span>
+                        <p id="coach-tip" style="font-size: 1.1rem; line-height: 1.6;">Welcome to NeuroMind Elite! Let's start with a quick assessment to personalize your training.</p>
+                        <div style="margin-top: 1rem;">
+                            <button class="btn primary" id="get-personalized-tip">Get Personalized Tip</button>
+                            <button class="btn secondary" id="adjust-difficulty">Adjust Difficulty</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Training Recommendations</div>
+                    <div class="card-body">
+                        <div id="training-recommendations">
+                            <h4>Based on your performance:</h4>
+                            <ul id="recommendation-list">
+                                <li>Focus on memory training exercises</li>
+                                <li>Practice reaction time tests in the morning</li>
+                                <li>Try meditation before cognitive tasks</li>
+                            </ul>
+                        </div>
+                        <button class="btn success" id="apply-recommendations">Apply Recommendations</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Adaptive Difficulty</div>
+                    <div class="card-body">
+                        <p>Current Difficulty Level: <span id="current-difficulty">Intermediate</span></p>
+                        <div style="margin: 1rem 0;">
+                            <label>Adjustment:</label>
+                            <select id="difficulty-selector" class="sleep-input">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="expert">Expert</option>
+                                <option value="adaptive">Adaptive (AI-driven)</option>
+                            </select>
+                        </div>
+                        <p id="difficulty-description">Moderate challenge level with balanced exercises</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const app = {
-                state: { gameRunning: false, gameTimer: null, timeLeft: 30, moves: 0, flippedCards: [], matchedPairs: 0, soundEnabled: false },
-                scores: { cognitive: 50, focus: 50, memory: 50, resilience: 50 },
-                charts: {},
-                sfx: {},
-                methods: {
-                    playSound(sound) {
-                        if (!app.state.soundEnabled || !app.sfx[sound]) return;
-                        app.sfx[sound].currentTime = 0;
-                        app.sfx[sound].play();
-                    },
-
-                    updateCognitiveScore(focusChange = 0, memoryChange = 0, resilienceChange = 0) {
-                        const clamp = (val) => Math.max(0, Math.min(100, val));
-                        app.scores.focus = clamp(app.scores.focus + focusChange);
-                        app.scores.memory = clamp(app.scores.memory + memoryChange);
-                        app.scores.resilience = clamp(app.scores.resilience + resilienceChange);
-                        app.scores.cognitive = Math.round(app.scores.focus * 0.4 + app.scores.memory * 0.4 + app.scores.resilience * 0.2);
+        // Application State Management
+        const app = {
+            state: {
+                cognitiveScore: 75,
+                focusScore: 75,
+                memoryScore: 65,
+                resilienceScore: 80,
+                sessions: 24,
+                currentStreak: 8,
+                totalTime: 150, // minutes
+                userData: {},
+                testResults: [],
+                moodLogs: [],
+                sleepData: [],
+                memoryTags: [],
+                settings: {
+                    difficulty: 'intermediate',
+                    soundEnabled: true
+                }
+            },
+            
+            charts: {},
+            timers: {},
+            
+            // Utility Functions
+            utils: {
+                playSound() {
+                    // Sound implementation would go here
+                },
+                
+                saveToLocalStorage() {
+                    localStorage.setItem('neuroMindData', JSON.stringify(app.state));
+                },
+                
+                loadFromLocalStorage() {
+                    const saved = localStorage.getItem('neuroMindData');
+                    if (saved) {
+                        app.state = { ...app.state, ...JSON.parse(saved) };
+                    }
+                },
+                
+                updateHeaderStats() {
+                    document.getElementById('header-cognitive-score').textContent = app.state.cognitiveScore;
+                    document.getElementById('header-sessions').textContent = app.state.sessions;
+                    document.getElementById('header-streak').textContent = app.state.currentStreak + ' days';
+                },
+                
+                generateCoachTip() {
+                    const tips = [
+                        "Your focus score is improving! Try the attention test to maintain momentum.",
+                        "Memory performance peaks in the morning - schedule training sessions early.",
+                        "Consider a 5-minute meditation before cognitive tests for better results.",
+                        "Your sleep quality affects cognitive performance by up to 40%.",
+                        "Regular training sessions show 3x better improvement than sporadic practice."
+                    ];
+                    return tips[Math.floor(Math.random() * tips.length)];
+                }
+            },
+            
+            // Assessment Tests
+            assessment: {
+                reactionTest: {
+                    start() {
+                        const circle = document.getElementById('reaction-circle');
+                        circle.textContent = "Wait...";
+                        circle.className = "reaction-test waiting";
                         
-                        app.charts.cognitiveGauge.data.datasets[0].value = app.scores.cognitive;
-                        app.charts.cognitiveGauge.update();
-                        document.getElementById('focus-score-bar').style.width = `${app.scores.focus}%`;
-                        document.getElementById('memory-score-bar').style.width = `${app.scores.memory}%`;
-                        document.getElementById('resilience-score-bar').style.width = `${app.scores.resilience}%`;
-                        
-                        app.methods.checkScoresForCoach();
-                    },
-
-                    checkScoresForCoach() {
-                        if (app.scores.focus < 40) app.methods.updateCoach("Your focus seems low. Try the Logical Deduction puzzle to sharpen it!", "🧩");
-                        else if (app.scores.memory < 40) app.methods.updateCoach("Your memory score could use a boost. Play a round of Synaptic Pathway!", "🧠");
-                        else if (app.scores.resilience < 40) app.methods.updateCoach("Feeling a bit down? Logging your mood can help track patterns and build resilience.", "😊");
+                        const delay = 2000 + Math.random() * 3000;
+                        setTimeout(() => {
+                            if (circle.className.includes('waiting')) {
+                                circle.textContent = "CLICK NOW!";
+                                circle.className = "reaction-test ready";
+                                this.startTime = Date.now();
+                            }
+                        }, delay);
                     },
                     
-                    updateCoach(text, icon = '💡') {
-                        document.getElementById('coach-tip').textContent = text;
-                        document.getElementById('coach-icon').textContent = icon;
-                        app.methods.playSound('notify');
-                    },
-
-                    logMoodAndPerformance(mood) {
-                        app.methods.playSound('success');
-                        const score = app.scores.cognitive;
-                        const chart = app.charts.moodPerformance;
-                        chart.data.labels.push(mood);
-                        chart.data.datasets[0].data.push(score);
-                        chart.update();
-
-                        let resilienceChange = 0;
-                        if(mood === 'Happy') resilienceChange = 5;
-                        if(mood === 'Tired' || mood === 'Stressed') resilienceChange = -5;
-                        app.methods.updateCognitiveScore(0, 0, resilienceChange);
-                        
-                        app.methods.updateCoach(`Mood logged as ${mood}. Tracking this helps build self-awareness.`);
-                    },
-                    
-                    startGame() {
-                        if(app.state.gameRunning) return;
-                        app.methods.playSound('click');
-                        app.state = {...app.state, gameRunning: true, timeLeft: 30, moves: 0, flippedCards: [], matchedPairs: 0};
-                        
-                        document.getElementById('game-time').textContent = app.state.timeLeft;
-                        document.getElementById('game-moves').textContent = app.state.moves;
-                        document.getElementById('memory-game-overlay').style.display = 'none';
-
-                        const ICONS = ['⚛️', '🧠', '🧪', '🧬', '🔬', '🛰️', '🚀', '🤖'];
-                        const gameIcons = [...ICONS, ...ICONS].sort(() => 0.5 - Math.random());
-                        const board = document.getElementById('memory-game-board');
-                        board.innerHTML = '';
-                        gameIcons.forEach(icon => {
-                            const card = document.createElement('div');
-                            card.className = 'memory-card';
-                            card.dataset.icon = icon;
-                            card.innerHTML = `<div class="memory-card-face memory-card-front"></div><div class="memory-card-face memory-card-back">${icon}</div>`;
-                            card.addEventListener('click', app.methods.onCardClick);
-                            board.appendChild(card);
-                        });
-
-                        app.state.gameTimer = setInterval(() => {
-                            app.state.timeLeft--;
-                            document.getElementById('game-time').textContent = app.state.timeLeft;
-                            if(app.state.timeLeft <= 0) app.methods.endGame(false);
-                        }, 1000);
-                    },
-
-                    onCardClick(e) {
-                        const clickedCard = e.currentTarget;
-                        if (app.state.flippedCards.length >= 2 || clickedCard.classList.contains('is-flipped')) return;
-                        
-                        app.methods.playSound('click');
-                        clickedCard.classList.add('is-flipped');
-                        app.state.flippedCards.push(clickedCard);
-                        
-                        if(app.state.flippedCards.length === 2) {
-                            app.state.moves++;
-                            document.getElementById('game-moves').textContent = app.state.moves;
-                            setTimeout(app.methods.checkForMatch, 700);
-                        }
-                    },
-
-                    checkForMatch() {
-                        const [card1, card2] = app.state.flippedCards;
-                        if(card1.dataset.icon === card2.dataset.icon) {
-                            card1.classList.add('is-matched');
-                            card2.classList.add('is-matched');
-                            app.state.matchedPairs++;
-                            if(app.state.matchedPairs === 8) app.methods.endGame(true);
-                        } else {
-                            card1.classList.remove('is-flipped');
-                            card2.classList.remove('is-flipped');
-                        }
-                        app.state.flippedCards = [];
-                    },
-
-                    endGame(won) {
-                        clearInterval(app.state.gameTimer);
-                        app.state.gameRunning = false;
-                        document.getElementById('memory-game-overlay').style.display = 'flex';
-                        const title = document.getElementById('game-over-title');
-                        
-                        if(won) {
-                            app.methods.playSound('win');
-                            title.textContent = "Victory!";
-                            app.methods.updateCognitiveScore(0, 15, 0);
-                            app.methods.updateCoach("Excellent work! Your memory score has increased significantly.", "🏆");
-                        } else {
-                            app.methods.playSound('lose');
-                            title.textContent = "Time's Up!";
-                            app.methods.updateCognitiveScore(0, -5, 0);
+                    click() {
+                        const circle = document.getElementById('reaction-circle');
+                        if (circle.className.includes('ready')) {
+                            const reactionTime = Date.now() - this.startTime;
+                            circle.textContent = reactionTime + "ms";
+                            circle.className = "reaction-test clicked";
+                            
+                            document.getElementById('last-reaction').textContent = reactionTime;
+                            
+                            app.state.testResults.push({
+                                type: 'reaction',
+                                value: reactionTime,
+                                timestamp: Date.now()
+                            });
+                            
+                            setTimeout(() => {
+                                circle.textContent = "Click when GREEN";
+                                circle.className = "reaction-test waiting";
+                            }, 2000);
                         }
                     }
                 },
                 
-                init() {
-                    if (typeof Chart === 'undefined' || typeof ChartDataLabels === 'undefined') {
-                        document.body.innerHTML = `<div style="text-align:center; padding: 50px; font-size:1.2rem;">
-                            <h1>Error</h1>
-                            <p>Could not load essential chart libraries. Please ensure you have an active internet connection and try reloading the page.</p>
-                        </div>`;
-                        return;
+                memoryTest: {
+                    sequence: [],
+                    userSequence: [],
+                    level: 1,
+                    
+                    start() {
+                        this.sequence = [];
+                        this.userSequence = [];
+                        this.level = 1;
+                        this.generateSequence();
+                        this.showSequence();
+                    },
+                    
+                    generateSequence() {
+                        for (let i = 0; i < this.level + 2; i++) {
+                            this.sequence.push(Math.floor(Math.random() * 9));
+                        }
+                    },
+                    
+                    showSequence() {
+                        const grid = document.getElementById('memory-test-grid');
+                        grid.innerHTML = '';
+                        
+                        for (let i = 0; i < 9; i++) {
+                            const item = document.createElement('div');
+                            item.className = 'memory-item';
+                            item.dataset.index = i;
+                            item.addEventListener('click', () => this.userClick(i));
+                            grid.appendChild(item);
+                        }
+                        
+                        let index = 0;
+                        const showNext = () => {
+                            if (index < this.sequence.length) {
+                                const item = grid.children[this.sequence[index]];
+                                item.classList.add('highlighted');
+                                setTimeout(() => {
+                                    item.classList.remove('highlighted');
+                                    index++;
+                                    setTimeout(showNext, 200);
+                                }, 600);
+                            }
+                        };
+                        showNext();
+                    },
+                    
+                    userClick(index) {
+                        this.userSequence.push(index);
+                        if (this.userSequence.length === this.sequence.length) {
+                            this.checkSequence();
+                        }
+                    },
+                    
+                    checkSequence() {
+                        const correct = this.sequence.every((val, i) => val === this.userSequence[i]);
+                        if (correct) {
+                            this.level++;
+                            document.getElementById('memory-level').textContent = this.level;
+                            document.getElementById('memory-test-score').textContent = this.level - 1;
+                            this.sequence = [];
+                            this.userSequence = [];
+                            setTimeout(() => {
+                                this.generateSequence();
+                                this.showSequence();
+                            }, 1000);
+                        } else {
+                            alert('Incorrect! Final Score: ' + (this.level - 1));
+                            this.start();
+                        }
                     }
-                    
-                    ['click', 'success', 'notify', 'win', 'lose'].forEach(sfxKey => {
-                        app.sfx[sfxKey] = document.getElementById(`sfx-${sfxKey}`);
-                    });
-                    document.body.addEventListener('click', () => { app.state.soundEnabled = true }, { once: true });
-
-                    Chart.register(ChartDataLabels);
-                    const gaugeCtx = document.getElementById('cognitiveScoreChart').getContext('2d');
-                    app.charts.cognitiveGauge = new Chart(gaugeCtx, {
-                        type: 'doughnut',
-                        data: { datasets: [{ value: app.scores.cognitive, backgroundColor: [var(--primary), var(--glass)], borderWidth: 0, borderRadius: 20 }] },
-                        options: {
-                            circumference: 180, rotation: -90, cutout: '80%',
-                            plugins: { legend: { display: false }, tooltip: { enabled: false }, datalabels: { formatter: (value) => value, color: var(--text), font: { size: 40, weight: 'bold' } } }
-                        }
-                    });
-
-                    const moodPerfCtx = document.getElementById('moodPerformanceChart').getContext('2d');
-                    app.charts.moodPerformance = new Chart(moodPerfCtx, { type: 'line', data: { labels: [], datasets: [{ label: 'Cognitive Score', data: [], borderColor: var(--primary), tension: 0.1 }] }, options: { scales: { y: { beginAtZero: true, max: 100 } } } });
-
-                    document.querySelectorAll('.tab-btn').forEach(tab => tab.addEventListener('click', e => {
-                        app.methods.playSound('click');
-                        document.querySelector('.tab-btn.active').classList.remove('active');
-                        e.currentTarget.classList.add('active');
-                        document.querySelector('.tab-content.active').classList.remove('active');
-                        document.getElementById(e.currentTarget.dataset.tab).classList.add('active');
-                    }));
-
-                    document.querySelectorAll('#deduction-puzzle .option').forEach(btn => btn.addEventListener('click', e => {
-                        app.methods.playSound('click');
-                        const isCorrect = e.currentTarget.dataset.correct === 'true';
-                        document.getElementById('puzzle-feedback').textContent = isCorrect ? 'Correct!' : 'Incorrect.';
-                        document.getElementById('puzzle-feedback').style.color = isCorrect ? 'var(--success)' : 'var(--danger)';
-                        if (isCorrect) {
-                            app.methods.playSound('success');
-                            app.methods.updateCognitiveScore(10, 0, 0);
-                            e.currentTarget.parentNode.style.pointerEvents = 'none';
-                        }
-                    }));
-                    
-                    document.querySelectorAll('#mood-selector .mood-btn').forEach(btn => btn.addEventListener('click', e => {
-                        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected', 'pulse-guide'));
-                        e.currentTarget.classList.add('selected');
-                        app.methods.logMoodAndPerformance(e.currentTarget.dataset.mood);
-                    }));
-
-                    document.getElementById('start-game-btn').addEventListener('click', app.methods.startGame);
-                    document.getElementById('restart-game-btn').addEventListener('click', app.methods.startGame);
-
-                    app.methods.updateCognitiveScore();
-                    document.querySelector('#mood-selector .mood-btn').classList.add('pulse-guide');
                 }
-            };
+            },
             
+            // Meditation & Relaxation
+            meditation: {
+                breathing: {
+                    active: false,
+                    
+                    start() {
+                        this.active = true;
+                        const circle = document.getElementById('breathing-circle');
+                        const instruction = document.getElementById('breathing-instruction');
+                        
+                        document.getElementById('start-breathing').style.display = 'none';
+                        document.getElementById('stop-breathing').style.display = 'inline-block';
+                        
+                        const breatheCycle = () => {
+                            if (!this.active) return;
+                            
+                            // Inhale
+                            instruction.textContent = "Breathe in...";
+                            circle.classList.add('inhale');
+                            circle.classList.remove('exhale');
+                            
+                            setTimeout(() => {
+                                if (!this.active) return;
+                                // Hold
+                                instruction.textContent = "Hold...";
+                                
+                                setTimeout(() => {
+                                    if (!this.active) return;
+                                    // Exhale
+                                    instruction.textContent = "Breathe out...";
+                                    circle.classList.add('exhale');
+                                    circle.classList.remove('inhale');
+                                    
+                                    setTimeout(() => {
+                                        if (!this.active) return;
+                                        instruction.textContent = "Hold...";
+                                        setTimeout(breatheCycle, 1000);
+                                    }, 4000);
+                                }, 1000);
+                            }, 4000);
+                        };
+                        
+                        breatheCycle();
+                    },
+                    
+                    stop() {
+                        this.active = false;
+                        const circle = document.getElementById('breathing-circle');
+                        circle.classList.remove('inhale', 'exhale');
+                        document.getElementById('breathing-instruction').textContent = "Click start to begin";
+                        document.getElementById('start-breathing').style.display = 'inline-block';
+                        document.getElementById('stop-breathing').style.display = 'none';
+                    }
+                }
+            },
+            
+            // EEG Simulation
+            eeg: {
+                active: false,
+                
+                start() {
+                    this.active = true;
+                    document.querySelectorAll('.wave-line').forEach(wave => {
+                        wave.style.animationPlayState = 'running';
+                    });
+                },
+                
+                stop() {
+                    this.active = false;
+                    document.querySelectorAll('.wave-line').forEach(wave => {
+                        wave.style.animationPlayState = 'paused';
+                    });
+                }
+            },
+            
+            // Data Management
+            data: {
+                export(format) {
+                    const data = {
+                        cognitiveScores: app.state.testResults,
+                        moodLogs: app.state.moodLogs,
+                        sleepData: app.state.sleepData,
+                        memoryTags: app.state.memoryTags,
+                        exportDate: new Date().toISOString()
+                    };
+                    
+                    if (format === 'json') {
+                        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                        this.downloadFile(blob, 'neuromind-data.json');
+                    } else if (format === 'csv') {
+                        const csv = this.convertToCSV(data);
+                        const blob = new Blob([csv], { type: 'text/csv' });
+                        this.downloadFile(blob, 'neuromind-data.csv');
+                    }
+                },
+                
+                downloadFile(blob, filename) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                },
+                
+                convertToCSV(data) {
+                    // Simple CSV conversion
+                    let csv = 'Type,Value,Timestamp\n';
+                    data.cognitiveScores.forEach(score => {
+                        csv += `${score.type},${score.value},${new Date(score.timestamp).toISOString()}\n`;
+                    });
+                    return csv;
+                }
+            },
+            
+            // Chart Management
+            initCharts() {
+                Chart.register(ChartDataLabels);
+                
+                // Cognitive Score Gauge
+                const cognitiveCtx = document.getElementById('cognitiveScoreChart').getContext('2d');
+                this.charts.cognitive = new Chart(cognitiveCtx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [app.state.cognitiveScore, 100 - app.state.cognitiveScore],
+                            backgroundColor: ['var(--primary)', 'var(--glass)'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        circumference: 180,
+                        rotation: -90,
+                        cutout: '80%',
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false },
+                            datalabels: {
+                                formatter: (value, context) => {
+                                    return context.dataIndex === 0 ? value : '';
+                                },
+                                color: 'var(--text)',
+                                font: { size: 40, weight: 'bold' }
+                            }
+                        }
+                    }
+                });
+                
+                // Progress Chart
+                const progressCtx = document.getElementById('progressChart').getContext('2d');
+                this.charts.progress = new Chart(progressCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Cognitive Score',
+                            data: [65, 72, 78, 75, 80, 85, 82],
+                            borderColor: 'var(--primary)',
+                            tension: 0.4,
+                            fill: true,
+                            backgroundColor: 'rgba(0, 168, 255, 0.1)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, max: 100 }
+                        }
+                    }
+                });
+                
+                // Mood Performance Chart
+                const moodCtx = document.getElementById('moodPerformanceChart').getContext('2d');
+                this.charts.moodPerformance = new Chart(moodCtx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Mood vs Performance',
+                            data: [],
+                            backgroundColor: 'var(--secondary)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { 
+                                title: { display: true, text: 'Mood Score' },
+                                min: 1, max: 10
+                            },
+                            y: { 
+                                title: { display: true, text: 'Cognitive Performance' },
+                                min: 0, max: 100
+                            }
+                        }
+                    }
+                });
+            },
+            
+            // Event Listeners
+            initEventListeners() {
+                // Tab Navigation
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelector('.tab-btn.active').classList.remove('active');
+                        e.target.classList.add('active');
+                        document.querySelector('.tab-content.active').classList.remove('active');
+                        document.getElementById(e.target.dataset.tab).classList.add('active');
+                    });
+                });
+                
+                // Assessment Tests
+                document.getElementById('start-reaction-test').addEventListener('click', () => {
+                    app.assessment.reactionTest.start();
+                });
+                
+                document.getElementById('reaction-circle').addEventListener('click', () => {
+                    app.assessment.reactionTest.click();
+                });
+                
+                document.getElementById('start-memory-test').addEventListener('click', () => {
+                    app.assessment.memoryTest.start();
+                });
+                
+                // Meditation
+                document.getElementById('start-breathing').addEventListener('click', () => {
+                    app.meditation.breathing.start();
+                });
+                
+                document.getElementById('stop-breathing').addEventListener('click', () => {
+                    app.meditation.breathing.stop();
+                });
+                
+                // EEG
+                document.getElementById('start-eeg').addEventListener('click', () => {
+                    app.eeg.start();
+                });
+                
+                document.getElementById('stop-eeg').addEventListener('click', () => {
+                    app.eeg.stop();
+                });
+                
+                // Mood Tracking
+                document.querySelectorAll('.mood-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+                        e.target.classList.add('selected');
+                        
+                        const mood = e.target.dataset.mood;
+                        const intensity = document.getElementById('mood-intensity').value;
+                        
+                        app.state.moodLogs.push({
+                            mood,
+                            intensity: parseInt(intensity),
+                            cognitiveScore: app.state.cognitiveScore,
+                            timestamp: Date.now()
+                        });
+                        
+                        // Update mood-performance chart
+                        app.charts.moodPerformance.data.datasets[0].data.push({
+                            x: parseInt(intensity),
+                            y: app.state.cognitiveScore
+                        });
+                        app.charts.moodPerformance.update();
+                        
+                        app.utils.saveToLocalStorage();
+                    });
+                });
+                
+                // Mood intensity slider
+                document.getElementById('mood-intensity').addEventListener('input', (e) => {
+                    document.getElementById('intensity-value').textContent = e.target.value;
+                });
+                
+                // Data Export
+                document.getElementById('export-json').addEventListener('click', () => {
+                    app.data.export('json');
+                });
+                
+                document.getElementById('export-csv').addEventListener('click', () => {
+                    app.data.export('csv');
+                });
+                
+                // AI Coach
+                document.getElementById('get-personalized-tip').addEventListener('click', () => {
+                    document.getElementById('coach-tip').textContent = app.utils.generateCoachTip();
+                });
+                
+                // Sleep logging
+                document.getElementById('log-sleep').addEventListener('click', () => {
+                    const bedtime = document.getElementById('bedtime').value;
+                    const waketime = document.getElementById('waketime').value;
+                    const quality = document.getElementById('sleep-quality').value;
+                    const interruptions = document.getElementById('sleep-interruptions').value;
+                    
+                    if (bedtime && waketime && quality) {
+                        app.state.sleepData.push({
+                            bedtime,
+                            waketime,
+                            quality,
+                            interruptions: parseInt(interruptions) || 0,
+                            date: new Date().toDateString()
+                        });
+                        
+                        app.utils.saveToLocalStorage();
+                        alert('Sleep data logged successfully!');
+                    }
+                });
+                
+                // Memory tagging
+                document.getElementById('save-memory').addEventListener('click', () => {
+                    const description = document.getElementById('memory-description').value;
+                    const selectedEmotion = document.querySelector('.memory-emotion-btn.selected');
+                    
+                    if (description && selectedEmotion) {
+                        app.state.memoryTags.push({
+                            description,
+                            emotion: selectedEmotion.dataset.emotion,
+                            timestamp: Date.now(),
+                            retrievalEase: null // To be rated later
+                        });
+                        
+                        document.getElementById('memory-description').value = '';
+                        selectedEmotion.classList.remove('selected');
+                        app.utils.saveToLocalStorage();
+                        alert('Memory tagged successfully!');
+                    }
+                });
+                
+                document.querySelectorAll('.memory-emotion-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.memory-emotion-btn').forEach(b => b.classList.remove('selected'));
+                        e.target.classList.add('selected');
+                    });
+                });
+            },
+            
+            // Initialization
+            init() {
+                this.utils.loadFromLocalStorage();
+                this.utils.updateHeaderStats();
+                this.initCharts();
+                this.initEventListeners();
+                
+                // Initialize score bars
+                document.getElementById('focus-score-bar').style.width = app.state.focusScore + '%';
+                document.getElementById('memory-score-bar').style.width = app.state.memoryScore + '%';
+                document.getElementById('resilience-score-bar').style.width = app.state.resilienceScore + '%';
+                
+                console.log('NeuroMind Elite initialized successfully');
+            }
+        };
+        
+        // Start the application
+        document.addEventListener('DOMContentLoaded', () => {
             app.init();
         });
     </script>
