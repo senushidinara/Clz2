@@ -1216,40 +1216,51 @@
 
         // Brain Scan Function
         function startBrainScan() {
+            console.log('Starting brain scan...');
             const modal = document.getElementById('brainScanModal');
-            modal.classList.add('active');
-            
-            // Animate the EEG wave
-            const waves = modal.querySelectorAll('.eeg-wave');
-            waves.forEach(wave => wave.classList.add('growing'));
-            
-            // Simulate analysis text appearing letter by letter
-            setTimeout(() => {
-                const analysisText = document.getElementById('analysisText');
-                const messages = [
-                    "Analyzing neural patterns...",
-                    "Detecting theta waves in hippocampus...",
-                    "Measuring prefrontal cortex activity...",
-                    "Analysis complete: Optimal cognitive state detected!"
-                ];
-                
-                let messageIndex = 0;
-                const showNextMessage = () => {
-                    if (messageIndex < messages.length) {
-                        analysisText.textContent = messages[messageIndex];
-                        analysisText.style.width = '0';
-                        analysisText.style.animation = 'none';
-                        setTimeout(() => {
-                            analysisText.style.animation = 'typewriter 2s steps(40, end)';
-                            analysisText.style.width = '100%';
-                        }, 100);
-                        messageIndex++;
-                        setTimeout(showNextMessage, 2500);
+            if (modal) {
+                modal.classList.add('active');
+
+                // Animate the EEG wave
+                const waves = modal.querySelectorAll('.eeg-wave');
+                waves.forEach(wave => wave.classList.add('growing'));
+
+                // Simulate analysis text appearing letter by letter
+                setTimeout(() => {
+                    const analysisText = document.getElementById('analysisText');
+                    if (analysisText) {
+                        const messages = [
+                            "Analyzing neural patterns...",
+                            "Detecting theta waves in hippocampus...",
+                            "Measuring prefrontal cortex activity...",
+                            "Analysis complete: Optimal cognitive state detected!"
+                        ];
+
+                        let messageIndex = 0;
+                        const showNextMessage = () => {
+                            if (messageIndex < messages.length) {
+                                analysisText.textContent = messages[messageIndex];
+                                analysisText.style.width = '0';
+                                analysisText.style.animation = 'none';
+                                setTimeout(() => {
+                                    analysisText.style.animation = 'typewriter 2s steps(40, end)';
+                                    analysisText.style.width = '100%';
+                                }, 100);
+                                messageIndex++;
+                                setTimeout(showNextMessage, 2500);
+                            }
+                        };
+                        showNextMessage();
                     }
-                };
-                showNextMessage();
-            }, 500);
+                }, 500);
+                console.log('Brain scan modal opened');
+            } else {
+                console.error('Brain scan modal not found');
+            }
         }
+
+        // Make function globally accessible
+        window.startBrainScan = startBrainScan;
 
         // Challenge Functions
         function joinChallenge() {
