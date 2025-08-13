@@ -2107,12 +2107,117 @@
     <!-- Toast Notification -->
     <div class="toast" id="toast">Challenge Joined!</div>
 
+    <!-- Web3 JavaScript -->
+    <script src="js/web3.js"></script>
+    <script src="js/neurox-advanced.js"></script>
+
     <script>
         // Global variables
         let activeTab = 'home';
         let focusTimer = null;
         let focusTime = 25 * 60;
         let isTimerRunning = false;
+
+        // Web3 Integration Functions
+        async function connectWallet() {
+            if (!window.neuroWeb3) {
+                showOnboarding();
+                return;
+            }
+            await window.neuroWeb3.connect();
+        }
+
+        async function disconnectWallet() {
+            if (window.neuroWeb3) {
+                await window.neuroWeb3.disconnect();
+            }
+        }
+
+        function copyAddress() {
+            if (window.neuroWeb3 && window.neuroWeb3.userAddress) {
+                window.neuroWeb3.copyToClipboard(window.neuroWeb3.userAddress);
+            }
+        }
+
+        async function switchChain(chainId) {
+            if (window.neuroWeb3) {
+                await window.neuroWeb3.switchNetwork(chainId);
+            }
+        }
+
+        function showOnboarding() {
+            document.getElementById('onboardingModal').style.display = 'flex';
+        }
+
+        function closeOnboarding() {
+            document.getElementById('onboardingModal').style.display = 'none';
+        }
+
+        function showMintInfo() {
+            const modal = document.createElement('div');
+            modal.className = 'onboarding-modal';
+            modal.innerHTML = `
+                <div class="onboarding-content">
+                    <h2>Get Your NeuroX Premium NFT! 🎨</h2>
+                    <p>Unlock exclusive cognitive training features with our premium NFT pass.</p>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">💎</span>
+                        <strong>Premium Benefits</strong>
+                        <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                            <li>Advanced Neural Analytics</li>
+                            <li>AI-Powered Cognitive Coach</li>
+                            <li>Exclusive Premium Challenges</li>
+                            <li>Priority Customer Support</li>
+                            <li>Early Access to New Features</li>
+                        </ul>
+                    </div>
+
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <div style="font-size: 3rem;">🧠</div>
+                        <div style="font-size: 1.5rem; font-weight: 600; color: var(--home-color);">NeuroX Premium Pass</div>
+                        <div style="font-size: 1.2rem; margin-top: 0.5rem;">0.05 ETH</div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove()">
+                            <i class="fas fa-times"></i>
+                            Close
+                        </button>
+                        <button class="btn btn-challenges" onclick="window.open('https://opensea.io/collection/neurox-premium', '_blank')">
+                            <i class="fas fa-external-link-alt"></i>
+                            View on OpenSea
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        function openPremiumFeature(feature) {
+            if (window.neuroWeb3 && window.neuroWeb3.isConnected) {
+                window.neuroWeb3.showInfo(`${feature} feature coming soon! Your NFT access is verified.`);
+            } else {
+                showOnboarding();
+            }
+        }
+
+        function openPremiumChallenge(challenge) {
+            if (window.neuroWeb3 && window.neuroWeb3.isConnected) {
+                window.neuroWeb3.showInfo(`${challenge} challenge coming soon! Your NFT access is verified.`);
+            } else {
+                showOnboarding();
+            }
+        }
+
+        function showPremiumLeaderboard() {
+            if (window.neuroWeb3 && window.neuroWeb3.isConnected) {
+                window.neuroWeb3.showInfo('Premium leaderboard coming soon! Your NFT access is verified.');
+            } else {
+                showOnboarding();
+            }
+        }
 
         // WORKING CHALLENGE FUNCTIONS
         function openChallenge(type) {
@@ -2879,7 +2984,7 @@
 
             const techniques = {
                 breathwork: {
-                    title: '🫁 Breathwork Meditation',
+                    title: '���� Breathwork Meditation',
                     background: 'linear-gradient(135deg, #FF6B6B 0%, #FFB6C1 50%, #FFA07A 100%)',
                     instructions: [
                         '🔵 Inhale for 4 counts',
