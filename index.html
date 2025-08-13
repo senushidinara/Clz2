@@ -3011,7 +3011,7 @@
                     </div>
 
                     <div style="text-align: center; margin: 2rem 0;">
-                        <div style="font-size: 3rem;">��</div>
+                        <div style="font-size: 3rem;">🧠</div>
                         <div style="font-size: 1.5rem; font-weight: 600; color: var(--home-color);">NeuroX Premium Pass</div>
                         <div style="font-size: 1.2rem; margin-top: 0.5rem;">0.05 ETH</div>
                     </div>
@@ -4394,6 +4394,8 @@
                 type: challengeType,
                 score: score,
                 time: time,
+                performance: score,
+                duration: time / 1000,
                 timestamp: new Date().toISOString()
             };
 
@@ -4404,7 +4406,349 @@
             if (window.neuroXAdvanced && window.neuroXAdvanced.analytics) {
                 window.neuroXAdvanced.analytics.trackSession(challengeData);
             }
+
+            // Update cognitive twin with new data
+            if (window.cognitiveTwin) {
+                window.cognitiveTwin.performCognitiveMapping([challengeData]);
+            }
+
+            // Create memory capsule in garden
+            if (window.thoughtGarden) {
+                window.thoughtGarden.processSession(challengeData);
+            }
         }
+
+        // Cognitive Twin Functions
+        let cognitiveTwin;
+
+        function initializeCognitiveTwin() {
+            if (typeof CognitiveTwin !== 'undefined') {
+                cognitiveTwin = new CognitiveTwin();
+                window.cognitiveTwin = cognitiveTwin;
+
+                // Start with initial mapping
+                const initialData = [
+                    { type: 'memory', performance: 0.7, reactionTime: 800, accuracy: 0.75 },
+                    { type: 'focus', performance: 0.8, reactionTime: 600, accuracy: 0.85 }
+                ];
+
+                cognitiveTwin.performCognitiveMapping(initialData).then(results => {
+                    updateCognitiveTwinUI(results);
+                });
+            }
+        }
+
+        function updateCognitiveTwinUI(results) {
+            // Update cognitive fingerprint display
+            const fingerprintEl = document.getElementById('cognitiveFingerprint');
+            if (fingerprintEl && results.fingerprint) {
+                fingerprintEl.innerHTML = results.fingerprint.svg;
+            }
+
+            // Update twin status
+            const statusEl = document.getElementById('twinStatus');
+            if (statusEl) {
+                statusEl.textContent = `Active - ${results.twinInsights.personality}`;
+            }
+
+            // Update prediction accuracy
+            const accuracyEl = document.getElementById('predictionAccuracy');
+            if (accuracyEl) {
+                accuracyEl.style.width = '75%'; // Initial accuracy
+            }
+        }
+
+        function showCognitiveMapping() {
+            if (!cognitiveTwin) {
+                showToast('❌ Cognitive Twin not initialized');
+                return;
+            }
+
+            const modal = document.createElement('div');
+            modal.className = 'onboarding-modal';
+            modal.innerHTML = `
+                <div class="onboarding-content">
+                    <h2>🧠 Your Cognitive Brain Map</h2>
+                    <div style="text-align: center; margin: 2rem 0;">
+                        ${cognitiveTwin.cognitiveFingerprint?.svg || '<div>Generating brain map...</div>'}
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">🎯</span>
+                        <strong>Cognitive Strengths</strong>
+                        <div style="margin-top: 0.5rem;">
+                            ${cognitiveTwin.getDominantCognitiveAreas().map(area =>
+                                `<div>• ${area.area.charAt(0).toUpperCase() + area.area.slice(1)}: ${Math.round(area.strength * 100)}%</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">📈</span>
+                        <strong>Growth Areas</strong>
+                        <div style="margin-top: 0.5rem;">
+                            ${cognitiveTwin.getWeakCognitiveAreas().map(area =>
+                                `<div>• ${area.area.charAt(0).toUpperCase() + area.area.slice(1)}: ${Math.round(area.strength * 100)}%</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove();">
+                        <i class="fas fa-check"></i>
+                        Continue Training
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        async function challengeTwin() {
+            if (!cognitiveTwin) {
+                showToast('❌ Cognitive Twin not initialized');
+                return;
+            }
+
+            const modal = document.createElement('div');
+            modal.className = 'onboarding-modal';
+            modal.innerHTML = `
+                <div class="onboarding-content">
+                    <h2>🤖 Challenge Your Cognitive Twin</h2>
+                    <p>Choose a challenge type to compete against your AI twin:</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0;">
+                        <button class="btn btn-dashboard" onclick="startTwinChallenge('memory')">
+                            🧠 Memory Challenge
+                        </button>
+                        <button class="btn btn-focus" onclick="startTwinChallenge('focus')">
+                            🎯 Focus Challenge
+                        </button>
+                        <button class="btn btn-challenges" onclick="startTwinChallenge('speed')">
+                            ⚡ Speed Challenge
+                        </button>
+                        <button class="btn btn-primary" onclick="startTwinChallenge('logic')">
+                            🧩 Logic Challenge
+                        </button>
+                    </div>
+
+                    <button class="btn" onclick="this.closest('.onboarding-modal').remove();">
+                        Cancel
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        async function startTwinChallenge(type) {
+            // Close the modal
+            document.querySelector('.onboarding-modal').remove();
+
+            // Simulate user performance
+            const userScore = 0.6 + Math.random() * 0.4;
+            const userTime = 500 + Math.random() * 1000;
+
+            const result = await cognitiveTwin.competeTwin(type, userScore, userTime);
+
+            // Show results
+            const resultModal = document.createElement('div');
+            resultModal.className = 'onboarding-modal';
+            resultModal.innerHTML = `
+                <div class="onboarding-content">
+                    <h2>🏆 Twin Challenge Results</h2>
+
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin: 2rem 0;">
+                        <div style="text-align: center; padding: 1rem; background: rgba(0,0,255,0.1); border-radius: 8px;">
+                            <h3>👤 You</h3>
+                            <div style="font-size: 1.5rem; font-weight: bold;">${Math.round(userScore * 100)}%</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">${Math.round(userTime)}ms</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: rgba(255,0,0,0.1); border-radius: 8px;">
+                            <h3>🤖 Twin</h3>
+                            <div style="font-size: 1.5rem; font-weight: bold;">${Math.round(result.twinScore * 100)}%</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">${result.twinTime}ms</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin: 1rem 0;">
+                        <h3>${result.twinWon ? '🤖 Twin Wins!' : '🎉 You Win!'}</h3>
+                        <p style="font-style: italic;">"${result.twinComment}"</p>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">📊</span>
+                        <strong>Your Improvement</strong>
+                        <p>${result.userImprovement > 0 ? '+' : ''}${result.userImprovement.toFixed(1)}% since last session</p>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">🎯</span>
+                        <strong>Next Challenge</strong>
+                        <p>${result.nextChallenge.reason}</p>
+                        <button class="btn btn-focus" onclick="this.closest('.onboarding-modal').remove(); startTwinChallenge('${result.nextChallenge.type}')">
+                            Try ${result.nextChallenge.type} Challenge
+                        </button>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove();">
+                        <i class="fas fa-check"></i>
+                        Great!
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(resultModal);
+            resultModal.style.display = 'flex';
+        }
+
+        function showTwinInsights() {
+            if (!cognitiveTwin) {
+                showToast('❌ Cognitive Twin not initialized');
+                return;
+            }
+
+            const insights = cognitiveTwin.generateTwinInsights();
+            const modal = document.createElement('div');
+            modal.className = 'onboarding-modal';
+            modal.innerHTML = `
+                <div class="onboarding-content">
+                    <h2>💡 Cognitive Twin Insights</h2>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">💪</span>
+                        <strong>Your Strengths</strong>
+                        <div style="margin-top: 0.5rem;">
+                            ${insights.strengths.map(strength => `<div>• ${strength}</div>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">🎯</span>
+                        <strong>Growth Opportunities</strong>
+                        <div style="margin-top: 0.5rem;">
+                            ${insights.weaknesses.map(weakness => `<div>• ${weakness}</div>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">🧠</span>
+                        <strong>Twin Personality</strong>
+                        <p>${insights.personality}</p>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">📋</span>
+                        <strong>Recommendations</strong>
+                        <div style="margin-top: 0.5rem;">
+                            ${insights.recommendations.map(rec => `<div>• ${rec}</div>`).join('')}
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove();">
+                        <i class="fas fa-check"></i>
+                        Apply Insights
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        // Memory Garden Functions
+        function viewFullGarden() {
+            if (window.thoughtGarden) {
+                // Garden widget is already visible at bottom left
+                showToast('🌱 Your thought garden is visible in the bottom left corner!');
+            } else {
+                showToast('❌ Memory Garden not initialized');
+            }
+        }
+
+        function createMemoryCapsule() {
+            const modal = document.createElement('div');
+            modal.className = 'onboarding-modal';
+            modal.innerHTML = `
+                <div class="onboarding-content">
+                    <h2>🌱 Plant a Memory</h2>
+                    <p>Transform your recent cognitive session into a growing memory capsule.</p>
+
+                    <div style="margin: 2rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Memory Type:</label>
+                        <select id="memoryType" style="width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid #ccc;">
+                            <option value="memory">🧠 Memory Training</option>
+                            <option value="focus">🎯 Focus Session</option>
+                            <option value="meditation">🧘 Meditation</option>
+                            <option value="learning">📚 Learning</option>
+                            <option value="creativity">🎨 Creative Work</option>
+                        </select>
+                    </div>
+
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem;">Session Quality (1-10):</label>
+                        <input type="range" id="sessionQuality" min="1" max="10" value="7" style="width: 100%;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--gray-medium);">
+                            <span>Poor</span>
+                            <span>Excellent</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="btn btn-focus" onclick="plantMemoryInGarden()">
+                            <i class="fas fa-seedling"></i>
+                            Plant Memory
+                        </button>
+                        <button class="btn" onclick="this.closest('.onboarding-modal').remove();">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        function plantMemoryInGarden() {
+            const type = document.getElementById('memoryType').value;
+            const quality = document.getElementById('sessionQuality').value / 10;
+
+            const sessionData = {
+                type: type,
+                performance: quality,
+                duration: 15 + Math.random() * 30,
+                timestamp: new Date().toISOString()
+            };
+
+            if (window.thoughtGarden) {
+                const capsule = window.thoughtGarden.processSession(sessionData);
+                document.querySelector('.onboarding-modal').remove();
+                showToast(`🌱 Memory capsule "${capsule.content.title}" planted in your garden!`);
+
+                // Update garden stats display
+                updateGardenStatsDisplay();
+            } else {
+                showToast('❌ Memory Garden not available');
+            }
+        }
+
+        function updateGardenStatsDisplay() {
+            if (window.thoughtGarden) {
+                const stats = window.thoughtGarden.getGardenSummary();
+
+                // Update the dashboard display
+                document.getElementById('gardenSeeds').textContent = stats.gardenStats.totalPlants || 0;
+                document.getElementById('gardenGrowing').textContent = Math.floor(stats.gardenStats.totalPlants * 0.6) || 0;
+                document.getElementById('gardenBlooming').textContent = stats.gardenStats.bloomingPlants || 0;
+                document.getElementById('gardenMature').textContent = stats.gardenStats.matureThoughts || 0;
+            }
+        }
+
+        // Initialize advanced features when ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Cognitive Twin after a short delay
+            setTimeout(() => {
+                initializeCognitiveTwin();
+                updateGardenStatsDisplay();
+            }, 2000);
+        });
 
         // Debug function to test initialization
         window.debugNeuroX = function() {
