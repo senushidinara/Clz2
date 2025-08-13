@@ -2452,7 +2452,7 @@
                         <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20%; background: linear-gradient(90deg, rgba(176,224,230,0.7) 0%, rgba(135,206,235,0.5) 50%, rgba(70,130,180,0.7) 100%); border-radius: 50% 50% 0 0; animation: wave2 3s ease-in-out infinite reverse;"></div>
 
                         <!-- Seagulls -->
-                        <div style="position: absolute; top: 30%; left: 30%; color: white; font-size: 1.5rem; animation: fly 10s linear infinite;">🕊️</div>
+                        <div style="position: absolute; top: 30%; left: 30%; color: white; font-size: 1.5rem; animation: fly 10s linear infinite;">���️</div>
                     </div>
 
                     <!-- Mountain Background -->
@@ -2676,7 +2676,7 @@
                                 allowfullscreen>
                             </iframe>
                         </div>
-                        <div class="video-duration">Quick techniques ��� Immediate results</div>
+                        <div class="video-duration">Quick techniques • Immediate results</div>
                     </div>
 
                     <!-- Yoga Video -->
@@ -4131,6 +4131,178 @@
 
             // Start the actual timer functionality here
             startTimer();
+        }
+
+        // Video Playlist Functions
+        let currentPlaylist = [
+            { id: 'j734gLbQFbU', title: 'Guided Meditation', duration: '15:00', icon: '🧘' },
+            { id: 'LiUnFJ8P4gM', title: 'Breathing Exercises', duration: '8:00', icon: '🌬️' },
+            { id: 'yPK7ISPEu3M', title: 'Yoga Flow', duration: '20:00', icon: '🧘‍♂️' }
+        ];
+        let currentVideoIndex = 0;
+        let isAutoPlay = false;
+
+        function playVideo(videoId, title) {
+            // Update all video iframes to the selected video
+            const iframes = document.querySelectorAll('iframe[src*="youtube.com"]');
+            iframes.forEach(iframe => {
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            });
+
+            // Update playlist UI
+            document.querySelectorAll('.playlist-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Show floating progress
+            const progressDiv = document.getElementById('videoProgress');
+            const titleElement = document.getElementById('currentVideoTitle');
+            if (progressDiv && titleElement) {
+                titleElement.textContent = title;
+                progressDiv.style.display = 'block';
+
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    if (progressDiv.style.display !== 'none') {
+                        progressDiv.style.display = 'none';
+                    }
+                }, 5000);
+            }
+
+            // Track video play
+            const playData = {
+                videoId: videoId,
+                title: title,
+                timestamp: new Date().toISOString(),
+                source: 'wellness_playlist'
+            };
+
+            // Save to analytics
+            const analytics = JSON.parse(localStorage.getItem('videoAnalytics') || '[]');
+            analytics.push(playData);
+            localStorage.setItem('videoAnalytics', JSON.stringify(analytics));
+
+            showToast(`▶️ Now playing: ${title}`);
+        }
+
+        function shufflePlaylist() {
+            // Fisher-Yates shuffle algorithm
+            for (let i = currentPlaylist.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentPlaylist[i], currentPlaylist[j]] = [currentPlaylist[j], currentPlaylist[i]];
+            }
+
+            showToast('🔀 Playlist shuffled!');
+            updatePlaylistUI();
+        }
+
+        function autoPlayNext() {
+            isAutoPlay = !isAutoPlay;
+            const button = event.currentTarget;
+
+            if (isAutoPlay) {
+                button.innerHTML = '<i class="fas fa-pause"></i> Auto-Play ON';
+                button.style.background = 'var(--focus-color)';
+                showToast('🔄 Auto-play enabled');
+            } else {
+                button.innerHTML = '<i class="fas fa-forward"></i> Auto-Play';
+                button.style.background = 'rgba(255, 255, 255, 0.9)';
+                showToast('⏸️ Auto-play disabled');
+            }
+        }
+
+        function downloadPlaylist() {
+            const playlist = {
+                name: 'NeuroX Wellness Playlist',
+                videos: currentPlaylist,
+                created: new Date().toISOString()
+            };
+
+            const dataStr = JSON.stringify(playlist, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'neurox_wellness_playlist.json';
+            link.click();
+
+            showToast('💾 Playlist saved for offline use!');
+        }
+
+        function updatePlaylistUI() {
+            // This would update the playlist order in the UI
+            console.log('Playlist updated:', currentPlaylist);
+        }
+
+        // Simulate video progress (since we can't access YouTube API directly)
+        function simulateVideoProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const currentTimeEl = document.getElementById('currentTime');
+
+            if (progressFill && currentTimeEl) {
+                let progress = 0;
+                let minutes = 0;
+                let seconds = 0;
+
+                const interval = setInterval(() => {
+                    progress += 0.5; // Increment progress
+                    seconds += 5;
+
+                    if (seconds >= 60) {
+                        minutes++;
+                        seconds = 0;
+                    }
+
+                    progressFill.style.width = progress + '%';
+                    currentTimeEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                    if (progress >= 100) {
+                        clearInterval(interval);
+
+                        if (isAutoPlay) {
+                            // Auto-play next video
+                            currentVideoIndex = (currentVideoIndex + 1) % currentPlaylist.length;
+                            const nextVideo = currentPlaylist[currentVideoIndex];
+                            setTimeout(() => {
+                                playVideo(nextVideo.id, nextVideo.title);
+                            }, 2000);
+                        }
+                    }
+                }, 2000); // Update every 2 seconds for demo
+            }
+        }
+
+        // Enhanced meditation background controls
+        function changeMeditationBg(bgType) {
+            const backgrounds = ['nature-bg', 'ocean-bg', 'mountain-bg'];
+            const buttons = document.querySelectorAll('.bg-btn');
+
+            // Hide all backgrounds
+            backgrounds.forEach(bg => {
+                const element = document.getElementById(bg === 'nature-bg' ? 'natureBg' :
+                                                      bg === 'ocean-bg' ? 'oceanBg' : 'mountainBg');
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+
+            // Show selected background
+            const targetBg = document.getElementById(bgType === 'nature' ? 'natureBg' :
+                                                   bgType === 'ocean' ? 'oceanBg' : 'mountainBg');
+            if (targetBg) {
+                targetBg.style.display = 'block';
+            }
+
+            // Update button states
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.bg === bgType) {
+                    btn.classList.add('active');
+                }
+            });
+
+            showToast(`🌟 Background changed to ${bgType}`);
         }
 
         // Enhanced challenge completion tracking
