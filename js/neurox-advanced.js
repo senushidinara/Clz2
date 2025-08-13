@@ -1,59 +1,155 @@
-// NeuroX Advanced Features Module
+/**
+ * NeuroX Advanced Features Integration
+ * Orchestrates all advanced cognitive training features with latest technologies
+ */
+
 class NeuroXAdvanced {
     constructor() {
-        this.userProfile = this.loadUserProfile();
+        this.systems = {
+            web3: null,
+            brain3D: null,
+            cognitiveTwin: null,
+            neuroResponsive: null,
+            memoryGarden: null,
+            brainwaveComposer: null,
+            advancedAudio: null,
+            dataVisualization: null
+        };
+        this.isInitialized = false;
+        this.currentUser = null;
+        this.sessionData = {};
         this.achievements = [];
-        this.socialFeatures = null;
-        this.aiCoach = null;
-        this.gamification = null;
-        this.analytics = null;
-        this.nftMarketplace = null;
-        this.communityFeatures = null;
-        this.init();
+        this.socialConnections = [];
+        this.realTimeMetrics = {
+            attention: 0,
+            focus: 0,
+            relaxation: 0,
+            cognitive_load: 0,
+            brainwaves: {
+                delta: 0,
+                theta: 0,
+                alpha: 0,
+                beta: 0,
+                gamma: 0
+            }
+        };
+        
+        this.initializeAdvancedFeatures();
     }
 
-    init() {
+    async initializeAdvancedFeatures() {
         try {
-            this.setupEventListeners();
-            this.initializeFeatures();
-            this.startPerformanceTracking();
+            console.log('🧠 Initializing NeuroX Advanced Features...');
+            
+            // Wait for DOM to be ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    this.setupSystems();
+                });
+            } else {
+                await this.setupSystems();
+            }
+            
         } catch (error) {
-            console.error('NeuroXAdvanced initialization failed:', error);
+            console.error('Failed to initialize NeuroX Advanced:', error);
         }
     }
 
-    initializeFeatures() {
-        try {
-            // Initialize features only when classes are available
-            if (typeof SocialFeatures !== 'undefined') {
-                this.socialFeatures = new SocialFeatures();
+    async setupSystems() {
+        console.log('🔧 Setting up advanced systems...');
+        
+        // Initialize Web3 system
+        if (window.NeuroWeb3) {
+            try {
+                this.systems.web3 = new window.NeuroWeb3();
+                console.log('✅ Web3 system initialized');
+            } catch (error) {
+                console.warn('⚠️ Web3 system failed to initialize:', error);
             }
-            if (typeof AICoach !== 'undefined') {
-                this.aiCoach = new AICoach();
-            }
-            if (typeof Gamification !== 'undefined') {
-                this.gamification = new Gamification();
-            }
-            if (typeof AdvancedAnalytics !== 'undefined') {
-                this.analytics = new AdvancedAnalytics();
-            }
-            if (typeof NFTMarketplace !== 'undefined') {
-                this.nftMarketplace = new NFTMarketplace();
-            }
-            if (typeof CommunityFeatures !== 'undefined') {
-                this.communityFeatures = new CommunityFeatures();
-            }
-        } catch (error) {
-            console.error('Feature initialization failed:', error);
         }
+
+        // Initialize Advanced Audio System
+        if (window.AdvancedAudioSystem) {
+            try {
+                this.systems.advancedAudio = new window.AdvancedAudioSystem();
+                console.log('✅ Advanced Audio System initialized');
+            } catch (error) {
+                console.warn('⚠️ Advanced Audio System failed to initialize:', error);
+            }
+        }
+
+        // Initialize Advanced Data Visualization
+        if (window.AdvancedDataVisualization) {
+            try {
+                this.systems.dataVisualization = new window.AdvancedDataVisualization();
+                console.log('✅ Advanced Data Visualization initialized');
+            } catch (error) {
+                console.warn('⚠️ Advanced Data Visualization failed to initialize:', error);
+            }
+        }
+
+        // Initialize 3D Brain Visualization
+        if (window.Brain3DVisualization) {
+            try {
+                this.systems.brain3D = new window.Brain3DVisualization('brain3DContainer');
+                console.log('✅ 3D Brain Visualization initialized');
+            } catch (error) {
+                console.warn('⚠️ 3D Brain Visualization failed to initialize:', error);
+            }
+        }
+
+        // Initialize Cognitive Twin
+        if (window.CognitiveTwin) {
+            try {
+                this.systems.cognitiveTwin = new window.CognitiveTwin();
+                console.log('✅ Cognitive Twin initialized');
+            } catch (error) {
+                console.warn('⚠️ Cognitive Twin failed to initialize:', error);
+            }
+        }
+
+        // Initialize other systems...
+        await this.initializeOtherSystems();
+        
+        // Start real-time data collection
+        this.startRealTimeDataCollection();
+        
+        // Setup event listeners
+        this.setupEventListeners();
+        
+        this.isInitialized = true;
+        console.log('🎉 NeuroX Advanced Systems Initialized Successfully!');
     }
 
-    startPerformanceTracking() {
-        try {
-            // Start performance tracking
-            console.log('Performance tracking started');
-        } catch (error) {
-            console.error('Performance tracking failed:', error);
+    async initializeOtherSystems() {
+        // Initialize Neuro-Responsive UI
+        if (window.NeuroResponsiveUI) {
+            try {
+                this.systems.neuroResponsive = new window.NeuroResponsiveUI();
+                console.log('✅ Neuro-Responsive UI initialized');
+            } catch (error) {
+                console.warn('⚠️ Neuro-Responsive UI failed to initialize:', error);
+            }
+        }
+
+        // Initialize Memory Garden
+        if (window.ThoughtGarden) {
+            try {
+                this.systems.memoryGarden = new window.ThoughtGarden();
+                console.log('✅ Memory Garden initialized');
+            } catch (error) {
+                console.warn('⚠️ Memory Garden failed to initialize:', error);
+            }
+        }
+
+        // Initialize Brainwave Composer
+        if (window.BrainwaveComposer) {
+            try {
+                this.systems.brainwaveComposer = new window.BrainwaveComposer();
+                console.log('✅ Brainwave Composer initialized');
+            } catch (error) {
+                console.warn('⚠️ Brainwave Composer failed to initialize:', error);
+            }
         }
     }
 
@@ -71,1009 +167,611 @@ class NeuroXAdvanced {
         document.addEventListener('challengeCompleted', (event) => {
             this.trackPerformance(event.detail);
         });
-    }
 
-    async onWalletConnected(walletData) {
-        try {
-            this.userProfile.walletAddress = walletData.address;
-            this.userProfile.chainId = walletData.chainId;
-
-            // Load user's NFTs and social profile
-            await this.loadUserNFTs();
-            if (this.socialFeatures && this.socialFeatures.loadProfile) {
-                await this.socialFeatures.loadProfile(walletData.address);
-            }
-
-            // Initialize AI coach with user data
-            if (this.aiCoach && this.aiCoach.initializeUser) {
-                this.aiCoach.initializeUser(this.userProfile);
-            }
-
-            // Update UI
-            this.updateProfileUI();
-        } catch (error) {
-            console.error('Wallet connection handling failed:', error);
-        }
-    }
-
-    async onNFTVerified(nftData) {
-        try {
-            this.userProfile.premiumAccess = true;
-            this.userProfile.nftCollection = nftData.collection;
-
-            // Unlock premium features
-            this.unlockPremiumFeatures();
-
-            // Initialize premium analytics
-            if (this.analytics && this.analytics.enablePremiumFeatures) {
-                this.analytics.enablePremiumFeatures();
-            }
-
-            // Show welcome message
-            this.showPremiumWelcome(nftData);
-        } catch (error) {
-            console.error('NFT verification handling failed:', error);
-        }
-    }
-
-    loadUserProfile() {
-        const saved = localStorage.getItem('neuroXProfile');
-        return saved ? JSON.parse(saved) : {
-            id: Date.now().toString(),
-            level: 1,
-            xp: 0,
-            streakDays: 0,
-            totalSessions: 0,
-            premiumAccess: false,
-            achievements: [],
-            preferences: {
-                notifications: true,
-                darkMode: false,
-                difficulty: 'medium'
-            }
-        };
-    }
-
-    saveUserProfile() {
-        localStorage.setItem('neuroXProfile', JSON.stringify(this.userProfile));
-    }
-
-    async loadUserNFTs() {
-        if (!this.userProfile.walletAddress) return;
-
-        try {
-            if (this.nftMarketplace && this.nftMarketplace.getUserNFTs) {
-                const nfts = await this.nftMarketplace.getUserNFTs(this.userProfile.walletAddress);
-                this.userProfile.nfts = nfts;
-                this.displayUserNFTs(nfts);
-            }
-        } catch (error) {
-            console.error('Failed to load NFTs:', error);
-        }
-    }
-
-    displayUserNFTs(nfts) {
-        try {
-            console.log('User NFTs loaded:', nfts);
-            // Update UI with NFTs if needed
-        } catch (error) {
-            console.error('Failed to display NFTs:', error);
-        }
-    }
-
-    updateProfileUI() {
-        try {
-            console.log('Profile UI updated');
-            // Update profile UI elements
-        } catch (error) {
-            console.error('Failed to update profile UI:', error);
-        }
-    }
-
-    unlockPremiumFeatures() {
-        // Remove locks from premium features
-        document.querySelectorAll('.premium-feature.locked').forEach(element => {
-            element.classList.remove('locked');
-            element.classList.add('unlocked');
+        // Audio session events
+        document.addEventListener('audioSessionStarted', (event) => {
+            this.onAudioSessionStarted(event.detail);
         });
 
-        // Hide premium locks
-        document.querySelectorAll('.premium-lock').forEach(element => {
-            element.style.display = 'none';
-        });
-
-        // Enable premium navigation
-        this.enablePremiumNavigation();
-    }
-
-    showPremiumWelcome(nftData) {
-        const modal = document.createElement('div');
-        modal.className = 'onboarding-modal';
-        modal.innerHTML = `
-            <div class="onboarding-content premium-welcome">
-                <div class="celebration-animation">🎉✨🧠✨🎉</div>
-                <h2>Welcome to NeuroX Premium! 🚀</h2>
-                <p>Your ${nftData.name} has been verified!</p>
-                
-                <div class="nft-showcase">
-                    <img src="${nftData.image}" alt="${nftData.name}" style="width: 150px; height: 150px; border-radius: 12px; object-fit: cover;">
-                    <div style="margin-top: 1rem;">
-                        <h3>${nftData.name}</h3>
-                        <p>${nftData.description}</p>
-                    </div>
-                </div>
-
-                <div class="premium-features-list">
-                    <h3>🔓 Unlocked Features:</h3>
-                    <div class="feature-grid">
-                        <div class="feature-item">
-                            <i class="fas fa-brain"></i>
-                            <span>Advanced Neural Analytics</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-robot"></i>
-                            <span>AI Cognitive Coach</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-users"></i>
-                            <span>Premium Community</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-trophy"></i>
-                            <span>Exclusive Challenges</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove(); neuroXAdvanced.startPremiumTour();">
-                    <i class="fas fa-rocket"></i>
-                    Explore Premium Features
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.style.display = 'flex';
-    }
-
-    startPremiumTour() {
-        try {
-            // Interactive tour of premium features
-            const tourSteps = [
-                {
-                    target: '#advancedAnalytics',
-                    title: 'Advanced Neural Analytics',
-                    description: 'Get deep insights into your cognitive patterns and brain activity.',
-                    action: () => {
-                        if (this.analytics && this.analytics.showDemo) {
-                            this.analytics.showDemo();
-                        }
-                    }
-                },
-                {
-                    target: '#aiCoach',
-                    title: 'AI Cognitive Coach',
-                    description: 'Your personal AI coach adapts training to your unique needs.',
-                    action: () => {
-                        if (this.aiCoach && this.aiCoach.showIntro) {
-                            this.aiCoach.showIntro();
-                        }
-                    }
-                },
-                {
-                    target: '.premium-community',
-                    title: 'Premium Community',
-                    description: 'Connect with other premium members and share insights.',
-                    action: () => {
-                        if (this.communityFeatures && this.communityFeatures.showHub) {
-                            this.communityFeatures.showHub();
-                        }
-                    }
-                }
-            ];
-
-            if (typeof InteractiveTour !== 'undefined') {
-                const tour = new InteractiveTour(tourSteps);
-                tour.start();
-            } else {
-                console.log('Premium tour started - InteractiveTour not available');
-                // Fallback: show features one by one
-                tourSteps.forEach((step, index) => {
-                    setTimeout(() => {
-                        if (step.action) step.action();
-                    }, index * 2000);
-                });
-            }
-        } catch (error) {
-            console.error('Premium tour failed:', error);
-        }
-    }
-}
-
-// Social Features Module
-class SocialFeatures {
-    constructor() {
-        this.friends = [];
-        this.activities = [];
-        this.leaderboards = new Map();
-    }
-
-    async loadProfile(walletAddress) {
-        try {
-            // In a real app, this would fetch from a backend
-            const profile = await this.fetchUserProfile(walletAddress);
-            this.updateSocialUI(profile);
-        } catch (error) {
-            console.error('Failed to load social profile:', error);
-        }
-    }
-
-    async fetchUserProfile(address) {
-        // Mock profile data - in production, fetch from backend
-        return {
-            address,
-            ens: await this.resolveENS(address),
-            avatar: `https://api.dicebear.com/7.x/identicon/svg?seed=${address}`,
-            bio: 'Cognitive training enthusiast',
-            stats: {
-                sessionsCompleted: Math.floor(Math.random() * 100),
-                averageScore: Math.floor(Math.random() * 100),
-                friendsCount: Math.floor(Math.random() * 50)
-            }
-        };
-    }
-
-    async resolveENS(address) {
-        try {
-            if (window.neuroWeb3 && window.neuroWeb3.provider) {
-                return await window.neuroWeb3.provider.lookupAddress(address);
-            }
-        } catch (error) {
-            console.log('ENS resolution failed:', error);
-        }
-        return null;
-    }
-
-    shareAchievement(achievement) {
-        const shareData = {
-            title: `NeuroX Achievement: ${achievement.title}`,
-            text: `I just unlocked "${achievement.title}" in NeuroX! 🧠💪`,
-            url: window.location.href
-        };
-
-        if (navigator.share) {
-            navigator.share(shareData);
-        } else {
-            this.fallbackShare(shareData);
-        }
-    }
-
-    fallbackShare(shareData) {
-        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareData.text)}&url=${encodeURIComponent(shareData.url)}`;
-        window.open(url, '_blank');
-    }
-
-    createSocialPost(content, type = 'achievement') {
-        const post = {
-            id: Date.now().toString(),
-            content,
-            type,
-            timestamp: new Date().toISOString(),
-            likes: 0,
-            comments: []
-        };
-
-        this.activities.unshift(post);
-        this.updateActivityFeed();
-        return post;
-    }
-
-    updateActivityFeed() {
-        const feed = document.getElementById('socialFeed');
-        if (!feed) return;
-
-        feed.innerHTML = this.activities.map(activity => `
-            <div class="activity-item">
-                <div class="activity-header">
-                    <img src="${this.getActivityIcon(activity.type)}" alt="${activity.type}">
-                    <span class="activity-time">${this.formatTime(activity.timestamp)}</span>
-                </div>
-                <div class="activity-content">${activity.content}</div>
-                <div class="activity-actions">
-                    <button onclick="neuroXAdvanced.socialFeatures.likeActivity('${activity.id}')">
-                        <i class="fas fa-heart"></i> ${activity.likes}
-                    </button>
-                    <button onclick="neuroXAdvanced.socialFeatures.commentOnActivity('${activity.id}')">
-                        <i class="fas fa-comment"></i> ${activity.comments.length}
-                    </button>
-                </div>
-            </div>
-        `).join('');
-    }
-}
-
-// AI Coach Module
-class AICoach {
-    constructor() {
-        this.recommendations = [];
-        this.insights = [];
-        this.sessionHistory = [];
-    }
-
-    initializeUser(profile) {
-        this.userProfile = profile;
-        this.generatePersonalizedRecommendations();
-    }
-
-    generatePersonalizedRecommendations() {
-        const recommendations = [
-            {
-                type: 'training',
-                title: 'Focus on Memory Training',
-                description: 'Your recent scores suggest memory exercises would benefit you most.',
-                confidence: 0.85,
-                action: 'memory-challenge'
-            },
-            {
-                type: 'timing',
-                title: 'Optimal Training Time',
-                description: 'Your performance peaks between 10-11 AM. Schedule sessions then.',
-                confidence: 0.78,
-                action: 'schedule-reminder'
-            },
-            {
-                type: 'difficulty',
-                title: 'Increase Challenge Level',
-                description: 'You\'re ready for harder challenges to continue improving.',
-                confidence: 0.92,
-                action: 'level-up'
-            }
-        ];
-
-        this.recommendations = recommendations;
-        this.updateCoachUI();
-    }
-
-    analyzePerformance(sessionData) {
-        const insights = {
-            strengths: this.identifyStrengths(sessionData),
-            improvements: this.identifyImprovements(sessionData),
-            trends: this.analyzeTrends(sessionData),
-            nextSteps: this.suggestNextSteps(sessionData)
-        };
-
-        this.insights.push(insights);
-        return insights;
-    }
-
-    showIntro() {
-        const modal = document.createElement('div');
-        modal.className = 'onboarding-modal';
-        modal.innerHTML = `
-            <div class="onboarding-content ai-coach-intro">
-                <div class="ai-avatar">🤖</div>
-                <h2>Meet Your AI Cognitive Coach</h2>
-                <p>I analyze your performance patterns and create personalized training plans.</p>
-                
-                <div class="coach-features">
-                    <div class="coach-feature">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Performance Analysis</h3>
-                        <p>Deep insights into your cognitive patterns</p>
-                    </div>
-                    <div class="coach-feature">
-                        <i class="fas fa-target"></i>
-                        <h3>Personalized Goals</h3>
-                        <p>Custom training plans based on your needs</p>
-                    </div>
-                    <div class="coach-feature">
-                        <i class="fas fa-clock"></i>
-                        <h3>Optimal Timing</h3>
-                        <p>When to train for maximum effectiveness</p>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove();">
-                    <i class="fas fa-check"></i>
-                    Let's Start Training!
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.style.display = 'flex';
-    }
-
-    updateCoachUI() {
-        const coachPanel = document.getElementById('aiCoachPanel');
-        if (!coachPanel) return;
-
-        coachPanel.innerHTML = `
-            <div class="coach-header">
-                <div class="ai-avatar">🤖</div>
-                <h3>Your AI Coach</h3>
-            </div>
-            <div class="recommendations">
-                ${this.recommendations.map(rec => `
-                    <div class="recommendation-card">
-                        <div class="rec-header">
-                            <span class="rec-type">${rec.type}</span>
-                            <span class="confidence">${Math.round(rec.confidence * 100)}%</span>
-                        </div>
-                        <h4>${rec.title}</h4>
-                        <p>${rec.description}</p>
-                        <button class="btn btn-sm" onclick="neuroXAdvanced.aiCoach.executeRecommendation('${rec.action}')">
-                            Take Action
-                        </button>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-}
-
-// Gamification Module
-class Gamification {
-    constructor() {
-        this.achievements = new Map();
-        this.badges = new Map();
-        this.quests = [];
-        this.rewards = [];
-        this.initializeAchievements();
-    }
-
-    initializeAchievements() {
-        const achievements = [
-            {
-                id: 'first_session',
-                title: 'First Steps',
-                description: 'Complete your first training session',
-                icon: '🌟',
-                xp: 100,
-                unlocked: false
-            },
-            {
-                id: 'memory_master',
-                title: 'Memory Master',
-                description: 'Score 90%+ on memory challenges 5 times',
-                icon: '🧠',
-                xp: 500,
-                unlocked: false,
-                progress: 0,
-                target: 5
-            },
-            {
-                id: 'speed_demon',
-                title: 'Speed Demon',
-                description: 'Complete a challenge in under 30 seconds',
-                icon: '⚡',
-                xp: 300,
-                unlocked: false
-            },
-            {
-                id: 'nft_holder',
-                title: 'Premium Member',
-                description: 'Own a NeuroX Premium NFT',
-                icon: '💎',
-                xp: 1000,
-                unlocked: false
-            }
-        ];
-
-        achievements.forEach(achievement => {
-            this.achievements.set(achievement.id, achievement);
+        // Visualization events
+        document.addEventListener('brainActivityChanged', (event) => {
+            this.onBrainActivityChanged(event.detail);
         });
     }
 
-    checkAchievements(event) {
-        const { type, data } = event;
+    startRealTimeDataCollection() {
+        // Collect data from all systems every second
+        this.dataCollectionInterval = setInterval(() => {
+            this.collectRealTimeMetrics();
+        }, 1000);
 
-        switch (type) {
-            case 'session_completed':
-                this.unlockAchievement('first_session');
-                break;
-            case 'challenge_completed':
-                this.handleChallengeAchievements(data);
-                break;
-            case 'nft_verified':
-                this.unlockAchievement('nft_holder');
-                break;
-        }
-    }
-
-    unlockAchievement(achievementId) {
-        const achievement = this.achievements.get(achievementId);
-        if (!achievement || achievement.unlocked) return;
-
-        achievement.unlocked = true;
-        achievement.unlockedAt = new Date().toISOString();
-
-        // Award XP
-        if (window.neuroXAdvanced && window.neuroXAdvanced.userProfile) {
-            window.neuroXAdvanced.userProfile.xp += achievement.xp;
-            window.neuroXAdvanced.saveUserProfile();
-        }
-
-        // Show achievement notification
-        this.showAchievementNotification(achievement);
-
-        // Update UI
-        this.updateAchievementsUI();
-
-        return achievement;
-    }
-
-    showAchievementNotification(achievement) {
-        const notification = document.createElement('div');
-        notification.className = 'achievement-notification';
-        notification.innerHTML = `
-            <div class="achievement-content">
-                <div class="achievement-icon">${achievement.icon}</div>
-                <div class="achievement-info">
-                    <h3>Achievement Unlocked!</h3>
-                    <h4>${achievement.title}</h4>
-                    <p>${achievement.description}</p>
-                    <div class="xp-reward">+${achievement.xp} XP</div>
-                </div>
-            </div>
-        `;
-
-        document.body.appendChild(notification);
-        
-        // Animate in
-        setTimeout(() => notification.classList.add('show'), 100);
-        
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => notification.remove(), 300);
+        // Sync data between systems every 5 seconds
+        this.syncInterval = setInterval(() => {
+            this.syncSystemData();
         }, 5000);
+
+        console.log('📊 Real-time data collection started');
     }
 
-    createQuest(title, description, tasks, rewards) {
-        const quest = {
-            id: Date.now().toString(),
-            title,
-            description,
-            tasks,
-            rewards,
-            progress: 0,
-            completed: false,
-            startedAt: new Date().toISOString()
-        };
-
-        this.quests.push(quest);
-        this.updateQuestsUI();
-        return quest;
-    }
-
-    updateQuestsUI() {
-        const questsPanel = document.getElementById('questsPanel');
-        if (!questsPanel) return;
-
-        questsPanel.innerHTML = `
-            <h3>🎯 Active Quests</h3>
-            <div class="quests-list">
-                ${this.quests.filter(q => !q.completed).map(quest => `
-                    <div class="quest-card">
-                        <h4>${quest.title}</h4>
-                        <p>${quest.description}</p>
-                        <div class="quest-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${(quest.progress / quest.tasks.length) * 100}%"></div>
-                            </div>
-                            <span>${quest.progress}/${quest.tasks.length}</span>
-                        </div>
-                        <div class="quest-rewards">
-                            ${quest.rewards.map(reward => `<span class="reward">${reward}</span>`).join('')}
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    }
-}
-
-// Advanced Analytics Module
-class AdvancedAnalytics {
-    constructor() {
-        this.analyticsData = {
-            sessions: [],
-            performance: [],
-            insights: [],
-            predictions: []
-        };
-        this.premiumEnabled = false;
-    }
-
-    enablePremiumFeatures() {
-        this.premiumEnabled = true;
-        this.initializePremiumAnalytics();
-    }
-
-    initializePremiumAnalytics() {
-        this.setupRealTimeTracking();
-        this.enableAdvancedMetrics();
-        this.startPredictiveAnalysis();
-    }
-
-    trackSession(sessionData) {
-        const enrichedData = {
-            ...sessionData,
-            timestamp: new Date().toISOString(),
-            browserInfo: this.getBrowserInfo(),
-            performanceMetrics: this.getPerformanceMetrics()
-        };
-
-        this.analyticsData.sessions.push(enrichedData);
-        this.analyzeSessionData(enrichedData);
-    }
-
-    analyzeSessionData(sessionData) {
-        const insights = {
-            focusLevel: this.calculateFocusLevel(sessionData),
-            improvementRate: this.calculateImprovementRate(sessionData),
-            optimalTiming: this.findOptimalTiming(sessionData),
-            cognitiveLoad: this.assessCognitiveLoad(sessionData)
-        };
-
-        this.analyticsData.insights.push(insights);
-        this.updateAnalyticsUI(insights);
-    }
-
-    showDemo() {
-        const modal = document.createElement('div');
-        modal.className = 'onboarding-modal analytics-demo';
-        modal.innerHTML = `
-            <div class="onboarding-content">
-                <h2>🧠 Advanced Neural Analytics</h2>
-                <div class="analytics-preview">
-                    <div class="metric-card">
-                        <h3>Neural Efficiency</h3>
-                        <div class="metric-value">87%</div>
-                        <div class="metric-trend">↗ +5% this week</div>
-                    </div>
-                    <div class="metric-card">
-                        <h3>Focus Patterns</h3>
-                        <div class="mini-chart">📈</div>
-                        <div class="metric-insight">Peak: 10-11 AM</div>
-                    </div>
-                    <div class="metric-card">
-                        <h3>Memory Retention</h3>
-                        <div class="metric-value">92%</div>
-                        <div class="metric-trend">↗ Improving</div>
-                    </div>
-                </div>
-                <p>Get detailed insights into your cognitive patterns and performance trends.</p>
-                <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove();">
-                    <i class="fas fa-chart-line"></i>
-                    Explore Analytics
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.style.display = 'flex';
-    }
-}
-
-// NFT Marketplace Module
-class NFTMarketplace {
-    constructor() {
-        this.collections = new Map();
-        this.listings = [];
-        this.userNFTs = [];
-    }
-
-    async getUserNFTs(walletAddress) {
+    collectRealTimeMetrics() {
         try {
-            // In production, this would call multiple chain APIs
-            const chains = ['ethereum', 'polygon', 'bsc'];
-            const allNFTs = [];
-
-            for (const chain of chains) {
-                const nfts = await this.fetchNFTsFromChain(walletAddress, chain);
-                allNFTs.push(...nfts);
+            // Collect from audio system
+            if (this.systems.advancedAudio && this.systems.advancedAudio.getRealTimeData) {
+                const audioData = this.systems.advancedAudio.getRealTimeData();
+                this.realTimeMetrics.volume = audioData.volume;
+                this.realTimeMetrics.pitch = audioData.pitch;
             }
 
-            return allNFTs;
+            // Collect from brain visualization
+            if (this.systems.brain3D && this.systems.brain3D.exportVisualizationData) {
+                const brainData = this.systems.brain3D.exportVisualizationData();
+                this.updateBrainMetrics(brainData);
+            }
+
+            // Collect from data visualization
+            if (this.systems.dataVisualization && this.systems.dataVisualization.getDataStream) {
+                const brainwaveData = this.systems.dataVisualization.getDataStream('brainwaves');
+                if (brainwaveData && brainwaveData.data) {
+                    this.updateBrainwaveMetrics(brainwaveData.data);
+                }
+            }
+
+            // Update UI with collected metrics
+            this.updateMetricsUI();
+
         } catch (error) {
-            console.error('Failed to fetch NFTs:', error);
-            return [];
+            console.warn('Data collection error:', error);
         }
     }
 
-    async fetchNFTsFromChain(address, chain) {
-        // Mock NFT data - in production, use Moralis, Alchemy, or similar
-        return [
-            {
-                id: `${chain}-1`,
-                name: 'NeuroX Premium Pass',
-                description: 'Exclusive access to premium cognitive training features',
-                image: 'https://via.placeholder.com/300x300/667eea/white?text=NeuroX+Premium',
-                collection: 'NeuroX Premium',
-                chain,
-                tokenId: '1',
-                contractAddress: '0x742d35cc6634c0532925a3b8d0ed6fb9a9eb4a5e',
-                metadata: {
-                    attributes: [
-                        { trait_type: 'Access Level', value: 'Premium' },
-                        { trait_type: 'Features', value: 'All' },
-                        { trait_type: 'Rarity', value: 'Elite' }
-                    ]
-                }
-            }
-        ];
+    updateBrainMetrics(brainData) {
+        if (!brainData || !brainData.regions) return;
+
+        // Calculate average activity across regions
+        let totalActivity = 0;
+        let regionCount = 0;
+
+        brainData.regions.forEach(region => {
+            totalActivity += region.activity;
+            regionCount++;
+        });
+
+        if (regionCount > 0) {
+            this.realTimeMetrics.cognitive_load = totalActivity / regionCount;
+        }
     }
 
-    async mintNFT(metadata) {
-        try {
-            if (!window.neuroWeb3 || !window.neuroWeb3.isConnected) {
-                throw new Error('Wallet not connected');
+    updateBrainwaveMetrics(brainwaveData) {
+        Object.keys(brainwaveData).forEach(band => {
+            if (brainwaveData[band].length > 0) {
+                const latest = brainwaveData[band].slice(-1)[0];
+                this.realTimeMetrics.brainwaves[band] = latest.value;
             }
+        });
 
-            // Show minting modal
-            this.showMintingModal(metadata);
+        // Calculate derived metrics
+        this.realTimeMetrics.attention = this.realTimeMetrics.brainwaves.beta * 0.7 + 
+                                         this.realTimeMetrics.brainwaves.gamma * 0.3;
+        this.realTimeMetrics.relaxation = this.realTimeMetrics.brainwaves.alpha * 0.6 + 
+                                          this.realTimeMetrics.brainwaves.theta * 0.4;
+        this.realTimeMetrics.focus = (this.realTimeMetrics.attention + (100 - this.realTimeMetrics.relaxation)) / 2;
+    }
 
-            // In production, this would interact with a minting contract
-            const mockTransaction = {
-                hash: '0x' + Math.random().toString(16).substr(2, 64),
-                from: window.neuroWeb3.userAddress,
-                to: '0x742d35cc6634c0532925a3b8d0ed6fb9a9eb4a5e',
-                status: 'pending'
+    syncSystemData() {
+        // Sync cognitive state between systems
+        const cognitiveState = {
+            attention: this.realTimeMetrics.attention / 100,
+            focus: this.realTimeMetrics.focus / 100,
+            relaxation: this.realTimeMetrics.relaxation / 100,
+            activity: this.realTimeMetrics.cognitive_load
+        };
+
+        // Update brain visualization
+        if (this.systems.brain3D && this.systems.brain3D.updateCognitiveState) {
+            this.systems.brain3D.updateCognitiveState(cognitiveState);
+        }
+
+        // Update neuro-responsive UI
+        if (this.systems.neuroResponsive && this.systems.neuroResponsive.updateState) {
+            this.systems.neuroResponsive.updateState(cognitiveState);
+        }
+
+        // Update cognitive twin
+        if (this.systems.cognitiveTwin && this.systems.cognitiveTwin.updateBrainState) {
+            this.systems.cognitiveTwin.updateBrainState(this.realTimeMetrics);
+        }
+    }
+
+    updateMetricsUI() {
+        // Update dashboard metrics if visible
+        const metricsPanel = document.getElementById('realTimeMetrics');
+        if (metricsPanel) {
+            metricsPanel.innerHTML = `
+                <div class="metric-item">
+                    <span class="metric-label">Attention:</span>
+                    <span class="metric-value">${Math.round(this.realTimeMetrics.attention)}%</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Focus:</span>
+                    <span class="metric-value">${Math.round(this.realTimeMetrics.focus)}%</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Relaxation:</span>
+                    <span class="metric-value">${Math.round(this.realTimeMetrics.relaxation)}%</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Cognitive Load:</span>
+                    <span class="metric-value">${Math.round(this.realTimeMetrics.cognitive_load * 100)}%</span>
+                </div>
+            `;
+        }
+    }
+
+    // Advanced Training Session Management
+    async startAdvancedTrainingSession(type, options = {}) {
+        try {
+            console.log(`🎯 Starting advanced ${type} training session`);
+
+            const sessionConfig = {
+                type: type,
+                duration: options.duration || 900, // 15 minutes default
+                difficulty: options.difficulty || 'adaptive',
+                modalities: options.modalities || ['visual', 'audio'],
+                biofeedback: options.biofeedback || true,
+                ...options
             };
 
-            return mockTransaction;
+            // Initialize audio session if requested
+            if (sessionConfig.modalities.includes('audio') && this.systems.advancedAudio) {
+                const audioSession = await this.systems.advancedAudio.startSession(type, {
+                    duration: sessionConfig.duration,
+                    customSettings: options.audioSettings
+                });
+                sessionConfig.audioSessionId = audioSession.id;
+            }
+
+            // Start brain visualization recording
+            if (this.systems.brain3D) {
+                this.systems.brain3D.setInteractionMode('analyze');
+            }
+
+            // Start data visualization recording
+            if (this.systems.dataVisualization) {
+                this.systems.dataVisualization.startRealTimeUpdates();
+            }
+
+            // Create session tracking
+            this.currentSession = {
+                id: Date.now().toString(),
+                ...sessionConfig,
+                startTime: Date.now(),
+                metrics: [],
+                events: []
+            };
+
+            // Store session data
+            this.sessionData[this.currentSession.id] = this.currentSession;
+
+            return this.currentSession;
+
         } catch (error) {
-            console.error('Minting failed:', error);
+            console.error('Failed to start advanced training session:', error);
             throw error;
         }
     }
 
-    showMintingModal(metadata) {
-        const modal = document.createElement('div');
-        modal.className = 'onboarding-modal';
-        modal.innerHTML = `
-            <div class="onboarding-content minting-modal">
-                <h2>🎨 Minting Your NFT</h2>
-                <div class="nft-preview">
-                    <img src="${metadata.image}" alt="${metadata.name}">
-                    <h3>${metadata.name}</h3>
-                    <p>${metadata.description}</p>
-                </div>
-                <div class="minting-progress">
-                    <div class="progress-step active">
-                        <i class="fas fa-wallet"></i>
-                        <span>Confirm Transaction</span>
-                    </div>
-                    <div class="progress-step">
-                        <i class="fas fa-cog"></i>
-                        <span>Processing</span>
-                    </div>
-                    <div class="progress-step">
-                        <i class="fas fa-check"></i>
-                        <span>Complete</span>
-                    </div>
-                </div>
-                <p>Please confirm the transaction in your wallet...</p>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.style.display = 'flex';
-    }
-}
+    async endTrainingSession() {
+        if (!this.currentSession) return null;
 
-// Community Features Module
-class CommunityFeatures {
-    constructor() {
-        this.chatRooms = new Map();
-        this.forums = [];
-        this.events = [];
-    }
-
-    showHub() {
-        const modal = document.createElement('div');
-        modal.className = 'onboarding-modal community-hub';
-        modal.innerHTML = `
-            <div class="onboarding-content">
-                <h2>🌟 Premium Community Hub</h2>
-                <div class="community-features">
-                    <div class="community-section">
-                        <i class="fas fa-comments"></i>
-                        <h3>Chat Rooms</h3>
-                        <p>Connect with other premium members</p>
-                        <button class="btn btn-sm" onclick="neuroXAdvanced.communityFeatures.openChat()">Join Chat</button>
-                    </div>
-                    <div class="community-section">
-                        <i class="fas fa-calendar"></i>
-                        <h3>Exclusive Events</h3>
-                        <p>VIP workshops and training sessions</p>
-                        <button class="btn btn-sm" onclick="neuroXAdvanced.communityFeatures.showEvents()">View Events</button>
-                    </div>
-                    <div class="community-section">
-                        <i class="fas fa-trophy"></i>
-                        <h3>Competitions</h3>
-                        <p>Premium-only challenges and tournaments</p>
-                        <button class="btn btn-sm" onclick="neuroXAdvanced.communityFeatures.showCompetitions()">Compete</button>
-                    </div>
-                </div>
-                <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove();">
-                    Close
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        modal.style.display = 'flex';
-    }
-
-    openChat() {
         try {
-            // Implementation for chat functionality
-            if (window.neuroWeb3 && window.neuroWeb3.showInfo) {
-                window.neuroWeb3.showInfo('Premium chat rooms coming soon!');
-            } else {
-                console.log('Premium chat rooms coming soon!');
+            const session = this.currentSession;
+            session.endTime = Date.now();
+            session.duration = session.endTime - session.startTime;
+
+            // Stop audio session
+            if (session.audioSessionId && this.systems.advancedAudio) {
+                this.systems.advancedAudio.stopSession();
             }
+
+            // Export brain data
+            if (this.systems.brain3D) {
+                session.brainData = this.systems.brain3D.exportVisualizationData();
+            }
+
+            // Export visualization data
+            if (this.systems.dataVisualization) {
+                session.vizData = {
+                    eeg: this.systems.dataVisualization.exportChartData('eegChart'),
+                    brainwaves: this.systems.dataVisualization.exportChartData('brainwaveChart'),
+                    cognitive: this.systems.dataVisualization.exportChartData('cognitiveChart')
+                };
+            }
+
+            // Analyze session performance
+            session.analysis = await this.analyzeSessionPerformance(session);
+
+            // Update user profile
+            if (this.currentUser) {
+                this.updateUserProfileFromSession(session);
+            }
+
+            // Generate insights
+            session.insights = this.generateSessionInsights(session);
+
+            this.currentSession = null;
+            return session;
+
         } catch (error) {
-            console.error('Chat feature error:', error);
+            console.error('Failed to end training session:', error);
+            return null;
         }
     }
 
-    showEvents() {
+    async analyzeSessionPerformance(session) {
+        const analysis = {
+            overallScore: 0,
+            improvementAreas: [],
+            strengths: [],
+            recommendations: []
+        };
+
         try {
-            // Implementation for events
-            if (window.neuroWeb3 && window.neuroWeb3.showInfo) {
-                window.neuroWeb3.showInfo('Exclusive events coming soon!');
-            } else {
-                console.log('Exclusive events coming soon!');
+            // Analyze attention patterns
+            const avgAttention = this.calculateAverageMetric(session.metrics, 'attention');
+            analysis.attention = {
+                average: avgAttention,
+                trend: this.calculateTrend(session.metrics, 'attention'),
+                stability: this.calculateStability(session.metrics, 'attention')
+            };
+
+            // Analyze focus patterns
+            const avgFocus = this.calculateAverageMetric(session.metrics, 'focus');
+            analysis.focus = {
+                average: avgFocus,
+                trend: this.calculateTrend(session.metrics, 'focus'),
+                peak: this.findPeakMetric(session.metrics, 'focus')
+            };
+
+            // Calculate overall score
+            analysis.overallScore = (avgAttention + avgFocus) / 2;
+
+            // Generate recommendations
+            if (avgAttention < 70) {
+                analysis.improvementAreas.push('attention');
+                analysis.recommendations.push('Try attention-focused meditation sessions');
             }
-        } catch (error) {
-            console.error('Events feature error:', error);
-        }
-    }
 
-    showCompetitions() {
-        try {
-            // Implementation for competitions
-            if (window.neuroWeb3 && window.neuroWeb3.showInfo) {
-                window.neuroWeb3.showInfo('Premium competitions coming soon!');
-            } else {
-                console.log('Premium competitions coming soon!');
+            if (avgFocus < 70) {
+                analysis.improvementAreas.push('focus');
+                analysis.recommendations.push('Practice concentration exercises');
             }
+
+            if (avgAttention > 80) {
+                analysis.strengths.push('attention');
+            }
+
+            if (avgFocus > 80) {
+                analysis.strengths.push('focus');
+            }
+
         } catch (error) {
-            console.error('Competitions feature error:', error);
-        }
-    }
-}
-
-// Interactive Tour Module
-class InteractiveTour {
-    constructor(steps) {
-        this.steps = steps;
-        this.currentStep = 0;
-    }
-
-    start() {
-        window.interactiveTour = this; // Make accessible globally
-        this.showStep(0);
-    }
-
-    showStep(stepIndex) {
-        if (stepIndex >= this.steps.length) {
-            this.complete();
-            return;
+            console.error('Session analysis failed:', error);
         }
 
-        const step = this.steps[stepIndex];
-        const target = document.querySelector(step.target);
+        return analysis;
+    }
+
+    calculateAverageMetric(metrics, metricName) {
+        if (!metrics || metrics.length === 0) return 0;
         
-        if (!target) {
-            this.nextStep();
+        const values = metrics.map(m => m[metricName]).filter(v => v !== undefined);
+        return values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0;
+    }
+
+    calculateTrend(metrics, metricName) {
+        if (!metrics || metrics.length < 2) return 'stable';
+        
+        const values = metrics.map(m => m[metricName]).filter(v => v !== undefined);
+        if (values.length < 2) return 'stable';
+        
+        const first = values.slice(0, Math.floor(values.length / 3)).reduce((a, b) => a + b, 0) / Math.floor(values.length / 3);
+        const last = values.slice(-Math.floor(values.length / 3)).reduce((a, b) => a + b, 0) / Math.floor(values.length / 3);
+        
+        const diff = last - first;
+        if (diff > 5) return 'improving';
+        if (diff < -5) return 'declining';
+        return 'stable';
+    }
+
+    calculateStability(metrics, metricName) {
+        if (!metrics || metrics.length === 0) return 0;
+        
+        const values = metrics.map(m => m[metricName]).filter(v => v !== undefined);
+        if (values.length === 0) return 0;
+        
+        const mean = values.reduce((a, b) => a + b, 0) / values.length;
+        const variance = values.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / values.length;
+        return Math.sqrt(variance);
+    }
+
+    findPeakMetric(metrics, metricName) {
+        if (!metrics || metrics.length === 0) return 0;
+        
+        const values = metrics.map(m => m[metricName]).filter(v => v !== undefined);
+        return values.length > 0 ? Math.max(...values) : 0;
+    }
+
+    generateSessionInsights(session) {
+        const insights = [];
+
+        if (session.analysis) {
+            const { attention, focus } = session.analysis;
+
+            if (attention && attention.trend === 'improving') {
+                insights.push({
+                    type: 'positive',
+                    title: 'Attention Improvement',
+                    description: 'Your attention levels improved throughout the session!',
+                    icon: '📈'
+                });
+            }
+
+            if (focus && focus.average > 85) {
+                insights.push({
+                    type: 'achievement',
+                    title: 'Excellent Focus',
+                    description: 'You maintained exceptional focus during this session.',
+                    icon: '🎯'
+                });
+            }
+
+            if (attention && attention.stability < 10) {
+                insights.push({
+                    type: 'skill',
+                    title: 'Stable Attention',
+                    description: 'Your attention remained consistently stable.',
+                    icon: '⚖️'
+                });
+            }
+        }
+
+        return insights;
+    }
+
+    updateUserProfileFromSession(session) {
+        if (!this.currentUser || !session.analysis) return;
+
+        // Update experience points
+        const xpGained = Math.floor(session.analysis.overallScore);
+        this.currentUser.experience = (this.currentUser.experience || 0) + xpGained;
+
+        // Update session count
+        this.currentUser.totalSessions = (this.currentUser.totalSessions || 0) + 1;
+
+        // Update best scores
+        if (!this.currentUser.bestScores) {
+            this.currentUser.bestScores = {};
+        }
+
+        const sessionType = session.type;
+        if (!this.currentUser.bestScores[sessionType] || 
+            session.analysis.overallScore > this.currentUser.bestScores[sessionType]) {
+            this.currentUser.bestScores[sessionType] = session.analysis.overallScore;
+        }
+
+        // Update streak
+        const today = new Date().toDateString();
+        if (this.currentUser.lastSessionDate !== today) {
+            const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toDateString();
+            if (this.currentUser.lastSessionDate === yesterday) {
+                this.currentUser.streak = (this.currentUser.streak || 0) + 1;
+            } else {
+                this.currentUser.streak = 1;
+            }
+            this.currentUser.lastSessionDate = today;
+        }
+
+        this.saveUserProfile();
+    }
+
+    // Audio Session Integration
+    async startAudioSession(sessionType, options = {}) {
+        if (!this.systems.advancedAudio) {
+            throw new Error('Advanced Audio System not available');
+        }
+
+        return await this.systems.advancedAudio.startSession(sessionType, options);
+    }
+
+    stopAudioSession() {
+        if (this.systems.advancedAudio) {
+            this.systems.advancedAudio.stopSession();
+        }
+    }
+
+    // Data Visualization Integration
+    createAdvancedChart(containerId, chartType, options = {}) {
+        if (!this.systems.dataVisualization) {
+            console.warn('Advanced Data Visualization not available');
             return;
         }
 
-        const tooltip = this.createTooltip(step);
-        this.positionTooltip(tooltip, target);
-        this.highlightElement(target);
-
-        this.currentStep = stepIndex;
-    }
-
-    createTooltip(step) {
-        const tooltip = document.createElement('div');
-        tooltip.className = 'tour-tooltip';
-        tooltip.innerHTML = `
-            <div class="tooltip-content">
-                <h3>${step.title}</h3>
-                <p>${step.description}</p>
-                <div class="tooltip-actions">
-                    <button class="btn btn-sm" onclick="window.interactiveTour && window.interactiveTour.skip()">Skip Tour</button>
-                    <button class="btn btn-primary btn-sm" onclick="window.interactiveTour && window.interactiveTour.nextStep()">
-                        ${this.currentStep === this.steps.length - 1 ? 'Finish' : 'Next'}
-                    </button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(tooltip);
-        return tooltip;
-    }
-
-    positionTooltip(tooltip, target) {
-        try {
-            const rect = target.getBoundingClientRect();
-            tooltip.style.position = 'fixed';
-            tooltip.style.top = (rect.bottom + 10) + 'px';
-            tooltip.style.left = rect.left + 'px';
-            tooltip.style.zIndex = '2000';
-        } catch (error) {
-            console.error('Tooltip positioning failed:', error);
+        switch (chartType) {
+            case 'eeg':
+                this.systems.dataVisualization.createEEGChart(containerId);
+                break;
+            case 'brainwave':
+                this.systems.dataVisualization.createBrainwaveChart(containerId);
+                break;
+            case 'cognitive':
+                this.systems.dataVisualization.createCognitivePerformanceChart(containerId);
+                break;
+            case '3d-brain':
+                this.systems.dataVisualization.create3DBrainActivity(containerId);
+                break;
+            case 'heatmap':
+                this.systems.dataVisualization.createComplexHeatmap(containerId, options.data);
+                break;
+            case 'timeseries':
+                this.systems.dataVisualization.createTimeSeriesAnalysis(containerId);
+                break;
         }
     }
 
-    highlightElement(element) {
-        try {
-            element.classList.add('tour-highlight');
-        } catch (error) {
-            console.error('Element highlighting failed:', error);
-        }
+    // User Management
+    async createUser(userData) {
+        this.currentUser = {
+            id: Date.now().toString(),
+            ...userData,
+            createdAt: new Date(),
+            cognitiveProfile: await this.generateCognitiveProfile(),
+            preferences: {
+                difficulty: 'adaptive',
+                sessionLength: 15,
+                preferredModalities: ['visual', 'auditory'],
+                audioPreferences: {
+                    binauralBeats: true,
+                    ambientSounds: ['rain', 'ocean'],
+                    volume: 0.7
+                },
+                visualPreferences: {
+                    colorScheme: 'adaptive',
+                    animationSpeed: 'normal',
+                    particles: true
+                }
+            }
+        };
+        
+        localStorage.setItem('neuroXUser', JSON.stringify(this.currentUser));
+        return this.currentUser;
     }
 
-    nextStep() {
-        this.cleanup();
-        this.showStep(this.currentStep + 1);
-    }
-
-    skip() {
-        this.cleanup();
-        this.complete();
-    }
-
-    complete() {
-        this.cleanup();
-        if (window.neuroWeb3 && window.neuroWeb3.showSuccess) {
-            window.neuroWeb3.showSuccess('Tour completed! Enjoy your premium features!');
-        } else {
-            console.log('✅ Tour completed! Enjoy your premium features!');
-        }
-        window.interactiveTour = null; // Clean up global reference
-    }
-
-    cleanup() {
-        document.querySelectorAll('.tour-tooltip').forEach(el => el.remove());
-        document.querySelectorAll('.tour-highlight').forEach(el => {
-            el.classList.remove('tour-highlight');
-        });
-    }
-}
-
-// Initialize advanced features
-let neuroXAdvanced;
-
-function initializeNeuroXAdvanced() {
-    try {
-        neuroXAdvanced = new NeuroXAdvanced();
-        window.neuroXAdvanced = neuroXAdvanced;
-        console.log('✅ NeuroXAdvanced initialized successfully');
-    } catch (error) {
-        console.error('❌ NeuroXAdvanced initialization failed:', error);
-        // Create minimal fallback object
-        window.neuroXAdvanced = {
-            userProfile: { premiumAccess: false },
-            socialFeatures: null,
-            aiCoach: null,
-            gamification: null,
-            analytics: null,
-            startPremiumTour: () => console.log('Premium tour not available'),
-            onWalletConnected: () => console.log('Wallet connected'),
-            onNFTVerified: () => console.log('NFT verified')
+    async generateCognitiveProfile() {
+        // Generate a basic cognitive profile
+        return {
+            cognitiveType: this.determineCognitiveType(),
+            strengths: this.identifyInitialStrengths(),
+            areas_for_improvement: this.identifyInitialImprovements(),
+            learningStyle: this.determineLearningStyle(),
+            optimalTimeOfDay: this.determineOptimalTime()
         };
     }
+
+    determineCognitiveType() {
+        const types = ['analytical', 'creative', 'practical', 'experimental'];
+        return types[Math.floor(Math.random() * types.length)];
+    }
+
+    identifyInitialStrengths() {
+        const allStrengths = ['memory', 'attention', 'processing_speed', 'cognitive_flexibility', 'working_memory'];
+        return allStrengths.slice(0, 2 + Math.floor(Math.random() * 2));
+    }
+
+    identifyInitialImprovements() {
+        const allAreas = ['focus', 'sustained_attention', 'task_switching', 'inhibitory_control'];
+        return allAreas.slice(0, 1 + Math.floor(Math.random() * 2));
+    }
+
+    determineLearningStyle() {
+        const styles = ['visual', 'auditory', 'kinesthetic', 'multimodal'];
+        return styles[Math.floor(Math.random() * styles.length)];
+    }
+
+    determineOptimalTime() {
+        const times = ['morning', 'afternoon', 'evening', 'variable'];
+        return times[Math.floor(Math.random() * times.length)];
+    }
+
+    saveUserProfile() {
+        if (this.currentUser) {
+            localStorage.setItem('neuroXUser', JSON.stringify(this.currentUser));
+        }
+    }
+
+    loadUserProfile() {
+        const saved = localStorage.getItem('neuroXUser');
+        if (saved) {
+            this.currentUser = JSON.parse(saved);
+            return this.currentUser;
+        }
+        return null;
+    }
+
+    // Event Handlers
+    async onWalletConnected(walletData) {
+        console.log('🔗 Wallet connected:', walletData);
+        // Handle wallet connection
+    }
+
+    async onNFTVerified(nftData) {
+        console.log('🎨 NFT verified:', nftData);
+        // Handle NFT verification
+    }
+
+    onAudioSessionStarted(sessionData) {
+        console.log('🎵 Audio session started:', sessionData);
+        // Update UI to show audio session is active
+    }
+
+    onBrainActivityChanged(activityData) {
+        console.log('🧠 Brain activity changed:', activityData);
+        // React to brain activity changes
+    }
+
+    trackPerformance(performanceData) {
+        if (this.currentSession) {
+            this.currentSession.events.push({
+                timestamp: Date.now(),
+                type: 'performance',
+                data: performanceData
+            });
+        }
+    }
+
+    // Cleanup
+    destroy() {
+        // Stop data collection
+        if (this.dataCollectionInterval) {
+            clearInterval(this.dataCollectionInterval);
+        }
+        if (this.syncInterval) {
+            clearInterval(this.syncInterval);
+        }
+
+        // Destroy all systems
+        Object.values(this.systems).forEach(system => {
+            if (system && system.destroy) {
+                system.destroy();
+            }
+        });
+
+        console.log('🧠 NeuroX Advanced systems destroyed');
+    }
+
+    // Utility Methods
+    getRealTimeMetrics() {
+        return { ...this.realTimeMetrics };
+    }
+
+    getCurrentSession() {
+        return this.currentSession;
+    }
+
+    getSystemStatus() {
+        const status = {};
+        Object.keys(this.systems).forEach(key => {
+            status[key] = this.systems[key] ? 'initialized' : 'not available';
+        });
+        return status;
+    }
 }
 
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeNeuroXAdvanced);
-} else {
-    // DOM is already loaded
-    initializeNeuroXAdvanced();
-}
-
-// Export for global access
+// Export for global use
 window.NeuroXAdvanced = NeuroXAdvanced;
+
+// Auto-initialize
+document.addEventListener('DOMContentLoaded', () => {
+    if (!window.neuroXAdvanced) {
+        window.neuroXAdvanced = new NeuroXAdvanced();
+    }
+});
