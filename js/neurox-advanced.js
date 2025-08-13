@@ -1027,7 +1027,12 @@ class InteractiveTour {
 
     complete() {
         this.cleanup();
-        window.neuroWeb3.showSuccess('Tour completed! Enjoy your premium features!');
+        if (window.neuroWeb3 && window.neuroWeb3.showSuccess) {
+            window.neuroWeb3.showSuccess('Tour completed! Enjoy your premium features!');
+        } else {
+            console.log('✅ Tour completed! Enjoy your premium features!');
+        }
+        window.interactiveTour = null; // Clean up global reference
     }
 
     cleanup() {
