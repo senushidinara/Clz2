@@ -2007,7 +2007,21 @@
             <div class="hero-section">
                 <h1 class="hero-title">Welcome to NeuroX</h1>
                 <p class="hero-subtitle">Advanced cognitive training for peak mental performance</p>
-                
+
+                <!-- Demo Video Section -->
+                <div class="demo-video-container">
+                    <h3>🎬 See NeuroX in Action</h3>
+                    <p>Watch how our advanced cognitive training platform can enhance your mental performance</p>
+                    <div class="video-container-responsive">
+                        <iframe
+                            src="https://www.youtube.com/embed/e4jCD7pvfTU"
+                            title="NeuroX Demo Video"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-duration">Duration: Watch the full demo to understand all features</div>
+                </div>
+
                 <div class="quick-actions">
                     <button class="btn btn-dashboard" onclick="navigateToPage('dashboard')">
                         <i class="fas fa-brain"></i>
@@ -3396,7 +3410,7 @@
             const modal = document.getElementById('brainScanModal');
             if (modal) {
                 modal.classList.add('active');
-                showToast("�� Brain scan initiated!");
+                showToast("🧠 Brain scan initiated!");
             }
         }
 
