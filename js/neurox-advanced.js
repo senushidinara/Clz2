@@ -904,18 +904,42 @@ class CommunityFeatures {
     }
 
     openChat() {
-        // Implementation for chat functionality
-        window.neuroWeb3.showInfo('Premium chat rooms coming soon!');
+        try {
+            // Implementation for chat functionality
+            if (window.neuroWeb3 && window.neuroWeb3.showInfo) {
+                window.neuroWeb3.showInfo('Premium chat rooms coming soon!');
+            } else {
+                console.log('Premium chat rooms coming soon!');
+            }
+        } catch (error) {
+            console.error('Chat feature error:', error);
+        }
     }
 
     showEvents() {
-        // Implementation for events
-        window.neuroWeb3.showInfo('Exclusive events coming soon!');
+        try {
+            // Implementation for events
+            if (window.neuroWeb3 && window.neuroWeb3.showInfo) {
+                window.neuroWeb3.showInfo('Exclusive events coming soon!');
+            } else {
+                console.log('Exclusive events coming soon!');
+            }
+        } catch (error) {
+            console.error('Events feature error:', error);
+        }
     }
 
     showCompetitions() {
-        // Implementation for competitions
-        window.neuroWeb3.showInfo('Premium competitions coming soon!');
+        try {
+            // Implementation for competitions
+            if (window.neuroWeb3 && window.neuroWeb3.showInfo) {
+                window.neuroWeb3.showInfo('Premium competitions coming soon!');
+            } else {
+                console.log('Premium competitions coming soon!');
+            }
+        } catch (error) {
+            console.error('Competitions feature error:', error);
+        }
     }
 }
 
