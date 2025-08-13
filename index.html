@@ -3576,6 +3576,85 @@
                 console.log('🎉 READY - Try clicking challenge buttons now!');
             }, 1000);
         });
+        // Show onboarding to new users (commented out for demo)
+        // setTimeout(() => {
+        //     if (!localStorage.getItem('web3OnboardingShown')) {
+        //         showOnboarding();
+        //         localStorage.setItem('web3OnboardingShown', 'true');
+        //     }
+        // }, 3000);
+
+        // Initialize advanced features when ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('NeuroX Advanced Features Loaded');
+
+            // Setup event listeners for Web3 integration
+            if (window.neuroWeb3) {
+                console.log('Web3 module loaded');
+            }
+
+            // Initialize gamification
+            if (window.neuroXAdvanced) {
+                console.log('Advanced features loaded');
+            }
+        });
+
+        function updateUIForConnectedWallet(walletData) {
+            // Update wallet display
+            const walletAddress = document.getElementById('walletAddress');
+            if (walletAddress) {
+                walletAddress.textContent = `${walletData.address.slice(0, 6)}...${walletData.address.slice(-4)}`;
+            }
+
+            // Show chain selector
+            const chainSelector = document.getElementById('chainSelector');
+            if (chainSelector) {
+                chainSelector.style.display = 'flex';
+            }
+
+            // Update active chain indicator
+            document.querySelectorAll('.chain-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.chain === walletData.chainId.toString()) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function triggerPageAnimations(page) {
+            if (page === 'dashboard') {
+                // Start EEG animation
+                const eegWaves = document.querySelectorAll('.eeg-wave');
+                eegWaves.forEach(wave => wave.classList.add('growing'));
+
+                // Dispatch session started event
+                document.dispatchEvent(new CustomEvent('sessionStarted'));
+            }
+        }
+
+        // Enhanced challenge completion tracking
+        function completeChallenge(challengeType, score, time) {
+            const challengeData = {
+                type: challengeType,
+                score: score,
+                time: time,
+                timestamp: new Date().toISOString()
+            };
+
+            // Dispatch challenge completed event
+            document.dispatchEvent(new CustomEvent('challengeCompleted', { detail: challengeData }));
+
+            // Track with analytics if available
+            if (window.neuroXAdvanced && window.neuroXAdvanced.analytics) {
+                window.neuroXAdvanced.analytics.trackSession(challengeData);
+            }
+        }
+
+        console.log('🧠 NeuroX with Web3 Premium Features Initialized!');
+        console.log('🔗 Multi-chain wallet support enabled (Ethereum, Polygon, BSC)');
+        console.log('💎 NFT-gated premium features ready');
+        console.log('🤖 AI Coach and advanced analytics available');
+        console.log('🎮 Gamification and social features enabled');
     </script>
 </body>
 </html>
