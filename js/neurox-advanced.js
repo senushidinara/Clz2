@@ -983,8 +983,8 @@ class InteractiveTour {
                 <h3>${step.title}</h3>
                 <p>${step.description}</p>
                 <div class="tooltip-actions">
-                    <button class="btn btn-sm" onclick="interactiveTour.skip()">Skip Tour</button>
-                    <button class="btn btn-primary btn-sm" onclick="interactiveTour.nextStep()">
+                    <button class="btn btn-sm" onclick="window.interactiveTour && window.interactiveTour.skip()">Skip Tour</button>
+                    <button class="btn btn-primary btn-sm" onclick="window.interactiveTour && window.interactiveTour.nextStep()">
                         ${this.currentStep === this.steps.length - 1 ? 'Finish' : 'Next'}
                     </button>
                 </div>
@@ -992,6 +992,26 @@ class InteractiveTour {
         `;
         document.body.appendChild(tooltip);
         return tooltip;
+    }
+
+    positionTooltip(tooltip, target) {
+        try {
+            const rect = target.getBoundingClientRect();
+            tooltip.style.position = 'fixed';
+            tooltip.style.top = (rect.bottom + 10) + 'px';
+            tooltip.style.left = rect.left + 'px';
+            tooltip.style.zIndex = '2000';
+        } catch (error) {
+            console.error('Tooltip positioning failed:', error);
+        }
+    }
+
+    highlightElement(element) {
+        try {
+            element.classList.add('tour-highlight');
+        } catch (error) {
+            console.error('Element highlighting failed:', error);
+        }
     }
 
     nextStep() {
