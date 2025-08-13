@@ -2526,6 +2526,70 @@
                     <div style="color: var(--gray-medium);">Days of consistent focus training</div>
                 </div>
             </div>
+
+            <!-- Meditation & Wellness Videos Section -->
+            <div class="meditation-videos">
+                <h3>🧘‍♀️ Guided Wellness Videos</h3>
+                <p>Expert-led sessions to enhance your mental wellbeing and cognitive performance</p>
+
+                <div class="video-grid">
+                    <!-- Meditation Video -->
+                    <div class="video-card">
+                        <div class="video-badge">🧘 Meditation</div>
+                        <h4>Deep Meditation Session</h4>
+                        <p>Experience profound relaxation and mental clarity with this guided meditation designed to calm your mind and enhance focus.</p>
+                        <div class="video-container-responsive">
+                            <iframe
+                                src="https://www.youtube.com/embed/j734gLbQFbU"
+                                title="Guided Meditation for Mental Clarity"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="video-duration">Perfect for daily practice • Beginner friendly</div>
+                    </div>
+
+                    <!-- Breathing Exercises Video -->
+                    <div class="video-card">
+                        <div class="video-badge">🌬️ Breathing</div>
+                        <h4>Breathing Exercises</h4>
+                        <p>Learn powerful breathing techniques to reduce stress, improve focus, and boost cognitive performance instantly.</p>
+                        <div class="video-container-responsive">
+                            <iframe
+                                src="https://www.youtube.com/embed/LiUnFJ8P4gM"
+                                title="Breathing Exercises for Focus"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="video-duration">Quick techniques • Immediate results</div>
+                    </div>
+
+                    <!-- Yoga Video -->
+                    <div class="video-card">
+                        <div class="video-badge">🧘‍♂️ Yoga</div>
+                        <h4>Cognitive Yoga Flow</h4>
+                        <p>Gentle yoga movements designed to increase blood flow to the brain and enhance mental flexibility and clarity.</p>
+                        <div class="video-container-responsive">
+                            <iframe
+                                src="https://www.youtube.com/embed/yPK7ISPEu3M"
+                                title="Yoga for Brain Health"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="video-duration">Mind-body connection • All levels welcome</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-focus" onclick="createWellnessRoutine()">
+                        <i class="fas fa-calendar-plus"></i>
+                        Create Wellness Routine
+                    </button>
+                    <button class="btn btn-primary" onclick="trackWellnessProgress()">
+                        <i class="fas fa-chart-line"></i>
+                        Track Progress
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -3232,7 +3296,7 @@
             console.log('Joining challenge');
             alert('Challenge joined!');
             createConfetti();
-            showToast("🎉 Challenge Joined!");
+            showToast("��� Challenge Joined!");
         }
 
         function showLeaderboard() {
@@ -3521,7 +3585,7 @@
                     title: '🌸 Mindfulness Meditation',
                     background: 'linear-gradient(135deg, #BA68C8 0%, #CE93D8 50%, #E1BEE7 100%)',
                     instructions: [
-                        '🎯 Focus on the present',
+                        '��� Focus on the present',
                         '👁️ Observe your thoughts',
                         '🍃 Let them pass by',
                         '🧘‍♀️ Return to breath'
