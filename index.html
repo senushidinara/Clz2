@@ -3650,11 +3650,29 @@
             }
         }
 
+        // Debug function to test initialization
+        window.debugNeuroX = function() {
+            console.log('=== NeuroX Debug Report ===');
+            console.log('Web3 Module:', window.neuroWeb3 ? '✅ Loaded' : '❌ Missing');
+            console.log('Advanced Features:', window.neuroXAdvanced ? '✅ Loaded' : '❌ Missing');
+            console.log('Ethers.js:', typeof ethers !== 'undefined' ? '✅ Loaded' : '❌ Missing');
+            console.log('Web3Modal:', typeof Web3Modal !== 'undefined' ? '✅ Loaded' : '❌ Missing');
+
+            if (window.neuroXAdvanced) {
+                console.log('User Profile:', window.neuroXAdvanced.userProfile);
+                console.log('Premium Access:', window.neuroXAdvanced.userProfile?.premiumAccess || false);
+            }
+
+            console.log('========================');
+            return 'Debug complete - check console for details';
+        };
+
         console.log('🧠 NeuroX with Web3 Premium Features Initialized!');
         console.log('🔗 Multi-chain wallet support enabled (Ethereum, Polygon, BSC)');
         console.log('💎 NFT-gated premium features ready');
         console.log('🤖 AI Coach and advanced analytics available');
         console.log('🎮 Gamification and social features enabled');
+        console.log('🔧 Debug function available: debugNeuroX()');
     </script>
 </body>
 </html>
