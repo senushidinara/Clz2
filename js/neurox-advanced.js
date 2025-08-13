@@ -236,28 +236,56 @@ class NeuroXAdvanced {
     }
 
     startPremiumTour() {
-        // Interactive tour of premium features
-        const tour = new InteractiveTour([
-            {
-                target: '#advancedAnalytics',
-                title: 'Advanced Neural Analytics',
-                description: 'Get deep insights into your cognitive patterns and brain activity.',
-                action: () => this.analytics.showDemo()
-            },
-            {
-                target: '#aiCoach',
-                title: 'AI Cognitive Coach',
-                description: 'Your personal AI coach adapts training to your unique needs.',
-                action: () => this.aiCoach.showIntro()
-            },
-            {
-                target: '.premium-community',
-                title: 'Premium Community',
-                description: 'Connect with other premium members and share insights.',
-                action: () => this.communityFeatures.showHub()
+        try {
+            // Interactive tour of premium features
+            const tourSteps = [
+                {
+                    target: '#advancedAnalytics',
+                    title: 'Advanced Neural Analytics',
+                    description: 'Get deep insights into your cognitive patterns and brain activity.',
+                    action: () => {
+                        if (this.analytics && this.analytics.showDemo) {
+                            this.analytics.showDemo();
+                        }
+                    }
+                },
+                {
+                    target: '#aiCoach',
+                    title: 'AI Cognitive Coach',
+                    description: 'Your personal AI coach adapts training to your unique needs.',
+                    action: () => {
+                        if (this.aiCoach && this.aiCoach.showIntro) {
+                            this.aiCoach.showIntro();
+                        }
+                    }
+                },
+                {
+                    target: '.premium-community',
+                    title: 'Premium Community',
+                    description: 'Connect with other premium members and share insights.',
+                    action: () => {
+                        if (this.communityFeatures && this.communityFeatures.showHub) {
+                            this.communityFeatures.showHub();
+                        }
+                    }
+                }
+            ];
+
+            if (typeof InteractiveTour !== 'undefined') {
+                const tour = new InteractiveTour(tourSteps);
+                tour.start();
+            } else {
+                console.log('Premium tour started - InteractiveTour not available');
+                // Fallback: show features one by one
+                tourSteps.forEach((step, index) => {
+                    setTimeout(() => {
+                        if (step.action) step.action();
+                    }, index * 2000);
+                });
             }
-        ]);
-        tour.start();
+        } catch (error) {
+            console.error('Premium tour failed:', error);
+        }
     }
 }
 
