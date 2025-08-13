@@ -1733,6 +1733,106 @@
             font-size: 1.5rem;
         }
 
+        /* Video Control Enhancements */
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .video-control-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--black);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .video-control-btn:hover {
+            background: var(--focus-color);
+            transform: translateY(-2px);
+        }
+
+        .video-playlist {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(185, 224, 216, 0.1));
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .playlist-item:hover {
+            background: var(--focus-color);
+            transform: translateX(5px);
+        }
+
+        .playlist-item.active {
+            background: var(--home-color);
+            font-weight: 600;
+        }
+
+        .playlist-icon {
+            font-size: 1.5rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .playlist-info h5 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+        }
+
+        .playlist-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .floating-video-progress {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow);
+            display: none;
+            z-index: 500;
+            min-width: 250px;
+        }
+
+        .video-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .video-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--focus-color), var(--home-color));
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
         /* Responsive Design Enhancements */
         @media (max-width: 768px) {
             .wallet-section {
@@ -1781,6 +1881,22 @@
                 right: 10px;
                 left: 10px;
                 max-width: none;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .demo-video-container {
+                padding: 1rem;
+            }
+
+            .floating-video-progress {
+                bottom: 120px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
             }
         }
 
@@ -3211,7 +3327,7 @@
 
             const puzzles = [
                 {
-                    pattern: ['🔴', '🟡', '🔵', '🔴', '🟡', '?'],
+                    pattern: ['🔴', '���', '🔵', '🔴', '🟡', '?'],
                     options: ['🔵', '🟢', '🔴', '🟡'],
                     answer: 0
                 },
@@ -3616,7 +3732,7 @@
                     background: 'linear-gradient(135deg, #81C784 0%, #A5D6A7 50%, #C8E6C9 100%)',
                     instructions: [
                         '👣 Feel each step',
-                        '🌬️ Sync with breathing',
+                        '��️ Sync with breathing',
                         '👀 Stay present',
                         '🧘‍♀️ Move mindfully'
                     ]
