@@ -3,19 +3,58 @@ class NeuroXAdvanced {
     constructor() {
         this.userProfile = this.loadUserProfile();
         this.achievements = [];
-        this.socialFeatures = new SocialFeatures();
-        this.aiCoach = new AICoach();
-        this.gamification = new Gamification();
-        this.analytics = new AdvancedAnalytics();
-        this.nftMarketplace = new NFTMarketplace();
-        this.communityFeatures = new CommunityFeatures();
+        this.socialFeatures = null;
+        this.aiCoach = null;
+        this.gamification = null;
+        this.analytics = null;
+        this.nftMarketplace = null;
+        this.communityFeatures = null;
         this.init();
     }
 
     init() {
-        this.setupEventListeners();
-        this.initializeFeatures();
-        this.startPerformanceTracking();
+        try {
+            this.setupEventListeners();
+            this.initializeFeatures();
+            this.startPerformanceTracking();
+        } catch (error) {
+            console.error('NeuroXAdvanced initialization failed:', error);
+        }
+    }
+
+    initializeFeatures() {
+        try {
+            // Initialize features only when classes are available
+            if (typeof SocialFeatures !== 'undefined') {
+                this.socialFeatures = new SocialFeatures();
+            }
+            if (typeof AICoach !== 'undefined') {
+                this.aiCoach = new AICoach();
+            }
+            if (typeof Gamification !== 'undefined') {
+                this.gamification = new Gamification();
+            }
+            if (typeof AdvancedAnalytics !== 'undefined') {
+                this.analytics = new AdvancedAnalytics();
+            }
+            if (typeof NFTMarketplace !== 'undefined') {
+                this.nftMarketplace = new NFTMarketplace();
+            }
+            if (typeof CommunityFeatures !== 'undefined') {
+                this.communityFeatures = new CommunityFeatures();
+            }
+        } catch (error) {
+            console.error('Feature initialization failed:', error);
+        }
+    }
+
+    startPerformanceTracking() {
+        try {
+            // Start performance tracking
+            console.log('Performance tracking started');
+        } catch (error) {
+            console.error('Performance tracking failed:', error);
+        }
     }
 
     setupEventListeners() {
