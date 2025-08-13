@@ -2676,7 +2676,7 @@
                                 allowfullscreen>
                             </iframe>
                         </div>
-                        <div class="video-duration">Quick techniques • Immediate results</div>
+                        <div class="video-duration">Quick techniques ��� Immediate results</div>
                     </div>
 
                     <!-- Yoga Video -->
@@ -2704,6 +2704,66 @@
                         <i class="fas fa-chart-line"></i>
                         Track Progress
                     </button>
+                </div>
+
+                <!-- Video Playlist -->
+                <div class="video-playlist">
+                    <h4>🎵 Wellness Playlist</h4>
+                    <p>Create your personalized wellness journey</p>
+
+                    <div class="playlist-item active" onclick="playVideo('j734gLbQFbU', 'Guided Meditation')">
+                        <div class="playlist-icon">🧘</div>
+                        <div class="playlist-info">
+                            <h5>Deep Meditation Session</h5>
+                            <p>Mindfulness • 15 min</p>
+                        </div>
+                    </div>
+
+                    <div class="playlist-item" onclick="playVideo('LiUnFJ8P4gM', 'Breathing Exercises')">
+                        <div class="playlist-icon">🌬️</div>
+                        <div class="playlist-info">
+                            <h5>Breathing Techniques</h5>
+                            <p>Stress Relief • 8 min</p>
+                        </div>
+                    </div>
+
+                    <div class="playlist-item" onclick="playVideo('yPK7ISPEu3M', 'Yoga Flow')">
+                        <div class="playlist-icon">🧘‍♂️</div>
+                        <div class="playlist-info">
+                            <h5>Cognitive Yoga Flow</h5>
+                            <p>Mind-Body • 20 min</p>
+                        </div>
+                    </div>
+
+                    <div class="video-controls">
+                        <button class="video-control-btn" onclick="shufflePlaylist()">
+                            <i class="fas fa-random"></i> Shuffle
+                        </button>
+                        <button class="video-control-btn" onclick="autoPlayNext()">
+                            <i class="fas fa-forward"></i> Auto-Play
+                        </button>
+                        <button class="video-control-btn" onclick="downloadPlaylist()">
+                            <i class="fas fa-download"></i> Save Offline
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Video Progress (hidden by default) -->
+            <div class="floating-video-progress" id="videoProgress">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                    <div style="font-size: 1.2rem;">🧘</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.9rem;">Now Playing</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;" id="currentVideoTitle">Guided Meditation</div>
+                    </div>
+                </div>
+                <div class="video-progress-bar">
+                    <div class="video-progress-fill" style="width: 0%;" id="progressFill"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.7rem; opacity: 0.8;">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalTime">15:00</span>
                 </div>
             </div>
         </div>
@@ -3327,7 +3387,7 @@
 
             const puzzles = [
                 {
-                    pattern: ['🔴', '���', '🔵', '🔴', '🟡', '?'],
+                    pattern: ['🔴', '🟡', '🔵', '🔴', '🟡', '?'],
                     options: ['🔵', '🟢', '🔴', '🟡'],
                     answer: 0
                 },
@@ -3732,7 +3792,7 @@
                     background: 'linear-gradient(135deg, #81C784 0%, #A5D6A7 50%, #C8E6C9 100%)',
                     instructions: [
                         '👣 Feel each step',
-                        '��️ Sync with breathing',
+                        '🌬️ Sync with breathing',
                         '👀 Stay present',
                         '🧘‍♀️ Move mindfully'
                     ]
