@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroX Debug Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>NeuroX Debug Test</h1>
+    <div id="test-results"></div>
+
+    <!-- Web3 Dependencies -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+    <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+    <script src="https://unpkg.com/@coinbase/wallet-sdk@3.7.2/dist/index.min.js"></script>
+    
+    <!-- NeuroX Scripts -->
+    <script src="js/web3.js"></script>
+    <script src="js/neurox-advanced.js"></script>
+
+    <script>
+        const resultsDiv = document.getElementById('test-results');
+
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            resultsDiv.appendChild(div);
+        }
+
+        // Test script loading
+        setTimeout(() => {
+            addResult('Testing NeuroX initialization...', 'info');
+
+            // Test Web3 module
+            if (window.neuroWeb3) {
+                addResult('✅ NeuroWeb3 loaded successfully', 'success');
+                
+                if (typeof window.neuroWeb3.connect === 'function') {
+                    addResult('✅ Web3 connect method available', 'success');
+                } else {
+                    addResult('❌ Web3 connect method missing', 'error');
+                }
+            } else {
+                addResult('❌ NeuroWeb3 not loaded', 'error');
+            }
+
+            // Test Advanced Features module
+            if (window.neuroXAdvanced) {
+                addResult('✅ NeuroXAdvanced loaded successfully', 'success');
+                
+                if (window.neuroXAdvanced.userProfile) {
+                    addResult('✅ User profile initialized', 'success');
+                } else {
+                    addResult('❌ User profile not initialized', 'error');
+                }
+            } else {
+                addResult('❌ NeuroXAdvanced not loaded', 'error');
+            }
+
+            // Test class availability
+            if (typeof NeuroXAdvanced !== 'undefined') {
+                addResult('✅ NeuroXAdvanced class available', 'success');
+            } else {
+                addResult('❌ NeuroXAdvanced class not available', 'error');
+            }
+
+            // Test dependencies
+            if (typeof ethers !== 'undefined') {
+                addResult('✅ Ethers.js loaded', 'success');
+            } else {
+                addResult('❌ Ethers.js not loaded', 'error');
+            }
+
+            if (typeof Web3Modal !== 'undefined') {
+                addResult('✅ Web3Modal loaded', 'success');
+            } else {
+                addResult('❌ Web3Modal not loaded', 'error');
+            }
+
+            addResult('Debug test completed!', 'info');
+        }, 1000);
+
+        // Monitor console for errors
+        const originalConsoleError = console.error;
+        console.error = function(...args) {
+            addResult('❌ Console Error: ' + args.join(' '), 'error');
+            originalConsoleError.apply(console, args);
+        };
+
+        window.addEventListener('error', function(event) {
+            addResult('❌ JavaScript Error: ' + event.error.message, 'error');
+        });
+    </script>
+</body>
+</html>
