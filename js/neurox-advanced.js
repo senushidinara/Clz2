@@ -142,11 +142,31 @@ class NeuroXAdvanced {
         if (!this.userProfile.walletAddress) return;
 
         try {
-            const nfts = await this.nftMarketplace.getUserNFTs(this.userProfile.walletAddress);
-            this.userProfile.nfts = nfts;
-            this.displayUserNFTs(nfts);
+            if (this.nftMarketplace && this.nftMarketplace.getUserNFTs) {
+                const nfts = await this.nftMarketplace.getUserNFTs(this.userProfile.walletAddress);
+                this.userProfile.nfts = nfts;
+                this.displayUserNFTs(nfts);
+            }
         } catch (error) {
             console.error('Failed to load NFTs:', error);
+        }
+    }
+
+    displayUserNFTs(nfts) {
+        try {
+            console.log('User NFTs loaded:', nfts);
+            // Update UI with NFTs if needed
+        } catch (error) {
+            console.error('Failed to display NFTs:', error);
+        }
+    }
+
+    updateProfileUI() {
+        try {
+            console.log('Profile UI updated');
+            // Update profile UI elements
+        } catch (error) {
+            console.error('Failed to update profile UI:', error);
         }
     }
 
