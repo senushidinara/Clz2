@@ -74,32 +74,46 @@ class NeuroXAdvanced {
     }
 
     async onWalletConnected(walletData) {
-        this.userProfile.walletAddress = walletData.address;
-        this.userProfile.chainId = walletData.chainId;
-        
-        // Load user's NFTs and social profile
-        await this.loadUserNFTs();
-        await this.socialFeatures.loadProfile(walletData.address);
-        
-        // Initialize AI coach with user data
-        this.aiCoach.initializeUser(this.userProfile);
-        
-        // Update UI
-        this.updateProfileUI();
+        try {
+            this.userProfile.walletAddress = walletData.address;
+            this.userProfile.chainId = walletData.chainId;
+
+            // Load user's NFTs and social profile
+            await this.loadUserNFTs();
+            if (this.socialFeatures && this.socialFeatures.loadProfile) {
+                await this.socialFeatures.loadProfile(walletData.address);
+            }
+
+            // Initialize AI coach with user data
+            if (this.aiCoach && this.aiCoach.initializeUser) {
+                this.aiCoach.initializeUser(this.userProfile);
+            }
+
+            // Update UI
+            this.updateProfileUI();
+        } catch (error) {
+            console.error('Wallet connection handling failed:', error);
+        }
     }
 
     async onNFTVerified(nftData) {
-        this.userProfile.premiumAccess = true;
-        this.userProfile.nftCollection = nftData.collection;
-        
-        // Unlock premium features
-        this.unlockPremiumFeatures();
-        
-        // Initialize premium analytics
-        this.analytics.enablePremiumFeatures();
-        
-        // Show welcome message
-        this.showPremiumWelcome(nftData);
+        try {
+            this.userProfile.premiumAccess = true;
+            this.userProfile.nftCollection = nftData.collection;
+
+            // Unlock premium features
+            this.unlockPremiumFeatures();
+
+            // Initialize premium analytics
+            if (this.analytics && this.analytics.enablePremiumFeatures) {
+                this.analytics.enablePremiumFeatures();
+            }
+
+            // Show welcome message
+            this.showPremiumWelcome(nftData);
+        } catch (error) {
+            console.error('NFT verification handling failed:', error);
+        }
     }
 
     loadUserProfile() {
