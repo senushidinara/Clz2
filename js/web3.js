@@ -353,9 +353,31 @@ class NeuroWeb3 {
 
 // Initialize Web3 when DOM is loaded
 let neuroWeb3;
-document.addEventListener('DOMContentLoaded', () => {
-    neuroWeb3 = new NeuroWeb3();
-});
 
-// Export for global access
-window.neuroWeb3 = neuroWeb3;
+function initializeNeuroWeb3() {
+    try {
+        neuroWeb3 = new NeuroWeb3();
+        window.neuroWeb3 = neuroWeb3;
+        console.log('✅ NeuroWeb3 initialized successfully');
+    } catch (error) {
+        console.error('❌ NeuroWeb3 initialization failed:', error);
+        // Create minimal fallback object
+        window.neuroWeb3 = {
+            isConnected: false,
+            userAddress: null,
+            connect: () => Promise.resolve(false),
+            disconnect: () => Promise.resolve(),
+            showInfo: (msg) => console.log('Info:', msg),
+            showSuccess: (msg) => console.log('Success:', msg),
+            showError: (msg) => console.error('Error:', msg)
+        };
+    }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeNeuroWeb3);
+} else {
+    // DOM is already loaded
+    initializeNeuroWeb3();
+}
