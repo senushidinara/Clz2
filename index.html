@@ -3296,7 +3296,7 @@
             console.log('Joining challenge');
             alert('Challenge joined!');
             createConfetti();
-            showToast("��� Challenge Joined!");
+            showToast("🎉 Challenge Joined!");
         }
 
         function showLeaderboard() {
@@ -3585,7 +3585,7 @@
                     title: '🌸 Mindfulness Meditation',
                     background: 'linear-gradient(135deg, #BA68C8 0%, #CE93D8 50%, #E1BEE7 100%)',
                     instructions: [
-                        '��� Focus on the present',
+                        '🎯 Focus on the present',
                         '👁️ Observe your thoughts',
                         '🍃 Let them pass by',
                         '🧘‍♀️ Return to breath'
@@ -3820,6 +3820,141 @@
                 // Dispatch session started event
                 document.dispatchEvent(new CustomEvent('sessionStarted'));
             }
+        }
+
+        // Wellness Video Functions
+        function createWellnessRoutine() {
+            const modal = document.createElement('div');
+            modal.className = 'onboarding-modal';
+            modal.innerHTML = `
+                <div class="onboarding-content">
+                    <h2>🌟 Create Your Wellness Routine</h2>
+                    <p>Build a personalized routine combining meditation, breathing, and yoga practices.</p>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">🧘</span>
+                        <strong>Daily Schedule</strong>
+                        <div style="margin-top: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem;">
+                                <input type="checkbox" checked> Morning meditation (10 min)
+                            </label>
+                            <label style="display: block; margin-bottom: 0.5rem;">
+                                <input type="checkbox" checked> Midday breathing exercises (5 min)
+                            </label>
+                            <label style="display: block; margin-bottom: 0.5rem;">
+                                <input type="checkbox"> Evening yoga flow (15 min)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">🔔</span>
+                        <strong>Reminder Settings</strong>
+                        <div style="margin-top: 1rem;">
+                            <select style="width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid #ccc;">
+                                <option>Daily at 8:00 AM</option>
+                                <option>Daily at 12:00 PM</option>
+                                <option>Daily at 6:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="saveWellnessRoutine(); this.closest('.onboarding-modal').remove();">
+                            <i class="fas fa-save"></i>
+                            Save Routine
+                        </button>
+                        <button class="btn btn-focus" onclick="this.closest('.onboarding-modal').remove();">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        function saveWellnessRoutine() {
+            // Save routine to localStorage
+            const routine = {
+                id: Date.now(),
+                name: 'My Wellness Routine',
+                activities: ['meditation', 'breathing', 'yoga'],
+                reminder: '8:00 AM',
+                created: new Date().toISOString()
+            };
+
+            const routines = JSON.parse(localStorage.getItem('wellnessRoutines') || '[]');
+            routines.push(routine);
+            localStorage.setItem('wellnessRoutines', JSON.stringify(routines));
+
+            showToast('✅ Wellness routine saved successfully!');
+        }
+
+        function trackWellnessProgress() {
+            const modal = document.createElement('div');
+            modal.className = 'onboarding-modal';
+            modal.innerHTML = `
+                <div class="onboarding-content">
+                    <h2>📊 Your Wellness Progress</h2>
+                    <p>Track your mindfulness journey and cognitive improvements.</p>
+
+                    <div class="stat-grid" style="margin: 2rem 0;">
+                        <div class="stat-card">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Meditation Sessions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">Days Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">Minutes Practiced</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">94%</div>
+                            <div class="stat-label">Focus Improvement</div>
+                        </div>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">📈</span>
+                        <strong>Weekly Insights</strong>
+                        <p>Your meditation consistency has improved focus scores by 23% this week.</p>
+                    </div>
+
+                    <div class="onboarding-step">
+                        <span class="step-number">🎯</span>
+                        <strong>Next Goal</strong>
+                        <p>Complete 5 more sessions to unlock the "Mindful Master" achievement!</p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="this.closest('.onboarding-modal').remove();">
+                        <i class="fas fa-check"></i>
+                        Continue Training
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        // Start Focus Session (enhanced)
+        function startFocusSession() {
+            console.log('Starting focus session');
+            // Track wellness session start
+            const sessionData = {
+                type: 'focus',
+                startTime: new Date().toISOString(),
+                duration: 25 * 60 // 25 minutes in seconds
+            };
+
+            localStorage.setItem('currentSession', JSON.stringify(sessionData));
+            showToast('🎯 Focus session started! Stay focused for 25 minutes.');
+
+            // Start the actual timer functionality here
+            startTimer();
         }
 
         // Enhanced challenge completion tracking
