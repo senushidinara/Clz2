@@ -951,6 +951,7 @@ class InteractiveTour {
     }
 
     start() {
+        window.interactiveTour = this; // Make accessible globally
         this.showStep(0);
     }
 
