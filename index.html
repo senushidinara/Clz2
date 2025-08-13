@@ -3,18 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroX Elite - Cognitive Training Platform</title>
+    <title>NeuroX Elite - Advanced Cognitive Training</title>
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Essential Libraries Only -->
+    <!-- Essential Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.150.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
+        :root {
+            --primary: #0066FF;
+            --secondary: #8B5CF6;
+            --accent: #00D9FF;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            
+            --dark-1: #0a0a0f;
+            --dark-2: #1a1a2e;
+            --dark-3: #16213e;
+            
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -23,22 +42,65 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            background: var(--dark-1);
             color: #ffffff;
-            min-height: 100vh;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Navigation */
-        .navbar {
+        /* Animated Background */
+        .cosmic-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at top, var(--dark-2) 0%, var(--dark-1) 70%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Neural Network Background */
+        .neural-network {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* Header */
+        .header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 70px;
-            background: rgba(10, 10, 15, 0.95);
+            height: 80px;
+            background: rgba(10, 10, 15, 0.9);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--glass-border);
             z-index: 1000;
             display: flex;
             align-items: center;
@@ -47,123 +109,194 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #0066FF, #8B5CF6);
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
         }
 
-        .nav-links {
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .nav-tabs {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            padding: 0.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
         }
 
-        .nav-btn {
-            padding: 0.5rem 1rem;
+        .nav-tab {
+            padding: 0.7rem 1.2rem;
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: none;
             border-radius: 8px;
-            color: #ffffff;
-            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
         }
 
-        .nav-btn:hover, .nav-btn.active {
-            background: linear-gradient(135deg, #0066FF, #8B5CF6);
-            border-color: transparent;
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-tab:hover::before {
+            left: 100%;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
         }
 
-        .wallet-btn {
-            background: linear-gradient(135deg, #F59E0B, #EC4899);
-            border: none;
+        .nav-tab.active {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.3);
+        }
+
+        .wallet-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .wallet-btn {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(45deg, var(--warning), var(--danger));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
             font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .wallet-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
         }
 
         /* Main Content */
         .main-content {
-            margin-top: 70px;
+            margin-top: 80px;
             padding: 2rem;
-            min-height: calc(100vh - 70px);
+            min-height: calc(100vh - 80px);
         }
 
         .page {
             display: none;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .page.active {
             display: block;
+            animation: pageEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        /* Cards */
-        .card {
-            background: rgba(255, 255, 255, 0.05);
+        @keyframes pageEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px var(--glass-shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .card h3 {
-            margin-bottom: 1rem;
-            color: #00D9FF;
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px var(--glass-shadow);
+            border-color: rgba(0, 217, 255, 0.3);
         }
 
         /* Dashboard Grid */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 1.5rem;
+            grid-template-columns: 350px 1fr 350px;
+            gap: 2rem;
             margin-bottom: 2rem;
         }
 
-        /* Charts */
-        .chart-container {
-            height: 300px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .chart-placeholder {
-            color: rgba(255, 255, 255, 0.5);
-            text-align: center;
-        }
-
-        /* 3D Visualization */
-        .brain-viz-container {
+        /* Brain Visualization */
+        .brain-container {
             height: 500px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
+            background: radial-gradient(ellipse at center, rgba(0, 102, 255, 0.1) 0%, transparent 70%);
+            border-radius: 20px;
             position: relative;
             overflow: hidden;
-            margin-bottom: 2rem;
+            border: 1px solid var(--glass-border);
         }
 
-        .viz-controls {
+        .brain-controls {
             position: absolute;
             top: 1rem;
             right: 1rem;
             display: flex;
             gap: 0.5rem;
+            z-index: 10;
         }
 
         .control-btn {
             width: 40px;
             height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
             color: white;
             cursor: pointer;
             display: flex;
@@ -173,110 +306,98 @@
         }
 
         .control-btn:hover {
-            background: rgba(0, 102, 255, 0.5);
+            background: var(--primary);
             transform: scale(1.1);
         }
 
-        /* Training Cards */
-        .training-grid {
+        /* Real-time Stats */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .training-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .training-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: #00D9FF;
-        }
-
-        .training-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #ffffff;
-        }
-
-        .training-description {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .training-stats {
-            display: flex;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
-            font-size: 0.8rem;
-            color: #00D9FF;
+            margin-top: 1.5rem;
         }
 
-        /* Buttons */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #0066FF, #8B5CF6);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
             font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        .stat-trend {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            color: var(--success);
+            font-size: 0.8rem;
         }
 
         /* Audio Visualizer */
-        .audio-visualizer {
+        .audio-viz {
             height: 200px;
-            background: linear-gradient(45deg, rgba(6, 182, 212, 0.1), rgba(16, 185, 129, 0.1));
-            border-radius: 12px;
+            background: linear-gradient(45deg, rgba(139, 92, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 16px;
             position: relative;
             overflow: hidden;
+            margin-top: 1.5rem;
+        }
+
+        .audio-waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
             display: flex;
-            align-items: center;
+            align-items: end;
             justify-content: center;
+            gap: 2px;
+            padding: 1rem;
+        }
+
+        .wave-bar {
+            width: 4px;
+            background: linear-gradient(to top, var(--accent), var(--primary));
+            border-radius: 2px;
+            animation: waveAnimation 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes waveAnimation {
+            from { height: 20%; }
+            to { height: 80%; }
         }
 
         .audio-controls {
-            display: flex;
-            gap: 1rem;
             position: absolute;
             bottom: 1rem;
             left: 50%;
             transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
         }
 
         .audio-btn {
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, #06B6D4, #10B981);
+            background: linear-gradient(45deg, var(--secondary), var(--success));
             border: none;
             border-radius: 50%;
             color: white;
@@ -290,47 +411,253 @@
 
         .audio-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
         }
 
-        /* Status Indicators */
-        .status-grid {
+        /* Training Cards */
+        .training-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .training-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .training-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .training-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .training-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
+        }
+
+        .training-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .training-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .training-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .training-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
             gap: 1rem;
-            margin-top: 1.5rem;
         }
 
-        .status-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
+        .action-btn {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+            width: 100%;
         }
 
-        .status-value {
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 102, 255, 0.4);
+        }
+
+        .action-btn.secondary {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Charts */
+        .chart-container {
+            height: 300px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+        }
+
+        /* Analytics Page */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Progress Ring */
+        .progress-ring {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+        }
+
+        .progress-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 8;
+        }
+
+        .progress-bg {
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-fill {
+            stroke: var(--accent);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 1.5rem;
             font-weight: 700;
-            color: #00D9FF;
-            margin-bottom: 0.5rem;
+            color: var(--accent);
         }
 
-        .status-label {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--success), var(--accent));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            max-width: 300px;
         }
 
-        /* Responsive */
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: linear-gradient(45deg, var(--danger), #dc2626);
+        }
+
+        .notification.warning {
+            background: linear-gradient(45deg, var(--warning), #d97706);
+        }
+
+        /* Loading States */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--glass-border);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
             }
             
-            .nav-links {
+            .nav-tabs {
                 display: none;
             }
             
-            .navbar {
+            .header {
                 padding: 0 1rem;
             }
             
@@ -339,58 +666,66 @@
             }
         }
 
-        /* Loading Animation */
+        /* Animations */
         @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
 
-        .loading {
-            animation: pulse 2s infinite;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
-        /* Success Notification */
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: rgba(16, 185, 129, 0.9);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            z-index: 2000;
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px var(--accent); }
+            50% { box-shadow: 0 0 40px var(--accent), 0 0 60px var(--accent); }
         }
 
-        .notification.show {
-            transform: translateX(0);
+        /* 3D Brain Styles */
+        #brainCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
+    <!-- Animated Background -->
+    <div class="cosmic-background"></div>
+    <div class="stars" id="stars"></div>
+    <canvas class="neural-network" id="neuralCanvas"></canvas>
+
+    <!-- Header -->
+    <header class="header">
         <div class="logo">NeuroX Elite</div>
-        <div class="nav-links">
-            <button class="nav-btn active" onclick="switchPage('dashboard')">
-                <i class="fas fa-chart-line"></i> Dashboard
+        
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-page="dashboard">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
             </button>
-            <button class="nav-btn" onclick="switchPage('brain-viz')">
-                <i class="fas fa-brain"></i> Brain 3D
+            <button class="nav-tab" data-page="brain-viz">
+                <i class="fas fa-brain"></i>
+                Brain 3D
             </button>
-            <button class="nav-btn" onclick="switchPage('training')">
-                <i class="fas fa-dumbbell"></i> Training
+            <button class="nav-tab" data-page="training">
+                <i class="fas fa-dumbbell"></i>
+                Training
             </button>
-            <button class="nav-btn" onclick="switchPage('analytics')">
-                <i class="fas fa-analytics"></i> Analytics
+            <button class="nav-tab" data-page="analytics">
+                <i class="fas fa-analytics"></i>
+                Analytics
+            </button>
+        </nav>
+        
+        <div class="wallet-section">
+            <button class="wallet-btn" id="walletBtn">
+                <i class="fas fa-wallet"></i>
+                Connect Wallet
             </button>
         </div>
-        <button class="nav-btn wallet-btn" onclick="connectWallet()">
-            <i class="fas fa-wallet"></i> Connect Wallet
-        </button>
-    </nav>
+    </header>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -398,72 +733,72 @@
         <!-- Dashboard Page -->
         <div class="page active" id="dashboard">
             <div class="dashboard-grid">
+                
                 <!-- Stats Column -->
-                <div class="card">
-                    <h3><i class="fas fa-chart-bar"></i> Cognitive Stats</h3>
-                    <div class="chart-container" id="statsChart">
-                        <div class="chart-placeholder loading">
-                            <i class="fas fa-brain" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                            <div>Loading cognitive metrics...</div>
-                        </div>
-                    </div>
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-brain"></i>
+                        Cognitive Metrics
+                    </h3>
                     
-                    <div class="status-grid">
-                        <div class="status-card">
-                            <div class="status-value" id="attentionScore">85</div>
-                            <div class="status-label">Attention</div>
+                    <div class="chart-container" id="mainChart"></div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-trend">+5%</div>
+                            <div class="stat-value" id="attentionValue">85</div>
+                            <div class="stat-label">Attention</div>
                         </div>
-                        <div class="status-card">
-                            <div class="status-value" id="memoryScore">92</div>
-                            <div class="status-label">Memory</div>
+                        <div class="stat-card">
+                            <div class="stat-trend">+8%</div>
+                            <div class="stat-value" id="memoryValue">92</div>
+                            <div class="stat-label">Memory</div>
                         </div>
-                        <div class="status-card">
-                            <div class="status-value" id="focusScore">78</div>
-                            <div class="status-label">Focus</div>
+                        <div class="stat-card">
+                            <div class="stat-trend">+3%</div>
+                            <div class="stat-value" id="focusValue">78</div>
+                            <div class="stat-label">Focus</div>
                         </div>
-                        <div class="status-card">
-                            <div class="status-value" id="speedScore">88</div>
-                            <div class="status-label">Speed</div>
+                        <div class="stat-card">
+                            <div class="stat-trend">+12%</div>
+                            <div class="stat-value" id="speedValue">88</div>
+                            <div class="stat-label">Speed</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Main Visualization -->
-                <div class="card">
-                    <h3><i class="fas fa-brain"></i> Real-time Brain Activity</h3>
-                    <div class="brain-viz-container" id="brainVizContainer">
-                        <div class="viz-controls">
-                            <button class="control-btn" onclick="toggleBrainAnimation()">
-                                <i class="fas fa-play" id="playIcon"></i>
+                <!-- Brain Visualization -->
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-brain"></i>
+                        Real-time Brain Activity
+                    </h3>
+                    
+                    <div class="brain-container">
+                        <div class="brain-controls">
+                            <button class="control-btn" id="playBtn">
+                                <i class="fas fa-play"></i>
                             </button>
-                            <button class="control-btn" onclick="resetBrainViz()">
+                            <button class="control-btn" id="resetBtn">
                                 <i class="fas fa-refresh"></i>
                             </button>
-                            <button class="control-btn" onclick="toggleFullscreen()">
+                            <button class="control-btn" id="fullscreenBtn">
                                 <i class="fas fa-expand"></i>
                             </button>
                         </div>
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: rgba(255,255,255,0.5);">
-                            <div style="text-align: center;">
-                                <i class="fas fa-brain" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                                <div>3D Brain Visualization Loading...</div>
-                            </div>
-                        </div>
+                        <canvas id="brainCanvas"></canvas>
                     </div>
                     
-                    <div class="audio-visualizer">
-                        <div style="text-align: center; color: rgba(255,255,255,0.7);">
-                            <i class="fas fa-wave-square" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                            <div>Audio Visualization</div>
-                        </div>
+                    <div class="audio-viz">
+                        <div class="audio-waves" id="audioWaves"></div>
                         <div class="audio-controls">
-                            <button class="audio-btn" onclick="startAudio()">
+                            <button class="audio-btn" id="playAudio">
                                 <i class="fas fa-play"></i>
                             </button>
-                            <button class="audio-btn" onclick="stopAudio()">
+                            <button class="audio-btn" id="stopAudio">
                                 <i class="fas fa-stop"></i>
                             </button>
-                            <button class="audio-btn" onclick="recordAudio()">
+                            <button class="audio-btn" id="recordAudio">
                                 <i class="fas fa-microphone"></i>
                             </button>
                         </div>
@@ -471,79 +806,116 @@
                 </div>
                 
                 <!-- Quick Actions -->
-                <div class="card">
-                    <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-bolt"></i>
+                        Quick Actions
+                    </h3>
                     
-                    <button class="btn" onclick="startTraining('focus')" style="width: 100%; margin-bottom: 1rem;">
-                        <i class="fas fa-bullseye"></i> Focus Training
-                    </button>
+                    <div class="quick-actions">
+                        <button class="action-btn" data-training="focus">
+                            <i class="fas fa-bullseye"></i>
+                            Focus Training
+                        </button>
+                        
+                        <button class="action-btn" data-training="memory">
+                            <i class="fas fa-memory"></i>
+                            Memory Boost
+                        </button>
+                        
+                        <button class="action-btn secondary" data-action="meditation">
+                            <i class="fas fa-leaf"></i>
+                            Meditation
+                        </button>
+                        
+                        <button class="action-btn secondary" data-action="analytics">
+                            <i class="fas fa-chart-bar"></i>
+                            View Analytics
+                        </button>
+                    </div>
                     
-                    <button class="btn" onclick="startTraining('memory')" style="width: 100%; margin-bottom: 1rem;">
-                        <i class="fas fa-memory"></i> Memory Boost
-                    </button>
-                    
-                    <button class="btn-secondary" onclick="startMeditation()" style="width: 100%; margin-bottom: 1rem;">
-                        <i class="fas fa-leaf"></i> Meditate
-                    </button>
-                    
-                    <button class="btn-secondary" onclick="viewAnalytics()" style="width: 100%;">
-                        <i class="fas fa-chart-bar"></i> View Analytics
-                    </button>
+                    <div style="margin-top: 2rem;">
+                        <h4 style="color: var(--accent); margin-bottom: 1rem;">Session Progress</h4>
+                        <div class="progress-ring">
+                            <svg>
+                                <circle class="progress-bg" cx="60" cy="60" r="52"></circle>
+                                <circle class="progress-fill" cx="60" cy="60" r="52" 
+                                        stroke-dasharray="327" stroke-dashoffset="98"></circle>
+                            </svg>
+                            <div class="progress-text">70%</div>
+                        </div>
+                    </div>
                 </div>
+                
             </div>
         </div>
 
-        <!-- Brain 3D Page -->
+        <!-- Brain 3D Visualization Page -->
         <div class="page" id="brain-viz">
-            <div class="card">
-                <h2><i class="fas fa-brain"></i> Advanced 3D Brain Visualization</h2>
+            <div class="glass-card">
+                <h2 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem;">
+                    <i class="fas fa-brain" style="color: var(--accent);"></i>
+                    Advanced 3D Brain Visualization
+                </h2>
                 <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">
                     Interactive neural network mapping with real-time cognitive state visualization
                 </p>
                 
-                <div class="brain-viz-container" style="height: 600px;">
-                    <div class="viz-controls">
-                        <button class="control-btn" data-mode="explore">
+                <div class="brain-container" style="height: 600px;">
+                    <div class="brain-controls">
+                        <button class="control-btn" data-mode="explore" title="Explore Mode">
                             <i class="fas fa-search"></i>
                         </button>
-                        <button class="control-btn" data-mode="stimulate">
+                        <button class="control-btn" data-mode="stimulate" title="Stimulate Mode">
                             <i class="fas fa-bolt"></i>
                         </button>
-                        <button class="control-btn" data-mode="analyze">
+                        <button class="control-btn" data-mode="analyze" title="Analyze Mode">
                             <i class="fas fa-chart-line"></i>
                         </button>
                     </div>
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: rgba(255,255,255,0.5);">
-                        <div style="text-align: center;">
-                            <i class="fas fa-brain" style="font-size: 4rem; margin-bottom: 1rem;"></i>
-                            <div style="font-size: 1.2rem;">Interactive 3D Brain Model</div>
-                            <div style="margin-top: 0.5rem;">Click and drag to explore</div>
-                        </div>
-                    </div>
+                    <canvas id="brain3DCanvas"></canvas>
                 </div>
                 
                 <div class="training-grid">
-                    <div class="training-card" onclick="simulateThought()">
+                    <div class="training-card" data-action="simulate-thought">
+                        <div class="training-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
                         <div class="training-title">Simulate Thought</div>
-                        <div class="training-description">Trigger neural pathways and observe thought propagation</div>
+                        <div class="training-description">
+                            Trigger neural pathways and observe thought propagation across brain regions
+                        </div>
                         <div class="training-stats">
-                            <span><i class="fas fa-bolt"></i> Instant</span>
+                            <span><i class="fas fa-clock"></i> Instant</span>
+                            <span><i class="fas fa-star"></i> Interactive</span>
                         </div>
                     </div>
                     
-                    <div class="training-card" onclick="stimulateRegion('frontal')">
+                    <div class="training-card" data-action="stimulate-frontal">
+                        <div class="training-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
                         <div class="training-title">Frontal Cortex</div>
-                        <div class="training-description">Executive function and decision making</div>
+                        <div class="training-description">
+                            Target executive function and decision-making processes
+                        </div>
                         <div class="training-stats">
-                            <span><i class="fas fa-brain"></i> Executive</span>
+                            <span><i class="fas fa-target"></i> Targeted</span>
+                            <span><i class="fas fa-cog"></i> Executive</span>
                         </div>
                     </div>
                     
-                    <div class="training-card" onclick="exportBrainData()">
-                        <div class="training-title">Export Data</div>
-                        <div class="training-description">Download neural activity patterns</div>
+                    <div class="training-card" data-action="export-data">
+                        <div class="training-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div class="training-title">Export Brain Data</div>
+                        <div class="training-description">
+                            Download neural activity patterns and analysis results
+                        </div>
                         <div class="training-stats">
-                            <span><i class="fas fa-download"></i> Export</span>
+                            <span><i class="fas fa-file-alt"></i> JSON</span>
+                            <span><i class="fas fa-chart-bar"></i> Analysis</span>
                         </div>
                     </div>
                 </div>
@@ -552,46 +924,97 @@
 
         <!-- Training Page -->
         <div class="page" id="training">
-            <div class="card">
-                <h2><i class="fas fa-dumbbell"></i> Cognitive Training Programs</h2>
+            <div class="glass-card">
+                <h2 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem;">
+                    <i class="fas fa-dumbbell" style="color: var(--accent);"></i>
+                    Cognitive Training Programs
+                </h2>
                 <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">
-                    Advanced AI-powered training modules with real-time adaptation
+                    Advanced AI-powered training modules with real-time biofeedback and adaptation
                 </p>
                 
                 <div class="training-grid">
-                    <div class="training-card" onclick="startAdvancedTraining('attention')">
+                    <div class="training-card" data-training="attention">
+                        <div class="training-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
                         <div class="training-title">Attention Enhancement</div>
-                        <div class="training-description">Multi-dimensional focus training with biofeedback integration</div>
+                        <div class="training-description">
+                            Multi-dimensional focus training with biofeedback integration and real-time difficulty adjustment
+                        </div>
                         <div class="training-stats">
-                            <span><i class="fas fa-clock"></i> 15 min</span>
+                            <span><i class="fas fa-clock"></i> 15-20 min</span>
                             <span><i class="fas fa-star"></i> Advanced</span>
                         </div>
                     </div>
                     
-                    <div class="training-card" onclick="startAdvancedTraining('memory')">
+                    <div class="training-card" data-training="memory">
+                        <div class="training-icon">
+                            <i class="fas fa-memory"></i>
+                        </div>
                         <div class="training-title">Working Memory</div>
-                        <div class="training-description">Spatial and verbal memory challenges with neural optimization</div>
+                        <div class="training-description">
+                            Spatial and verbal memory challenges with neural optimization and adaptive complexity
+                        </div>
                         <div class="training-stats">
-                            <span><i class="fas fa-clock"></i> 20 min</span>
-                            <span><i class="fas fa-brain"></i> Memory</span>
+                            <span><i class="fas fa-clock"></i> 20-25 min</span>
+                            <span><i class="fas fa-brain"></i> Cognitive</span>
                         </div>
                     </div>
                     
-                    <div class="training-card" onclick="startAdvancedTraining('flexibility')">
+                    <div class="training-card" data-training="flexibility">
+                        <div class="training-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
                         <div class="training-title">Cognitive Flexibility</div>
-                        <div class="training-description">Task-switching and mental agility enhancement</div>
+                        <div class="training-description">
+                            Task-switching and mental agility enhancement with dynamic rule changes
+                        </div>
                         <div class="training-stats">
-                            <span><i class="fas fa-clock"></i> 12 min</span>
-                            <span><i class="fas fa-exchange-alt"></i> Flexibility</span>
+                            <span><i class="fas fa-clock"></i> 12-18 min</span>
+                            <span><i class="fas fa-sync"></i> Dynamic</span>
                         </div>
                     </div>
                     
-                    <div class="training-card" onclick="startAdvancedTraining('speed')">
+                    <div class="training-card" data-training="speed">
+                        <div class="training-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
                         <div class="training-title">Processing Speed</div>
-                        <div class="training-description">Rapid information processing and decision making</div>
+                        <div class="training-description">
+                            Rapid information processing and decision-making under time pressure
+                        </div>
                         <div class="training-stats">
-                            <span><i class="fas fa-clock"></i> 10 min</span>
-                            <span><i class="fas fa-tachometer-alt"></i> Speed</span>
+                            <span><i class="fas fa-clock"></i> 10-15 min</span>
+                            <span><i class="fas fa-bolt"></i> Intense</span>
+                        </div>
+                    </div>
+                    
+                    <div class="training-card" data-training="creativity">
+                        <div class="training-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="training-title">Creative Thinking</div>
+                        <div class="training-description">
+                            Divergent thinking and creative problem-solving with artistic elements
+                        </div>
+                        <div class="training-stats">
+                            <span><i class="fas fa-clock"></i> 25-30 min</span>
+                            <span><i class="fas fa-lightbulb"></i> Creative</span>
+                        </div>
+                    </div>
+                    
+                    <div class="training-card" data-training="meditation">
+                        <div class="training-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="training-title">Mindfulness Training</div>
+                        <div class="training-description">
+                            Guided meditation with brainwave monitoring and binaural beat optimization
+                        </div>
+                        <div class="training-stats">
+                            <span><i class="fas fa-clock"></i> 10-45 min</span>
+                            <span><i class="fas fa-heart"></i> Relaxing</span>
                         </div>
                     </div>
                 </div>
@@ -600,249 +1023,643 @@
 
         <!-- Analytics Page -->
         <div class="page" id="analytics">
-            <div class="card">
-                <h2><i class="fas fa-chart-line"></i> Advanced Analytics Dashboard</h2>
+            <div class="glass-card">
+                <h2 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem;">
+                    <i class="fas fa-chart-line" style="color: var(--accent);"></i>
+                    Advanced Analytics Dashboard
+                </h2>
                 <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">
-                    Real-time cognitive performance metrics and predictive insights
+                    Real-time cognitive performance metrics with predictive insights and AI analysis
                 </p>
                 
-                <div class="training-grid">
-                    <div class="card">
-                        <h3>Performance Over Time</h3>
-                        <div class="chart-container" id="performanceChart">
-                            <div class="chart-placeholder">
-                                <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                                <div>Performance trends loading...</div>
-                            </div>
-                        </div>
+                <div class="analytics-grid">
+                    <div class="glass-card">
+                        <h3 style="color: var(--accent); margin-bottom: 1rem;">Performance Trends</h3>
+                        <div class="chart-container" id="performanceChart"></div>
                     </div>
                     
-                    <div class="card">
-                        <h3>Brainwave Analysis</h3>
-                        <div class="chart-container" id="brainwaveChart">
-                            <div class="chart-placeholder">
-                                <i class="fas fa-wave-square" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                                <div>Brainwave data loading...</div>
-                            </div>
-                        </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--accent); margin-bottom: 1rem;">Brainwave Analysis</h3>
+                        <div class="chart-container" id="brainwaveChart"></div>
                     </div>
                     
-                    <div class="card">
-                        <h3>Cognitive Map</h3>
-                        <div class="chart-container" id="cognitiveMap">
-                            <div class="chart-placeholder">
-                                <i class="fas fa-brain" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                                <div>Cognitive mapping in progress...</div>
-                            </div>
-                        </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--accent); margin-bottom: 1rem;">Cognitive Mapping</h3>
+                        <div class="chart-container" id="cognitiveChart"></div>
                     </div>
                     
-                    <div class="card">
-                        <h3>Progress Tracking</h3>
-                        <div class="chart-container" id="progressChart">
-                            <div class="chart-placeholder">
-                                <i class="fas fa-trophy" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                                <div>Progress data loading...</div>
-                            </div>
-                        </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--accent); margin-bottom: 1rem;">Progress Tracking</h3>
+                        <div class="chart-container" id="progressChart"></div>
                     </div>
                 </div>
             </div>
         </div>
+        
     </main>
 
     <script>
-        // Simple, working JavaScript
-        let isPlaying = false;
-        let currentPage = 'dashboard';
-
-        // Page Navigation
-        function switchPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            
-            // Update navigation
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            currentPage = pageId;
-            showNotification(`Switched to ${pageId.charAt(0).toUpperCase() + pageId.slice(1)}`);
-        }
-
-        // Audio Controls
-        function startAudio() {
-            showNotification('Audio session started');
-            // Audio implementation would go here
-        }
-
-        function stopAudio() {
-            showNotification('Audio session stopped');
-        }
-
-        function recordAudio() {
-            showNotification('Audio recording started');
-        }
-
-        // Brain Visualization Controls
-        function toggleBrainAnimation() {
-            const icon = document.getElementById('playIcon');
-            isPlaying = !isPlaying;
-            
-            if (isPlaying) {
-                icon.className = 'fas fa-pause';
-                showNotification('Brain animation started');
-            } else {
-                icon.className = 'fas fa-play';
-                showNotification('Brain animation paused');
+        // NeuroX Elite Advanced Platform
+        class NeuroXElite {
+            constructor() {
+                this.isAudioPlaying = false;
+                this.isBrainAnimating = false;
+                this.currentMode = 'explore';
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.brain = null;
+                this.neurons = [];
+                this.connections = [];
+                
+                this.init();
             }
-        }
 
-        function resetBrainViz() {
-            showNotification('Brain visualization reset');
-        }
+            async init() {
+                console.log('🧠 Initializing NeuroX Elite...');
+                
+                this.createStars();
+                this.createNeuralBackground();
+                this.setupNavigation();
+                this.setupControls();
+                this.initializeBrain3D();
+                this.createAudioVisualizer();
+                this.initializeCharts();
+                this.animateStats();
+                
+                this.showNotification('NeuroX Elite initialized successfully!', 'success');
+            }
 
-        function toggleFullscreen() {
-            showNotification('Fullscreen mode toggled');
-        }
+            createStars() {
+                const starsContainer = document.getElementById('stars');
+                for (let i = 0; i < 200; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    starsContainer.appendChild(star);
+                }
+            }
 
-        // Training Functions
-        function startTraining(type) {
-            showNotification(`Starting ${type} training session`);
-        }
-
-        function startAdvancedTraining(type) {
-            showNotification(`Starting advanced ${type} training`);
-        }
-
-        function startMeditation() {
-            showNotification('Meditation session started');
-        }
-
-        function viewAnalytics() {
-            switchPage('analytics');
-        }
-
-        // Brain Functions
-        function simulateThought() {
-            showNotification('Thought simulation triggered');
-        }
-
-        function stimulateRegion(region) {
-            showNotification(`Stimulating ${region} region`);
-        }
-
-        function exportBrainData() {
-            showNotification('Exporting brain data...');
-            // Create and download mock data
-            const data = {
-                timestamp: Date.now(),
-                regions: ['frontal', 'parietal', 'temporal', 'occipital'],
-                activity: Array(100).fill().map(() => Math.random())
-            };
-            
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `brain-data-${Date.now()}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // Wallet Connection
-        function connectWallet() {
-            showNotification('Connecting wallet...');
-            setTimeout(() => {
-                showNotification('Wallet connected successfully!');
-            }, 1000);
-        }
-
-        // Notification System
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        // Initialize Charts (Simple Implementation)
-        function initializeCharts() {
-            // Simple bar chart for stats
-            if (typeof Plotly !== 'undefined') {
-                setTimeout(() => {
-                    const statsData = [{
-                        x: ['Attention', 'Memory', 'Focus', 'Speed'],
-                        y: [85, 92, 78, 88],
-                        type: 'bar',
-                        marker: {
-                            color: ['#0066FF', '#8B5CF6', '#06B6D4', '#10B981']
-                        }
-                    }];
-
-                    const layout = {
-                        paper_bgcolor: 'transparent',
-                        plot_bgcolor: 'transparent',
-                        font: { color: '#FFFFFF', size: 12 },
-                        margin: { t: 20, r: 20, b: 40, l: 40 },
-                        height: 280
-                    };
-
-                    Plotly.newPlot('statsChart', statsData, layout, {
-                        responsive: true,
-                        displayModeBar: false
+            createNeuralBackground() {
+                const canvas = document.getElementById('neuralCanvas');
+                const ctx = canvas.getContext('2d');
+                
+                const resizeCanvas = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+                
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                
+                const nodes = [];
+                for (let i = 0; i < 50; i++) {
+                    nodes.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5
+                    });
+                }
+                
+                const animate = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Update and draw nodes
+                    nodes.forEach(node => {
+                        node.x += node.vx;
+                        node.y += node.vy;
+                        
+                        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+                        
+                        ctx.beginPath();
+                        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(0, 217, 255, 0.3)';
+                        ctx.fill();
                     });
                     
-                    document.querySelector('#statsChart .chart-placeholder').style.display = 'none';
+                    // Draw connections
+                    nodes.forEach((node, i) => {
+                        nodes.slice(i + 1).forEach(otherNode => {
+                            const distance = Math.sqrt(
+                                Math.pow(node.x - otherNode.x, 2) + 
+                                Math.pow(node.y - otherNode.y, 2)
+                            );
+                            
+                            if (distance < 150) {
+                                ctx.beginPath();
+                                ctx.moveTo(node.x, node.y);
+                                ctx.lineTo(otherNode.x, otherNode.y);
+                                ctx.strokeStyle = `rgba(0, 217, 255, ${0.1 * (1 - distance / 150)})`;
+                                ctx.stroke();
+                            }
+                        });
+                    });
+                    
+                    requestAnimationFrame(animate);
+                };
+                
+                animate();
+            }
+
+            setupNavigation() {
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        const targetPage = e.currentTarget.dataset.page;
+                        this.switchPage(targetPage);
+                    });
+                });
+            }
+
+            setupControls() {
+                // Audio controls
+                document.getElementById('playAudio').addEventListener('click', () => this.toggleAudio());
+                document.getElementById('stopAudio').addEventListener('click', () => this.stopAudio());
+                document.getElementById('recordAudio').addEventListener('click', () => this.recordAudio());
+                
+                // Brain controls
+                document.getElementById('playBtn').addEventListener('click', () => this.toggleBrainAnimation());
+                document.getElementById('resetBtn').addEventListener('click', () => this.resetBrain());
+                document.getElementById('fullscreenBtn').addEventListener('click', () => this.toggleFullscreen());
+                
+                // Training cards
+                document.querySelectorAll('.training-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const training = e.currentTarget.dataset.training;
+                        const action = e.currentTarget.dataset.action;
+                        
+                        if (training) {
+                            this.startTraining(training);
+                        } else if (action) {
+                            this.executeAction(action);
+                        }
+                    });
+                });
+                
+                // Quick actions
+                document.querySelectorAll('.action-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const training = e.currentTarget.dataset.training;
+                        const action = e.currentTarget.dataset.action;
+                        
+                        if (training) {
+                            this.startTraining(training);
+                        } else if (action) {
+                            if (action === 'analytics') {
+                                this.switchPage('analytics');
+                            } else {
+                                this.executeAction(action);
+                            }
+                        }
+                    });
+                });
+                
+                // Wallet
+                document.getElementById('walletBtn').addEventListener('click', () => this.connectWallet());
+            }
+
+            initializeBrain3D() {
+                const canvas = document.getElementById('brainCanvas');
+                if (!canvas) return;
+                
+                // Set up Three.js scene
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+                
+                this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+                this.renderer.setClearColor(0x000000, 0);
+                
+                // Create brain geometry
+                const brainGeometry = new THREE.SphereGeometry(2, 32, 32);
+                const brainMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x0066ff,
+                    transparent: true,
+                    opacity: 0.7,
+                    wireframe: false
+                });
+                
+                this.brain = new THREE.Mesh(brainGeometry, brainMaterial);
+                this.scene.add(this.brain);
+                
+                // Add neurons
+                this.createNeurons();
+                
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+                this.scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                this.scene.add(directionalLight);
+                
+                // Camera position
+                this.camera.position.z = 8;
+                
+                // Controls
+                if (THREE.OrbitControls) {
+                    this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+                    this.controls.enableDamping = true;
+                    this.controls.dampingFactor = 0.05;
+                }
+                
+                // Start render loop
+                this.animate3D();
+                
+                // Handle resize
+                window.addEventListener('resize', () => {
+                    if (this.camera && this.renderer) {
+                        this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+                        this.camera.updateProjectionMatrix();
+                        this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+                    }
+                });
+            }
+
+            createNeurons() {
+                const neuronGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+                const neuronMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff });
+                
+                for (let i = 0; i < 100; i++) {
+                    const neuron = new THREE.Mesh(neuronGeometry, neuronMaterial);
+                    
+                    // Random position on sphere surface
+                    const phi = Math.acos(-1 + (2 * i) / 100);
+                    const theta = Math.sqrt(100 * Math.PI) * phi;
+                    
+                    neuron.position.set(
+                        2.2 * Math.cos(theta) * Math.sin(phi),
+                        2.2 * Math.sin(theta) * Math.sin(phi),
+                        2.2 * Math.cos(phi)
+                    );
+                    
+                    this.neurons.push(neuron);
+                    this.scene.add(neuron);
+                }
+            }
+
+            animate3D() {
+                requestAnimationFrame(() => this.animate3D());
+                
+                if (this.brain && this.isBrainAnimating) {
+                    this.brain.rotation.y += 0.005;
+                    this.brain.rotation.x += 0.002;
+                    
+                    // Animate neurons
+                    this.neurons.forEach((neuron, i) => {
+                        neuron.material.emissive.setHSL(
+                            (Date.now() * 0.001 + i * 0.1) % 1, 
+                            0.5, 
+                            Math.sin(Date.now() * 0.005 + i) * 0.1 + 0.1
+                        );
+                    });
+                }
+                
+                if (this.controls) {
+                    this.controls.update();
+                }
+                
+                if (this.renderer && this.scene && this.camera) {
+                    this.renderer.render(this.scene, this.camera);
+                }
+            }
+
+            createAudioVisualizer() {
+                const container = document.getElementById('audioWaves');
+                if (!container) return;
+                
+                for (let i = 0; i < 20; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'wave-bar';
+                    bar.style.animationDelay = i * 0.1 + 's';
+                    bar.style.height = Math.random() * 60 + 20 + '%';
+                    container.appendChild(bar);
+                }
+                
+                // Animate bars when audio is playing
+                this.audioInterval = setInterval(() => {
+                    if (this.isAudioPlaying) {
+                        container.querySelectorAll('.wave-bar').forEach(bar => {
+                            bar.style.height = Math.random() * 60 + 20 + '%';
+                        });
+                    }
+                }, 200);
+            }
+
+            initializeCharts() {
+                // Main cognitive stats chart
+                setTimeout(() => {
+                    if (typeof Plotly !== 'undefined') {
+                        const data = [{
+                            x: ['Attention', 'Memory', 'Focus', 'Speed'],
+                            y: [85, 92, 78, 88],
+                            type: 'bar',
+                            marker: {
+                                color: ['#0066FF', '#8B5CF6', '#00D9FF', '#10B981'],
+                                opacity: 0.8
+                            }
+                        }];
+
+                        const layout = {
+                            paper_bgcolor: 'transparent',
+                            plot_bgcolor: 'transparent',
+                            font: { color: '#FFFFFF', size: 12 },
+                            margin: { t: 20, r: 20, b: 40, l: 40 },
+                            height: 280,
+                            xaxis: { gridcolor: 'rgba(255,255,255,0.1)' },
+                            yaxis: { gridcolor: 'rgba(255,255,255,0.1)' }
+                        };
+
+                        Plotly.newPlot('mainChart', data, layout, {
+                            responsive: true,
+                            displayModeBar: false
+                        });
+                    }
+                }, 1000);
+                
+                // Analytics charts
+                this.initializeAnalyticsCharts();
+            }
+
+            initializeAnalyticsCharts() {
+                setTimeout(() => {
+                    if (typeof Plotly !== 'undefined') {
+                        // Performance trend chart
+                        const performanceData = [{
+                            x: Array.from({length: 30}, (_, i) => i + 1),
+                            y: Array.from({length: 30}, () => Math.random() * 30 + 70),
+                            type: 'scatter',
+                            mode: 'lines+markers',
+                            line: { color: '#00D9FF', width: 3 },
+                            marker: { color: '#0066FF', size: 6 }
+                        }];
+                        
+                        const performanceLayout = {
+                            paper_bgcolor: 'transparent',
+                            plot_bgcolor: 'transparent',
+                            font: { color: '#FFFFFF', size: 11 },
+                            margin: { t: 20, r: 20, b: 40, l: 40 },
+                            height: 280,
+                            xaxis: { 
+                                title: 'Day',
+                                gridcolor: 'rgba(255,255,255,0.1)',
+                                color: '#FFFFFF'
+                            },
+                            yaxis: { 
+                                title: 'Score',
+                                gridcolor: 'rgba(255,255,255,0.1)',
+                                color: '#FFFFFF'
+                            }
+                        };
+                        
+                        Plotly.newPlot('performanceChart', performanceData, performanceLayout, {
+                            responsive: true,
+                            displayModeBar: false
+                        });
+                        
+                        // Brainwave chart
+                        const brainwaveData = [{
+                            labels: ['Delta', 'Theta', 'Alpha', 'Beta', 'Gamma'],
+                            values: [20, 25, 35, 15, 5],
+                            type: 'pie',
+                            marker: {
+                                colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#8B5CF6', '#10B981']
+                            }
+                        }];
+                        
+                        const brainwaveLayout = {
+                            paper_bgcolor: 'transparent',
+                            plot_bgcolor: 'transparent',
+                            font: { color: '#FFFFFF', size: 11 },
+                            margin: { t: 20, r: 20, b: 20, l: 20 },
+                            height: 280
+                        };
+                        
+                        Plotly.newPlot('brainwaveChart', brainwaveData, brainwaveLayout, {
+                            responsive: true,
+                            displayModeBar: false
+                        });
+                    }
+                }, 1500);
+            }
+
+            animateStats() {
+                const stats = [
+                    { id: 'attentionValue', target: 85 },
+                    { id: 'memoryValue', target: 92 },
+                    { id: 'focusValue', target: 78 },
+                    { id: 'speedValue', target: 88 }
+                ];
+                
+                stats.forEach(stat => {
+                    let current = 0;
+                    const increment = stat.target / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        document.getElementById(stat.id).textContent = Math.round(current);
+                        
+                        if (current >= stat.target) {
+                            document.getElementById(stat.id).textContent = stat.target;
+                            clearInterval(timer);
+                        }
+                    }, 50);
+                });
+            }
+
+            switchPage(pageId) {
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show target page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Update navigation
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+                
+                this.showNotification(`Switched to ${pageId.charAt(0).toUpperCase() + pageId.slice(1)}`, 'success');
+            }
+
+            toggleAudio() {
+                this.isAudioPlaying = !this.isAudioPlaying;
+                const icon = document.querySelector('#playAudio i');
+                
+                if (this.isAudioPlaying) {
+                    icon.className = 'fas fa-pause';
+                    this.showNotification('Audio session started', 'success');
+                } else {
+                    icon.className = 'fas fa-play';
+                    this.showNotification('Audio session paused', 'info');
+                }
+            }
+
+            stopAudio() {
+                this.isAudioPlaying = false;
+                document.querySelector('#playAudio i').className = 'fas fa-play';
+                this.showNotification('Audio session stopped', 'info');
+            }
+
+            recordAudio() {
+                this.showNotification('Audio recording started', 'warning');
+            }
+
+            toggleBrainAnimation() {
+                this.isBrainAnimating = !this.isBrainAnimating;
+                const icon = document.querySelector('#playBtn i');
+                
+                if (this.isBrainAnimating) {
+                    icon.className = 'fas fa-pause';
+                    this.showNotification('Brain animation started', 'success');
+                } else {
+                    icon.className = 'fas fa-play';
+                    this.showNotification('Brain animation paused', 'info');
+                }
+            }
+
+            resetBrain() {
+                if (this.brain) {
+                    this.brain.rotation.set(0, 0, 0);
+                    this.camera.position.set(0, 0, 8);
+                    this.showNotification('Brain visualization reset', 'success');
+                }
+            }
+
+            toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                    this.showNotification('Entered fullscreen mode', 'info');
+                } else {
+                    document.exitFullscreen();
+                    this.showNotification('Exited fullscreen mode', 'info');
+                }
+            }
+
+            startTraining(type) {
+                this.showNotification(`Starting ${type} training session...`, 'success');
+                
+                // Simulate training start
+                setTimeout(() => {
+                    this.showNotification(`${type.charAt(0).toUpperCase() + type.slice(1)} training in progress`, 'info');
+                }, 1000);
+            }
+
+            executeAction(action) {
+                switch (action) {
+                    case 'simulate-thought':
+                        this.simulateThought();
+                        break;
+                    case 'stimulate-frontal':
+                        this.stimulateFrontal();
+                        break;
+                    case 'export-data':
+                        this.exportData();
+                        break;
+                    case 'meditation':
+                        this.startMeditation();
+                        break;
+                    default:
+                        this.showNotification(`Action: ${action}`, 'info');
+                }
+            }
+
+            simulateThought() {
+                this.showNotification('Simulating thought propagation...', 'info');
+                
+                if (this.neurons.length > 0) {
+                    // Animate thought propagation
+                    this.neurons.forEach((neuron, i) => {
+                        setTimeout(() => {
+                            neuron.material.emissive.setHex(0x00ffff);
+                            setTimeout(() => {
+                                neuron.material.emissive.setHex(0x000000);
+                            }, 200);
+                        }, i * 50);
+                    });
+                }
+            }
+
+            stimulateFrontal() {
+                this.showNotification('Stimulating frontal cortex region...', 'success');
+            }
+
+            exportData() {
+                const data = {
+                    timestamp: Date.now(),
+                    cognitiveMetrics: {
+                        attention: 85,
+                        memory: 92,
+                        focus: 78,
+                        speed: 88
+                    },
+                    brainActivity: Array(100).fill().map(() => Math.random()),
+                    session: {
+                        duration: Math.floor(Math.random() * 1800) + 600,
+                        performance: Math.random() * 30 + 70
+                    }
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `neurox-data-${Date.now()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                this.showNotification('Brain data exported successfully', 'success');
+            }
+
+            startMeditation() {
+                this.showNotification('Starting meditation session...', 'success');
+            }
+
+            connectWallet() {
+                this.showNotification('Connecting wallet...', 'info');
+                
+                setTimeout(() => {
+                    const btn = document.getElementById('walletBtn');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Wallet Connected';
+                    btn.style.background = 'linear-gradient(45deg, var(--success), var(--accent))';
+                    this.showNotification('Wallet connected successfully!', 'success');
                 }, 2000);
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                
+                const icon = type === 'success' ? 'check-circle' : 
+                           type === 'error' ? 'exclamation-circle' :
+                           type === 'warning' ? 'exclamation-triangle' : 'info-circle';
+                
+                notification.innerHTML = `
+                    <i class="fas fa-${icon}"></i>
+                    ${message}
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => notification.classList.add('show'), 100);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => document.body.removeChild(notification), 400);
+                }, 3000);
             }
         }
 
-        // Animate Stats
-        function animateStats() {
-            const stats = ['attentionScore', 'memoryScore', 'focusScore', 'speedScore'];
-            const targets = [85, 92, 78, 88];
-            
-            stats.forEach((stat, index) => {
-                let current = 0;
-                const target = targets[index];
-                const increment = target / 50;
-                
-                const timer = setInterval(() => {
-                    current += increment;
-                    document.getElementById(stat).textContent = Math.round(current);
-                    
-                    if (current >= target) {
-                        document.getElementById(stat).textContent = target;
-                        clearInterval(timer);
-                    }
-                }, 50);
-            });
-        }
-
-        // Initialize
+        // Initialize NeuroX Elite
         document.addEventListener('DOMContentLoaded', () => {
-            showNotification('NeuroX Elite initialized successfully');
-            animateStats();
-            initializeCharts();
+            window.neuroXElite = new NeuroXElite();
         });
     </script>
 </body>
