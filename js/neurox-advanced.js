@@ -995,10 +995,35 @@ class InteractiveTour {
 
 // Initialize advanced features
 let neuroXAdvanced;
-document.addEventListener('DOMContentLoaded', () => {
-    neuroXAdvanced = new NeuroXAdvanced();
-    window.neuroXAdvanced = neuroXAdvanced;
-});
+
+function initializeNeuroXAdvanced() {
+    try {
+        neuroXAdvanced = new NeuroXAdvanced();
+        window.neuroXAdvanced = neuroXAdvanced;
+        console.log('✅ NeuroXAdvanced initialized successfully');
+    } catch (error) {
+        console.error('❌ NeuroXAdvanced initialization failed:', error);
+        // Create minimal fallback object
+        window.neuroXAdvanced = {
+            userProfile: { premiumAccess: false },
+            socialFeatures: null,
+            aiCoach: null,
+            gamification: null,
+            analytics: null,
+            startPremiumTour: () => console.log('Premium tour not available'),
+            onWalletConnected: () => console.log('Wallet connected'),
+            onNFTVerified: () => console.log('NFT verified')
+        };
+    }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeNeuroXAdvanced);
+} else {
+    // DOM is already loaded
+    initializeNeuroXAdvanced();
+}
 
 // Export for global access
 window.NeuroXAdvanced = NeuroXAdvanced;
