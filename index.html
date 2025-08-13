@@ -2309,6 +2309,84 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Cognitive Twin Feature -->
+            <div class="card">
+                <h3>🧬 Your Cognitive Twin</h3>
+                <p>An AI replica of your cognitive patterns that learns and evolves with you.</p>
+                <div style="display: flex; gap: 1rem; align-items: center; margin: 1rem 0;">
+                    <div style="flex: 1;">
+                        <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 1rem; border-radius: 8px;">
+                            <div id="cognitiveFingerprint" style="text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧠</div>
+                                <div style="font-size: 0.9rem; color: var(--gray-medium);">Generating cognitive fingerprint...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Twin Status:</strong></div>
+                        <div id="twinStatus" style="color: var(--dashboard-color); font-weight: 600;">Analyzing patterns...</div>
+                        <div style="margin-top: 0.5rem;">
+                            <div style="font-size: 0.8rem; color: var(--gray-medium);">Prediction Accuracy:</div>
+                            <div style="background: rgba(0,0,0,0.1); height: 6px; border-radius: 3px; margin-top: 0.25rem;">
+                                <div id="predictionAccuracy" style="background: var(--focus-color); height: 100%; width: 0%; border-radius: 3px; transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-dashboard" onclick="showCognitiveMapping()">
+                        <i class="fas fa-brain"></i>
+                        View Brain Map
+                    </button>
+                    <button class="btn btn-challenges" onclick="challengeTwin()">
+                        <i class="fas fa-duel"></i>
+                        Challenge Twin
+                    </button>
+                    <button class="btn btn-primary" onclick="showTwinInsights()">
+                        <i class="fas fa-lightbulb"></i>
+                        Twin Insights
+                    </button>
+                </div>
+            </div>
+
+            <!-- Memory Garden Integration -->
+            <div class="card">
+                <h3>🌱 Memory Garden Status</h3>
+                <p>Your cognitive growth visualized as a living, breathing garden.</p>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1rem 0;">
+                    <div style="text-align: center; padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <div style="font-size: 1.5rem;">🌱</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-medium);">Seeds</div>
+                        <div id="gardenSeeds" style="font-weight: 600;">3</div>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <div style="font-size: 1.5rem;">🌿</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-medium);">Growing</div>
+                        <div id="gardenGrowing" style="font-weight: 600;">2</div>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <div style="font-size: 1.5rem;">🌸</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-medium);">Blooming</div>
+                        <div id="gardenBlooming" style="font-weight: 600;">1</div>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <div style="font-size: 1.5rem;">🏆</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-medium);">Mature</div>
+                        <div id="gardenMature" style="font-weight: 600;">0</div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="btn btn-focus" onclick="viewFullGarden()">
+                        <i class="fas fa-eye"></i>
+                        View Garden
+                    </button>
+                    <button class="btn btn-dashboard" onclick="createMemoryCapsule()">
+                        <i class="fas fa-plus"></i>
+                        Plant Memory
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Challenges Page -->
@@ -2933,7 +3011,7 @@
                     </div>
 
                     <div style="text-align: center; margin: 2rem 0;">
-                        <div style="font-size: 3rem;">🧠</div>
+                        <div style="font-size: 3rem;">��</div>
                         <div style="font-size: 1.5rem; font-weight: 600; color: var(--home-color);">NeuroX Premium Pass</div>
                         <div style="font-size: 1.2rem; margin-top: 0.5rem;">0.05 ETH</div>
                     </div>
