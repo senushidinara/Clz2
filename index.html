@@ -2666,6 +2666,41 @@
                         padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
                         background: linear-gradient(45deg, #4169E1, #9370DB); color: white;
                         cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(65,105,225,0.3);
+                    ">⛰️ Mountain</button>
+                </div>
+
+                <div class="card">
+                    <h3>🧘‍♀️ Advanced Binaural Beats</h3>
+                    <div class="binaural-player" style="background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.1)); border-radius: 15px; padding: 2rem; margin: 1rem 0;">
+                        <div class="frequency-selector" style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                            <button class="freq-btn active" data-freq="delta" style="padding: 0.5rem 1rem; border: none; border-radius: 20px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; cursor: pointer; transition: all 0.3s ease;" onclick="selectFrequency('delta')">Delta (0.5-4Hz)</button>
+                            <button class="freq-btn" data-freq="theta" style="padding: 0.5rem 1rem; border: none; border-radius: 20px; background: rgba(255,255,255,0.2); color: #333; cursor: pointer; transition: all 0.3s ease;" onclick="selectFrequency('theta')">Theta (4-8Hz)</button>
+                            <button class="freq-btn" data-freq="alpha" style="padding: 0.5rem 1rem; border: none; border-radius: 20px; background: rgba(255,255,255,0.2); color: #333; cursor: pointer; transition: all 0.3s ease;" onclick="selectFrequency('alpha')">Alpha (8-13Hz)</button>
+                            <button class="freq-btn" data-freq="beta" style="padding: 0.5rem 1rem; border: none; border-radius: 20px; background: rgba(255,255,255,0.2); color: #333; cursor: pointer; transition: all 0.3s ease;" onclick="selectFrequency('beta')">Beta (13-30Hz)</button>
+                            <button class="freq-btn" data-freq="gamma" style="padding: 0.5rem 1rem; border: none; border-radius: 20px; background: rgba(255,255,255,0.2); color: #333; cursor: pointer; transition: all 0.3s ease;" onclick="selectFrequency('gamma')">Gamma (30+Hz)</button>
+                        </div>
+                        <div class="wave-visualizer" id="waveVisualizer" style="background: rgba(0,0,0,0.1); border-radius: 12px; padding: 1rem; margin-bottom: 2rem;">
+                            <canvas id="audioCanvas" width="400" height="100" style="width: 100%; height: 100px; display: block;"></canvas>
+                        </div>
+                        <div class="player-controls" style="display: flex; justify-content: space-between; align-items: center;">
+                            <button class="btn btn-focus" onclick="playBinauralBeats()" style="flex: 1; margin-right: 2rem;">
+                                <i class="fas fa-play"></i>
+                                Start Binaural Session
+                            </button>
+                            <div class="volume-control" style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-volume-down" style="color: #666;"></i>
+                                <input type="range" id="volumeSlider" min="0" max="100" value="50" style="width: 100px;">
+                                <i class="fas fa-volume-up" style="color: #666;"></i>
+                            </div>
+                        </div>
+                        <div class="frequency-info" id="frequencyInfo" style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 0.9rem; color: #666;">
+                            <strong>Delta Waves (0.5-4Hz):</strong> Deep sleep, healing, regeneration. Perfect for rest and recovery sessions.
+                        </div>
+                    </div>
+                    <button onclick="changeMeditationBg('mountain')" class="bg-btn" data-bg="mountain" style="
+                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
+                        background: linear-gradient(45deg, #4169E1, #9370DB); color: white;
+                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(65,105,225,0.3);
                     ">🏔️ Mountain</button>
                 </div>
             </div>
@@ -4000,7 +4035,7 @@
                     instructions: [
                         '💖 Send love to yourself',
                         '👥 Extend to loved ones',
-                        '�� Include all beings',
+                        '🌍 Include all beings',
                         '☮️ Feel universal love'
                     ]
                 },
