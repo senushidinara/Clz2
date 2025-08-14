@@ -2446,13 +2446,16 @@
                     <div class="finding-card" style="
                         background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
                         border: 2px solid rgba(52, 152, 219, 0.3);
-                        border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease;
-                    ">
+                        border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; cursor: pointer;
+                    " onclick="showResearchDetails('neuroplasticity')">
                         <h4 style="color: #3498db; margin-bottom: 1rem;">🧠 Neuroplasticity Enhancement</h4>
                         <p style="margin-bottom: 1rem;">Advanced cognitive training protocols show 34% improvement in neural pathway formation.</p>
                         <div class="metric-highlight" style="background: rgba(52, 152, 219, 0.2); padding: 0.8rem; border-radius: 8px; text-align: center;">
                             <div style="font-size: 1.5rem; font-weight: bold; color: #3498db;">+34%</div>
                             <div style="font-size: 0.9rem; color: #34495e;">Neural Pathway Formation</div>
+                        </div>
+                        <div style="text-align: center; margin-top: 0.8rem; font-size: 0.8rem; color: #3498db; opacity: 0.8;">
+                            Click for detailed research data →
                         </div>
                     </div>
 
@@ -3730,7 +3733,7 @@
         }
 
         function showMemoryStats() {
-            showToast('��� Memory stats updated!');
+            showToast('📊 Memory stats updated!');
         }
 
         // Floating Particles Animation
