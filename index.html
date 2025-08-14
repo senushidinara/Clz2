@@ -459,7 +459,18 @@
             border-radius: 20px;
             padding: 2rem;
             margin: 2rem 0;
-            background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fa231cf57cf3c4f96befd2a7f2bf90a3a?format=webp&width=800');
+            background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fb4b9263111d0439abc970baab0d96960?format=webp&width=800');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        .quantum-lab-section {
+            background: var(--glass-dark);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F4a081ca0657f4a668b85667c14c43779?format=webp&width=800');
             background-size: cover;
             background-position: center;
             background-blend-mode: overlay;
@@ -733,11 +744,11 @@
                 </div>
                 
                 <div class="chart-container">
-                    <h3 class="chart-title">🧠 EEG Monitoring</h3>
-                    <div class="eeg-section image-overlay">
+                    <h3 class="chart-title">🧠 Quantum Neural Monitoring</h3>
+                    <div class="quantum-lab-section image-overlay">
                         <div style="padding: 2rem;">
-                            <h4 style="color: var(--text-white); margin-bottom: 1rem;">Real-time Brain Activity</h4>
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                            <h4 style="color: var(--text-white); margin-bottom: 1rem;">Advanced Brain Activity Analysis</h4>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
                                 <div style="text-align: center;">
                                     <div class="stat-number" style="font-size: 1.8rem;" id="alphaWaves">12.4</div>
                                     <div class="stat-label">Alpha (Hz)</div>
@@ -746,7 +757,15 @@
                                     <div class="stat-number" style="font-size: 1.8rem;" id="betaWaves">18.7</div>
                                     <div class="stat-label">Beta (Hz)</div>
                                 </div>
+                                <div style="text-align: center;">
+                                    <div class="stat-number" style="font-size: 1.8rem;" id="gammaWaves">42.3</div>
+                                    <div class="stat-label">Gamma (Hz)</div>
+                                </div>
                             </div>
+                            <button class="btn btn-secondary" onclick="startBrainScan()" style="width: 100%; margin-top: 1.5rem;">
+                                <i class="fas fa-brain"></i>
+                                Start Quantum Brain Scan
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1214,7 +1233,7 @@
         <!-- Consultation Page -->
         <div class="page" id="consultation">
             <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--text-white);">
-                ��‍⚕️ Expert Consultation
+                👩‍⚕️ Expert Consultation
             </h2>
 
             <div class="activity-grid">
@@ -1743,14 +1762,33 @@
         // Dashboard Functions
         function runFullScan() {
             showNotification('Starting comprehensive cognitive scan...');
-            
+
             setTimeout(() => {
                 showNotification('Cognitive scan in progress... Analyzing brain patterns.');
-                
+
                 setTimeout(() => {
                     showNotification('Full cognitive scan complete! Results updated.');
                     updateRealTimeMetrics();
                 }, 4000);
+            }, 2000);
+        }
+
+        function startBrainScan() {
+            showNotification('Initializing quantum brain scan protocol...');
+
+            setTimeout(() => {
+                showNotification('Quantum scan in progress... Analyzing neural pathways.');
+
+                // Update gamma waves during scan
+                if (document.getElementById('gammaWaves')) {
+                    const newGamma = Math.max(35, Math.min(50, 42.3 + (Math.random() - 0.5) * 8));
+                    document.getElementById('gammaWaves').textContent = newGamma.toFixed(1);
+                }
+
+                setTimeout(() => {
+                    showNotification('Quantum brain scan complete! Advanced neural data collected.');
+                    updateRealTimeMetrics();
+                }, 3000);
             }, 2000);
         }
 
@@ -1804,6 +1842,7 @@
         window.scheduleVisit = scheduleVisit;
         window.bookEvening = bookEvening;
         window.runFullScan = runFullScan;
+        window.startBrainScan = startBrainScan;
         window.closeModal = closeModal;
     </script>
 </body>
