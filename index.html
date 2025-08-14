@@ -2666,7 +2666,7 @@
                         animation: mountainMist 10s ease-in-out infinite;
                     ">
                         <!-- Mountain peaks -->
-                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 4rem; color: #696969; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰️</div>
+                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 4rem; color: #696969; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰��</div>
                         <div style="position: absolute; bottom: 20%; right: 20%; font-size: 3.5rem; color: #808080; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🏔️</div>
 
                         <!-- Stars -->
@@ -2713,8 +2713,9 @@
                             </button>
                             <div class="volume-control" style="display: flex; align-items: center; gap: 0.5rem;">
                                 <i class="fas fa-volume-down" style="color: #666;"></i>
-                                <input type="range" id="volumeSlider" min="0" max="100" value="50" style="width: 100px;">
+                                <input type="range" id="volumeSlider" min="0" max="100" value="50" style="width: 100px;" oninput="updateVolume(this.value)">
                                 <i class="fas fa-volume-up" style="color: #666;"></i>
+                                <span id="volumeDisplay" style="min-width: 35px; font-size: 0.9rem; color: #666;">50%</span>
                             </div>
                         </div>
                         <div class="frequency-info" id="frequencyInfo" style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 0.9rem; color: #666;">
