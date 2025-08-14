@@ -1892,29 +1892,114 @@
     <!-- Animated Background -->
     <div class="animated-bg bg-home" id="animatedBg"></div>
 
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <div class="logo">NeuroX</div>
-        <div class="top-nav-tabs">
-            <div class="nav-tab active tab-home" onclick="navigateToPage('home')" data-page="home">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
+    <!-- Revolutionary Sidebar Navigation -->
+    <div class="revolutionary-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-advanced">NeuroX Elite</div>
+            <div class="neural-pulse-indicator"></div>
+        </div>
+
+        <div class="sidebar-content">
+            <!-- Main Navigation -->
+            <div class="nav-section">
+                <div class="section-title">Core Modules</div>
+                <div class="nav-item active" onclick="navigateToPage('home')" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Neural Hub</span>
+                    <div class="activity-dot"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('dashboard')" data-page="dashboard">
+                    <i class="fas fa-brain"></i>
+                    <span>Brain Monitor</span>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('challenges')" data-page="challenges">
+                    <i class="fas fa-trophy"></i>
+                    <span>Elite Challenges</span>
+                    <div class="challenge-count">3</div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('research')" data-page="research">
+                    <i class="fas fa-flask"></i>
+                    <span>Research Lab</span>
+                    <div class="research-status active"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('memory')" data-page="memory">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>Memory Palace</span>
+                    <div class="progress-ring"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('winners')" data-page="winners">
+                    <i class="fas fa-crown"></i>
+                    <span>Champions</span>
+                    <div class="champion-badge"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('focus')" data-page="focus">
+                    <i class="fas fa-bullseye"></i>
+                    <span>Zen Studio</span>
+                    <div class="meditation-glow"></div>
+                </div>
             </div>
-            <div class="nav-tab tab-dashboard" onclick="navigateToPage('dashboard')" data-page="dashboard">
-                <i class="fas fa-brain"></i>
-                <span>Dashboard</span>
+
+            <!-- AI Assistant Section -->
+            <div class="ai-assistant-section">
+                <div class="section-title">ARIA Assistant</div>
+                <div class="ai-avatar" id="ariaAvatar">
+                    <div class="ai-core"></div>
+                    <div class="ai-rings"></div>
+                </div>
+                <div class="ai-status">Neural patterns: Optimal</div>
+                <div class="ai-recommendation" id="aiRecommendation">
+                    "Ready for advanced training session"
+                </div>
             </div>
-            <div class="nav-tab tab-challenges" onclick="navigateToPage('challenges')" data-page="challenges">
-                <i class="fas fa-trophy"></i>
-                <span>Challenges</span>
+
+            <!-- Biometric Monitor -->
+            <div class="biometric-section">
+                <div class="section-title">Live Metrics</div>
+                <div class="biometric-grid">
+                    <div class="metric-item">
+                        <i class="fas fa-heartbeat heart-rate-monitor"></i>
+                        <span id="heartRate">72 BPM</span>
+                    </div>
+                    <div class="metric-item">
+                        <i class="fas fa-brain"></i>
+                        <span id="focusLevel">87%</span>
+                    </div>
+                    <div class="stress-indicator">
+                        <div class="stress-level" style="left: 25%;"></div>
+                    </div>
+                </div>
             </div>
-            <div class="nav-tab tab-sleep" onclick="navigateToPage('sleep')" data-page="sleep">
-                <i class="fas fa-moon"></i>
-                <span>Sleep</span>
+        </div>
+
+        <div class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+    </div>
+
+    <!-- Top Header with Neural Network Background -->
+    <div class="elite-header">
+        <div class="neural-network-bg">
+            <div class="floating-particles"></div>
+        </div>
+        <div class="header-content">
+            <div class="session-info">
+                <span class="session-type">Elite Training Session</span>
+                <span class="session-time" id="sessionTimer">00:00</span>
             </div>
-            <div class="nav-tab tab-focus" onclick="navigateToPage('focus')" data-page="focus">
-                <i class="fas fa-bullseye"></i>
-                <span>Focus</span>
+            <div class="performance-meter">
+                <svg width="200" height="100">
+                    <defs>
+                        <linearGradient id="performanceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#4ecdc4;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#45b7d1;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path class="meter-arc" d="M 20 80 A 80 80 0 0 1 180 80" />
+                    <path class="meter-progress" d="M 20 80 A 80 80 0 0 1 180 80" stroke-dasharray="251" stroke-dashoffset="50" />
+                </svg>
+                <div class="performance-text">Neural Efficiency: 87%</div>
             </div>
         </div>
     </div>
@@ -3261,7 +3346,7 @@
         function expandSleepTips() {
             console.log('Expanding sleep tips');
             alert('Sleep tips expanded!');
-            showToast("�� Sleep tips expanded!");
+            showToast("💡 Sleep tips expanded!");
         }
 
         function closeSleepTips(button) {
@@ -3431,7 +3516,7 @@
                     display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
                     animation: ${technique === 'breathwork' ? 'breathingPulse 4s ease-in-out infinite' : 'pulse 3s ease-in-out infinite'};
                 ">
-                    ${technique === 'breathwork' ? '🫁' : '🧘‍♀️'}
+                    ${technique === 'breathwork' ? '🫁' : '🧘‍♀���'}
                 </div>
                 <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem;">
                     <button onclick="startMeditationSession('${technique}')" style="
