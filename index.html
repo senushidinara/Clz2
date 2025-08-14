@@ -1785,9 +1785,39 @@
         }
 
         .nav-item i {
-            margin-right: 1rem;
-            font-size: 1.2rem;
-            width: 20px;
+            margin-right: 1.2rem;
+            font-size: 1.4rem;
+            width: 24px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover i {
+            transform: scale(1.2) rotate(5deg);
+            text-shadow: 0 0 15px rgba(138, 43, 226, 0.8);
+        }
+
+        .nav-item.active i {
+            transform: scale(1.15);
+            text-shadow: 0 0 20px rgba(138, 43, 226, 1);
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1.15); }
+            50% { transform: scale(1.25); }
+        }
+
+        .nav-item span {
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover span {
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .activity-dot {
@@ -1849,7 +1879,7 @@
         }
 
         .champion-badge::before {
-            content: '👑';
+            content: '���';
             position: absolute;
             top: -2px;
             left: -1px;
@@ -4812,7 +4842,7 @@
                         </div>
                     `;
                     createConfetti();
-                    showSoundEffect('🧘‍���️ MEDITATION COMPLETE!');
+                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
                 }
             }, 1000);
         }
