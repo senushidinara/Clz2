@@ -3544,7 +3544,7 @@
             initializeAIAssistant();
             createFloatingParticles();
             initializeBiometricMonitoring();
-            console.log('��� Advanced features initialized');
+            console.log('🚀 Advanced features initialized');
         }
 
         // Sidebar Toggle Function
@@ -3730,7 +3730,7 @@
         }
 
         function showMemoryStats() {
-            showToast('📊 Memory stats updated!');
+            showToast('��� Memory stats updated!');
         }
 
         // Floating Particles Animation
@@ -4309,9 +4309,80 @@
 
         function showBrainInfo(region) {
             console.log('Brain info:', region);
-            alert('Brain info: ' + region);
+
             const modal = document.getElementById('brainInfoModal');
-            if (modal) modal.classList.add('active');
+            const title = document.getElementById('brainRegionTitle');
+            const content = document.getElementById('brainRegionContent');
+
+            if (modal && title && content) {
+                const brainRegions = {
+                    memory: {
+                        title: '🧠 Memory Center',
+                        content: `
+                            <div style="line-height: 1.6;">
+                                <h4 style="color: var(--dashboard-color); margin-bottom: 1rem;">Hippocampus & Memory Networks</h4>
+                                <div style="background: rgba(185,224,216,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Current Status:</strong> Highly Active (94% efficiency)
+                                </div>
+                                <div style="background: rgba(185,224,216,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Function:</strong> Responsible for forming, storing, and retrieving memories. Critical for learning new information and spatial navigation.
+                                </div>
+                                <div style="background: rgba(185,224,216,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Training Impact:</strong> Your memory training has increased neural plasticity by 23% in this region over the past month.
+                                </div>
+                                <div style="background: rgba(241,196,15,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>💡 Recommendation:</strong> Continue with pattern recognition exercises. Consider advanced memory palace techniques.
+                                </div>
+                            </div>
+                        `
+                    },
+                    focus: {
+                        title: '🎯 Focus Control Center',
+                        content: `
+                            <div style="line-height: 1.6;">
+                                <h4 style="color: #36A2EB; margin-bottom: 1rem;">Prefrontal Cortex & Attention Networks</h4>
+                                <div style="background: rgba(54,162,235,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Current Status:</strong> Peak Performance (87% sustained attention)
+                                </div>
+                                <div style="background: rgba(54,162,235,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Function:</strong> Executive control, working memory, decision-making, and sustained attention.
+                                </div>
+                                <div style="background: rgba(54,162,235,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Training Impact:</strong> Focus training has enhanced cognitive control networks by 18%.
+                                </div>
+                                <div style="background: rgba(46,204,113,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>💡 Recommendation:</strong> Excellent progress! Try advanced dual-task challenges to further enhance cognitive flexibility.
+                                </div>
+                            </div>
+                        `
+                    },
+                    emotion: {
+                        title: '❤️ Emotional Processing Center',
+                        content: `
+                            <div style="line-height: 1.6;">
+                                <h4 style="color: #FF6384; margin-bottom: 1rem;">Limbic System & Emotional Networks</h4>
+                                <div style="background: rgba(255,99,132,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Current Status:</strong> Balanced (82% emotional regulation)
+                                </div>
+                                <div style="background: rgba(255,99,132,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Function:</strong> Processing emotions, stress response, and emotional memory formation.
+                                </div>
+                                <div style="background: rgba(255,99,132,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>Training Impact:</strong> Meditation practices have improved emotional stability by 15%.
+                                </div>
+                                <div style="background: rgba(142,68,173,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                                    <strong>💡 Recommendation:</strong> Continue mindfulness practices. Consider loving-kindness meditation for enhanced emotional well-being.
+                                </div>
+                            </div>
+                        `
+                    }
+                };
+
+                const regionData = brainRegions[region] || brainRegions.memory;
+                title.textContent = regionData.title;
+                content.innerHTML = regionData.content;
+                modal.classList.add('active');
+            }
         }
 
         // Enhanced Meditation Background Functions
