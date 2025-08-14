@@ -3653,32 +3653,46 @@
         }
 
         // Memory Challenge Functions
-        function startMemoryChallenge() {
-            console.log('Starting advanced memory challenge');
+        window.startMemoryChallenge = function() {
+            console.log('🧠 Starting advanced memory challenge');
+
             const matrix = document.getElementById('memoryMatrix');
+            if (!matrix) {
+                showToast("❌ Memory challenge unavailable");
+                return;
+            }
+
             const cells = matrix.querySelectorAll('.pattern-cell');
+            if (cells.length === 0) {
+                showToast("❌ Memory game not ready");
+                return;
+            }
 
             // Flash pattern sequence
             const sequence = [];
             const sequenceLength = 3 + Math.floor(Math.random() * 5);
 
             for (let i = 0; i < sequenceLength; i++) {
-                sequence.push(Math.floor(Math.random() * 16));
+                sequence.push(Math.floor(Math.random() * cells.length));
             }
+
+            showToast(`🎯 Watch sequence of ${sequenceLength} items`);
 
             // Show sequence
             cells.forEach(cell => cell.style.opacity = '0.3');
 
             sequence.forEach((index, step) => {
                 setTimeout(() => {
-                    cells[index].classList.add('active');
-                    setTimeout(() => {
-                        cells[index].classList.remove('active');
-                        if (step === sequence.length - 1) {
-                            cells.forEach(cell => cell.style.opacity = '1');
-                            startMemoryInput(sequence);
-                        }
-                    }, 800);
+                    if (cells[index]) {
+                        cells[index].classList.add('active');
+                        setTimeout(() => {
+                            cells[index].classList.remove('active');
+                            if (step === sequence.length - 1) {
+                                cells.forEach(cell => cell.style.opacity = '1');
+                                startMemoryInput(sequence);
+                            }
+                        }, 800);
+                    }
                 }, step * 1000);
             });
         }
@@ -4632,7 +4646,7 @@
                         </div>
                     `;
                     createConfetti();
-                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
+                    showSoundEffect('���‍♀️ MEDITATION COMPLETE!');
                 }
             }, 1000);
         }
