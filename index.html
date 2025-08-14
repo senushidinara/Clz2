@@ -4094,28 +4094,42 @@
             if (modal) modal.classList.add('active');
         }
 
-        // Meditation Functions
+        // Enhanced Meditation Background Functions
         function changeMeditationBg(bgType) {
             console.log('Changing meditation background to:', bgType);
 
             // Hide all backgrounds
-            const backgrounds = ['natureBg', 'oceanBg', 'mountainBg'];
-            backgrounds.forEach(bgId => {
-                const bg = document.getElementById(bgId);
-                if (bg) bg.style.display = 'none';
-            });
+            const natureBg = document.getElementById('natureBg');
+            const oceanBg = document.getElementById('oceanBg');
+            const mountainBg = document.getElementById('mountainBg');
+
+            if (natureBg) natureBg.style.display = 'none';
+            if (oceanBg) oceanBg.style.display = 'none';
+            if (mountainBg) mountainBg.style.display = 'none';
 
             // Show selected background
-            const selectedBg = document.getElementById(bgType + 'Bg');
-            if (selectedBg) selectedBg.style.display = 'block';
+            switch(bgType) {
+                case 'nature':
+                    if (natureBg) natureBg.style.display = 'block';
+                    break;
+                case 'ocean':
+                    if (oceanBg) oceanBg.style.display = 'block';
+                    break;
+                case 'mountain':
+                    if (mountainBg) mountainBg.style.display = 'block';
+                    break;
+            }
 
             // Update button states
             document.querySelectorAll('.bg-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.dataset.bg === bgType) btn.classList.add('active');
+                const btnBg = btn.getAttribute('data-bg');
+                if (btnBg === bgType) {
+                    btn.classList.add('active');
+                }
             });
 
-            showToast(`🌟 ${bgType.charAt(0).toUpperCase() + bgType.slice(1)} background activated`);
+            showToast(`🌄 ${bgType.charAt(0).toUpperCase() + bgType.slice(1)} meditation activated`);
         }
 
         function startMeditation(technique) {
@@ -4187,7 +4201,7 @@
                     background: 'linear-gradient(135deg, #81C784 0%, #A5D6A7 50%, #C8E6C9 100%)',
                     instructions: [
                         '👣 Feel each step',
-                        '🌬��� Sync with breathing',
+                        '🌬️ Sync with breathing',
                         '👀 Stay present',
                         '🧘‍♀️ Move mindfully'
                     ]
