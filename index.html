@@ -4224,63 +4224,77 @@
             }
         }
 
-        function trackSleep() {
-            console.log('Tracking sleep');
-            alert('Sleep tracking started!');
+        window.trackSleep = function() {
+            console.log('🌙 Tracking sleep');
             showToast("🌙 Sleep tracking started...");
+
+            // Simulate sleep tracking activation
+            setTimeout(() => {
+                showToast("📊 Sleep sensors activated");
+            }, 2000);
         }
 
-        function startFocusSession() {
-            console.log('Starting focus session');
+        window.startFocusSession = function() {
+            console.log('🎯 Starting focus session');
 
-            const timerText = document.getElementById('timerText');
-            const timerProgress = document.getElementById('timerProgress');
-            const button = event.target;
+            try {
+                const timerText = document.getElementById('timerText');
+                const timerProgress = document.getElementById('timerProgress');
+                const button = event.target;
 
-            if (!isTimerRunning) {
-                isTimerRunning = true;
-                button.innerHTML = '<i class="fas fa-pause"></i> Pause Session';
-                button.style.background = 'linear-gradient(45deg, #e74c3c, #c0392b)';
+                if (!timerText || !button) {
+                    showToast("❌ Timer not available");
+                    return;
+                }
 
-                showToast("🎯 Focus session started!");
+                if (!isTimerRunning) {
+                    isTimerRunning = true;
+                    button.innerHTML = '<i class="fas fa-pause"></i> Pause Session';
+                    button.style.background = 'linear-gradient(45deg, #e74c3c, #c0392b)';
 
-                focusTimer = setInterval(() => {
-                    focusTime--;
+                    showToast("🎯 Focus session started!");
 
-                    const minutes = Math.floor(focusTime / 60);
-                    const seconds = focusTime % 60;
-                    timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    focusTimer = setInterval(() => {
+                        focusTime--;
 
-                    // Update progress circle
-                    const totalTime = 25 * 60;
-                    const progress = ((totalTime - focusTime) / totalTime) * 565;
-                    if (timerProgress) {
-                        timerProgress.style.strokeDashoffset = 565 - progress;
-                    }
+                        const minutes = Math.floor(focusTime / 60);
+                        const seconds = focusTime % 60;
+                        timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-                    // Session complete
-                    if (focusTime <= 0) {
-                        clearInterval(focusTimer);
-                        isTimerRunning = false;
-                        button.innerHTML = '<i class="fas fa-play"></i> Begin Focus Session';
-                        button.style.background = 'var(--focus-color)';
-                        focusTime = 25 * 60;
-                        timerText.textContent = '25:00';
-                        if (timerProgress) timerProgress.style.strokeDashoffset = '565';
+                        // Update progress circle
+                        const totalTime = 25 * 60;
+                        const progress = ((totalTime - focusTime) / totalTime) * 565;
+                        if (timerProgress) {
+                            timerProgress.style.strokeDashoffset = 565 - progress;
+                        }
 
-                        createConfetti();
-                        showToast("🎉 Focus session completed! Great job!");
-                        showSoundEffect("🎯 SESSION COMPLETE!");
-                    }
-                }, 1000);
+                        // Session complete
+                        if (focusTime <= 0) {
+                            clearInterval(focusTimer);
+                            isTimerRunning = false;
+                            button.innerHTML = '<i class="fas fa-play"></i> Begin Focus Session';
+                            button.style.background = 'var(--focus-color)';
+                            focusTime = 25 * 60;
+                            timerText.textContent = '25:00';
+                            if (timerProgress) timerProgress.style.strokeDashoffset = '565';
 
-            } else {
-                // Pause session
-                clearInterval(focusTimer);
-                isTimerRunning = false;
-                button.innerHTML = '<i class="fas fa-play"></i> Resume Session';
-                button.style.background = 'var(--focus-color)';
-                showToast("⏸️ Focus session paused");
+                            createConfetti();
+                            showToast("🎉 Focus session completed! Great job!");
+                            if (window.showSoundEffect) showSoundEffect("🎯 SESSION COMPLETE!");
+                        }
+                    }, 1000);
+
+                } else {
+                    // Pause session
+                    clearInterval(focusTimer);
+                    isTimerRunning = false;
+                    button.innerHTML = '<i class="fas fa-play"></i> Resume Session';
+                    button.style.background = 'var(--focus-color)';
+                    showToast("��️ Focus session paused");
+                }
+            } catch (error) {
+                console.error('Focus session error:', error);
+                showToast("❌ Focus session failed to start");
             }
         }
 
