@@ -3997,21 +3997,27 @@
         function navigateToPage(page) {
             console.log('Navigating to:', page);
 
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            // Remove active from all nav items and pages
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 
-            const targetTab = document.querySelector(`.nav-tab[data-page="${page}"]`);
+            // Find and activate the target nav item and page
+            const targetNavItem = document.querySelector(`.nav-item[data-page="${page}"]`);
             const targetPage = document.getElementById(page);
 
-            if (targetTab && targetPage) {
-                targetTab.classList.add('active');
+            if (targetNavItem && targetPage) {
+                targetNavItem.classList.add('active');
                 targetPage.classList.add('active');
 
+                // Update background
                 const bg = document.getElementById('animatedBg');
                 if (bg) bg.className = `animated-bg bg-${page}`;
 
                 activeTab = page;
-                showToast(`Switched to ${page.charAt(0).toUpperCase() + page.slice(1)}`);
+                showToast(`📍 Navigated to ${page.charAt(0).toUpperCase() + page.slice(1)}`);
+            } else {
+                console.warn('Navigation target not found:', page);
+                showToast(`❌ Page "${page}" not found`);
             }
         }
 
