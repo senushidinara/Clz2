@@ -72,6 +72,39 @@
         .bg-memory { background: var(--memory-gradient); }
         .bg-winners { background: var(--winners-gradient); }
 
+        /* Sparkle Animation Keyframes */
+        @keyframes sparkle {
+            0%, 100% { 
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float-sparkle {
+            0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) translateX(5px) rotate(120deg); }
+            66% { transform: translateY(5px) translateX(-5px) rotate(240deg); }
+            100% { transform: translateY(0px) translateX(0px) rotate(360deg); }
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #FFD700;
+            font-size: 1.5rem;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        .floating-sparkle {
+            position: absolute;
+            color: #FFD700;
+            font-size: 0.8rem;
+            animation: float-sparkle 3s ease-in-out infinite;
+        }
+
         /* Revolutionary Sidebar */
         .revolutionary-sidebar {
             position: fixed;
@@ -90,6 +123,7 @@
         .sidebar-header {
             padding: 2.5rem 1.5rem;
             border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
         }
 
         .logo-advanced {
@@ -103,6 +137,37 @@
             text-align: center;
             animation: gradientShift 4s ease-in-out infinite;
             letter-spacing: 2px;
+            position: relative;
+        }
+
+        .logo-advanced::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            pointer-events: none;
+        }
+
+        /* Add sparkles around logo */
+        .logo-sparkles {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        .logo-sparkles:nth-child(2) {
+            top: 40px;
+            left: 10px;
+            animation-delay: 0.5s;
+        }
+
+        .logo-sparkles:nth-child(3) {
+            bottom: 10px;
+            right: 15px;
+            animation-delay: 1s;
         }
 
         @keyframes gradientShift {
@@ -187,6 +252,53 @@
         .status-indicator.online {
             background: #00ff00;
             box-shadow: 0 0 10px #00ff00;
+        }
+
+        /* ARIA Assistant Section */
+        .aria-assistant {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.2));
+            border-radius: 16px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .aria-assistant::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: rotate 8s linear infinite;
+            z-index: 1;
+        }
+
+        .aria-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .aria-title {
+            color: #FFD700;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .aria-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Main Content */
@@ -417,7 +529,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.4;
+            opacity: 0.8;
             z-index: -1;
         }
 
@@ -588,13 +700,51 @@
             100% { transform: scale(1); }
         }
 
-        /* Zen Studio Enhanced */
+        /* Enhanced Zen Studio / Meditation */
         .meditation-container {
             position: relative;
-            height: 300px;
-            border-radius: 12px;
+            height: 400px;
+            border-radius: 20px;
             overflow: hidden;
             margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .meditation-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 1s ease;
+        }
+
+        .meditation-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .meditation-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .meditation-info {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
         }
 
         .meditation-controls {
@@ -602,6 +752,36 @@
             justify-content: center;
             gap: 1rem;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meditation-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .meditation-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .meditation-btn.active {
+            background: linear-gradient(45deg, #8A2BE2, #FF6EC7);
+            color: white;
+        }
+
+        .meditation-techniques-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .meditation-card {
@@ -612,12 +792,49 @@
             border: 2px solid rgba(255,255,255,0.5);
             position: relative;
             overflow: hidden;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .meditation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .meditation-card:hover::before {
+            transform: translateX(100%);
         }
 
         .meditation-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            filter: brightness(1.1);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: #8A2BE2;
+        }
+
+        .technique-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .technique-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .technique-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         /* Responsive Design */
@@ -649,6 +866,15 @@
             .memory-palace-grid {
                 grid-template-columns: 1fr;
             }
+
+            .meditation-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .meditation-techniques-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Animations */
@@ -659,7 +885,7 @@
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.9; }
         }
 
         @keyframes float {
@@ -677,6 +903,14 @@
             0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
             50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
         }
+
+        /* Clear Image Overlay */
+        .clear-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.2), rgba(138,43,226,0.3));
+            backdrop-filter: blur(1px);
+        }
     </style>
 </head>
 <body>
@@ -686,7 +920,12 @@
     <!-- Revolutionary Sidebar Navigation -->
     <div class="revolutionary-sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="logo-advanced">NeuroX Elite</div>
+            <div class="logo-advanced">
+                NeuroX Elite
+                <div class="sparkle logo-sparkles">✨</div>
+                <div class="sparkle logo-sparkles">⭐</div>
+                <div class="sparkle logo-sparkles">💫</div>
+            </div>
         </div>
 
         <div class="sidebar-content">
@@ -734,6 +973,23 @@
                     <div class="status-indicator online"></div>
                 </div>
             </div>
+
+            <!-- Enhanced ARIA Assistant with Sparkles -->
+            <div class="aria-assistant">
+                <div class="aria-content">
+                    <div class="aria-title">
+                        ✨ ARIA Assistant ✨
+                        <div class="floating-sparkle" style="top: -5px; right: 10px;">💫</div>
+                        <div class="floating-sparkle" style="top: 5px; left: 5px; animation-delay: 1s;">⭐</div>
+                        <div class="floating-sparkle" style="bottom: 0px; right: 25px; animation-delay: 2s;">✨</div>
+                    </div>
+                    <div class="aria-text">
+                        Your intelligent neural companion ready to optimize your cognitive performance 🧠
+                        <br><br>
+                        <strong>Status:</strong> <span style="color: #00ff00;">● Online & Active</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -741,14 +997,18 @@
     <div class="main-content" id="mainContent">
         <!-- Home Page -->
         <div class="page active" id="home">
-            <div class="video-container" style="height: 300px;">
+            <div class="video-container" style="height: 350px;">
                 <video autoplay muted loop class="video-bg">
-                    <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F4bb395ff4afe41e689c601e8bf78dbeb?alt=media&token=d6b92c3a-2be8-4ee0-8cc8-1c215d8fa0f9&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                    <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fb9f6a139da264c7699ead061b31efebb?alt=media&token=8fb02c27-6177-41c3-8750-dee347afe30e&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                 </video>
-                <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(167,199,231,0.8), rgba(155,184,224,0.7)); display: flex; align-items: center; justify-content: center;">
+                <div class="clear-image-overlay"></div>
+                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 3;">
                     <div style="text-align: center; color: white;">
-                        <h1 style="font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Welcome to NeuroX Elite</h1>
-                        <p style="font-size: 1.2rem;">Advanced cognitive training for peak mental performance</p>
+                        <h1 style="font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); font-weight: 900;">Welcome to NeuroX Elite</h1>
+                        <p style="font-size: 1.4rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">Advanced cognitive training for peak mental performance</p>
+                        <div class="floating-sparkle" style="top: 20%; left: 20%; animation-delay: 0.5s;">✨</div>
+                        <div class="floating-sparkle" style="top: 30%; right: 25%; animation-delay: 1.5s;">⭐</div>
+                        <div class="floating-sparkle" style="bottom: 25%; left: 30%; animation-delay: 2.5s;">💫</div>
                     </div>
                 </div>
             </div>
@@ -824,7 +1084,7 @@
                 <h2>🧠 Advanced Brain Monitor</h2>
                 <div style="position: relative; margin: 2rem 0;">
                     <video autoplay muted loop style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; opacity: 0.3;">
-                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F4bb395ff4afe41e689c601e8bf78dbeb?alt=media&token=d6b92c3a-2be8-4ee0-8cc8-1c215d8fa0f9&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fb2b3c4fae48840799ea69501c3699e3a?alt=media&token=9fce40ce-125f-4503-9ed8-d0373e4942ff&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                     </video>
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column;">
                         <h3 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); margin-bottom: 1rem;">Real-time Neural Analysis</h3>
@@ -857,7 +1117,7 @@
                     </div>
                     
                     <div class="nft-card locked" onclick="viewNFT('elite-trainer')">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🚀🏆</div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🚀��</div>
                         <h4 style="color: #3498db; margin-bottom: 0.5rem;">Elite Trainer NFT</h4>
                         <p style="color: #666; font-size: 0.9rem;">Unlocks:</p>
                         <ul style="text-align: left; color: #666; font-size: 0.9rem;">
@@ -1021,7 +1281,7 @@
                 <h2>🌙 Sleep & Recovery Optimization</h2>
                 <div style="position: relative; margin: 2rem 0;">
                     <video autoplay muted loop style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; opacity: 0.5;">
-                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F06e44e9af33b4ba390af4dd1fcf2d5df?alt=media&token=6b90d15e-3d1b-4e4c-924a-c0c5b6e5a5a5&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F9723573faaf34cb7923016d6f32338ef?alt=media&token=7bd6c3ed-5e75-4104-85b1-6b3be18f3e6b&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                     </video>
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
                         <div style="text-align: center; color: white;">
@@ -1050,7 +1310,7 @@
                 <div class="card interactive-element" onclick="startBreathingSession()">
                     <div style="position: relative; overflow: hidden;">
                         <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 1;">
-                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F2c8c8ea6e2bf4ee090b0de5a2e3d3c3c?alt=media&token=8f5a1b9d-3e2a-4b5c-9d8e-7f6a5b4c3d2e&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Ffbcb0f1dc9b845d5ae00ca5dc94f185c?alt=media&token=7f0a5c3c-a127-4132-9e9f-1769d62efe7c&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                         </video>
                         <div style="position: relative; z-index: 2; text-align: center;">
                             <div style="font-size: 3rem; margin-bottom: 1rem;">🫁</div>
@@ -1063,7 +1323,7 @@
                 <div class="card interactive-element" onclick="startYogaSession()">
                     <div style="position: relative; overflow: hidden;">
                         <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 1;">
-                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F3d9d9eb7f3cf4ef191b1ef6b3f4e4d4d?alt=media&token=9g6b2c0e-4f3b-5c6d-0e9f-8g7b6c5d4e3f&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F7a1ae90fc24c463e928465e97169d034?alt=media&token=b56e3276-3534-45af-a7c4-73e26b879a6d&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                         </video>
                         <div style="position: relative; z-index: 2; text-align: center;">
                             <div style="font-size: 3rem; margin-bottom: 1rem;">🧘‍♀️</div>
@@ -1076,7 +1336,7 @@
                 <div class="card interactive-element" onclick="openGardenEnvironment()">
                     <div style="position: relative; overflow: hidden;">
                         <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 1;">
-                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fa6cd1d73d2ad48afafbce2ee93ffae7b?alt=media&token=31bac21d-6f86-4661-ac6c-7505a90cdc95&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F7f8eab4a7ca7488fa04fe081ea6fc328?alt=media&token=0cf2907d-2f7d-4cb7-a7ef-0f3319889edc&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                         </video>
                         <div style="position: relative; z-index: 2; text-align: center;">
                             <div style="font-size: 3rem; margin-bottom: 1rem;">🌿</div>
@@ -1089,7 +1349,7 @@
                 <div class="card interactive-element" onclick="openSeaEnvironment()">
                     <div style="position: relative; overflow: hidden;">
                         <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 1;">
-                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F7f8e9d0c1b2a3d4e5f6g7h8i9j0k1l2m?alt=media&token=4h5i6j7k-8l9m-0n1o-2p3q-4r5s6t7u8v9w&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F05ada447d198407e81b7f9955188ff28?alt=media&token=4ef1df49-f26f-40cb-b116-fcaf7e4cd4d0&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                         </video>
                         <div style="position: relative; z-index: 2; text-align: center;">
                             <div style="font-size: 3rem; margin-bottom: 1rem;">🌊</div>
@@ -1105,127 +1365,159 @@
         <div class="page" id="focus">
             <div class="card">
                 <h2>🧘‍♀️ Zen Studio - Advanced Meditation</h2>
+                
+                <!-- Dynamic Video Background Environment Changer -->
                 <div class="meditation-container">
-                    <!-- Dynamic Video Background Environment Changer -->
-                    <div class="nature-bg active" id="natureBg" style="
-                        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                        background: linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #32CD32 100%);
-                        animation: float 8s ease-in-out infinite;
-                    ">
-                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
-                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fa6cd1d73d2ad48afafbce2ee93ffae7b?alt=media&token=31bac21d-6f86-4661-ac6c-7505a90cdc95&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                    <!-- Nature Environment -->
+                    <div class="meditation-bg" id="natureBg" style="opacity: 1;">
+                        <video autoplay muted loop>
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F86f4ecf1c68747f5937cf270b42f6ae9?alt=media&token=23fb442c-2a58-47ef-9e8d-feb40cfa0f24&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                         </video>
-                        <!-- Floating elements -->
-                        <div style="position: absolute; top: 10%; left: 10%; font-size: 2rem; animation: float 6s ease-in-out infinite;">🌲</div>
-                        <div style="position: absolute; top: 20%; right: 15%; font-size: 1.5rem; animation: float 8s ease-in-out infinite reverse;">🦋</div>
-                        <div style="position: absolute; bottom: 20%; left: 20%; font-size: 2rem; animation: float 7s ease-in-out infinite;">🌸</div>
+                    </div>
+                    
+                    <!-- Ocean Environment -->
+                    <div class="meditation-bg" id="oceanBg" style="opacity: 0;">
+                        <video autoplay muted loop>
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F648c8a7e9a2a482684dfe98aa42e6984?alt=media&token=631bf647-9fd8-4acd-8dd5-f6cc33b199da&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                    </div>
+                    
+                    <!-- Mountain Environment -->
+                    <div class="meditation-bg" id="mountainBg" style="opacity: 0;">
+                        <video autoplay muted loop>
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Ffe6941bd0dbe40e3aed36331dd4f5e93?alt=media&token=23e02cc3-0528-4e93-8b43-f33f95358ac2&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                    </div>
+                    
+                    <!-- Desert Environment -->
+                    <div class="meditation-bg" id="desertBg" style="opacity: 0;">
+                        <video autoplay muted loop>
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F2ccf5f4c2b53480aab31a7b1c317fc4a?alt=media&token=0377f598-9b58-4c42-b698-8a0fdf4638b7&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                    </div>
+                    
+                    <!-- Forest Environment -->
+                    <div class="meditation-bg" id="forestBg" style="opacity: 0;">
+                        <video autoplay muted loop>
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fa8c0ae6ede6f411f81955d2be11e7ce8?alt=media&token=314bdec3-1ab8-4fed-9c00-86edafd7d071&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                    </div>
+                    
+                    <!-- Space Environment -->
+                    <div class="meditation-bg" id="spaceBg" style="opacity: 0;">
+                        <video autoplay muted loop>
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F2be16d25082f4dd493c0c4f6b06c85d8?alt=media&token=caeb3ef5-ebdd-4983-8ca5-b313871db2ec&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
                     </div>
 
-                    <div class="ocean-bg" id="oceanBg" style="
-                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
-                        background: linear-gradient(135deg, #4682B4 0%, #87CEEB 50%, #B0E0E6 100%);
-                    ">
-                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
-                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F7f8e9d0c1b2a3d4e5f6g7h8i9j0k1l2m?alt=media&token=4h5i6j7k-8l9m-0n1o-2p3q-4r5s6t7u8v9w&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
-                        </video>
-                        <div style="position: absolute; top: 30%; left: 30%; color: white; font-size: 1.5rem; animation: float 10s linear infinite;">🐚</div>
-                        <div style="position: absolute; bottom: 30%; right: 20%; color: white; font-size: 1.2rem; animation: float 12s linear infinite reverse;">🌊</div>
-                    </div>
-
-                    <div class="mountain-bg" id="mountainBg" style="
-                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
-                        background: linear-gradient(135deg, #4169E1 0%, #9370DB 30%, #8B4513 70%, #2F4F4F 100%);
-                    ">
-                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
-                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t?alt=media&token=5i6j7k8l-9m0n-1o2p-3q4r-5s6t7u8v9w0x&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
-                        </video>
-                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰️</div>
-                        <div style="position: absolute; top: 20%; right: 30%; color: white; font-size: 1rem; animation: pulse 2s ease-in-out infinite;">✨</div>
+                    <div class="meditation-overlay">
+                        <div class="meditation-info">
+                            <h3 style="font-size: 2rem; margin-bottom: 1rem;">🌿 Nature Sanctuary</h3>
+                            <p style="font-size: 1.1rem; opacity: 0.9;">Immerse yourself in tranquil natural environments</p>
+                            <div class="floating-sparkle" style="top: 10px; right: 20px;">✨</div>
+                            <div class="floating-sparkle" style="bottom: 10px; left: 20px; animation-delay: 1s;">⭐</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="meditation-controls">
-                    <button onclick="changeMeditationBg('nature')" class="btn btn-focus" style="background: linear-gradient(45deg, #32CD32, #98FB98);">
+                    <button class="meditation-btn active" onclick="changeMeditationBg('nature')" id="nature-btn">
                         🌿 Nature
                     </button>
-                    <button onclick="changeMeditationBg('ocean')" class="btn btn-dashboard" style="background: linear-gradient(45deg, #4682B4, #87CEEB);">
+                    <button class="meditation-btn" onclick="changeMeditationBg('ocean')" id="ocean-btn">
                         🌊 Ocean
                     </button>
-                    <button onclick="changeMeditationBg('mountain')" class="btn btn-challenges" style="background: linear-gradient(45deg, #4169E1, #9370DB);">
+                    <button class="meditation-btn" onclick="changeMeditationBg('mountain')" id="mountain-btn">
                         ⛰️ Mountain
+                    </button>
+                    <button class="meditation-btn" onclick="changeMeditationBg('desert')" id="desert-btn">
+                        🏜️ Desert
+                    </button>
+                    <button class="meditation-btn" onclick="changeMeditationBg('forest')" id="forest-btn">
+                        🌲 Forest
+                    </button>
+                    <button class="meditation-btn" onclick="changeMeditationBg('space')" id="space-btn">
+                        🌌 Space
                     </button>
                 </div>
             </div>
 
-            <!-- Enhanced Meditation Techniques -->
+            <!-- Enhanced Meditation Techniques with Videos -->
             <div class="card">
                 <h3>🧘‍♀️ Interactive Meditation Techniques</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                    
-                    <div class="meditation-card interactive-element" onclick="startMeditation('breathwork')" style="
-                        background: linear-gradient(135deg, rgba(255,182,193,0.8), rgba(255,218,185,0.8));
-                        border: 2px solid rgba(255,182,193,0.5);
-                    ">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🫁</div>
-                            <h4 style="color: #8B4513; margin-bottom: 1rem;">4-7-8 Breathing</h4>
-                            <p style="color: #654321; font-size: 0.9rem;">Deep relaxation breathing technique</p>
+                <p style="color: #666; margin-bottom: 2rem;">Choose from our collection of guided meditation practices with immersive visuals</p>
+                
+                <div class="meditation-techniques-grid">
+                    <div class="meditation-card" onclick="startMeditation('breathwork')" style="background: linear-gradient(135deg, rgba(255,182,193,0.9), rgba(255,218,185,0.9));">
+                        <div style="position: relative; overflow: hidden; margin: -2rem -2rem 1rem -2rem; height: 120px;">
+                            <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                                <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F0bf419db45c449c8a49e2a7d68abb7e4?alt=media&token=3d2595e8-007e-4a8f-a2cf-22601525fe7c&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            </video>
+                            <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(255,182,193,0.8); padding: 0.3rem 0.6rem; border-radius: 8px; font-size: 0.8rem;">5-10 min</div>
                         </div>
+                        <div class="technique-icon">🫁</div>
+                        <h4 class="technique-title" style="color: #8B4513;">4-7-8 Breathing</h4>
+                        <p class="technique-description">Deep relaxation breathing technique for stress relief and better sleep</p>
                     </div>
 
-                    <div class="meditation-card interactive-element" onclick="startMeditation('bodyscan')" style="
-                        background: linear-gradient(135deg, rgba(173,216,230,0.8), rgba(175,238,238,0.8));
-                        border: 2px solid rgba(173,216,230,0.5);
-                    ">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🧘‍♂️</div>
-                            <h4 style="color: #4682B4; margin-bottom: 1rem;">Body Scan</h4>
-                            <p style="color: #2F4F4F; font-size: 0.9rem;">Progressive muscle relaxation</p>
+                    <div class="meditation-card" onclick="startMeditation('bodyscan')" style="background: linear-gradient(135deg, rgba(173,216,230,0.9), rgba(175,238,238,0.9));">
+                        <div style="position: relative; overflow: hidden; margin: -2rem -2rem 1rem -2rem; height: 120px;">
+                            <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                                <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fddca72e52a7440c692960adc094de9cb?alt=media&token=7b94b210-9fa1-4542-b4d3-264d116b95ef&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            </video>
+                            <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(173,216,230,0.8); padding: 0.3rem 0.6rem; border-radius: 8px; font-size: 0.8rem;">15-20 min</div>
                         </div>
+                        <div class="technique-icon">🧘‍♂️</div>
+                        <h4 class="technique-title" style="color: #4682B4;">Body Scan</h4>
+                        <p class="technique-description">Progressive muscle relaxation and body awareness meditation</p>
                     </div>
 
-                    <div class="meditation-card interactive-element" onclick="startMeditation('mindfulness')" style="
-                        background: linear-gradient(135deg, rgba(221,160,221,0.8), rgba(238,130,238,0.8));
-                        border: 2px solid rgba(221,160,221,0.5);
-                    ">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🌸</div>
-                            <h4 style="color: #8B008B; margin-bottom: 1rem;">Mindfulness</h4>
-                            <p style="color: #663366; font-size: 0.9rem;">Present moment awareness</p>
+                    <div class="meditation-card" onclick="startMeditation('mindfulness')" style="background: linear-gradient(135deg, rgba(221,160,221,0.9), rgba(238,130,238,0.9));">
+                        <div style="position: relative; overflow: hidden; margin: -2rem -2rem 1rem -2rem; height: 120px;">
+                            <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                                <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F233fd7531b1b498b920eff055287d081?alt=media&token=e85ca20c-40f5-4664-b57c-a65761e88b55&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            </video>
+                            <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(221,160,221,0.8); padding: 0.3rem 0.6rem; border-radius: 8px; font-size: 0.8rem;">10-15 min</div>
                         </div>
+                        <div class="technique-icon">🌸</div>
+                        <h4 class="technique-title" style="color: #8B008B;">Mindfulness</h4>
+                        <p class="technique-description">Present moment awareness and mindful observation practice</p>
                     </div>
 
-                    <div class="meditation-card interactive-element" onclick="startMeditation('visualization')" style="
-                        background: linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,228,181,0.8));
-                        border: 2px solid rgba(255,215,0,0.5);
-                    ">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
-                            <h4 style="color: #B8860B; margin-bottom: 1rem;">Visualization</h4>
-                            <p style="color: #8B7500; font-size: 0.9rem;">Guided imagery for peace</p>
+                    <div class="meditation-card" onclick="startMeditation('visualization')" style="background: linear-gradient(135deg, rgba(255,215,0,0.9), rgba(255,228,181,0.9));">
+                        <div style="position: relative; overflow: hidden; margin: -2rem -2rem 1rem -2rem; height: 120px;">
+                            <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                                <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F06333c5dcc4f4f1eac59a4815339f3b3?alt=media&token=0476f7df-8e81-4972-bd61-7759bb8fc9c7&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            </video>
+                            <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(255,215,0,0.8); padding: 0.3rem 0.6rem; border-radius: 8px; font-size: 0.8rem;">12-18 min</div>
                         </div>
+                        <div class="technique-icon">✨</div>
+                        <h4 class="technique-title" style="color: #B8860B;">Visualization</h4>
+                        <p class="technique-description">Guided imagery and creative visualization for inner peace</p>
                     </div>
 
-                    <div class="meditation-card interactive-element" onclick="startMeditation('lovingkindness')" style="
-                        background: linear-gradient(135deg, rgba(255,192,203,0.8), rgba(255,182,193,0.8));
-                        border: 2px solid rgba(255,192,203,0.5);
-                    ">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">💝</div>
-                            <h4 style="color: #C71585; margin-bottom: 1rem;">Loving Kindness</h4>
-                            <p style="color: #8B1538; font-size: 0.9rem;">Compassion practice</p>
+                    <div class="meditation-card" onclick="startMeditation('lovingkindness')" style="background: linear-gradient(135deg, rgba(255,192,203,0.9), rgba(255,182,193,0.9));">
+                        <div style="position: relative; overflow: hidden; margin: -2rem -2rem 1rem -2rem; height: 120px;">
+                            <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                                <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fb3cfb0a72bae42218c58abbb46fb005b?alt=media&token=d8c0fae8-96c8-4913-9662-1a36f0a99a87&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            </video>
+                            <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(255,192,203,0.8); padding: 0.3rem 0.6rem; border-radius: 8px; font-size: 0.8rem;">15-25 min</div>
                         </div>
+                        <div class="technique-icon">💝</div>
+                        <h4 class="technique-title" style="color: #C71585;">Loving Kindness</h4>
+                        <p class="technique-description">Compassion and self-love meditation practice</p>
                     </div>
 
-                    <div class="meditation-card interactive-element" onclick="startMeditation('walking')" style="
-                        background: linear-gradient(135deg, rgba(152,251,152,0.8), rgba(144,238,144,0.8));
-                        border: 2px solid rgba(152,251,152,0.5);
-                    ">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🚶‍♀️</div>
-                            <h4 style="color: #228B22; margin-bottom: 1rem;">Walking Meditation</h4>
-                            <p style="color: #006400; font-size: 0.9rem;">Mindful movement</p>
+                    <div class="meditation-card" onclick="startMeditation('walking')" style="background: linear-gradient(135deg, rgba(152,251,152,0.9), rgba(144,238,144,0.9));">
+                        <div style="position: relative; overflow: hidden; margin: -2rem -2rem 1rem -2rem; height: 120px;">
+                            <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                                <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F780292101adf4333b4f34c2175c3c818?alt=media&token=e531d7ec-235f-4e81-826a-618ef8e86924&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                            </video>
+                            <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(152,251,152,0.8); padding: 0.3rem 0.6rem; border-radius: 8px; font-size: 0.8rem;">8-12 min</div>
                         </div>
+                        <div class="technique-icon">🚶‍♀️</div>
+                        <h4 class="technique-title" style="color: #228B22;">Walking Meditation</h4>
+                        <p class="technique-description">Mindful movement and walking meditation practice</p>
                     </div>
                 </div>
             </div>
@@ -1237,7 +1529,7 @@
                 <h2>🔬 Advanced Research Laboratory</h2>
                 <div style="position: relative; margin: 2rem 0;">
                     <video autoplay muted loop style="width: 100%; height: 250px; object-fit: cover; border-radius: 12px; opacity: 0.4;">
-                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F4bb395ff4afe41e689c601e8bf78dbeb?alt=media&token=d6b92c3a-2be8-4ee0-8cc8-1c215d8fa0f9&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F651533f38f8a40f29d59245f5e9ffc25?alt=media&token=3cfbc95e-ba1c-42fd-b66e-f22cf776cf0c&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
                     </video>
                     <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.3)); display: flex; align-items: center; justify-content: center;">
                         <div style="text-align: center; color: white;">
@@ -1325,7 +1617,7 @@
                     <div class="game-cell" data-index="4">💎</div>
                     <div class="game-cell" data-index="5">⭐</div>
                     <div class="game-cell" data-index="6">🚀</div>
-                    <div class="game-cell" data-index="7">💡</div>
+                    <div class="game-cell" data-index="7">����</div>
                     <div class="game-cell" data-index="8">🎨</div>
                     <div class="game-cell" data-index="9">🔬</div>
                     <div class="game-cell" data-index="10">🏆</div>
@@ -1398,6 +1690,7 @@
         let gameLevel = 1;
         let gameTime = 0;
         let gameTimer = null;
+        let currentMeditationBg = 'nature';
 
         // Navigation Function
         window.navigateToPage = function(page) {
@@ -1461,6 +1754,99 @@
             }
         };
 
+        // Enhanced Zen Studio Functions
+        window.changeMeditationBg = function(bgType) {
+            const environments = {
+                nature: { name: '🌿 Nature Sanctuary', bg: 'natureBg' },
+                ocean: { name: '🌊 Ocean Paradise', bg: 'oceanBg' },
+                mountain: { name: '⛰️ Mountain Peak', bg: 'mountainBg' },
+                desert: { name: '🏜️ Desert Oasis', bg: 'desertBg' },
+                forest: { name: '🌲 Enchanted Forest', bg: 'forestBg' },
+                space: { name: '🌌 Cosmic Space', bg: 'spaceBg' }
+            };
+
+            // Hide all backgrounds
+            Object.values(environments).forEach(env => {
+                const bg = document.getElementById(env.bg);
+                if (bg) bg.style.opacity = '0';
+            });
+
+            // Remove active from all buttons
+            document.querySelectorAll('.meditation-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected background
+            const targetBg = document.getElementById(environments[bgType].bg);
+            if (targetBg) {
+                targetBg.style.opacity = '1';
+                currentMeditationBg = bgType;
+            }
+
+            // Update active button
+            const targetBtn = document.getElementById(`${bgType}-btn`);
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
+
+            // Update meditation info
+            const info = document.querySelector('.meditation-info');
+            if (info) {
+                info.innerHTML = `
+                    <h3 style="font-size: 2rem; margin-bottom: 1rem;">${environments[bgType].name}</h3>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Immerse yourself in this tranquil environment</p>
+                    <div class="floating-sparkle" style="top: 10px; right: 20px;">✨</div>
+                    <div class="floating-sparkle" style="bottom: 10px; left: 20px; animation-delay: 1s;">⭐</div>
+                `;
+            }
+
+            showToast(`🌄 ${environments[bgType].name} meditation activated`);
+        };
+
+        window.startMeditation = function(technique) {
+            const techniques = {
+                breathwork: '4-7-8 Breathing Meditation',
+                bodyscan: 'Progressive Body Scan',
+                mindfulness: 'Mindfulness Practice',
+                visualization: 'Guided Visualization Journey',
+                lovingkindness: 'Loving Kindness Meditation',
+                walking: 'Mindful Walking Practice'
+            };
+
+            showToast(`🧘‍♀️ Starting ${techniques[technique]} session...`);
+            
+            // Add sparkle effect
+            createSparkleEffect();
+        };
+
+        // Sparkle Effect Function
+        function createSparkleEffect() {
+            const sparkles = ['✨', '⭐', '💫', '🌟'];
+            const container = document.body;
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = Math.random() * window.innerWidth + 'px';
+                    sparkle.style.top = Math.random() * window.innerHeight + 'px';
+                    sparkle.style.fontSize = '1.5rem';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.zIndex = '9999';
+                    sparkle.style.animation = 'sparkle 3s ease-out forwards';
+                    
+                    container.appendChild(sparkle);
+                    
+                    setTimeout(() => {
+                        if (sparkle.parentNode) {
+                            sparkle.parentNode.removeChild(sparkle);
+                        }
+                    }, 3000);
+                }, i * 200);
+            }
+        }
+
         // Game Functions
         window.startMemoryGame = function() {
             showGame('🧠 Memory Challenge', 'memory');
@@ -1497,7 +1883,6 @@
                 gameTime = 0;
                 updateGameStats();
                 startGameTimer();
-                
                 showToast(`🎮 ${title} started!`);
             }
         }
@@ -1766,7 +2151,7 @@
                     if (cell) {
                         cell.style.background = '#1abc9c';
                         cell.style.border = '3px solid #fff';
-                        cell.textContent = '����';
+                        cell.textContent = '✨';
 
                         setTimeout(() => {
                             cell.style.background = '#ecf0f1';
@@ -1880,7 +2265,8 @@
                                 text.textContent = 'COMPLETE';
                                 instructions.textContent = '🎉 Excellent! You completed the breathing exercise.';
                                 gameLevel++;
-                                showToast('🧘���♀️ Breathing exercise completed!');
+                                showToast('🧘‍♀️ Breathing exercise completed!');
+                                createSparkleEffect();
                             }
                         }, 2000);
                     }, 4000);
@@ -1900,6 +2286,7 @@
             };
             
             showToast(`🚪 Entering ${rooms[roomType]}`);
+            createSparkleEffect();
         };
 
         window.startMemoryChallenge = function() {
@@ -1959,6 +2346,7 @@
                 gameScore += 50;
                 gameLevel++;
                 updateGameStats();
+                createSparkleEffect();
             } else {
                 showToast('❌ Try again!');
             }
@@ -1980,6 +2368,7 @@
         // Brain Scan Function
         window.startBrainScan = function() {
             showToast('🧠 Starting neural analysis...');
+            createSparkleEffect();
 
             setTimeout(() => {
                 showToast('✅ Brain scan complete! Neural patterns optimal.');
@@ -1993,10 +2382,12 @@
 
         window.startBreathingSession = function() {
             showToast('🫁 Starting guided breathing session...');
+            createSparkleEffect();
         };
 
         window.startYogaSession = function() {
             showToast('🧘‍♀️ Starting yoga and meditation session...');
+            createSparkleEffect();
         };
 
         window.openGardenEnvironment = function() {
@@ -2005,46 +2396,6 @@
 
         window.openSeaEnvironment = function() {
             showToast('🌊 Opening ocean wave environment...');
-        };
-
-        // Zen Studio Functions
-        window.changeMeditationBg = function(bgType) {
-            const natureBg = document.getElementById('natureBg');
-            const oceanBg = document.getElementById('oceanBg');
-            const mountainBg = document.getElementById('mountainBg');
-
-            // Hide all backgrounds
-            if (natureBg) natureBg.style.display = 'none';
-            if (oceanBg) oceanBg.style.display = 'none';
-            if (mountainBg) mountainBg.style.display = 'none';
-
-            // Show selected background
-            switch(bgType) {
-                case 'nature':
-                    if (natureBg) natureBg.style.display = 'block';
-                    break;
-                case 'ocean':
-                    if (oceanBg) oceanBg.style.display = 'block';
-                    break;
-                case 'mountain':
-                    if (mountainBg) mountainBg.style.display = 'block';
-                    break;
-            }
-
-            showToast(`🌄 ${bgType.charAt(0).toUpperCase() + bgType.slice(1)} meditation activated`);
-        };
-
-        window.startMeditation = function(technique) {
-            const techniques = {
-                breathwork: '4-7-8 Breathing',
-                bodyscan: 'Body Scan Meditation',
-                mindfulness: 'Mindfulness Practice',
-                visualization: 'Visualization Journey',
-                lovingkindness: 'Loving Kindness Meditation',
-                walking: 'Walking Meditation'
-            };
-
-            showToast(`🧘‍♀️ Starting ${techniques[technique]} session...`);
         };
 
         // NFT Functions
@@ -2060,6 +2411,7 @@
 
         window.upgradeToPremium = function() {
             showToast('🌟 Premium upgrade options opened! Unlock exclusive NFT features.');
+            createSparkleEffect();
         };
 
         // Modal Functions
@@ -2079,6 +2431,29 @@
                 sidebarOpen = !sidebarOpen;
             }
         };
+
+        // Add floating sparkles periodically to ARIA assistant
+        function addAriaSparkles() {
+            const aria = document.querySelector('.aria-assistant');
+            if (aria) {
+                const sparkles = ['✨', '⭐', '💫'];
+                const sparkle = document.createElement('div');
+                sparkle.className = 'floating-sparkle';
+                sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                sparkle.style.position = 'absolute';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                
+                aria.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 3000);
+            }
+        }
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
@@ -2119,10 +2494,14 @@
                 }
             });
 
+            // Add periodic sparkles to ARIA assistant
+            setInterval(addAriaSparkles, 5000);
+
             // Success notification
             setTimeout(() => {
-                showToast('🎉 NeuroX Elite Ready! All features fully functional!');
-                console.log('✅ NEUROX ELITE - All systems operational!');
+                showToast('🎉 NeuroX Elite Ready! All systems enhanced with sparkles!');
+                console.log('✅ NEUROX ELITE - All systems operational with enhanced features!');
+                createSparkleEffect();
             }, 1000);
         });
     </script>
