@@ -3,35 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroX Elite - Advanced Cognitive Training & NFT Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>NeuroMind Pro - Advanced Cognitive Health Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
     <style>
         :root {
-            /* Enhanced Color Palette */
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --neural-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --nft-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            --holographic: linear-gradient(45deg, #ff6ec7, #36d1dc, #5b86e5, #a8edea);
+            /* Enhanced Color Palette with Better Readability */
+            --primary-blue: #2563eb;
+            --primary-teal: #059669;
+            --primary-purple: #7c3aed;
+            --accent-orange: #f59e0b;
             
-            /* Base Colors */
-            --white: #ffffff;
-            --black: #0a0a0f;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --neon-blue: #00d4ff;
-            --neon-purple: #b347d9;
-            --neon-pink: #ff1b6b;
-            --neon-green: #45ff4a;
+            /* Text Colors */
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-white: #ffffff;
+            --text-light: #f9fafb;
             
-            /* Advanced Shadows */
-            --glow-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-            --neural-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --holographic-shadow: 0 8px 32px rgba(255, 107, 199, 0.4);
+            /* Background Colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-dark: #1e293b;
+            --bg-darker: #0f172a;
+            
+            /* Glass Effects */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-dark: rgba(15, 23, 42, 0.8);
+            
+            /* Subtle Gradients */
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --gradient-secondary: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            
+            /* Shadows */
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -42,101 +53,43 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
-            color: var(--white);
+            background: linear-gradient(135deg, var(--bg-darker) 0%, #1e293b 50%, #334155 100%);
+            color: var(--text-white);
             overflow-x: hidden;
-            position: relative;
+            line-height: 1.6;
         }
 
-        /* Advanced Animated Background */
-        .quantum-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(179, 71, 217, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 27, 107, 0.1) 0%, transparent 50%);
-            animation: quantumShift 20s ease-in-out infinite;
-        }
-
-        .particle-field {
+        /* Background Elements */
+        .background-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            overflow: hidden;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
         }
 
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--neon-blue);
-            border-radius: 50%;
-            opacity: 0.7;
-            animation: particleFloat 10s linear infinite;
-        }
-
-        /* Glassmorphism UI */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow: var(--neural-shadow);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--glow-shadow);
-            border-color: var(--neon-blue);
-        }
-
-        /* Holographic Elements */
-        .holographic {
-            background: var(--holographic);
-            background-size: 400% 400%;
-            animation: holographicShimmer 3s ease-in-out infinite;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .neon-glow {
-            text-shadow: 
-                0 0 5px currentColor,
-                0 0 10px currentColor,
-                0 0 15px currentColor,
-                0 0 20px currentColor;
-            animation: neonPulse 2s ease-in-out infinite alternate;
-        }
-
-        /* Advanced Navigation */
-        .quantum-nav {
+        /* Navigation */
+        .main-nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 120px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(30px);
+            height: 80px;
+            background: var(--glass-dark);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
             z-index: 100;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 2rem;
-            animation: slideInFromTop 1s ease-out;
         }
 
-        .logo-container {
+        .logo-section {
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -144,40 +97,17 @@
 
         .logo {
             font-family: 'Orbitron', monospace;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 900;
-            background: var(--neural-gradient);
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: logoGlow 3s ease-in-out infinite;
         }
 
-        .neural-indicator {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--neon-blue);
-            border-radius: 50%;
-            position: relative;
-            animation: neuralSpin 4s linear infinite;
-        }
-
-        .neural-indicator::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            background: var(--neon-blue);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: neuralPulse 1s ease-in-out infinite;
-        }
-
-        .nav-tabs {
+        .nav-menu {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             background: var(--glass-bg);
             backdrop-filter: blur(15px);
             border-radius: 50px;
@@ -185,48 +115,58 @@
             border: 1px solid var(--glass-border);
         }
 
-        .nav-tab {
-            padding: 1rem 2rem;
+        .nav-button {
+            padding: 0.75rem 1.5rem;
             border: none;
             background: transparent;
-            color: var(--white);
+            color: var(--text-white);
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: 600;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
+            white-space: nowrap;
         }
 
-        .nav-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--neural-gradient);
-            transition: left 0.3s ease;
-            z-index: -1;
+        .nav-button:hover {
+            background: var(--glass-bg);
+            transform: translateY(-2px);
         }
 
-        .nav-tab.active::before,
-        .nav-tab:hover::before {
-            left: 0;
+        .nav-button.active {
+            background: var(--primary-blue);
+            color: white;
+            box-shadow: var(--shadow-soft);
         }
 
-        .nav-tab.active {
-            color: var(--white);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* Main Content */
         .main-content {
-            margin-top: 120px;
-            padding: 3rem 2rem;
+            margin-top: 80px;
+            padding: 2rem;
             max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
@@ -234,334 +174,215 @@
 
         .page {
             display: none;
-            animation: pageTransition 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .page.active {
             display: block;
         }
 
-        /* Enhanced Hero Section */
-        .quantum-hero {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards and Containers */
+        .glass-card {
+            background: var(--glass-dark);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .hero-section {
             text-align: center;
             padding: 4rem 0;
-            position: relative;
         }
 
         .hero-title {
             font-family: 'Orbitron', monospace;
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 900;
-            margin-bottom: 2rem;
-            background: var(--holographic);
-            background-size: 400% 400%;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: holographicShimmer 4s ease-in-out infinite;
-            line-height: 1.1;
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
             opacity: 0.9;
-            color: var(--neon-blue);
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
         }
 
-        /* NFT Section */
-        .nft-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .nft-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: pointer;
-        }
-
-        .nft-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--nft-gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-
-        .nft-card:hover::before {
-            opacity: 0.1;
-        }
-
-        .nft-card:hover {
-            transform: translateY(-10px) rotateY(5deg);
-            box-shadow: var(--holographic-shadow);
-            border-color: var(--neon-pink);
-        }
-
-        .nft-preview {
+        .hero-image {
             width: 100%;
-            height: 200px;
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
-            border-radius: 15px;
-            margin-bottom: 1rem;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            animation: nftGlow 3s ease-in-out infinite;
-        }
-
-        .nft-info {
-            padding: 1rem 0;
-        }
-
-        .nft-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--neon-blue);
-        }
-
-        .nft-price {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--neon-green);
-            text-shadow: 0 0 10px rgba(69, 255, 74, 0.5);
-        }
-
-        .nft-rarity {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.5rem 1rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 1px solid var(--glass-border);
-        }
-
-        /* 3D Brain Visualization */
-        .brain-3d-container {
-            position: relative;
-            height: 400px;
-            margin: 2rem 0;
-            border-radius: 20px;
-            overflow: hidden;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-        }
-
-        .neural-network-advanced {
-            position: relative;
+            max-width: 600px;
             height: 300px;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.1), transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(179, 71, 217, 0.1), transparent 50%);
-            border-radius: 15px;
-            overflow: hidden;
+            background: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fa88056c228e347a1a348b70690e8196c?format=webp&width=800') center/cover;
+            border-radius: 20px;
+            margin: 2rem auto;
+            box-shadow: var(--shadow-large);
         }
 
-        .neuron-advanced {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--neon-blue);
-            border-radius: 50%;
-            box-shadow: 0 0 15px currentColor;
-            animation: neuronPulseAdvanced 2s ease-in-out infinite;
-        }
-
-        .synapse {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            animation: synapseFlow 2s ease-in-out infinite;
-        }
-
-        /* Advanced Stats Display */
-        .stats-quantum {
+        /* Stats Grid */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
             margin: 3rem 0;
         }
 
-        .stat-quantum {
-            background: var(--glass-bg);
+        .stat-card {
+            background: var(--glass-dark);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 2rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
+            transition: transform 0.3s ease;
         }
 
-        .stat-quantum::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
-            animation: scanLine 3s ease-in-out infinite;
-        }
-
-        .stat-quantum:hover {
+        .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--glow-shadow);
         }
 
         .stat-number {
             font-family: 'Orbitron', monospace;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            background: var(--neural-gradient);
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 0.5rem;
-            animation: numberGlow 2s ease-in-out infinite;
         }
 
         .stat-label {
-            color: var(--neon-blue);
+            color: var(--text-light);
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Advanced Achievement System */
-        .achievement-quantum {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
             cursor: pointer;
-        }
-
-        .achievement-quantum.unlocked {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 30px rgba(69, 255, 74, 0.3);
-        }
-
-        .achievement-quantum.unlocked::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--nft-gradient);
-            opacity: 0.1;
-            animation: achievementGlow 2s ease-in-out infinite;
-        }
-
-        .achievement-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-            text-align: center;
-            filter: drop-shadow(0 0 10px rgba(69, 255, 74, 0.7));
-        }
-
-        /* Advanced Challenge Cards */
-        .challenge-quantum {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 1rem 0;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .challenge-quantum::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--neural-gradient);
-            opacity: 0;
             transition: all 0.3s ease;
-            z-index: -1;
+            text-decoration: none;
+            font-size: 0.95rem;
         }
 
-        .challenge-quantum:hover::before {
-            left: 0;
-            opacity: 0.1;
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
         }
 
-        .challenge-quantum:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--glow-shadow);
-            border-color: var(--neon-blue);
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
         }
 
-        /* Quantum Progress Bar */
-        .progress-quantum {
+        .btn-secondary {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+
+        .btn-accent {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-white);
+            border: 2px solid var(--glass-border);
+        }
+
+        .btn-outline:hover {
+            background: var(--glass-bg);
+        }
+
+        /* Activity Cards */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .activity-card {
+            background: var(--glass-dark);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .activity-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .activity-content {
+            padding: 1.5rem;
+        }
+
+        .activity-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .activity-description {
+            color: var(--text-light);
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Progress Elements */
+        .progress-bar {
             width: 100%;
             height: 8px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
             margin: 1rem 0;
-            position: relative;
         }
 
-        .progress-fill-quantum {
+        .progress-fill {
             height: 100%;
-            background: var(--neural-gradient);
+            background: var(--gradient-primary);
             border-radius: 4px;
-            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
+            transition: width 0.8s ease;
         }
 
-        .progress-fill-quantum::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: progressShimmer 2s ease-in-out infinite;
-        }
-
-        /* Advanced Modal System */
-        .modal-quantum {
+        /* Modal */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -573,1261 +394,902 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            animation: modalFadeIn 0.4s ease;
         }
 
-        .modal-quantum.active {
+        .modal.active {
             display: flex;
         }
 
-        .modal-content-quantum {
-            background: var(--glass-bg);
+        .modal-content {
+            background: var(--glass-dark);
             backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
-            border-radius: 25px;
-            padding: 3rem;
+            border-radius: 20px;
+            padding: 2rem;
             max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
-            animation: modalSlideIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* Quantum Buttons */
-        .btn-quantum {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 1rem 2rem;
-            color: var(--white);
-            font-weight: 600;
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-        }
-
-        .btn-quantum::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--neural-gradient);
-            transition: left 0.3s ease;
-            z-index: -1;
-        }
-
-        .btn-quantum:hover::before {
-            left: 0;
-        }
-
-        .btn-quantum:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: var(--glow-shadow);
-            border-color: var(--neon-blue);
-        }
-
-        .btn-primary { border-color: var(--neon-blue); }
-        .btn-secondary { border-color: var(--neon-purple); }
-        .btn-success { border-color: var(--neon-green); }
-        .btn-warning { border-color: var(--neon-pink); }
-
-        /* Advanced Chart Containers */
-        .chart-quantum {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chart-quantum::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(0, 212, 255, 0.05), transparent),
-                radial-gradient(circle at 90% 90%, rgba(179, 71, 217, 0.05), transparent);
-            animation: chartGlow 4s ease-in-out infinite;
-        }
-
-        /* AI Avatar */
-        .ai-avatar {
-            width: 100px;
-            height: 100px;
+            padding: 0.5rem;
             border-radius: 50%;
-            background: var(--neural-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: var(--glow-shadow);
-            animation: avatarFloat 3s ease-in-out infinite;
-            position: relative;
-            overflow: hidden;
+            transition: background 0.3s ease;
         }
 
-        .ai-avatar::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: avatarScan 2s linear infinite;
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Notification System */
-        .notification-quantum {
+        /* Notification */
+        .notification {
             position: fixed;
-            top: 140px;
+            top: 100px;
             right: 2rem;
-            background: var(--glass-bg);
+            background: var(--glass-dark);
             backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
             border-radius: 15px;
-            padding: 1rem 2rem;
-            color: var(--white);
-            box-shadow: var(--glow-shadow);
+            padding: 1rem 1.5rem;
+            color: var(--text-white);
+            box-shadow: var(--shadow-large);
             transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.4s ease;
             z-index: 1001;
             min-width: 300px;
         }
 
-        .notification-quantum.show {
+        .notification.show {
             transform: translateX(0);
+        }
+
+        /* EEG Monitoring Section */
+        .eeg-section {
+            background: var(--glass-dark);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fa231cf57cf3c4f96befd2a7f2bf90a3a?format=webp&width=800');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            background: var(--glass-dark);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--glass-border);
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        /* Focus Timer */
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .timer-circle {
+            width: 200px;
+            height: 200px;
+            border: 4px solid var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--glass-bg);
+            position: relative;
+        }
+
+        /* Games Section */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .game-card {
+            background: var(--glass-dark);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .quantum-nav {
-                flex-direction: column;
+            .main-nav {
+                padding: 0 1rem;
                 height: auto;
-                padding: 1rem;
+                flex-direction: column;
                 gap: 1rem;
+                padding: 1rem;
             }
             
-            .nav-tabs {
+            .nav-menu {
                 flex-wrap: wrap;
                 justify-content: center;
             }
             
             .main-content {
-                margin-top: 180px;
-                padding: 2rem 1rem;
+                margin-top: 140px;
+                padding: 1rem;
             }
             
             .hero-title {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
             
-            .nft-gallery {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .activity-grid,
+            .two-column {
                 grid-template-columns: 1fr;
             }
-            
-            .stats-quantum {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
         }
 
-        /* Advanced Animations */
-        @keyframes quantumShift {
-            0%, 100% { 
-                background-position: 0% 50%, 100% 50%, 50% 0%; 
-                filter: hue-rotate(0deg);
-            }
-            50% { 
-                background-position: 100% 50%, 0% 50%, 50% 100%; 
-                filter: hue-rotate(90deg);
-            }
-        }
-
-        @keyframes particleFloat {
-            0% {
-                transform: translateY(100vh) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes holographicShimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        @keyframes neonPulse {
-            0%, 100% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
-            50% { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor, 0 0 40px currentColor; }
-        }
-
-        @keyframes logoGlow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5)); }
-            50% { filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8)); }
-        }
-
-        @keyframes neuralSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes neuralPulse {
-            0%, 100% { 
-                transform: translate(-50%, -50%) scale(1); 
-                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
-            }
-            50% { 
-                transform: translate(-50%, -50%) scale(1.5); 
-                box-shadow: 0 0 0 10px rgba(0, 212, 255, 0);
-            }
-        }
-
-        @keyframes pageTransition {
-            0% { 
-                opacity: 0; 
-                transform: translateY(30px) scale(0.95); 
-            }
-            100% { 
-                opacity: 1; 
-                transform: translateY(0) scale(1); 
-            }
-        }
-
-        @keyframes slideInFromTop {
-            0% { 
-                transform: translateY(-100%); 
-                opacity: 0; 
-            }
-            100% { 
-                transform: translateY(0); 
-                opacity: 1; 
-            }
-        }
-
-        @keyframes nftGlow {
-            0%, 100% { 
-                box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.3); 
-            }
-            50% { 
-                box-shadow: inset 0 0 40px rgba(179, 71, 217, 0.5); 
-            }
-        }
-
-        @keyframes neuronPulseAdvanced {
-            0%, 100% { 
-                transform: scale(1); 
-                box-shadow: 0 0 15px currentColor;
-            }
-            50% { 
-                transform: scale(1.5); 
-                box-shadow: 0 0 25px currentColor, 0 0 35px currentColor;
-            }
-        }
-
-        @keyframes synapseFlow {
-            0% { 
-                background-position: -200% 0; 
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% { 
-                background-position: 200% 0; 
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes scanLine {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: -100%; }
-        }
-
-        @keyframes numberGlow {
-            0%, 100% { 
-                filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5)); 
-            }
-            50% { 
-                filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8)); 
-            }
-        }
-
-        @keyframes achievementGlow {
-            0%, 100% { opacity: 0.1; }
-            50% { opacity: 0.2; }
-        }
-
-        @keyframes progressShimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        @keyframes modalFadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes modalSlideIn {
-            0% { 
-                transform: translateY(50px) scale(0.9); 
-                opacity: 0; 
-            }
-            100% { 
-                transform: translateY(0) scale(1); 
-                opacity: 1; 
-            }
-        }
-
-        @keyframes chartGlow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        @keyframes avatarFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-
-        @keyframes avatarScan {
-            0% { 
-                top: -50%; 
-                left: -50%; 
-            }
-            100% { 
-                top: 150%; 
-                left: 150%; 
-            }
-        }
-
-        /* Additional NFT Styles */
-        .nft-mint-button {
-            background: var(--nft-gradient);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-top: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nft-mint-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .nft-mint-button:hover::before {
-            left: 100%;
-        }
-
-        .nft-mint-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(250, 112, 154, 0.4);
-        }
-
-        .blockchain-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
-            font-size: 0.9rem;
-            margin: 1rem 0;
-        }
-
-        .blockchain-status {
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
             width: 8px;
-            height: 8px;
-            background: var(--neon-green);
-            border-radius: 50%;
-            animation: neuralPulse 1s ease-in-out infinite;
         }
 
-        /* Three.js Container */
-        .threejs-container {
-            width: 100%;
-            height: 400px;
-            border-radius: 20px;
-            overflow: hidden;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-purple);
+        }
+
+        /* Image overlays for better text readability */
+        .image-overlay {
             position: relative;
+            background-blend-mode: overlay;
         }
 
-        /* Quantum Effect Overlays */
-        .quantum-overlay {
+        .image-overlay::after {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                repeating-linear-gradient(
-                    90deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0, 212, 255, 0.03) 2px,
-                    rgba(0, 212, 255, 0.03) 4px
-                );
-            pointer-events: none;
-            animation: quantumScan 4s linear infinite;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: inherit;
         }
 
-        @keyframes quantumScan {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Enhanced Typography */
-        .quantum-text {
-            background: var(--holographic);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: holographicShimmer 3s ease-in-out infinite;
-            font-weight: 700;
-        }
-
-        .neural-text {
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-            font-family: 'Orbitron', monospace;
+        .image-overlay > * {
+            position: relative;
+            z-index: 2;
         }
     </style>
 </head>
 <body>
-    <!-- Quantum Background -->
-    <div class="quantum-background"></div>
-    
-    <!-- Particle Field -->
-    <div class="particle-field" id="particleField"></div>
+    <!-- Background -->
+    <div class="background-container"></div>
 
-    <!-- Advanced Navigation -->
-    <nav class="quantum-nav">
-        <div class="logo-container">
-            <div class="neural-indicator"></div>
-            <div class="logo neon-glow">NeuroX Elite</div>
-            <div class="blockchain-indicator">
-                <div class="blockchain-status"></div>
-                <span>Blockchain Connected</span>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="logo-section">
+            <div class="status-indicator">
+                <i class="fas fa-brain"></i>
             </div>
+            <div class="logo">NeuroMind Pro</div>
         </div>
         
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="navigateToPage('home')" data-page="home">
+        <div class="nav-menu">
+            <button class="nav-button active" onclick="showPage('home')" data-page="home">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
             </button>
-            <button class="nav-tab" onclick="navigateToPage('dashboard')" data-page="dashboard">
-                <i class="fas fa-brain"></i>
-                <span>Neural Dashboard</span>
+            <button class="nav-button" onclick="showPage('dashboard')" data-page="dashboard">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
             </button>
-            <button class="nav-tab" onclick="navigateToPage('challenges')" data-page="challenges">
-                <i class="fas fa-trophy"></i>
-                <span>Challenges</span>
+            <button class="nav-button" onclick="showPage('training')" data-page="training">
+                <i class="fas fa-dumbbell"></i>
+                <span>Training</span>
             </button>
-            <button class="nav-tab" onclick="navigateToPage('nft')" data-page="nft">
-                <i class="fas fa-gem"></i>
-                <span>NFT Gallery</span>
+            <button class="nav-button" onclick="showPage('meditation')" data-page="meditation">
+                <i class="fas fa-leaf"></i>
+                <span>Meditation</span>
             </button>
-            <button class="nav-tab" onclick="navigateToPage('sleep')" data-page="sleep">
-                <i class="fas fa-moon"></i>
-                <span>Sleep</span>
+            <button class="nav-button" onclick="showPage('research')" data-page="research">
+                <i class="fas fa-microscope"></i>
+                <span>Research</span>
             </button>
-            <button class="nav-tab" onclick="navigateToPage('focus')" data-page="focus">
-                <i class="fas fa-bullseye"></i>
-                <span>Focus</span>
+            <button class="nav-button" onclick="showPage('consultation')" data-page="consultation">
+                <i class="fas fa-user-md"></i>
+                <span>Consultation</span>
             </button>
         </div>
         
-        <div class="ai-avatar">
-            🤖
+        <div class="user-profile">
+            <div style="text-align: right;">
+                <div style="font-weight: 600;">Dr. Sarah Chen</div>
+                <div style="font-size: 0.8rem; opacity: 0.7;">Neurologist</div>
+            </div>
+            <img src="https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F1a028164b1bc4199adf6f7768a677c7c?format=webp&width=800" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
         </div>
     </nav>
 
     <div class="main-content">
         <!-- Home Page -->
         <div class="page active" id="home">
-            <div class="quantum-hero">
-                <h1 class="hero-title">NeuroX Elite</h1>
-                <p class="hero-subtitle neural-text">Next-Generation Cognitive Training & NFT Platform</p>
+            <div class="hero-section">
+                <h1 class="hero-title">NeuroMind Pro</h1>
+                <p class="hero-subtitle">Advanced Cognitive Health & Research Platform</p>
                 
-                <div class="stats-quantum">
-                    <div class="stat-quantum">
-                        <div class="stat-number" id="cognitiveScore">95</div>
-                        <div class="stat-label">Cognitive Score</div>
+                <div class="hero-image image-overlay"></div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="activeSessions">2,847</div>
+                        <div class="stat-label">Active Sessions</div>
                     </div>
-                    <div class="stat-quantum">
-                        <div class="stat-number" id="nftCollection">7</div>
-                        <div class="stat-label">NFTs Owned</div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="researchStudies">156</div>
+                        <div class="stat-label">Research Studies</div>
                     </div>
-                    <div class="stat-quantum">
-                        <div class="stat-number" id="neuralTokens">2,840</div>
-                        <div class="stat-label">Neural Tokens</div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="cognitiveScore">94</div>
+                        <div class="stat-label">Avg. Cognitive Score</div>
                     </div>
-                    <div class="stat-quantum">
-                        <div class="stat-number" id="globalRank">142</div>
-                        <div class="stat-label">Global Rank</div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="patientProgress">87%</div>
+                        <div class="stat-label">Patient Progress</div>
                     </div>
                 </div>
 
-                <div class="glass-card" style="padding: 2rem; margin: 3rem 0; text-align: left;">
-                    <h3 class="quantum-text">🧠 Today's Neural Insights</h3>
-                    <div style="margin: 1rem 0; padding: 1rem; background: var(--glass-bg); border-radius: 10px;">
-                        <p id="aiInsight">Your cognitive performance has increased by 15% this week! Your unique neural patterns have generated a rare NFT reward.</p>
+                <div class="glass-card" style="text-align: left; margin-top: 3rem;">
+                    <h3 style="color: var(--text-white); margin-bottom: 1rem;">🧠 Today's Insights</h3>
+                    <div style="background: var(--glass-bg); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <p id="dailyInsight">Cognitive performance indicators show optimal patterns. Memory enhancement protocols are showing 23% improvement in patient outcomes this week.</p>
                     </div>
                     <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
-                        <button class="btn-quantum btn-primary" onclick="startQuantumChallenge()">
-                            <i class="fas fa-rocket"></i>
-                            Quantum Challenge
-                        </button>
-                        <button class="btn-quantum btn-secondary" onclick="navigateToPage('nft')">
-                            <i class="fas fa-gem"></i>
-                            View NFT Gallery
-                        </button>
-                        <button class="btn-quantum btn-success" onclick="mintNeuralNFT()">
+                        <button class="btn btn-primary" onclick="startAssessment()">
                             <i class="fas fa-brain"></i>
-                            Mint Neural NFT
+                            Start Assessment
+                        </button>
+                        <button class="btn btn-secondary" onclick="showPage('training')">
+                            <i class="fas fa-play"></i>
+                            Training Modules
+                        </button>
+                        <button class="btn btn-accent" onclick="showPage('research')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Neural Dashboard -->
+        <!-- Dashboard Page -->
         <div class="page" id="dashboard">
-            <h2 class="quantum-text" style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">
-                🧠 Advanced Neural Dashboard
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--text-white);">
+                📊 Cognitive Health Dashboard
             </h2>
 
-            <div class="threejs-container" id="brain3D">
-                <div class="quantum-overlay"></div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin: 3rem 0;">
-                <div class="chart-quantum">
-                    <h3 class="neural-text">📈 Neural Performance Analytics</h3>
-                    <canvas id="performanceChart" width="400" height="200"></canvas>
+            <div class="two-column">
+                <div class="chart-container">
+                    <h3 class="chart-title">📈 Performance Analytics</h3>
+                    <canvas id="performanceChart" width="400" height="300"></canvas>
                 </div>
                 
-                <div class="chart-quantum">
-                    <h3 class="neural-text">🧠 Real-time EEG Simulation</h3>
-                    <div class="neural-network-advanced" id="eegSimulation"></div>
+                <div class="chart-container">
+                    <h3 class="chart-title">🧠 EEG Monitoring</h3>
+                    <div class="eeg-section image-overlay">
+                        <div style="padding: 2rem;">
+                            <h4 style="color: var(--text-white); margin-bottom: 1rem;">Real-time Brain Activity</h4>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                <div style="text-align: center;">
+                                    <div class="stat-number" style="font-size: 1.8rem;" id="alphaWaves">12.4</div>
+                                    <div class="stat-label">Alpha (Hz)</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div class="stat-number" style="font-size: 1.8rem;" id="betaWaves">18.7</div>
+                                    <div class="stat-label">Beta (Hz)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="glass-card" style="padding: 2rem; margin: 2rem 0;">
-                <h3 class="quantum-text">🤖 AI Neural Analysis</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
-                    <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;" id="alphaWaves">12.4</div>
-                        <div class="stat-label">Alpha Waves (Hz)</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;" id="betaWaves">18.7</div>
-                        <div class="stat-label">Beta Waves (Hz)</div>
-                    </div>
+            <div class="glass-card" style="margin: 2rem 0;">
+                <h3 style="color: var(--text-white); margin-bottom: 2rem;">🔬 Cognitive Metrics</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
                     <div style="text-align: center;">
                         <div class="stat-number" style="font-size: 2rem;" id="focusLevel">87</div>
                         <div class="stat-label">Focus Level (%)</div>
                     </div>
                     <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;" id="neuralEfficiency">94</div>
-                        <div class="stat-label">Neural Efficiency</div>
+                        <div class="stat-number" style="font-size: 2rem;" id="memoryScore">91</div>
+                        <div class="stat-label">Memory Score</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat-number" style="font-size: 2rem;" id="reactionTime">245</div>
+                        <div class="stat-label">Reaction Time (ms)</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat-number" style="font-size: 2rem;" id="cognitiveLoad">73</div>
+                        <div class="stat-label">Cognitive Load</div>
                     </div>
                 </div>
-                <button class="btn-quantum btn-primary" onclick="startNeuralScan()" style="width: 100%; margin-top: 1rem;">
+                <button class="btn btn-primary" onclick="runFullScan()" style="width: 100%; margin-top: 2rem;">
                     <i class="fas fa-brain"></i>
-                    Start Deep Neural Scan
+                    Run Full Cognitive Scan
                 </button>
             </div>
         </div>
 
-        <!-- Challenges -->
-        <div class="page" id="challenges">
-            <h2 class="quantum-text" style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">
-                🏆 Quantum Cognitive Challenges
+        <!-- Training Page -->
+        <div class="page" id="training">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--text-white);">
+                🏋️ Cognitive Training Center
             </h2>
 
-            <div class="challenge-quantum">
-                <h3 class="neural-text">🧠 Neural Network Training</h3>
-                <p>Advanced pattern recognition with AI-generated sequences that adapt to your cognitive patterns.</p>
-                <div class="progress-quantum">
-                    <div class="progress-fill-quantum" style="width: 73%;"></div>
+            <div class="games-grid">
+                <div class="game-card" onclick="startGame('memory')">
+                    <div class="game-icon">🧩</div>
+                    <h3 class="game-title">Memory Palace</h3>
+                    <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
+                        Advanced spatial memory training using visualization techniques
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 67%;"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 67%</p>
+                    <button class="btn btn-primary" onclick="startGame('memory')" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Training
+                    </button>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin: 1rem 0;">
-                    <span>Progress: 73%</span>
-                    <span class="neural-text">Difficulty: Dynamic</span>
-                </div>
-                <button class="btn-quantum btn-primary" onclick="startAdvancedChallenge('neural')">
-                    <i class="fas fa-play"></i>
-                    Start Neural Challenge
-                </button>
-            </div>
 
-            <div class="challenge-quantum">
-                <h3 class="neural-text">⚡ Quantum Reaction Training</h3>
-                <p>Predictive analytics-powered reaction time enhancement with quantum computing simulation.</p>
-                <div class="progress-quantum">
-                    <div class="progress-fill-quantum" style="width: 56%;"></div>
+                <div class="game-card" onclick="startGame('attention')">
+                    <div class="game-icon">🎯</div>
+                    <h3 class="game-title">Focus Master</h3>
+                    <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
+                        Enhance attention and concentration through targeted exercises
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 84%;"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 84%</p>
+                    <button class="btn btn-primary" onclick="startGame('attention')" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Training
+                    </button>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin: 1rem 0;">
-                    <span>Progress: 56%</span>
-                    <span class="neural-text">Best Time: 127ms</span>
-                </div>
-                <button class="btn-quantum btn-primary" onclick="startAdvancedChallenge('quantum')">
-                    <i class="fas fa-zap"></i>
-                    Start Quantum Challenge
-                </button>
-            </div>
 
-            <div class="challenge-quantum">
-                <h3 class="neural-text">🧩 Holographic Logic Puzzles</h3>
-                <p>Multi-dimensional pattern recognition with holographic visualization and blockchain verification.</p>
-                <div class="progress-quantum">
-                    <div class="progress-fill-quantum" style="width: 89%;"></div>
+                <div class="game-card" onclick="startGame('reaction')">
+                    <div class="game-icon">⚡</div>
+                    <h3 class="game-title">Quick Response</h3>
+                    <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
+                        Improve reaction time and processing speed
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 56%;"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 56%</p>
+                    <button class="btn btn-primary" onclick="startGame('reaction')" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Training
+                    </button>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin: 1rem 0;">
-                    <span>Progress: 89%</span>
-                    <span class="neural-text">IQ Estimate: 147</span>
+
+                <div class="game-card" onclick="startGame('logic')">
+                    <div class="game-icon">🧠</div>
+                    <h3 class="game-title">Logic Builder</h3>
+                    <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
+                        Pattern recognition and logical reasoning challenges
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%;"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 78%</p>
+                    <button class="btn btn-primary" onclick="startGame('logic')" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Training
+                    </button>
                 </div>
-                <button class="btn-quantum btn-primary" onclick="startAdvancedChallenge('holographic')">
-                    <i class="fas fa-cube"></i>
-                    Start Holographic Challenge
-                </button>
-            </div>
 
-            <div class="glass-card" style="padding: 2rem; margin: 3rem 0;">
-                <h3 class="quantum-text">🏆 Achievement Gallery</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
-                    <div class="achievement-quantum unlocked">
-                        <div class="achievement-icon">🧠</div>
-                        <h4 class="neural-text">Neural Pioneer</h4>
-                        <p>Complete first neural challenge</p>
-                        <button class="nft-mint-button" onclick="mintAchievementNFT('neural-pioneer')">
-                            <i class="fas fa-gem"></i>
-                            Mint Achievement NFT
-                        </button>
+                <div class="game-card" onclick="startGame('executive')">
+                    <div class="game-icon">🎮</div>
+                    <h3 class="game-title">Executive Control</h3>
+                    <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
+                        Multitasking and cognitive flexibility training
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%;"></div>
                     </div>
-                    <div class="achievement-quantum unlocked">
-                        <div class="achievement-icon">⚡</div>
-                        <h4 class="neural-text">Quantum Speedster</h4>
-                        <p>React under 150ms consistently</p>
-                        <button class="nft-mint-button" onclick="mintAchievementNFT('quantum-speedster')">
-                            <i class="fas fa-gem"></i>
-                            Mint Achievement NFT
-                        </button>
-                    </div>
-                    <div class="achievement-quantum">
-                        <div class="achievement-icon" style="opacity: 0.3;">🌌</div>
-                        <h4 style="opacity: 0.3;">Cosmic Genius</h4>
-                        <p style="opacity: 0.3;">Reach IQ estimate of 160+</p>
-                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 45%</p>
+                    <button class="btn btn-primary" onclick="startGame('executive')" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Training
+                    </button>
                 </div>
-            </div>
-        </div>
 
-        <!-- NFT Gallery -->
-        <div class="page" id="nft">
-            <h2 class="quantum-text" style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">
-                💎 Neural NFT Gallery
-            </h2>
-
-            <div class="glass-card" style="padding: 2rem; margin-bottom: 3rem;">
-                <h3 class="neural-text">🧠 Your Neural Collection</h3>
-                <p>Unique NFTs generated from your cognitive patterns and achievements. Each NFT represents your neural journey and can be traded on the blockchain.</p>
-                
-                <div style="display: flex; gap: 2rem; margin: 2rem 0; flex-wrap: wrap; align-items: center;">
-                    <div>
-                        <div class="stat-number" style="font-size: 2rem;">7</div>
-                        <div class="stat-label">NFTs Owned</div>
+                <div class="game-card" onclick="startGame('working-memory')">
+                    <div class="game-icon">💡</div>
+                    <h3 class="game-title">Working Memory</h3>
+                    <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
+                        N-back tasks and working memory enhancement
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 62%;"></div>
                     </div>
-                    <div>
-                        <div class="stat-number" style="font-size: 2rem;">2.4</div>
-                        <div class="stat-label">ETH Value</div>
-                    </div>
-                    <div>
-                        <div class="stat-number" style="font-size: 2rem;">94%</div>
-                        <div class="stat-label">Rarity Score</div>
-                    </div>
-                    <button class="btn-quantum btn-success" onclick="generateNeuralNFT()">
-                        <i class="fas fa-brain"></i>
-                        Generate Neural NFT
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 62%</p>
+                    <button class="btn btn-primary" onclick="startGame('working-memory')" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Training
                     </button>
                 </div>
             </div>
 
-            <div class="nft-gallery">
-                <div class="nft-card" onclick="viewNFTDetails('neural-pattern-001')">
-                    <div class="nft-rarity" style="background: linear-gradient(45deg, #ffd700, #ffed4e); color: #b8860b;">Legendary</div>
-                    <div class="nft-preview">
-                        <div style="width: 80%; height: 80%; background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-                            <div style="position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent); animation: holographicShimmer 2s ease-in-out infinite;"></div>
-                            🧠
-                        </div>
+            <div class="glass-card" style="margin-top: 3rem;">
+                <h3 style="color: var(--text-white); margin-bottom: 2rem;">🏆 Training Achievements</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div style="text-align: center; padding: 1rem; background: var(--glass-bg); border-radius: 10px;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🥇</div>
+                        <h4 style="color: var(--text-white);">Memory Master</h4>
+                        <p style="opacity: 0.8;">Complete 100 memory challenges</p>
                     </div>
-                    <div class="nft-info">
-                        <div class="nft-title">Neural Pattern #001</div>
-                        <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.5rem 0;">Your first cognitive breakthrough pattern, captured at peak performance.</div>
-                        <div class="nft-price">0.45 ETH</div>
-                        <button class="nft-mint-button" onclick="tradeTNFT('neural-pattern-001')">
-                            <i class="fas fa-exchange-alt"></i>
-                            Trade NFT
-                        </button>
+                    <div style="text-align: center; padding: 1rem; background: var(--glass-bg); border-radius: 10px;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                        <h4 style="color: var(--text-white);">Focus Champion</h4>
+                        <p style="opacity: 0.8;">Maintain focus for 30+ minutes</p>
                     </div>
-                </div>
-
-                <div class="nft-card" onclick="viewNFTDetails('speed-demon-badge')">
-                    <div class="nft-rarity" style="background: linear-gradient(45deg, #e74c3c, #c0392b); color: white;">Epic</div>
-                    <div class="nft-preview">
-                        <div style="width: 80%; height: 80%; background: linear-gradient(45deg, var(--neon-pink), var(--neon-green)); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-                            <div style="position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent); animation: holographicShimmer 2s ease-in-out infinite;"></div>
-                            ⚡
-                        </div>
-                    </div>
-                    <div class="nft-info">
-                        <div class="nft-title">Speed Demon Badge</div>
-                        <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.5rem 0;">Achievement NFT for sub-150ms reaction times.</div>
-                        <div class="nft-price">0.32 ETH</div>
-                        <button class="nft-mint-button" onclick="tradeNFT('speed-demon-badge')">
-                            <i class="fas fa-exchange-alt"></i>
-                            Trade NFT
-                        </button>
-                    </div>
-                </div>
-
-                <div class="nft-card" onclick="viewNFTDetails('cognitive-evolution')">
-                    <div class="nft-rarity" style="background: linear-gradient(45deg, #9b59b6, #8e44ad); color: white;">Rare</div>
-                    <div class="nft-preview">
-                        <div style="width: 80%; height: 80%; background: linear-gradient(45deg, var(--neon-green), var(--neon-blue)); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-                            <div style="position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent); animation: holographicShimmer 2s ease-in-out infinite;"></div>
-                            🧬
-                        </div>
-                    </div>
-                    <div class="nft-info">
-                        <div class="nft-title">Cognitive Evolution</div>
-                        <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.5rem 0;">DNA-like pattern representing your cognitive growth journey.</div>
-                        <div class="nft-price">0.28 ETH</div>
-                        <button class="nft-mint-button" onclick="tradeNFT('cognitive-evolution')">
-                            <i class="fas fa-exchange-alt"></i>
-                            Trade NFT
-                        </button>
-                    </div>
-                </div>
-
-                <div class="nft-card" style="border: 2px dashed var(--glass-border); background: transparent;" onclick="mintNewNFT()">
-                    <div class="nft-preview" style="background: var(--glass-bg); border: 2px dashed var(--glass-border);">
-                        <i class="fas fa-plus" style="font-size: 3rem; opacity: 0.5;"></i>
-                    </div>
-                    <div class="nft-info">
-                        <div class="nft-title">Create New NFT</div>
-                        <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.5rem 0;">Generate a new NFT from your latest cognitive achievements.</div>
-                        <button class="nft-mint-button">
-                            <i class="fas fa-magic"></i>
-                            Mint New NFT
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass-card" style="padding: 2rem; margin: 3rem 0;">
-                <h3 class="quantum-text">🌟 Featured NFT Marketplace</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
-                    <div class="nft-card">
-                        <div class="nft-rarity" style="background: linear-gradient(45deg, #1abc9c, #16a085); color: white;">Ultra Rare</div>
-                        <div class="nft-preview">
-                            <div style="width: 80%; height: 80%; background: linear-gradient(45deg, #f39c12, #d35400); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                🌌
-                            </div>
-                        </div>
-                        <div class="nft-info">
-                            <div class="nft-title">Cosmic Intelligence</div>
-                            <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.5rem 0;">By NeuroMaster_99 • IQ 180+ achievement</div>
-                            <div class="nft-price">1.2 ETH</div>
-                            <button class="nft-mint-button" onclick="purchaseNFT('cosmic-intelligence')">
-                                <i class="fas fa-shopping-cart"></i>
-                                Purchase NFT
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="nft-card">
-                        <div class="nft-rarity" style="background: linear-gradient(45deg, #3498db, #2980b9); color: white;">Rare</div>
-                        <div class="nft-preview">
-                            <div style="width: 80%; height: 80%; background: linear-gradient(45deg, #e67e22, #d35400); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                🔮
-                            </div>
-                        </div>
-                        <div class="nft-info">
-                            <div class="nft-title">Memory Palace</div>
-                            <div style="font-size: 0.9rem; opacity: 0.8; margin: 0.5rem 0;">By CognitiveGuru • Perfect memory challenge</div>
-                            <div class="nft-price">0.8 ETH</div>
-                            <button class="nft-mint-button" onclick="purchaseNFT('memory-palace')">
-                                <i class="fas fa-shopping-cart"></i>
-                                Purchase NFT
-                            </button>
-                        </div>
+                    <div style="text-align: center; padding: 1rem; background: var(--glass-bg); border-radius: 10px;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                        <h4 style="color: var(--text-white);">Speed Demon</h4>
+                        <p style="opacity: 0.8;">React under 200ms consistently</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Sleep Page -->
-        <div class="page" id="sleep">
-            <h2 class="quantum-text" style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">
-                🌙 Quantum Sleep Optimization
+        <!-- Meditation Page -->
+        <div class="page" id="meditation">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--text-white);">
+                🧘 Mindfulness & Meditation
             </h2>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
-                <div class="chart-quantum">
-                    <h3 class="neural-text">📊 Sleep Quality Analysis</h3>
-                    <div style="text-align: center; margin: 2rem 0;">
-                        <div class="stat-number" style="font-size: 4rem;" id="sleepScore">94</div>
-                        <div class="stat-label">Sleep Quality Score</div>
-                    </div>
-                    <canvas id="sleepChart" width="400" height="200"></canvas>
-                </div>
-
-                <div class="chart-quantum">
-                    <h3 class="neural-text">🧠 REM Cycle Optimization</h3>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0;">
-                        <div style="text-align: center;">
-                            <div class="stat-number" style="font-size: 2rem;">2.4h</div>
-                            <div class="stat-label">Deep Sleep</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div class="stat-number" style="font-size: 2rem;">1.8h</div>
-                            <div class="stat-label">REM Sleep</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div class="stat-number" style="font-size: 2rem;">3.1h</div>
-                            <div class="stat-label">Light Sleep</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div class="stat-number" style="font-size: 2rem;">89%</div>
-                            <div class="stat-label">Efficiency</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass-card" style="padding: 2rem; margin: 3rem 0;">
-                <h3 class="quantum-text">🤖 AI Sleep Recommendations</h3>
-                <div style="background: var(--glass-bg); padding: 2rem; border-radius: 15px; margin: 1rem 0;">
-                    <h4 class="neural-text">Personalized Insights</h4>
-                    <ul style="margin: 1rem 0; padding-left: 2rem;">
-                        <li>Your optimal bedtime is 10:30 PM for maximum REM sleep</li>
-                        <li>Room temperature of 67°F detected - perfect for deep sleep</li>
-                        <li>Consider 10 minutes of meditation before sleep</li>
-                        <li>Your sleep pattern generates rare "Dream State" NFT eligibility</li>
-                    </ul>
-                </div>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <button class="btn-quantum btn-primary" onclick="startSleepTracking()">
-                        <i class="fas fa-moon"></i>
-                        Start Sleep Tracking
-                    </button>
-                    <button class="btn-quantum btn-secondary" onclick="generateSleepNFT()">
-                        <i class="fas fa-gem"></i>
-                        Generate Sleep NFT
-                    </button>
-                    <button class="btn-quantum btn-success" onclick="optimizeSleep()">
-                        <i class="fas fa-magic"></i>
-                        AI Sleep Optimization
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Focus Page -->
-        <div class="page" id="focus">
-            <h2 class="quantum-text" style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;">
-                🎯 Quantum Focus Training
-            </h2>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
-                <div class="chart-quantum">
-                    <h3 class="neural-text">⏰ Advanced Pomodoro</h3>
-                    <div style="text-align: center; margin: 2rem 0;">
-                        <div style="width: 200px; height: 200px; border: 4px solid var(--neon-blue); border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; position: relative; background: var(--glass-bg);">
-                            <div style="font-size: 2rem; font-weight: 700;" id="focusTimer">25:00</div>
-                            <div style="position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50%; background: conic-gradient(var(--neon-blue) 0deg, transparent 0deg); animation: neuralSpin 60s linear infinite;"></div>
-                        </div>
-                        <button class="btn-quantum btn-primary" onclick="startQuantumPomodoro()" style="margin-top: 2rem;">
+            <div class="activity-grid">
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F8e4b6cf8d490402e9c2b199bd70a7e87?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Beach Meditation</h3>
+                        <p class="activity-description">Peaceful beach sounds and guided meditation for stress relief and mental clarity.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('beach')">
                             <i class="fas fa-play"></i>
-                            Start Quantum Focus
+                            Start Session
                         </button>
                     </div>
                 </div>
 
-                <div class="chart-quantum">
-                    <h3 class="neural-text">🧘‍♀️ Meditation Analytics</h3>
-                    <canvas id="meditationChart" width="400" height="200"></canvas>
-                    <button class="btn-quantum btn-secondary" onclick="startAIMeditation()" style="width: 100%; margin-top: 1rem;">
-                        <i class="fas fa-brain"></i>
-                        AI-Guided Meditation
-                    </button>
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F60b6318f6255476396456fe7fd21e5b7?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Garden Tranquility</h3>
+                        <p class="activity-description">Nature-inspired meditation in a serene garden environment for deep relaxation.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('garden')">
+                            <i class="fas fa-play"></i>
+                            Start Session
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F99e28656e082417291f20a3f2669648a?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Yoga Flow</h3>
+                        <p class="activity-description">Gentle yoga sequences combined with breathing exercises for mind-body harmony.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('yoga')">
+                            <i class="fas fa-play"></i>
+                            Start Session
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F2b3f0fcb944b410a93f8942ca8cd51cb?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Breathing Techniques</h3>
+                        <p class="activity-description">Advanced breathing exercises for anxiety reduction and cognitive enhancement.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('breathing')">
+                            <i class="fas fa-play"></i>
+                            Start Session
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="glass-card" style="padding: 2rem; margin: 3rem 0;">
-                <h3 class="quantum-text">🎵 Quantum Soundscapes</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
-                    <button class="btn-quantum btn-primary" onclick="playQuantumSound('forest')">
-                        <i class="fas fa-tree"></i>
-                        Quantum Forest
-                    </button>
-                    <button class="btn-quantum btn-primary" onclick="playQuantumSound('ocean')">
-                        <i class="fas fa-water"></i>
-                        Neural Ocean
-                    </button>
-                    <button class="btn-quantum btn-primary" onclick="playQuantumSound('space')">
-                        <i class="fas fa-rocket"></i>
-                        Cosmic Frequencies
-                    </button>
-                    <button class="btn-quantum btn-primary" onclick="playQuantumSound('rain')">
+            <div class="two-column">
+                <div class="glass-card">
+                    <h3 style="color: var(--text-white); margin-bottom: 2rem;">⏰ Focus Timer</h3>
+                    <div class="timer-container">
+                        <div class="timer-circle">
+                            <span id="focusTimer">25:00</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="startFocusTimer()">
+                            <i class="fas fa-play"></i>
+                            Start Focus Session
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 class="chart-title">📊 Meditation Progress</h3>
+                    <canvas id="meditationChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 2rem;">
+                <h3 style="color: var(--text-white); margin-bottom: 2rem;">🎵 Ambient Sounds</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <button class="btn btn-outline" onclick="playSound('rain')">
                         <i class="fas fa-cloud-rain"></i>
-                        Digital Rain
+                        Rain Sounds
+                    </button>
+                    <button class="btn btn-outline" onclick="playSound('ocean')">
+                        <i class="fas fa-water"></i>
+                        Ocean Waves
+                    </button>
+                    <button class="btn btn-outline" onclick="playSound('forest')">
+                        <i class="fas fa-tree"></i>
+                        Forest Ambience
+                    </button>
+                    <button class="btn btn-outline" onclick="playSound('birds')">
+                        <i class="fas fa-dove"></i>
+                        Bird Songs
                     </button>
                 </div>
                 <div id="soundControls" style="display: none; text-align: center; margin-top: 2rem;">
-                    <div class="neural-text">🎵 Playing: <span id="currentQuantumSound">None</span></div>
-                    <button class="btn-quantum btn-warning" onclick="stopQuantumSound()" style="margin-top: 1rem;">
+                    <p>🎵 Playing: <span id="currentSound">None</span></p>
+                    <button class="btn btn-accent" onclick="stopSound()" style="margin-top: 1rem;">
                         <i class="fas fa-stop"></i>
-                        Stop Soundscape
+                        Stop Sound
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Research Page -->
+        <div class="page" id="research">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--text-white);">
+                🔬 Neuroscience Research
+            </h2>
+
+            <div class="activity-grid">
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F44bc7e31c5b94dfe9c4fcdf423d60528?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Advanced Neural Lab</h3>
+                        <p class="activity-description">Cutting-edge research in cognitive neuroscience and brain-computer interfaces.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('neural-lab')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F67db4c138ef448d69a2d234d119437b7?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Brain Enhancement Studies</h3>
+                        <p class="activity-description">Research on cognitive enhancement techniques and neuroplasticity protocols.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('enhancement')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F4e4cc545682a460cb32cf0b69eb71d9e?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Sleep & Memory Research</h3>
+                        <p class="activity-description">Understanding the connection between sleep patterns and memory consolidation.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('sleep-memory')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F169d5121f3b340878a2f86681ff9f774?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Memory Enhancement Activities</h3>
+                        <p class="activity-description">Clinical studies on memory training protocols and cognitive rehabilitation.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('memory-activities')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 3rem;">
+                <h3 style="color: var(--text-white); margin-bottom: 2rem;">📊 Research Metrics</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                    <div style="text-align: center;">
+                        <div class="stat-number" style="font-size: 2rem;">127</div>
+                        <div class="stat-label">Active Studies</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat-number" style="font-size: 2rem;">5,432</div>
+                        <div class="stat-label">Participants</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat-number" style="font-size: 2rem;">89%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat-number" style="font-size: 2rem;">34</div>
+                        <div class="stat-label">Publications</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consultation Page -->
+        <div class="page" id="consultation">
+            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--text-white);">
+                👩‍⚕️ Expert Consultation
+            </h2>
+
+            <div class="activity-grid">
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F1a028164b1bc4199adf6f7768a677c7c?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Dr. Sarah Chen</h3>
+                        <p class="activity-description">Senior Neurologist specializing in cognitive assessment and brain health optimization.</p>
+                        <button class="btn btn-primary" onclick="bookConsultation('dr-chen')">
+                            <i class="fas fa-calendar"></i>
+                            Book Consultation
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F1f244d09a17e497f899a70874a0a0404?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Dr. Emily Rodriguez</h3>
+                        <p class="activity-description">Cognitive therapist with expertise in memory enhancement and attention training.</p>
+                        <button class="btn btn-primary" onclick="bookConsultation('dr-rodriguez')">
+                            <i class="fas fa-calendar"></i>
+                            Book Consultation
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fc2c6d51dec1a4358b228d4366dca081d?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">NeuroMind Pro Center</h3>
+                        <p class="activity-description">State-of-the-art facility for comprehensive cognitive health assessment and treatment.</p>
+                        <button class="btn btn-primary" onclick="scheduleVisit()">
+                            <i class="fas fa-hospital"></i>
+                            Schedule Visit
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F12d6af8fc237409fa89e215275a42cf1?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Evening Therapy Sessions</h3>
+                        <p class="activity-description">Personalized cognitive therapy sessions in a comfortable, supportive environment.</p>
+                        <button class="btn btn-primary" onclick="bookEvening()">
+                            <i class="fas fa-moon"></i>
+                            Book Evening Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 3rem;">
+                <h3 style="color: var(--text-white); margin-bottom: 2rem;">📅 Upcoming Appointments</h3>
+                <div style="space-y: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--glass-bg); border-radius: 10px; margin-bottom: 1rem;">
+                        <div>
+                            <h4 style="color: var(--text-white);">Cognitive Assessment</h4>
+                            <p style="opacity: 0.8;">Dr. Sarah Chen • March 15, 2024 • 2:00 PM</p>
+                        </div>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-video"></i>
+                            Join Call
+                        </button>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--glass-bg); border-radius: 10px; margin-bottom: 1rem;">
+                        <div>
+                            <h4 style="color: var(--text-white);">Memory Training Session</h4>
+                            <p style="opacity: 0.8;">Dr. Emily Rodriguez • March 18, 2024 • 10:00 AM</p>
+                        </div>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-calendar"></i>
+                            Reschedule
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Advanced Modal System -->
-    <div class="modal-quantum" id="nftModal">
-        <div class="modal-content-quantum">
-            <button onclick="closeQuantumModal('nftModal')" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
-            <h3 class="quantum-text">💎 NFT Details</h3>
-            <div id="nftModalContent">
-                <!-- NFT details will be loaded here -->
+    <!-- Modal -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('gameModal')">&times;</button>
+            <h3 id="gameTitle" style="color: var(--text-white); margin-bottom: 2rem;">Game Session</h3>
+            <div id="gameContent">
+                <!-- Game content will be loaded here -->
             </div>
         </div>
     </div>
 
-    <div class="modal-quantum" id="achievementModal">
-        <div class="modal-content-quantum">
-            <button onclick="closeQuantumModal('achievementModal')" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
-            <h3 class="quantum-text">🏆 Achievement Unlocked!</h3>
-            <div id="achievementModalContent" style="text-align: center;">
-                <div style="font-size: 4rem; margin: 2rem 0;">🏆</div>
-                <h2 id="achievementTitle">Quantum Pioneer!</h2>
-                <p id="achievementDescription">You've unlocked a new level of cognitive mastery!</p>
-                <button class="nft-mint-button" onclick="mintAchievementNFT()" style="margin-top: 2rem;">
-                    <i class="fas fa-gem"></i>
-                    Mint Achievement NFT
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Quantum Notification -->
-    <div class="notification-quantum" id="quantumNotification">
+    <!-- Notification -->
+    <div class="notification" id="notification">
         <div style="display: flex; align-items: center; gap: 1rem;">
-            <div style="font-size: 1.5rem;">🚀</div>
+            <div style="font-size: 1.5rem;">🧠</div>
             <div>
-                <div style="font-weight: 600;">Quantum System Ready</div>
-                <div style="font-size: 0.9rem; opacity: 0.8;">All neural networks synchronized</div>
+                <div style="font-weight: 600;">NeuroMind Pro</div>
+                <div style="font-size: 0.9rem; opacity: 0.8;" id="notificationMessage">System ready</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Advanced Data Management System
-        class QuantumDataManager {
+        // Data Management
+        class DataManager {
             constructor() {
-                this.storageKey = 'neurox_quantum_data';
-                this.blockchainKey = 'neurox_nft_collection';
-                this.initializeQuantumData();
+                this.storageKey = 'neuromind_data';
+                this.initializeData();
             }
 
-            initializeQuantumData() {
+            initializeData() {
                 if (!localStorage.getItem(this.storageKey)) {
-                    const quantumData = {
+                    const initialData = {
                         user: {
-                            level: 'Quantum Novice',
-                            cognitiveScore: 95,
-                            neuralTokens: 2840,
-                            globalRank: 142,
-                            totalSessions: 47,
-                            streak: 12,
-                            neuralPattern: this.generateNeuralPattern()
-                        },
-                        nfts: {
-                            owned: [
-                                { id: 'neural-pattern-001', rarity: 'legendary', value: 0.45 },
-                                { id: 'speed-demon-badge', rarity: 'epic', value: 0.32 },
-                                { id: 'cognitive-evolution', rarity: 'rare', value: 0.28 }
-                            ],
-                            totalValue: 2.4,
-                            generatedCount: 7
-                        },
-                        achievements: {
-                            unlocked: ['neural-pioneer', 'quantum-speedster'],
-                            rare: ['cosmic-genius']
-                        },
-                        neuralMetrics: {
-                            alphaWaves: 12.4,
-                            betaWaves: 18.7,
+                            name: 'Dr. Sarah Chen',
+                            role: 'Neurologist',
+                            cognitiveScore: 94,
                             focusLevel: 87,
-                            neuralEfficiency: 94
+                            memoryScore: 91,
+                            reactionTime: 245
                         },
-                        sleep: {
-                            qualityScore: 94,
-                            deepSleep: 2.4,
-                            remSleep: 1.8,
-                            lightSleep: 3.1,
-                            efficiency: 89
+                        stats: {
+                            activeSessions: 2847,
+                            researchStudies: 156,
+                            patientProgress: 87
+                        },
+                        games: {
+                            memory: { progress: 67, lastPlayed: new Date() },
+                            attention: { progress: 84, lastPlayed: new Date() },
+                            reaction: { progress: 56, lastPlayed: new Date() },
+                            logic: { progress: 78, lastPlayed: new Date() },
+                            executive: { progress: 45, lastPlayed: new Date() },
+                            workingMemory: { progress: 62, lastPlayed: new Date() }
+                        },
+                        meditation: {
+                            totalSessions: 23,
+                            totalMinutes: 456,
+                            streakDays: 7
                         }
                     };
-                    this.saveQuantumData(quantumData);
+                    this.saveData(initialData);
                 }
-                this.updateQuantumUI();
+                this.updateUI();
             }
 
-            generateNeuralPattern() {
-                const patterns = [];
-                for (let i = 0; i < 64; i++) {
-                    patterns.push(Math.random());
-                }
-                return patterns;
-            }
-
-            getQuantumData() {
+            getData() {
                 return JSON.parse(localStorage.getItem(this.storageKey)) || {};
             }
 
-            saveQuantumData(data) {
+            saveData(data) {
                 localStorage.setItem(this.storageKey, JSON.stringify(data));
             }
 
-            updateQuantumUI() {
-                const data = this.getQuantumData();
+            updateUI() {
+                const data = this.getData();
                 
                 // Update stats
-                document.getElementById('cognitiveScore').textContent = data.user.cognitiveScore;
-                document.getElementById('nftCollection').textContent = data.nfts.generatedCount;
-                document.getElementById('neuralTokens').textContent = data.user.neuralTokens.toLocaleString();
-                document.getElementById('globalRank').textContent = data.user.globalRank;
+                if (document.getElementById('activeSessions')) {
+                    document.getElementById('activeSessions').textContent = data.stats.activeSessions.toLocaleString();
+                }
+                if (document.getElementById('researchStudies')) {
+                    document.getElementById('researchStudies').textContent = data.stats.researchStudies;
+                }
+                if (document.getElementById('cognitiveScore')) {
+                    document.getElementById('cognitiveScore').textContent = data.user.cognitiveScore;
+                }
+                if (document.getElementById('patientProgress')) {
+                    document.getElementById('patientProgress').textContent = data.stats.patientProgress + '%';
+                }
 
-                // Update neural metrics
-                document.getElementById('alphaWaves').textContent = data.neuralMetrics.alphaWaves;
-                document.getElementById('betaWaves').textContent = data.neuralMetrics.betaWaves;
-                document.getElementById('focusLevel').textContent = data.neuralMetrics.focusLevel;
-                document.getElementById('neuralEfficiency').textContent = data.neuralMetrics.neuralEfficiency;
-
-                // Update sleep metrics
-                document.getElementById('sleepScore').textContent = data.sleep.qualityScore;
+                // Update cognitive metrics
+                if (document.getElementById('focusLevel')) {
+                    document.getElementById('focusLevel').textContent = data.user.focusLevel;
+                }
+                if (document.getElementById('memoryScore')) {
+                    document.getElementById('memoryScore').textContent = data.user.memoryScore;
+                }
+                if (document.getElementById('reactionTime')) {
+                    document.getElementById('reactionTime').textContent = data.user.reactionTime;
+                }
+                if (document.getElementById('cognitiveLoad')) {
+                    document.getElementById('cognitiveLoad').textContent = Math.floor(Math.random() * 20) + 70;
+                }
             }
 
-            addNeuralTokens(amount) {
-                const data = this.getQuantumData();
-                data.user.neuralTokens += amount;
-                this.saveQuantumData(data);
-                this.updateQuantumUI();
-            }
-
-            generateNFT(type, metadata) {
-                const data = this.getQuantumData();
-                const nft = {
-                    id: `${type}-${Date.now()}`,
-                    type: type,
-                    rarity: this.calculateRarity(),
-                    value: this.calculateNFTValue(),
-                    metadata: metadata,
-                    timestamp: new Date().toISOString()
-                };
-                
-                data.nfts.owned.push(nft);
-                data.nfts.generatedCount++;
-                data.nfts.totalValue += nft.value;
-                
-                this.saveQuantumData(data);
-                this.updateQuantumUI();
-                return nft;
-            }
-
-            calculateRarity() {
-                const rand = Math.random();
-                if (rand < 0.01) return 'legendary';
-                if (rand < 0.05) return 'epic';
-                if (rand < 0.15) return 'rare';
-                if (rand < 0.35) return 'uncommon';
-                return 'common';
-            }
-
-            calculateNFTValue() {
-                const baseValue = 0.1;
-                const multiplier = 1 + Math.random() * 2;
-                return Math.round(baseValue * multiplier * 100) / 100;
+            updateGameProgress(gameType, progress) {
+                const data = this.getData();
+                data.games[gameType].progress = Math.min(100, progress + 5);
+                data.games[gameType].lastPlayed = new Date();
+                this.saveData(data);
+                this.updateUI();
             }
         }
 
-        // Advanced 3D Brain Visualization
-        class Brain3DVisualizer {
-            constructor(containerId) {
-                this.container = document.getElementById(containerId);
-                this.scene = null;
-                this.camera = null;
-                this.renderer = null;
-                this.brain = null;
-                this.neurons = [];
-                this.synapses = [];
-                this.init();
-            }
-
-            init() {
-                // Create scene
-                this.scene = new THREE.Scene();
-                
-                // Create camera
-                this.camera = new THREE.PerspectiveCamera(75, this.container.offsetWidth / this.container.offsetHeight, 0.1, 1000);
-                this.camera.position.z = 5;
-
-                // Create renderer
-                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-                this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
-                this.renderer.setClearColor(0x000000, 0);
-                this.container.appendChild(this.renderer.domElement);
-
-                // Create brain structure
-                this.createBrain();
-                this.createNeurons();
-                this.createSynapses();
-
-                // Start animation
-                this.animate();
-            }
-
-            createBrain() {
-                const geometry = new THREE.SphereGeometry(1.5, 32, 32);
-                const material = new THREE.MeshBasicMaterial({
-                    color: 0x00d4ff,
-                    transparent: true,
-                    opacity: 0.1,
-                    wireframe: true
-                });
-                this.brain = new THREE.Mesh(geometry, material);
-                this.scene.add(this.brain);
-            }
-
-            createNeurons() {
-                for (let i = 0; i < 50; i++) {
-                    const geometry = new THREE.SphereGeometry(0.02, 8, 8);
-                    const material = new THREE.MeshBasicMaterial({
-                        color: Math.random() > 0.5 ? 0x00d4ff : 0xb347d9
-                    });
-                    const neuron = new THREE.Mesh(geometry, material);
-                    
-                    const phi = Math.acos(2 * Math.random() - 1);
-                    const theta = 2 * Math.PI * Math.random();
-                    const radius = 1.3;
-                    
-                    neuron.position.x = radius * Math.sin(phi) * Math.cos(theta);
-                    neuron.position.y = radius * Math.sin(phi) * Math.sin(theta);
-                    neuron.position.z = radius * Math.cos(phi);
-                    
-                    this.neurons.push(neuron);
-                    this.scene.add(neuron);
-                }
-            }
-
-            createSynapses() {
-                for (let i = 0; i < 30; i++) {
-                    const neuron1 = this.neurons[Math.floor(Math.random() * this.neurons.length)];
-                    const neuron2 = this.neurons[Math.floor(Math.random() * this.neurons.length)];
-                    
-                    if (neuron1 !== neuron2) {
-                        const geometry = new THREE.BufferGeometry().setFromPoints([
-                            neuron1.position,
-                            neuron2.position
-                        ]);
-                        const material = new THREE.LineBasicMaterial({
-                            color: 0x00d4ff,
-                            transparent: true,
-                            opacity: 0.3
-                        });
-                        const synapse = new THREE.Line(geometry, material);
-                        this.synapses.push(synapse);
-                        this.scene.add(synapse);
-                    }
-                }
-            }
-
-            animate() {
-                requestAnimationFrame(() => this.animate());
-
-                // Rotate brain
-                if (this.brain) {
-                    this.brain.rotation.x += 0.005;
-                    this.brain.rotation.y += 0.01;
-                }
-
-                // Animate neurons
-                this.neurons.forEach((neuron, index) => {
-                    const time = Date.now() * 0.001;
-                    neuron.scale.setScalar(1 + 0.5 * Math.sin(time * 2 + index));
-                });
-
-                // Animate synapses
-                this.synapses.forEach((synapse, index) => {
-                    const time = Date.now() * 0.001;
-                    synapse.material.opacity = 0.1 + 0.3 * Math.sin(time * 3 + index);
-                });
-
-                this.renderer.render(this.scene, this.camera);
-            }
-        }
-
-        // Advanced Chart System
-        class QuantumCharts {
+        // Chart Management
+        class ChartManager {
             constructor() {
                 this.charts = {};
                 this.initializeCharts();
@@ -1835,7 +1297,6 @@
 
             initializeCharts() {
                 this.createPerformanceChart();
-                this.createSleepChart();
                 this.createMeditationChart();
             }
 
@@ -1843,23 +1304,19 @@
                 const ctx = document.getElementById('performanceChart');
                 if (!ctx) return;
 
-                const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 400);
-                gradient.addColorStop(0, 'rgba(0, 212, 255, 0.8)');
-                gradient.addColorStop(1, 'rgba(0, 212, 255, 0.1)');
-
                 this.charts.performance = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                         datasets: [{
-                            label: 'Neural Performance',
+                            label: 'Cognitive Performance',
                             data: [85, 89, 92, 88, 95, 97, 94],
-                            borderColor: '#00d4ff',
-                            backgroundColor: gradient,
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
                             borderWidth: 3,
                             fill: true,
                             tension: 0.4,
-                            pointBackgroundColor: '#00d4ff',
+                            pointBackgroundColor: '#2563eb',
                             pointBorderColor: '#ffffff',
                             pointBorderWidth: 2,
                             pointRadius: 6
@@ -1887,33 +1344,6 @@
                 });
             }
 
-            createSleepChart() {
-                const ctx = document.getElementById('sleepChart');
-                if (!ctx) return;
-
-                this.charts.sleep = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Deep Sleep', 'REM Sleep', 'Light Sleep'],
-                        datasets: [{
-                            data: [2.4, 1.8, 3.1],
-                            backgroundColor: ['#4a90e2', '#7ed321', '#f5a623'],
-                            borderWidth: 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: { color: '#ffffff' }
-                            }
-                        }
-                    }
-                });
-            }
-
             createMeditationChart() {
                 const ctx = document.getElementById('meditationChart');
                 if (!ctx) return;
@@ -1925,10 +1355,10 @@
                         datasets: [{
                             label: 'Meditation Progress',
                             data: [85, 92, 78, 88, 90],
-                            borderColor: '#b347d9',
-                            backgroundColor: 'rgba(179, 71, 217, 0.2)',
+                            borderColor: '#7c3aed',
+                            backgroundColor: 'rgba(124, 58, 237, 0.2)',
                             borderWidth: 2,
-                            pointBackgroundColor: '#b347d9',
+                            pointBackgroundColor: '#7c3aed',
                             pointBorderColor: '#ffffff',
                             pointBorderWidth: 2
                         }]
@@ -1953,366 +1383,139 @@
             }
         }
 
-        // Particle System
-        class ParticleSystem {
-            constructor() {
-                this.container = document.getElementById('particleField');
-                this.particles = [];
-                this.createParticles();
-                this.animate();
-            }
-
-            createParticles() {
-                for (let i = 0; i < 50; i++) {
-                    this.createParticle();
-                }
-            }
-
-            createParticle() {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = (5 + Math.random() * 10) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                this.container.appendChild(particle);
-                this.particles.push(particle);
-
-                setTimeout(() => {
-                    particle.remove();
-                    this.particles = this.particles.filter(p => p !== particle);
-                }, 15000);
-            }
-
-            animate() {
-                setInterval(() => {
-                    if (this.particles.length < 50) {
-                        this.createParticle();
-                    }
-                }, 300);
-            }
-        }
-
-        // NFT System
-        class NFTSystem {
-            constructor(dataManager) {
-                this.dataManager = dataManager;
-            }
-
-            generateNeuralNFT() {
-                const data = this.dataManager.getQuantumData();
-                const metadata = {
-                    neuralPattern: data.user.neuralPattern,
-                    cognitiveScore: data.user.cognitiveScore,
-                    timestamp: Date.now(),
-                    uniqueId: this.generateUniqueId()
-                };
-
-                const nft = this.dataManager.generateNFT('neural-pattern', metadata);
-                this.showNFTMinted(nft);
-                return nft;
-            }
-
-            generateAchievementNFT(achievementId) {
-                const metadata = {
-                    achievement: achievementId,
-                    timestamp: Date.now(),
-                    uniqueId: this.generateUniqueId()
-                };
-
-                const nft = this.dataManager.generateNFT('achievement', metadata);
-                this.showNFTMinted(nft);
-                return nft;
-            }
-
-            generateSleepNFT() {
-                const data = this.dataManager.getQuantumData();
-                const metadata = {
-                    sleepPattern: {
-                        quality: data.sleep.qualityScore,
-                        deep: data.sleep.deepSleep,
-                        rem: data.sleep.remSleep,
-                        efficiency: data.sleep.efficiency
-                    },
-                    timestamp: Date.now(),
-                    uniqueId: this.generateUniqueId()
-                };
-
-                const nft = this.dataManager.generateNFT('sleep-pattern', metadata);
-                this.showNFTMinted(nft);
-                return nft;
-            }
-
-            generateUniqueId() {
-                return Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
-            }
-
-            showNFTMinted(nft) {
-                showQuantumNotification(`🎉 NFT Minted! Rarity: ${nft.rarity.toUpperCase()} | Value: ${nft.value} ETH`);
-                this.dataManager.addNeuralTokens(100);
-            }
-        }
-
-        // Neural Network Simulator
-        class NeuralNetworkSimulator {
-            constructor() {
-                this.container = document.getElementById('eegSimulation');
-                if (this.container) {
-                    this.createNeuralNetwork();
-                    this.startSimulation();
-                }
-            }
-
-            createNeuralNetwork() {
-                for (let i = 0; i < 30; i++) {
-                    const neuron = document.createElement('div');
-                    neuron.className = 'neuron-advanced';
-                    neuron.style.left = Math.random() * 90 + '%';
-                    neuron.style.top = Math.random() * 90 + '%';
-                    neuron.style.animationDelay = Math.random() * 2 + 's';
-                    this.container.appendChild(neuron);
-                }
-
-                for (let i = 0; i < 20; i++) {
-                    const synapse = document.createElement('div');
-                    synapse.className = 'synapse';
-                    synapse.style.left = Math.random() * 80 + '%';
-                    synapse.style.top = Math.random() * 80 + '%';
-                    synapse.style.width = (50 + Math.random() * 100) + 'px';
-                    synapse.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    synapse.style.animationDelay = Math.random() * 2 + 's';
-                    this.container.appendChild(synapse);
-                }
-            }
-
-            startSimulation() {
-                setInterval(() => {
-                    this.updateNeuralActivity();
-                }, 2000);
-            }
-
-            updateNeuralActivity() {
-                const neurons = this.container.querySelectorAll('.neuron-advanced');
-                neurons.forEach(neuron => {
-                    if (Math.random() < 0.3) {
-                        neuron.style.background = Math.random() > 0.5 ? '#00d4ff' : '#b347d9';
-                        neuron.style.animationDuration = (1 + Math.random()) + 's';
-                    }
-                });
-            }
-        }
-
-        // Initialize Systems
-        let quantumDataManager, brain3D, quantumCharts, particleSystem, nftSystem, neuralSimulator;
+        // Initialize systems
+        let dataManager, chartManager;
+        let focusTimer = null;
+        let focusTimeLeft = 25 * 60; // 25 minutes
+        let currentSound = null;
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 NeuroX Quantum Loading...');
-
-            // Initialize advanced systems
-            quantumDataManager = new QuantumDataManager();
-            quantumCharts = new QuantumCharts();
-            particleSystem = new ParticleSystem();
-            nftSystem = new NFTSystem(quantumDataManager);
-            neuralSimulator = new NeuralNetworkSimulator();
-
-            // Initialize 3D brain if Three.js is available
-            if (typeof THREE !== 'undefined') {
-                setTimeout(() => {
-                    brain3D = new Brain3DVisualizer('brain3D');
-                }, 1000);
-            }
-
-            // Start real-time updates
-            setInterval(() => {
-                updateRealTimeMetrics();
-            }, 3000);
-
-            // Show welcome notification
+            console.log('🚀 NeuroMind Pro Loading...');
+            
+            dataManager = new DataManager();
+            chartManager = new ChartManager();
+            
+            // Real-time updates
+            setInterval(updateRealTimeMetrics, 5000);
+            
+            // Welcome notification
             setTimeout(() => {
-                showQuantumNotification('🚀 Quantum Neural System Online! All systems synchronized.');
+                showNotification('Welcome to NeuroMind Pro! All systems are ready.');
             }, 2000);
         });
 
-        // Navigation System
-        function navigateToPage(page) {
-            console.log('Navigating to:', page);
+        // Navigation
+        function showPage(pageId) {
+            console.log('Navigating to:', pageId);
 
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Update navigation
+            document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
 
-            const targetTab = document.querySelector(`.nav-tab[data-page="${page}"]`);
-            const targetPage = document.getElementById(page);
+            const targetBtn = document.querySelector(`.nav-button[data-page="${pageId}"]`);
+            const targetPage = document.getElementById(pageId);
 
-            if (targetTab && targetPage) {
-                targetTab.classList.add('active');
+            if (targetBtn && targetPage) {
+                targetBtn.classList.add('active');
                 targetPage.classList.add('active');
-                showQuantumNotification(`🌌 Switched to ${page.charAt(0).toUpperCase() + page.slice(1)} Quantum Interface`);
+                showNotification(`Switched to ${pageId.charAt(0).toUpperCase() + pageId.slice(1)} section`);
             }
         }
 
-        // Challenge System
-        function startQuantumChallenge() {
-            showQuantumNotification('🧠 Initializing Quantum Challenge Protocol...');
+        // Assessment
+        function startAssessment() {
+            showNotification('Starting comprehensive cognitive assessment...');
             
             setTimeout(() => {
-                const challenges = ['Neural Pattern Recognition', 'Quantum Memory Sequence', 'Holographic Logic Puzzle'];
-                const selectedChallenge = challenges[Math.floor(Math.random() * challenges.length)];
-                showQuantumNotification(`🎮 ${selectedChallenge} Activated!`);
-                
-                // Simulate challenge completion
-                setTimeout(() => {
-                    const score = Math.round(80 + Math.random() * 20);
-                    quantumDataManager.addNeuralTokens(50);
-                    showQuantumNotification(`✨ Challenge Complete! Score: ${score}/100 | +50 Neural Tokens`);
-                    
-                    if (score > 95) {
-                        nftSystem.generateAchievementNFT('quantum-master');
-                    }
-                }, 5000);
-            }, 2000);
+                showNotification('Assessment complete! Results updated in dashboard.');
+                dataManager.updateGameProgress('assessment', 0);
+            }, 3000);
         }
 
-        function startAdvancedChallenge(type) {
-            const challengeTypes = {
-                neural: 'Neural Network Training',
-                quantum: 'Quantum Reaction Training',
-                holographic: 'Holographic Logic Puzzles'
+        // Game Functions
+        function startGame(gameType) {
+            const gameNames = {
+                memory: 'Memory Palace Training',
+                attention: 'Focus Master Challenge',
+                reaction: 'Quick Response Training',
+                logic: 'Logic Builder Exercise',
+                executive: 'Executive Control Task',
+                'working-memory': 'Working Memory Enhancement'
             };
-            
-            showQuantumNotification(`🚀 Starting ${challengeTypes[type]}...`);
-            
-            setTimeout(() => {
-                const score = Math.round(70 + Math.random() * 30);
-                quantumDataManager.addNeuralTokens(75);
-                showQuantumNotification(`🏆 ${challengeTypes[type]} Complete! Score: ${score}/100`);
-            }, 3000);
-        }
 
-        // NFT Functions
-        function mintNeuralNFT() {
-            showQuantumNotification('🧠 Analyzing neural patterns...');
+            showNotification(`Starting ${gameNames[gameType]}...`);
             
-            setTimeout(() => {
-                const nft = nftSystem.generateNeuralNFT();
-                showQuantumNotification(`💎 Neural NFT Generated! Rarity: ${nft.rarity} | Value: ${nft.value} ETH`);
-            }, 2000);
-        }
-
-        function generateNeuralNFT() {
-            mintNeuralNFT();
-        }
-
-        function generateSleepNFT() {
-            showQuantumNotification('🌙 Processing sleep patterns...');
+            const modal = document.getElementById('gameModal');
+            const title = document.getElementById('gameTitle');
+            const content = document.getElementById('gameContent');
             
-            setTimeout(() => {
-                const nft = nftSystem.generateSleepNFT();
-                showQuantumNotification(`💎 Sleep Pattern NFT Generated! Capturing your optimal REM cycles.`);
-            }, 2000);
-        }
-
-        function mintNewNFT() {
-            const nftTypes = ['cognitive-breakthrough', 'neural-evolution', 'quantum-consciousness'];
-            const randomType = nftTypes[Math.floor(Math.random() * nftTypes.length)];
-            
-            showQuantumNotification('✨ Creating unique NFT from your latest achievements...');
-            
-            setTimeout(() => {
-                const nft = quantumDataManager.generateNFT(randomType, { generated: true });
-                showQuantumNotification(`🎉 New NFT Created! Type: ${randomType} | Rarity: ${nft.rarity}`);
-            }, 3000);
-        }
-
-        function mintAchievementNFT(achievementId) {
-            showQuantumNotification('🏆 Minting achievement NFT...');
-            
-            setTimeout(() => {
-                const nft = nftSystem.generateAchievementNFT(achievementId);
-                document.getElementById('achievementModal').classList.remove('active');
-            }, 2000);
-        }
-
-        function viewNFTDetails(nftId) {
-            const modal = document.getElementById('nftModal');
-            const content = document.getElementById('nftModalContent');
-            
+            title.textContent = gameNames[gameType];
             content.innerHTML = `
-                <div style="text-align: center; margin: 2rem 0;">
-                    <div style="width: 200px; height: 200px; background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); border-radius: 15px; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; font-size: 4rem;">
-                        🧠
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 2rem;">🎮</div>
+                    <h3 style="color: var(--text-white); margin-bottom: 1rem;">Game Session Active</h3>
+                    <p style="margin-bottom: 2rem; opacity: 0.8;">Training in progress... Focus on the exercises.</p>
+                    <div style="background: var(--glass-bg); padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="gameProgress" style="width: 0%;"></div>
+                        </div>
+                        <p style="margin-top: 1rem;">Progress: <span id="gameProgressText">0%</span></p>
                     </div>
-                    <h3 class="quantum-text">${nftId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h3>
-                    <div style="margin: 2rem 0;">
-                        <div class="stat-number" style="font-size: 2rem;">0.45 ETH</div>
-                        <div class="stat-label">Current Value</div>
-                    </div>
-                    <div style="background: var(--glass-bg); padding: 1rem; border-radius: 10px; margin: 2rem 0;">
-                        <h4>Metadata</h4>
-                        <p>Neural Pattern Complexity: 94.7%</p>
-                        <p>Cognitive Signature: Verified</p>
-                        <p>Blockchain: Ethereum</p>
-                        <p>Minted: ${new Date().toLocaleDateString()}</p>
-                    </div>
-                    <div style="display: flex; gap: 1rem; justify-content: center;">
-                        <button class="btn-quantum btn-primary" onclick="tradeNFT('${nftId}')">
-                            <i class="fas fa-exchange-alt"></i>
-                            Trade NFT
-                        </button>
-                        <button class="btn-quantum btn-secondary" onclick="shareNFT('${nftId}')">
-                            <i class="fas fa-share"></i>
-                            Share NFT
-                        </button>
-                    </div>
+                    <button class="btn btn-accent" onclick="completeGame('${gameType}')">
+                        <i class="fas fa-check"></i>
+                        Complete Session
+                    </button>
                 </div>
             `;
             
             modal.classList.add('active');
+            
+            // Simulate game progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15 + 5;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(progressInterval);
+                }
+                document.getElementById('gameProgress').style.width = progress + '%';
+                document.getElementById('gameProgressText').textContent = Math.round(progress) + '%';
+            }, 500);
         }
 
-        function tradeNFT(nftId) {
-            showQuantumNotification(`💼 Opening marketplace for ${nftId}...`);
-            closeQuantumModal('nftModal');
+        function completeGame(gameType) {
+            dataManager.updateGameProgress(gameType, 0);
+            closeModal('gameModal');
+            showNotification('Training session completed! Progress updated.');
         }
 
-        function shareNFT(nftId) {
-            showQuantumNotification(`📱 Sharing ${nftId} on social networks...`);
-            closeQuantumModal('nftModal');
-        }
-
-        function purchaseNFT(nftId) {
-            showQuantumNotification(`💰 Initiating purchase for ${nftId}...`);
-        }
-
-        // Sleep Functions
-        function startSleepTracking() {
-            showQuantumNotification('🌙 Quantum sleep tracking initiated...');
+        // Meditation Functions
+        function startMeditation(type) {
+            const meditationTypes = {
+                beach: 'Beach Meditation',
+                garden: 'Garden Tranquility',
+                yoga: 'Yoga Flow',
+                breathing: 'Breathing Techniques'
+            };
+            
+            showNotification(`Starting ${meditationTypes[type]} session...`);
             
             setTimeout(() => {
-                showQuantumNotification('📊 Sleep patterns captured! Generating optimization recommendations...');
-            }, 3000);
+                showNotification('Meditation session in progress. Focus on your breathing.');
+            }, 2000);
         }
 
-        function optimizeSleep() {
-            showQuantumNotification('🤖 AI analyzing your sleep patterns...');
-            
-            setTimeout(() => {
-                showQuantumNotification('✨ Sleep optimization complete! Personalized recommendations updated.');
-            }, 4000);
-        }
-
-        // Focus Functions
-        let focusTimer = null;
-        let focusTimeLeft = 25 * 60; // 25 minutes
-
-        function startQuantumPomodoro() {
+        // Focus Timer
+        function startFocusTimer() {
             if (focusTimer) {
                 clearInterval(focusTimer);
                 focusTimer = null;
                 document.getElementById('focusTimer').textContent = '25:00';
-                showQuantumNotification('⏸️ Quantum focus session paused');
+                showNotification('Focus session paused');
                 return;
             }
 
-            showQuantumNotification('🎯 Quantum focus session initiated...');
+            showNotification('Focus session started. Stay concentrated!');
             
             focusTimer = setInterval(() => {
                 focusTimeLeft--;
@@ -2325,85 +1528,101 @@
                     clearInterval(focusTimer);
                     focusTimer = null;
                     focusTimeLeft = 25 * 60;
-                    quantumDataManager.addNeuralTokens(25);
-                    showQuantumNotification('🎉 Quantum focus session complete! +25 Neural Tokens');
+                    showNotification('Focus session complete! Great work!');
                 }
             }, 1000);
         }
 
-        function startAIMeditation() {
-            showQuantumNotification('🧘‍♀️ Initializing AI-guided meditation...');
-            
-            setTimeout(() => {
-                const meditationTypes = ['Quantum Consciousness', 'Neural Harmony', 'Cosmic Awareness'];
-                const selectedType = meditationTypes[Math.floor(Math.random() * meditationTypes.length)];
-                showQuantumNotification(`🌌 ${selectedType} Meditation Activated`);
-            }, 2000);
-        }
-
-        function playQuantumSound(soundType) {
+        // Sound Functions
+        function playSound(soundType) {
             const sounds = {
-                forest: '🌲 Quantum Forest Frequencies',
-                ocean: '🌊 Neural Ocean Waves',
-                space: '🚀 Cosmic Background Radiation',
-                rain: '🌧️ Digital Rain Patterns'
+                rain: 'Rain Sounds',
+                ocean: 'Ocean Waves',
+                forest: 'Forest Ambience',
+                birds: 'Bird Songs'
             };
             
-            document.getElementById('currentQuantumSound').textContent = sounds[soundType];
+            currentSound = sounds[soundType];
+            document.getElementById('currentSound').textContent = currentSound;
             document.getElementById('soundControls').style.display = 'block';
-            showQuantumNotification(`🎵 Playing: ${sounds[soundType]}`);
+            showNotification(`Playing: ${currentSound}`);
         }
 
-        function stopQuantumSound() {
+        function stopSound() {
+            currentSound = null;
             document.getElementById('soundControls').style.display = 'none';
-            showQuantumNotification('🔇 Quantum soundscape stopped');
+            showNotification('Sound stopped');
         }
 
-        // Neural Scan
-        function startNeuralScan() {
-            showQuantumNotification('🧠 Initiating deep neural scan...');
+        // Research Functions
+        function viewResearch(researchType) {
+            const researchTypes = {
+                'neural-lab': 'Advanced Neural Laboratory Research',
+                'enhancement': 'Brain Enhancement Studies',
+                'sleep-memory': 'Sleep & Memory Research',
+                'memory-activities': 'Memory Enhancement Activities'
+            };
+            
+            showNotification(`Opening ${researchTypes[researchType]}...`);
+        }
+
+        // Consultation Functions
+        function bookConsultation(doctor) {
+            const doctors = {
+                'dr-chen': 'Dr. Sarah Chen',
+                'dr-rodriguez': 'Dr. Emily Rodriguez'
+            };
+            
+            showNotification(`Booking consultation with ${doctors[doctor]}...`);
+        }
+
+        function scheduleVisit() {
+            showNotification('Scheduling visit to NeuroMind Pro Center...');
+        }
+
+        function bookEvening() {
+            showNotification('Booking evening therapy session...');
+        }
+
+        // Dashboard Functions
+        function runFullScan() {
+            showNotification('Starting comprehensive cognitive scan...');
             
             setTimeout(() => {
-                showQuantumNotification('📊 Neural patterns analyzed! Generating cognitive insights...');
+                showNotification('Cognitive scan in progress... Analyzing brain patterns.');
                 
                 setTimeout(() => {
-                    showQuantumNotification('✨ Neural scan complete! Cognitive enhancement suggestions updated.');
-                    quantumDataManager.addNeuralTokens(30);
-                }, 3000);
+                    showNotification('Full cognitive scan complete! Results updated.');
+                    updateRealTimeMetrics();
+                }, 4000);
             }, 2000);
-        }
-
-        // Real-time Updates
-        function updateRealTimeMetrics() {
-            const data = quantumDataManager.getQuantumData();
-            
-            // Simulate real-time neural activity
-            const alphaVariation = (Math.random() - 0.5) * 2;
-            const betaVariation = (Math.random() - 0.5) * 3;
-            const focusVariation = Math.round((Math.random() - 0.5) * 10);
-            const efficiencyVariation = Math.round((Math.random() - 0.5) * 5);
-
-            data.neuralMetrics.alphaWaves = Math.max(8, Math.min(15, data.neuralMetrics.alphaWaves + alphaVariation));
-            data.neuralMetrics.betaWaves = Math.max(13, Math.min(30, data.neuralMetrics.betaWaves + betaVariation));
-            data.neuralMetrics.focusLevel = Math.max(60, Math.min(100, data.neuralMetrics.focusLevel + focusVariation));
-            data.neuralMetrics.neuralEfficiency = Math.max(70, Math.min(100, data.neuralMetrics.neuralEfficiency + efficiencyVariation));
-
-            quantumDataManager.saveQuantumData(data);
-            quantumDataManager.updateQuantumUI();
         }
 
         // Utility Functions
-        function showQuantumNotification(message) {
-            const notification = document.getElementById('quantumNotification');
-            notification.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div style="font-size: 1.5rem;">🌌</div>
-                    <div>
-                        <div style="font-weight: 600;">Quantum System</div>
-                        <div style="font-size: 0.9rem; opacity: 0.8;">${message}</div>
-                    </div>
-                </div>
-            `;
+        function updateRealTimeMetrics() {
+            // Simulate real-time data updates
+            const data = dataManager.getData();
+            
+            // Small random variations
+            const alphaVariation = (Math.random() - 0.5) * 2;
+            const betaVariation = (Math.random() - 0.5) * 3;
+            
+            const newAlpha = Math.max(8, Math.min(15, 12.4 + alphaVariation));
+            const newBeta = Math.max(13, Math.min(30, 18.7 + betaVariation));
+            
+            if (document.getElementById('alphaWaves')) {
+                document.getElementById('alphaWaves').textContent = newAlpha.toFixed(1);
+            }
+            if (document.getElementById('betaWaves')) {
+                document.getElementById('betaWaves').textContent = newBeta.toFixed(1);
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
             notification.classList.add('show');
             
             setTimeout(() => {
@@ -2411,31 +1630,25 @@
             }, 4000);
         }
 
-        function closeQuantumModal(modalId) {
+        function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
         }
 
         // Global function assignments
-        window.navigateToPage = navigateToPage;
-        window.startQuantumChallenge = startQuantumChallenge;
-        window.startAdvancedChallenge = startAdvancedChallenge;
-        window.mintNeuralNFT = mintNeuralNFT;
-        window.generateNeuralNFT = generateNeuralNFT;
-        window.generateSleepNFT = generateSleepNFT;
-        window.mintNewNFT = mintNewNFT;
-        window.mintAchievementNFT = mintAchievementNFT;
-        window.viewNFTDetails = viewNFTDetails;
-        window.tradeNFT = tradeNFT;
-        window.shareNFT = shareNFT;
-        window.purchaseNFT = purchaseNFT;
-        window.startSleepTracking = startSleepTracking;
-        window.optimizeSleep = optimizeSleep;
-        window.startQuantumPomodoro = startQuantumPomodoro;
-        window.startAIMeditation = startAIMeditation;
-        window.playQuantumSound = playQuantumSound;
-        window.stopQuantumSound = stopQuantumSound;
-        window.startNeuralScan = startNeuralScan;
-        window.closeQuantumModal = closeQuantumModal;
+        window.showPage = showPage;
+        window.startAssessment = startAssessment;
+        window.startGame = startGame;
+        window.completeGame = completeGame;
+        window.startMeditation = startMeditation;
+        window.startFocusTimer = startFocusTimer;
+        window.playSound = playSound;
+        window.stopSound = stopSound;
+        window.viewResearch = viewResearch;
+        window.bookConsultation = bookConsultation;
+        window.scheduleVisit = scheduleVisit;
+        window.bookEvening = bookEvening;
+        window.runFullScan = runFullScan;
+        window.closeModal = closeModal;
     </script>
 </body>
 </html>
