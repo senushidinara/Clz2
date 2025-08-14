@@ -2816,7 +2816,7 @@
             <!-- Meditation & Breathing Section -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
                 <!-- Breathing Exercise -->
-                <div style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fb5a20f82efa948b3924d1e6bbf15aecd?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(46, 204, 113, 0.3); cursor: pointer;" onclick="startFocusGame()">
+                <div style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F14afa2845fd04fcaa6f413ba5b8e87ab?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(46, 204, 113, 0.3); cursor: pointer;" onclick="startBreathingSession()">
                     <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 1.5rem; backdrop-filter: blur(10px);">
                         <h3 style="color: #2ecc71; margin-bottom: 1rem;">🫁 Breathing Exercises</h3>
                         <p style="color: #666; margin-bottom: 1rem;">Guided breathing sessions to calm your mind and prepare for sleep</p>
@@ -2825,7 +2825,7 @@
                 </div>
 
                 <!-- Yoga & Meditation -->
-                <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F1e6e4d70768b44f1b7442ab14dea0379?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(155, 89, 182, 0.3); cursor: pointer;" onclick="navigateToPage('memory')">
+                <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F0771d46462034bcda6882d979db537bc?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(155, 89, 182, 0.3); cursor: pointer;" onclick="startYogaSession()">
                     <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 1.5rem; backdrop-filter: blur(10px);">
                         <h3 style="color: #8e44ad; margin-bottom: 1rem;">🧘‍♀️ Yoga & Meditation</h3>
                         <p style="color: #666; margin-bottom: 1rem;">Mindfulness practices to enhance relaxation and mental clarity</p>
@@ -2833,12 +2833,39 @@
                     </div>
                 </div>
 
-                <!-- Calming Environments -->
-                <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F6e88981895ac440ab5494f3ce2e89d4c?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(52, 152, 219, 0.3); cursor: pointer;" onclick="playAmbientSounds()">
+                <!-- Garden Environments -->
+                <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F00f62e7258b749b1b75913e9611b4bc3?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(52, 152, 219, 0.3); cursor: pointer;" onclick="openGardenEnvironment()">
                     <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 1.5rem; backdrop-filter: blur(10px);">
-                        <h3 style="color: #3498db; margin-bottom: 1rem;">🌿 Calming Environments</h3>
-                        <p style="color: #666; margin-bottom: 1rem;">Ambient sounds and nature scenes to create the perfect atmosphere</p>
-                        <div style="color: #3498db; font-weight: bold;">Play Sounds →</div>
+                        <h3 style="color: #3498db; margin-bottom: 1rem;">🌿 Garden Sanctuary</h3>
+                        <p style="color: #666; margin-bottom: 1rem;">Peaceful garden environments with natural sounds for deep relaxation</p>
+                        <div style="color: #3498db; font-weight: bold;">Enter Garden →</div>
+                    </div>
+                </div>
+
+                <!-- Sea Environments -->
+                <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fef7d0039c9e24561ad28004e59286a33?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(52, 152, 219, 0.3); cursor: pointer;" onclick="openSeaEnvironment()">
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 1.5rem; backdrop-filter: blur(10px);">
+                        <h3 style="color: #3498db; margin-bottom: 1rem;">🌊 Ocean Waves</h3>
+                        <p style="color: #666; margin-bottom: 1rem;">Calming ocean sounds and coastal scenery for ultimate relaxation</p>
+                        <div style="color: #3498db; font-weight: bold;">Visit Beach →</div>
+                    </div>
+                </div>
+
+                <!-- Evening Counseling -->
+                <div style="background: linear-gradient(135deg, rgba(230, 126, 34, 0.1), rgba(211, 84, 0, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Faa8ae6e675b5484294c1214676ba2aca?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(230, 126, 34, 0.3); cursor: pointer;" onclick="startCounselingSession()">
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 1.5rem; backdrop-filter: blur(10px);">
+                        <h3 style="color: #e67e22; margin-bottom: 1rem;">💬 Evening Counseling</h3>
+                        <p style="color: #666; margin-bottom: 1rem;">Professional guidance for mental wellness and stress management</p>
+                        <div style="color: #e67e22; font-weight: bold;">Book Session →</div>
+                    </div>
+                </div>
+
+                <!-- Physical Activity -->
+                <div style="background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(22, 160, 133, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fa30179ec47264a19b488bdb89ffc6848?format=webp&width=800') center/cover; border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); border: 2px solid rgba(26, 188, 156, 0.3); cursor: pointer;" onclick="startPhysicalActivity()">
+                    <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 1.5rem; backdrop-filter: blur(10px);">
+                        <h3 style="color: #1abc9c; margin-bottom: 1rem;">🏃‍♀️ Physical Activity</h3>
+                        <p style="color: #666; margin-bottom: 1rem;">Track your daily activities and optimize nutrition for brain health</p>
+                        <div style="color: #1abc9c; font-weight: bold;">Start Activity →</div>
                     </div>
                 </div>
             </div>
@@ -4092,7 +4119,7 @@
                     currentPuzzle++;
 
                     if (currentPuzzle < puzzles.length) {
-                        statusDiv.innerHTML = `��� Correct! Score: ${score}/${puzzles.length}`;
+                        statusDiv.innerHTML = `✅ Correct! Score: ${score}/${puzzles.length}`;
                         setTimeout(() => {
                             showPuzzle();
                             statusDiv.textContent = 'Find the missing pattern!';
@@ -4919,7 +4946,7 @@
                             if (timerProgress) timerProgress.style.strokeDashoffset = '565';
 
                             createConfetti();
-                            showToast("🎉 Focus session completed! Great job!");
+                            showToast("��� Focus session completed! Great job!");
                             if (window.showSoundEffect) showSoundEffect("🎯 SESSION COMPLETE!");
                         }
                     }, 1000);
@@ -5154,7 +5181,7 @@
                     ]
                 },
                 bodyscan: {
-                    title: '🧘‍♂️ Body Scan Meditation',
+                    title: '🧘‍���️ Body Scan Meditation',
                     background: 'linear-gradient(135deg, #4FC3F7 0%, #81C784 50%, #AED581 100%)',
                     instructions: [
                         '🧠 Start with your head',
@@ -5288,7 +5315,7 @@
 
             instructions.innerHTML = `
                 <div style="font-size: 1.5rem; color: rgba(255,255,255,0.9);">
-                    🧘���♀️ Session in progress...<br>
+                    🧘‍♀️ Session in progress...<br>
                     <small style="opacity: 0.8;">Focus on your ${technique} practice</small>
                 </div>
             `;
