@@ -174,10 +174,13 @@
             animation: fadeInUp 0.6s ease-out;
             position: relative;
             z-index: 2;
+            min-height: 50vh;
         }
 
         .page.active {
-            display: block;
+            display: block !important;
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Advanced 3D Cards */
@@ -5029,7 +5032,7 @@
 
             const techniques = {
                 breathwork: {
-                    title: '���� Breathwork Meditation',
+                    title: '🫁 Breathwork Meditation',
                     background: 'linear-gradient(135deg, #FF6B6B 0%, #FFB6C1 50%, #FFA07A 100%)',
                     instructions: [
                         '🔵 Inhale for 4 counts',
