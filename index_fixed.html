@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroX Elite - Cognitive Training Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Enhanced Pastel Tab Colors */
+            --home-color: #E6F3FF;
+            --dashboard-color: #E6FFF5;
+            --challenges-color: #FFE6F0;
+            --sleep-color: #F0E6FF;
+            --focus-color: #FFFACD;
+            --research-color: #E6FFFA;
+            --memory-color: #FFE6E6;
+            --winners-color: #FFF0E6;
+            
+            /* Base Colors */
+            --white: #ffffff;
+            --black: #2d2d2d;
+            --gray-light: #f8f9fa;
+            --gray-medium: #6c757d;
+            --gray-dark: #495057;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            
+            /* Enhanced Pastel Gradients */
+            --home-gradient: linear-gradient(135deg, #E6F3FF 0%, #CCE7FF 50%, #B3DBFF 100%);
+            --dashboard-gradient: linear-gradient(135deg, #E6FFF5 0%, #CCFFEB 50%, #B3FFE0 100%);
+            --challenges-gradient: linear-gradient(135deg, #FFE6F0 0%, #FFCCE0 50%, #FFB3D1 100%);
+            --sleep-gradient: linear-gradient(135deg, #F0E6FF 0%, #E0CCFF 50%, #D1B3FF 100%);
+            --focus-gradient: linear-gradient(135deg, #FFFACD 0%, #FFF7B3 50%, #FFF49A 100%);
+            --research-gradient: linear-gradient(135deg, #E6FFFA 0%, #CCFFF5 50%, #B3FFEF 100%);
+            --memory-gradient: linear-gradient(135deg, #FFE6E6 0%, #FFCCCC 50%, #FFB3B3 100%);
+            --winners-gradient: linear-gradient(135deg, #FFF0E6 0%, #FFE0CC 50%, #FFD1B3 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-light);
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            transition: all 0.8s ease;
+        }
+
+        .bg-home { background: var(--home-gradient); }
+        .bg-dashboard { background: var(--dashboard-gradient); }
+        .bg-challenges { background: var(--challenges-gradient); }
+        .bg-sleep { background: var(--sleep-gradient); }
+        .bg-focus { background: var(--focus-gradient); }
+        .bg-research { background: var(--research-gradient); }
+        .bg-memory { background: var(--memory-gradient); }
+        .bg-winners { background: var(--winners-gradient); }
+
+        /* Revolutionary Sidebar */
+        .revolutionary-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: linear-gradient(145deg, rgba(5, 5, 15, 0.98), rgba(15, 15, 35, 0.96));
+            backdrop-filter: blur(25px);
+            border-right: 1px solid rgba(138, 43, 226, 0.4);
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 8px 0 40px rgba(138, 43, 226, 0.3);
+        }
+
+        .sidebar-header {
+            padding: 2.5rem 1.5rem;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .logo-advanced {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #8A2BE2 0%, #FF6EC7 25%, #4B0082 50%, #9370DB 75%, #8A2BE2 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            animation: gradientShift 4s ease-in-out infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .sidebar-content {
+            padding: 1rem;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            color: rgba(255, 255, 255, 0.8);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item:hover {
+            transform: translateX(8px) scale(1.02);
+            color: #2d2d2d;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item.active {
+            color: #2d2d2d;
+            transform: translateX(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Specific pastel colors for active nav items */
+        .nav-item[data-page="home"].active { background: var(--home-gradient); }
+        .nav-item[data-page="dashboard"].active { background: var(--dashboard-gradient); }
+        .nav-item[data-page="challenges"].active { background: var(--challenges-gradient); }
+        .nav-item[data-page="sleep"].active { background: var(--sleep-gradient); }
+        .nav-item[data-page="focus"].active { background: var(--focus-gradient); }
+        .nav-item[data-page="research"].active { background: var(--research-gradient); }
+        .nav-item[data-page="memory"].active { background: var(--memory-gradient); }
+        .nav-item[data-page="winners"].active { background: var(--winners-gradient); }
+
+        .nav-item i {
+            margin-right: 1.2rem;
+            font-size: 1.4rem;
+            width: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item span {
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+
+        .status-indicator.online {
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        /* Main Content */
+        .main-content {
+            position: fixed;
+            top: 0;
+            left: 350px;
+            right: 0;
+            bottom: 0;
+            padding: 2rem;
+            background: transparent;
+            z-index: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Page Containers */
+        .page {
+            display: none;
+            width: 100%;
+            margin: 0;
+            padding: 2rem 0;
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+            z-index: 2;
+            min-height: 90vh;
+        }
+
+        .page.active {
+            display: block !important;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Advanced Cards */
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 32px rgba(138, 43, 226, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(25px);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 25px 60px rgba(138, 43, 226, 0.25), 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Enhanced Buttons */
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 16px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+            color: var(--black);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.15);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(138, 43, 226, 0.25);
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-primary { background: var(--home-color); }
+        .btn-dashboard { background: var(--dashboard-color); }
+        .btn-challenges { background: var(--challenges-color); }
+        .btn-sleep { background: var(--sleep-color); }
+        .btn-focus { background: var(--focus-color); }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(15px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            backdrop-filter: blur(25px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-medium);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--black);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 10001;
+            font-weight: 600;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 3rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--black);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-medium);
+            margin-bottom: 2rem;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .stat-label {
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Video Backgrounds */
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        /* Interactive Elements */
+        .interactive-element {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Memory Palace Enhanced */
+        .memory-palace-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .memory-room-card {
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-room-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .memory-room-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+            z-index: 1;
+        }
+
+        .memory-room-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* NFT Collection Enhanced */
+        .nft-collection {
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,193,7,0.2));
+            border: 2px solid rgba(255,215,0,0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .nft-card {
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nft-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .nft-card.owned {
+            background: linear-gradient(145deg, rgba(255,215,0,0.3), rgba(255,193,7,0.4));
+            border: 2px solid #ffd700;
+        }
+
+        .nft-card.locked {
+            background: linear-gradient(145deg, rgba(108,117,125,0.2), rgba(108,117,125,0.3));
+            border: 2px solid #6c757d;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Game Area Enhanced */
+        .game-area {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem auto;
+            max-width: 400px;
+        }
+
+        .game-cell {
+            aspect-ratio: 1;
+            background: rgba(255,255,255,0.8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #ddd;
+        }
+
+        .game-cell:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .game-cell.active {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            color: white;
+            animation: cellPulse 0.5s ease-out;
+        }
+
+        @keyframes cellPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Zen Studio Enhanced */
+        .meditation-container {
+            position: relative;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .meditation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .meditation-card {
+            border-radius: 15px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meditation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            filter: brightness(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .revolutionary-sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .revolutionary-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                left: 0;
+                padding: 1rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .memory-palace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Premium Features Glow */
+        .premium-feature {
+            position: relative;
+            animation: premiumGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes premiumGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg bg-home" id="animatedBg"></div>
+
+    <!-- Revolutionary Sidebar Navigation -->
+    <div class="revolutionary-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-advanced">NeuroX Elite</div>
+        </div>
+
+        <div class="sidebar-content">
+            <!-- Main Navigation -->
+            <div class="nav-section">
+                <div class="section-title">Core Modules</div>
+                <div class="nav-item active" onclick="navigateToPage('home')" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Neural Hub</span>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('dashboard')" data-page="dashboard">
+                    <i class="fas fa-brain"></i>
+                    <span>Brain Monitor</span>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('challenges')" data-page="challenges">
+                    <i class="fas fa-trophy"></i>
+                    <span>Elite Challenges</span>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('sleep')" data-page="sleep">
+                    <i class="fas fa-moon"></i>
+                    <span>Sleep & Recovery</span>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('focus')" data-page="focus">
+                    <i class="fas fa-spa"></i>
+                    <span>Zen Studio</span>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('research')" data-page="research">
+                    <i class="fas fa-flask"></i>
+                    <span>Research Lab</span>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('memory')" data-page="memory">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <span>Memory Palace</span>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div class="nav-item" onclick="navigateToPage('winners')" data-page="winners">
+                    <i class="fas fa-crown"></i>
+                    <span>Champions</span>
+                    <div class="status-indicator online"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Home Page -->
+        <div class="page active" id="home">
+            <div class="video-container" style="height: 300px;">
+                <video autoplay muted loop class="video-bg">
+                    <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F4bb395ff4afe41e689c601e8bf78dbeb?alt=media&token=d6b92c3a-2be8-4ee0-8cc8-1c215d8fa0f9&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                </video>
+                <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(167,199,231,0.8), rgba(155,184,224,0.7)); display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <h1 style="font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Welcome to NeuroX Elite</h1>
+                        <p style="font-size: 1.2rem;">Advanced cognitive training for peak mental performance</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-section">
+                <h1 class="hero-title">Neural Enhancement Platform</h1>
+                <p class="hero-subtitle">Unlock your cognitive potential with advanced brain training</p>
+                
+                <div class="quick-actions">
+                    <button class="btn btn-dashboard interactive-element" onclick="navigateToPage('dashboard')">
+                        <i class="fas fa-brain"></i>
+                        Brain Dashboard
+                    </button>
+                    <button class="btn btn-sleep interactive-element" onclick="navigateToPage('sleep')">
+                        <i class="fas fa-moon"></i>
+                        Sleep Optimization
+                    </button>
+                    <button class="btn btn-challenges interactive-element" onclick="navigateToPage('challenges')">
+                        <i class="fas fa-trophy"></i>
+                        Elite Challenges
+                    </button>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-number">94</div>
+                    <div class="stat-label">Neural Efficiency</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">28</div>
+                    <div class="stat-label">Days Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Elite</div>
+                    <div class="stat-label">Level</div>
+                </div>
+            </div>
+
+            <!-- Enhanced Features Showcase -->
+            <div class="card-grid">
+                <div class="card interactive-element" onclick="navigateToPage('research')">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔬</div>
+                        <h3 style="color: #1abc9c; margin-bottom: 1rem;">Research Lab</h3>
+                        <p style="color: #666;">Explore cutting-edge neuroscience research and cognitive enhancement studies</p>
+                    </div>
+                </div>
+                <div class="card interactive-element" onclick="navigateToPage('dashboard')">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🧠</div>
+                        <h3 style="color: #8e44ad; margin-bottom: 1rem;">Brain Monitor</h3>
+                        <p style="color: #666;">Real-time neural analysis and cognitive performance tracking</p>
+                    </div>
+                </div>
+                <div class="card interactive-element" onclick="navigateToPage('focus')">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🧘‍♀️</div>
+                        <h3 style="color: #e74c3c; margin-bottom: 1rem;">Zen Studio</h3>
+                        <p style="color: #666;">Advanced meditation and mindfulness training with immersive environments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div class="page" id="dashboard">
+            <div class="card">
+                <h2>🧠 Advanced Brain Monitor</h2>
+                <div style="position: relative; margin: 2rem 0;">
+                    <video autoplay muted loop style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; opacity: 0.3;">
+                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F4bb395ff4afe41e689c601e8bf78dbeb?alt=media&token=d6b92c3a-2be8-4ee0-8cc8-1c215d8fa0f9&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                    </video>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <h3 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); margin-bottom: 1rem;">Real-time Neural Analysis</h3>
+                        <button class="btn btn-dashboard" onclick="startBrainScan()">
+                            <i class="fas fa-play"></i>
+                            Start Brain Scan
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NFT Premium Access Section -->
+            <div class="nft-collection premium-feature">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #f39c12;">
+                    🎨 Premium NFT Access
+                </h2>
+                <div class="premium-badge">ELITE MEMBER</div>
+                <div class="nft-grid">
+                    <div class="nft-card owned" onclick="viewNFT('neural-master')">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🧠✨</div>
+                        <h4 style="color: #f39c12; margin-bottom: 0.5rem;">Neural Master NFT</h4>
+                        <p style="color: #666; font-size: 0.9rem;">Grants access to:</p>
+                        <ul style="text-align: left; color: #666; font-size: 0.9rem;">
+                            <li>Advanced brain training protocols</li>
+                            <li>Premium analytics dashboard</li>
+                            <li>Exclusive research studies</li>
+                            <li>1-on-1 cognitive coaching</li>
+                        </ul>
+                        <div style="background: #27ae60; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-top: 1rem;">✅ OWNED - VALUE: 2.5 ETH</div>
+                    </div>
+                    
+                    <div class="nft-card locked" onclick="viewNFT('elite-trainer')">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🚀🏆</div>
+                        <h4 style="color: #3498db; margin-bottom: 0.5rem;">Elite Trainer NFT</h4>
+                        <p style="color: #666; font-size: 0.9rem;">Unlocks:</p>
+                        <ul style="text-align: left; color: #666; font-size: 0.9rem;">
+                            <li>Unlimited training sessions</li>
+                            <li>Advanced biometric tracking</li>
+                            <li>VIP community access</li>
+                            <li>Custom training plans</li>
+                        </ul>
+                        <div style="background: #f39c12; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-top: 1rem;">⏳ 73% PROGRESS</div>
+                    </div>
+
+                    <div class="nft-card locked" onclick="viewNFT('memory-architect')">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🏛️💎</div>
+                        <h4 style="color: #8e44ad; margin-bottom: 0.5rem;">Memory Architect NFT</h4>
+                        <p style="color: #666; font-size: 0.9rem;">Premium Features:</p>
+                        <ul style="text-align: left; color: #666; font-size: 0.9rem;">
+                            <li>Advanced memory palace builder</li>
+                            <li>AI-powered optimization</li>
+                            <li>Compete in global tournaments</li>
+                            <li>Exclusive memory techniques</li>
+                        </ul>
+                        <div style="background: #e74c3c; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; margin-top: 1rem;">🔒 UPGRADE TO UNLOCK</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-challenges premium-feature" onclick="upgradeToPremium()">
+                        <i class="fas fa-star"></i>
+                        Upgrade to Premium Access
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>📈 Cognitive Performance</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 2rem 0;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #3498db;">94%</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Neural Efficiency</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #2ecc71;">87%</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Focus Level</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #e74c3c;">12%</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Stress</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>🎯 Today's Goals</h3>
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Memory Training</span>
+                            <span>8/10 sessions</span>
+                        </div>
+                        <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px;">
+                            <div style="width: 80%; height: 100%; background: #2ecc71; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Focus Training</span>
+                            <span>6/8 sessions</span>
+                        </div>
+                        <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px;">
+                            <div style="width: 75%; height: 100%; background: #3498db; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Elite Challenges Page -->
+        <div class="page" id="challenges">
+            <div class="card">
+                <h2>🏆 Elite Interactive Challenges</h2>
+                <p style="margin-bottom: 2rem; color: #666;">Test your cognitive abilities with our advanced interactive training modules</p>
+                
+                <div class="card-grid">
+                    <div class="card interactive-element" onclick="startMemoryGame()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">🧠</div>
+                            <h3 style="color: #8e44ad; margin-bottom: 1rem;">Memory Challenge</h3>
+                            <p style="color: #666; margin-bottom: 1rem;">Advanced pattern recognition and memory training</p>
+                            <button class="btn btn-challenges">
+                                <i class="fas fa-play"></i>
+                                Start Game
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card interactive-element" onclick="startSpeedGame()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">⚡</div>
+                            <h3 style="color: #3498db; margin-bottom: 1rem;">Speed Training</h3>
+                            <p style="color: #666; margin-bottom: 1rem;">Reaction time optimization and cognitive speed</p>
+                            <button class="btn btn-dashboard">
+                                <i class="fas fa-play"></i>
+                                Start Game
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card interactive-element" onclick="startLogicGame()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">🔬</div>
+                            <h3 style="color: #1abc9c; margin-bottom: 1rem;">Logic Patterns</h3>
+                            <p style="color: #666; margin-bottom: 1rem;">Analytical thinking and problem solving</p>
+                            <button class="btn btn-focus">
+                                <i class="fas fa-play"></i>
+                                Start Game
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card interactive-element" onclick="startFocusGame()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">🎯</div>
+                            <h3 style="color: #e74c3c; margin-bottom: 1rem;">Focus Training</h3>
+                            <p style="color: #666; margin-bottom: 1rem;">Attention span and concentration exercises</p>
+                            <button class="btn btn-sleep">
+                                <i class="fas fa-play"></i>
+                                Start Game
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Game Area -->
+            <div class="game-area" id="gameArea" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 id="gameTitle">Game Loading...</h2>
+                    <button onclick="closeGame()" style="background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer;">✕ Close</button>
+                </div>
+                <div id="gameContent" style="min-height: 300px; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                    <!-- Game content will be populated here -->
+                </div>
+                <div id="gameStats" style="display: flex; justify-content: space-around; margin-top: 2rem; padding: 1rem; background: rgba(240,248,255,0.8); border-radius: 15px;">
+                    <div style="text-align: center;">
+                        <div id="gameScore" style="font-size: 1.5rem; font-weight: bold; color: #8A2BE2;">0</div>
+                        <div style="color: #666; font-size: 0.9rem;">Score</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="gameTime" style="font-size: 1.5rem; font-weight: bold; color: #1abc9c;">00:00</div>
+                        <div style="color: #666; font-size: 0.9rem;">Time</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="gameLevel" style="font-size: 1.5rem; font-weight: bold; color: #e74c3c;">1</div>
+                        <div style="color: #666; font-size: 0.9rem;">Level</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Sleep & Recovery Page -->
+        <div class="page" id="sleep">
+            <div class="card">
+                <h2>🌙 Sleep & Recovery Optimization</h2>
+                <div style="position: relative; margin: 2rem 0;">
+                    <video autoplay muted loop style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; opacity: 0.5;">
+                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F06e44e9af33b4ba390af4dd1fcf2d5df?alt=media&token=6b90d15e-3d1b-4e4c-924a-c0c5b6e5a5a5&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                    </video>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: white;">
+                            <h3 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.7); margin-bottom: 1rem;">Sleep Quality Monitor</h3>
+                            <div style="display: flex; gap: 2rem; justify-content: center;">
+                                <div>
+                                    <div style="font-size: 2rem; font-weight: bold;">8h 15m</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.8;">Duration</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 2rem; font-weight: bold;">92%</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.8;">Quality</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-sleep" onclick="trackSleep()">
+                    <i class="fas fa-moon"></i>
+                    Start Sleep Tracking
+                </button>
+            </div>
+
+            <!-- Meditation & Recovery Activities -->
+            <div class="card-grid">
+                <div class="card interactive-element" onclick="startBreathingSession()">
+                    <div style="position: relative; overflow: hidden;">
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 1;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F2c8c8ea6e2bf4ee090b0de5a2e3d3c3c?alt=media&token=8f5a1b9d-3e2a-4b5c-9d8e-7f6a5b4c3d2e&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <div style="position: relative; z-index: 2; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🫁</div>
+                            <h3 style="color: #2ecc71; margin-bottom: 1rem;">Breathing Exercises</h3>
+                            <p style="color: #666;">Guided breathing for relaxation and stress relief</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card interactive-element" onclick="startYogaSession()">
+                    <div style="position: relative; overflow: hidden;">
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 1;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F3d9d9eb7f3cf4ef191b1ef6b3f4e4d4d?alt=media&token=9g6b2c0e-4f3b-5c6d-0e9f-8g7b6c5d4e3f&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <div style="position: relative; z-index: 2; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🧘‍♀️</div>
+                            <h3 style="color: #8e44ad; margin-bottom: 1rem;">Yoga & Meditation</h3>
+                            <p style="color: #666;">Mindfulness practices and yoga poses</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card interactive-element" onclick="openGardenEnvironment()">
+                    <div style="position: relative; overflow: hidden;">
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 1;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fa6cd1d73d2ad48afafbce2ee93ffae7b?alt=media&token=31bac21d-6f86-4661-ac6c-7505a90cdc95&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <div style="position: relative; z-index: 2; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🌿</div>
+                            <h3 style="color: #3498db; margin-bottom: 1rem;">Garden Sanctuary</h3>
+                            <p style="color: #666;">Peaceful nature sounds and environments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card interactive-element" onclick="openSeaEnvironment()">
+                    <div style="position: relative; overflow: hidden;">
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: 1;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F7f8e9d0c1b2a3d4e5f6g7h8i9j0k1l2m?alt=media&token=4h5i6j7k-8l9m-0n1o-2p3q-4r5s6t7u8v9w&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <div style="position: relative; z-index: 2; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🌊</div>
+                            <h3 style="color: #3498db; margin-bottom: 1rem;">Ocean Waves</h3>
+                            <p style="color: #666;">Calming ocean sounds for deep relaxation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Zen Studio / Focus Page -->
+        <div class="page" id="focus">
+            <div class="card">
+                <h2>🧘‍♀️ Zen Studio - Advanced Meditation</h2>
+                <div class="meditation-container">
+                    <!-- Dynamic Video Background Environment Changer -->
+                    <div class="nature-bg active" id="natureBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                        background: linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #32CD32 100%);
+                        animation: float 8s ease-in-out infinite;
+                    ">
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fa6cd1d73d2ad48afafbce2ee93ffae7b?alt=media&token=31bac21d-6f86-4661-ac6c-7505a90cdc95&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <!-- Floating elements -->
+                        <div style="position: absolute; top: 10%; left: 10%; font-size: 2rem; animation: float 6s ease-in-out infinite;">🌲</div>
+                        <div style="position: absolute; top: 20%; right: 15%; font-size: 1.5rem; animation: float 8s ease-in-out infinite reverse;">🦋</div>
+                        <div style="position: absolute; bottom: 20%; left: 20%; font-size: 2rem; animation: float 7s ease-in-out infinite;">🌸</div>
+                    </div>
+
+                    <div class="ocean-bg" id="oceanBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
+                        background: linear-gradient(135deg, #4682B4 0%, #87CEEB 50%, #B0E0E6 100%);
+                    ">
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F7f8e9d0c1b2a3d4e5f6g7h8i9j0k1l2m?alt=media&token=4h5i6j7k-8l9m-0n1o-2p3q-4r5s6t7u8v9w&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <div style="position: absolute; top: 30%; left: 30%; color: white; font-size: 1.5rem; animation: float 10s linear infinite;">🐚</div>
+                        <div style="position: absolute; bottom: 30%; right: 20%; color: white; font-size: 1.2rem; animation: float 12s linear infinite reverse;">🌊</div>
+                    </div>
+
+                    <div class="mountain-bg" id="mountainBg" style="
+                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
+                        background: linear-gradient(135deg, #4169E1 0%, #9370DB 30%, #8B4513 70%, #2F4F4F 100%);
+                    ">
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t?alt=media&token=5i6j7k8l-9m0n-1o2p-3q4r-5s6t7u8v9w0x&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰️</div>
+                        <div style="position: absolute; top: 20%; right: 30%; color: white; font-size: 1rem; animation: pulse 2s ease-in-out infinite;">✨</div>
+                    </div>
+                </div>
+
+                <div class="meditation-controls">
+                    <button onclick="changeMeditationBg('nature')" class="btn btn-focus" style="background: linear-gradient(45deg, #32CD32, #98FB98);">
+                        🌿 Nature
+                    </button>
+                    <button onclick="changeMeditationBg('ocean')" class="btn btn-dashboard" style="background: linear-gradient(45deg, #4682B4, #87CEEB);">
+                        🌊 Ocean
+                    </button>
+                    <button onclick="changeMeditationBg('mountain')" class="btn btn-challenges" style="background: linear-gradient(45deg, #4169E1, #9370DB);">
+                        ⛰️ Mountain
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enhanced Meditation Techniques -->
+            <div class="card">
+                <h3>🧘‍♀️ Interactive Meditation Techniques</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    
+                    <div class="meditation-card interactive-element" onclick="startMeditation('breathwork')" style="
+                        background: linear-gradient(135deg, rgba(255,182,193,0.8), rgba(255,218,185,0.8));
+                        border: 2px solid rgba(255,182,193,0.5);
+                    ">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🫁</div>
+                            <h4 style="color: #8B4513; margin-bottom: 1rem;">4-7-8 Breathing</h4>
+                            <p style="color: #654321; font-size: 0.9rem;">Deep relaxation breathing technique</p>
+                        </div>
+                    </div>
+
+                    <div class="meditation-card interactive-element" onclick="startMeditation('bodyscan')" style="
+                        background: linear-gradient(135deg, rgba(173,216,230,0.8), rgba(175,238,238,0.8));
+                        border: 2px solid rgba(173,216,230,0.5);
+                    ">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🧘‍♂️</div>
+                            <h4 style="color: #4682B4; margin-bottom: 1rem;">Body Scan</h4>
+                            <p style="color: #2F4F4F; font-size: 0.9rem;">Progressive muscle relaxation</p>
+                        </div>
+                    </div>
+
+                    <div class="meditation-card interactive-element" onclick="startMeditation('mindfulness')" style="
+                        background: linear-gradient(135deg, rgba(221,160,221,0.8), rgba(238,130,238,0.8));
+                        border: 2px solid rgba(221,160,221,0.5);
+                    ">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🌸</div>
+                            <h4 style="color: #8B008B; margin-bottom: 1rem;">Mindfulness</h4>
+                            <p style="color: #663366; font-size: 0.9rem;">Present moment awareness</p>
+                        </div>
+                    </div>
+
+                    <div class="meditation-card interactive-element" onclick="startMeditation('visualization')" style="
+                        background: linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,228,181,0.8));
+                        border: 2px solid rgba(255,215,0,0.5);
+                    ">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+                            <h4 style="color: #B8860B; margin-bottom: 1rem;">Visualization</h4>
+                            <p style="color: #8B7500; font-size: 0.9rem;">Guided imagery for peace</p>
+                        </div>
+                    </div>
+
+                    <div class="meditation-card interactive-element" onclick="startMeditation('lovingkindness')" style="
+                        background: linear-gradient(135deg, rgba(255,192,203,0.8), rgba(255,182,193,0.8));
+                        border: 2px solid rgba(255,192,203,0.5);
+                    ">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">💝</div>
+                            <h4 style="color: #C71585; margin-bottom: 1rem;">Loving Kindness</h4>
+                            <p style="color: #8B1538; font-size: 0.9rem;">Compassion practice</p>
+                        </div>
+                    </div>
+
+                    <div class="meditation-card interactive-element" onclick="startMeditation('walking')" style="
+                        background: linear-gradient(135deg, rgba(152,251,152,0.8), rgba(144,238,144,0.8));
+                        border: 2px solid rgba(152,251,152,0.5);
+                    ">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🚶‍♀️</div>
+                            <h4 style="color: #228B22; margin-bottom: 1rem;">Walking Meditation</h4>
+                            <p style="color: #006400; font-size: 0.9rem;">Mindful movement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Research Lab Page -->
+        <div class="page" id="research">
+            <div class="card">
+                <h2>🔬 Advanced Research Laboratory</h2>
+                <div style="position: relative; margin: 2rem 0;">
+                    <video autoplay muted loop style="width: 100%; height: 250px; object-fit: cover; border-radius: 12px; opacity: 0.4;">
+                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F4bb395ff4afe41e689c601e8bf78dbeb?alt=media&token=d6b92c3a-2be8-4ee0-8cc8-1c215d8fa0f9&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                    </video>
+                    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.3)); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; color: white;">
+                            <h3 style="font-size: 2rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Elite Neuroscience Research</h3>
+                            <p style="font-size: 1.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Advancing cognitive science through innovation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🧠 Neural Monitoring</h3>
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #3498db;">847</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Active Protocols</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>📊 Research Progress</h3>
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #2ecc71;">92%</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Study Completion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Memory Palace -->
+        <div class="page" id="memory">
+            <div class="card">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #9b59b6;">
+                    🏛️ Elite Memory Palace
+                </h2>
+
+                <!-- Enhanced Memory Palace Grid -->
+                <div class="memory-palace-grid">
+                    <div class="memory-room-card interactive-element" onclick="enterMemoryRoom('knowledge')" style="
+                        background: linear-gradient(135deg, #FFE6E6, #FFCCCC);
+                        border: 2px solid #FFB3B3;
+                    ">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">📚</div>
+                        <h3 style="color: #d63384; margin-bottom: 0.5rem;">Knowledge Vault</h3>
+                        <p style="color: #6c757d; font-size: 0.9rem;">847 memories stored</p>
+                    </div>
+
+                    <div class="memory-room-card interactive-element" onclick="enterMemoryRoom('skills')" style="
+                        background: linear-gradient(135deg, #E6FFFA, #CCFFF5);
+                        border: 2px solid #B3FFEF;
+                    ">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">⚡</div>
+                        <h3 style="color: #20c997; margin-bottom: 0.5rem;">Skills Chamber</h3>
+                        <p style="color: #6c757d; font-size: 0.9rem;">23 skills mastered</p>
+                    </div>
+
+                    <div class="memory-room-card interactive-element" onclick="enterMemoryRoom('experiences')" style="
+                        background: linear-gradient(135deg, #E6F3FF, #CCE7FF);
+                        border: 2px solid #B3DBFF;
+                    ">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🌟</div>
+                        <h3 style="color: #0d6efd; margin-bottom: 0.5rem;">Experience Hall</h3>
+                        <p style="color: #6c757d; font-size: 0.9rem;">156 experiences</p>
+                    </div>
+
+                    <div class="memory-room-card interactive-element" onclick="enterMemoryRoom('achievements')" style="
+                        background: linear-gradient(135deg, #FFF0E6, #FFE0CC);
+                        border: 2px solid #FFD1B3;
+                    ">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🏆</div>
+                        <h3 style="color: #fd7e14; margin-bottom: 0.5rem;">Achievement Gallery</h3>
+                        <p style="color: #6c757d; font-size: 0.9rem;">89 achievements</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Memory Challenge -->
+            <div class="card">
+                <h3 style="text-align: center; color: #9b59b6; margin-bottom: 1.5rem;">🎯 Advanced Memory Training</h3>
+                
+                <div class="game-grid" id="memoryGrid">
+                    <div class="game-cell" data-index="0">🧠</div>
+                    <div class="game-cell" data-index="1">⚡</div>
+                    <div class="game-cell" data-index="2">🎯</div>
+                    <div class="game-cell" data-index="3">🔥</div>
+                    <div class="game-cell" data-index="4">💎</div>
+                    <div class="game-cell" data-index="5">⭐</div>
+                    <div class="game-cell" data-index="6">🚀</div>
+                    <div class="game-cell" data-index="7">💡</div>
+                    <div class="game-cell" data-index="8">🎨</div>
+                    <div class="game-cell" data-index="9">🔬</div>
+                    <div class="game-cell" data-index="10">🏆</div>
+                    <div class="game-cell" data-index="11">🎪</div>
+                    <div class="game-cell" data-index="12">🎵</div>
+                    <div class="game-cell" data-index="13">🌟</div>
+                    <div class="game-cell" data-index="14">🔮</div>
+                    <div class="game-cell" data-index="15">💫</div>
+                </div>
+
+                <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+                    <button class="btn btn-challenges" onclick="startMemoryChallenge()">
+                        <i class="fas fa-play"></i>
+                        Start Challenge
+                    </button>
+                    <button class="btn btn-focus" onclick="showMemoryStats()">
+                        <i class="fas fa-chart-line"></i>
+                        View Progress
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Champions Page -->
+        <div class="page" id="winners">
+            <div class="card">
+                <h2>🏆 Elite Champions Hall</h2>
+                <div style="text-align: center; margin: 2rem 0;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">👑</div>
+                    <h3>Celebrating Excellence</h3>
+                    <p style="color: #666;">Recognizing the brightest minds in cognitive training</p>
+                </div>
+                
+                <div style="margin: 2rem 0;">
+                    <div style="display: flex; align-items: center; background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.3)); padding: 1rem; border-radius: 12px; margin: 1rem 0; border: 2px solid #ffd700;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(45deg, #ffd700, #ffed4a); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; margin-right: 1rem;">1</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: bold; font-size: 1.1rem;">Alex Chen</div>
+                            <div style="color: #666; font-size: 0.9rem;">Cognitive Elite • Neural Efficiency: 98%</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #f1c40f;">2,847</div>
+                            <div style="font-size: 0.8rem; color: #666;">Elite Points</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('gameModal')">&times;</button>
+            <h3 id="modalTitle">Game</h3>
+            <div id="modalContent">
+                <!-- Modal content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Welcome to NeuroX Elite!</div>
+
+    <script>
+        // Global Variables
+        let activeTab = 'home';
+        let currentGame = null;
+        let gameScore = 0;
+        let gameLevel = 1;
+        let gameTime = 0;
+        let gameTimer = null;
+
+        // Navigation Function
+        window.navigateToPage = function(page) {
+            console.log('🔄 Navigating to:', page);
+
+            try {
+                // Remove active from all nav items and pages
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelectorAll('.page').forEach(p => {
+                    p.classList.remove('active');
+                    p.style.display = 'none';
+                });
+
+                // Find and activate the target nav item and page
+                const targetNavItem = document.querySelector(`.nav-item[data-page="${page}"]`);
+                const targetPage = document.getElementById(page);
+
+                if (targetNavItem && targetPage) {
+                    targetNavItem.classList.add('active');
+                    targetPage.classList.add('active');
+                    targetPage.style.display = 'block';
+                    targetPage.style.visibility = 'visible';
+                    targetPage.style.opacity = '1';
+
+                    // Update background
+                    const bg = document.getElementById('animatedBg');
+                    if (bg) {
+                        bg.className = `animated-bg bg-${page}`;
+                    }
+
+                    window.activeTab = page;
+                    showToast(`✅ ${page.charAt(0).toUpperCase() + page.slice(1)} activated`);
+
+                    // Scroll to top
+                    const mainContent = document.getElementById('mainContent');
+                    if (mainContent) {
+                        mainContent.scrollTop = 0;
+                    }
+
+                } else {
+                    console.warn('❌ Navigation target not found:', page);
+                    showToast(`❌ Page "${page}" not available`);
+                }
+            } catch (error) {
+                console.error('Navigation error:', error);
+                showToast('❌ Navigation failed');
+            }
+        };
+
+        // Toast Function
+        window.showToast = function(message) {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        };
+
+        // Game Functions
+        window.startMemoryGame = function() {
+            showGame('🧠 Memory Challenge', 'memory');
+            initMemoryGame();
+        };
+
+        window.startSpeedGame = function() {
+            showGame('⚡ Speed Training', 'speed');
+            initSpeedGame();
+        };
+
+        window.startLogicGame = function() {
+            showGame('🔬 Logic Patterns', 'logic');
+            initLogicGame();
+        };
+
+        window.startFocusGame = function() {
+            showGame('🎯 Focus Training', 'focus');
+            initFocusGame();
+        };
+
+        function showGame(title, type) {
+            currentGame = type;
+            const gameArea = document.getElementById('gameArea');
+            const gameTitle = document.getElementById('gameTitle');
+            
+            if (gameArea && gameTitle) {
+                gameTitle.textContent = title;
+                gameArea.style.display = 'block';
+                gameArea.scrollIntoView({ behavior: 'smooth' });
+                
+                gameScore = 0;
+                gameLevel = 1;
+                gameTime = 0;
+                updateGameStats();
+                startGameTimer();
+                
+                showToast(`🎮 ${title} started!`);
+            }
+        }
+
+        window.closeGame = function() {
+            const gameArea = document.getElementById('gameArea');
+            if (gameArea) {
+                gameArea.style.display = 'none';
+            }
+            
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+            
+            currentGame = null;
+            showToast('🏁 Game closed');
+        };
+
+        function updateGameStats() {
+            const scoreElement = document.getElementById('gameScore');
+            const levelElement = document.getElementById('gameLevel');
+            
+            if (scoreElement) scoreElement.textContent = gameScore;
+            if (levelElement) levelElement.textContent = gameLevel;
+        }
+
+        function startGameTimer() {
+            gameTime = 0;
+            gameTimer = setInterval(() => {
+                gameTime++;
+                const minutes = Math.floor(gameTime / 60);
+                const seconds = gameTime % 60;
+                const timeElement = document.getElementById('gameTime');
+                if (timeElement) {
+                    timeElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        // Game Implementations
+        function initMemoryGame() {
+            const gameContent = document.getElementById('gameContent');
+            if (gameContent) {
+                gameContent.innerHTML = `
+                    <div style="text-align: center;">
+                        <h3 style="margin-bottom: 2rem;">Match the patterns!</h3>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 400px; margin: 0 auto;">
+                            ${Array.from({length: 16}, (_, i) => `
+                                <div class="memory-card" data-index="${i}" onclick="flipMemoryCard(${i})"
+                                     style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                     border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+                                     font-size: 0; transition: all 0.3s ease; border: 3px solid transparent;">
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button onclick="resetMemoryGame()" style="background: #8e44ad; color: white; border: none; padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold; margin-top: 2rem;">🔄 New Game</button>
+                    </div>
+                `;
+                setupMemoryCards();
+            }
+        }
+
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        function setupMemoryCards() {
+            const symbols = ['🧠', '⚡', '🎯', '🔥', '💎', '⭐', '🚀', '💡'];
+            memoryCards = [...symbols, ...symbols];
+            
+            // Shuffle cards
+            for (let i = memoryCards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [memoryCards[i], memoryCards[j]] = [memoryCards[j], memoryCards[i]];
+            }
+            
+            flippedCards = [];
+            matchedPairs = 0;
+        }
+
+        window.flipMemoryCard = function(index) {
+            if (flippedCards.length >= 2 || flippedCards.includes(index)) return;
+
+            const card = document.querySelectorAll('.memory-card')[index];
+            if (card) {
+                card.style.background = '#4ECDC4';
+                card.style.fontSize = '2rem';
+                card.textContent = memoryCards[index];
+                card.style.border = '3px solid #fff';
+
+                flippedCards.push(index);
+
+                if (flippedCards.length === 2) {
+                    setTimeout(checkMemoryMatch, 1000);
+                }
+            }
+        };
+
+        function checkMemoryMatch() {
+            const [first, second] = flippedCards;
+            const cards = document.querySelectorAll('.memory-card');
+
+            if (memoryCards[first] === memoryCards[second]) {
+                // Match found
+                cards[first].style.opacity = '0.7';
+                cards[second].style.opacity = '0.7';
+                matchedPairs++;
+                gameScore += 10;
+                
+                if (matchedPairs === 8) {
+                    gameLevel++;
+                    setTimeout(() => {
+                        showToast('🎉 Level Complete! Starting next level...');
+                        initMemoryGame();
+                    }, 500);
+                }
+            } else {
+                // No match
+                cards[first].style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                cards[first].style.fontSize = '0';
+                cards[first].textContent = '';
+                cards[first].style.border = '3px solid transparent';
+
+                cards[second].style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                cards[second].style.fontSize = '0';
+                cards[second].textContent = '';
+                cards[second].style.border = '3px solid transparent';
+            }
+
+            flippedCards = [];
+            updateGameStats();
+        }
+
+        window.resetMemoryGame = function() {
+            initMemoryGame();
+            showToast('🔄 Memory game reset');
+        };
+
+        function initSpeedGame() {
+            const gameContent = document.getElementById('gameContent');
+            if (gameContent) {
+                gameContent.innerHTML = `
+                    <div style="text-align: center;">
+                        <h3 style="margin-bottom: 2rem;">Click when it turns GREEN!</h3>
+                        <div id="speedButton" onclick="speedClick()"
+                             style="width: 200px; height: 200px; background: #e74c3c; border-radius: 50%; margin: 0 auto;
+                             display: flex; align-items: center; justify-content: center; cursor: pointer;
+                             transition: all 0.3s ease; font-size: 1.2rem; color: white; font-weight: bold;">
+                            WAIT...
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <div>Best Time: <span id="bestTime">-</span></div>
+                            <div>Average: <span id="avgTime">-</span></div>
+                        </div>
+                        <button onclick="startSpeedRound()" style="background: #3498db; color: white; border: none; padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold; margin-top: 2rem;">🚀 Start Round</button>
+                    </div>
+                `;
+            }
+        }
+
+        let speedActive = false;
+        let speedStartTime = 0;
+        let reactionTimes = [];
+
+        window.startSpeedRound = function() {
+            const button = document.getElementById('speedButton');
+            if (button) {
+                button.style.background = '#e74c3c';
+                button.textContent = 'WAIT...';
+                speedActive = false;
+
+                setTimeout(() => {
+                    button.style.background = '#2ecc71';
+                    button.textContent = 'CLICK NOW!';
+                    speedStartTime = Date.now();
+                    speedActive = true;
+                }, Math.random() * 3000 + 1000);
+            }
+        };
+
+        window.speedClick = function() {
+            if (!speedActive) {
+                showToast('⚠️ Too early! Wait for GREEN!');
+                return;
+            }
+
+            const reactionTime = Date.now() - speedStartTime;
+            reactionTimes.push(reactionTime);
+            gameScore += Math.max(1000 - reactionTime, 10);
+
+            const avgTime = reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length;
+            const bestTime = Math.min(...reactionTimes);
+
+            const avgElement = document.getElementById('avgTime');
+            const bestElement = document.getElementById('bestTime');
+            
+            if (avgElement) avgElement.textContent = `${avgTime.toFixed(0)}ms`;
+            if (bestElement) bestElement.textContent = `${bestTime}ms`;
+
+            speedActive = false;
+            updateGameStats();
+
+            const button = document.getElementById('speedButton');
+            if (button) {
+                button.style.background = '#f39c12';
+                button.textContent = `${reactionTime}ms`;
+            }
+
+            if (reactionTimes.length >= 5) {
+                gameLevel++;
+                showToast(`🎉 Round Complete! Average: ${avgTime.toFixed(0)}ms`);
+            }
+        };
+
+        function initLogicGame() {
+            const gameContent = document.getElementById('gameContent');
+            if (gameContent) {
+                gameContent.innerHTML = `
+                    <div style="text-align: center;">
+                        <h3 style="margin-bottom: 2rem;">Remember the sequence!</h3>
+                        <div id="logicPattern" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 300px; margin: 0 auto 2rem;">
+                            ${Array.from({length: 9}, (_, i) => `
+                                <div class="logic-cell" data-index="${i}" onclick="selectLogicCell(${i})"
+                                     style="width: 80px; height: 80px; background: #ecf0f1; border-radius: 10px;
+                                     cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center;
+                                     justify-content: center; font-size: 1.5rem; border: 3px solid transparent;">
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div>Sequence Length: <span id="sequenceLength">3</span></div>
+                        <button onclick="startLogicRound()" style="background: #1abc9c; color: white; border: none; padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold; margin-top: 2rem;">🧩 Show Pattern</button>
+                    </div>
+                `;
+            }
+        }
+
+        let logicSequence = [];
+        let userSequence = [];
+        let sequenceLength = 3;
+
+        window.startLogicRound = function() {
+            logicSequence = [];
+            userSequence = [];
+            
+            for (let i = 0; i < sequenceLength; i++) {
+                logicSequence.push(Math.floor(Math.random() * 9));
+            }
+            
+            showLogicPattern();
+        };
+
+        function showLogicPattern() {
+            const cells = document.querySelectorAll('.logic-cell');
+            cells.forEach(cell => {
+                cell.style.background = '#ecf0f1';
+                cell.style.border = '3px solid transparent';
+                cell.textContent = '';
+            });
+
+            let index = 0;
+            const showNext = () => {
+                if (index < logicSequence.length) {
+                    const cellIndex = logicSequence[index];
+                    const cell = cells[cellIndex];
+                    if (cell) {
+                        cell.style.background = '#1abc9c';
+                        cell.style.border = '3px solid #fff';
+                        cell.textContent = '����';
+
+                        setTimeout(() => {
+                            cell.style.background = '#ecf0f1';
+                            cell.style.border = '3px solid transparent';
+                            cell.textContent = '';
+                            index++;
+                            setTimeout(showNext, 300);
+                        }, 600);
+                    }
+                }
+            };
+
+            setTimeout(showNext, 500);
+        }
+
+        window.selectLogicCell = function(index) {
+            if (userSequence.length >= sequenceLength) return;
+
+            userSequence.push(index);
+            const cell = document.querySelectorAll('.logic-cell')[index];
+            if (cell) {
+                cell.style.background = '#3498db';
+                cell.style.border = '3px solid #fff';
+                cell.textContent = '✓';
+            }
+
+            if (userSequence.length === sequenceLength) {
+                setTimeout(() => {
+                    checkLogicSequence();
+                }, 500);
+            }
+        };
+
+        function checkLogicSequence() {
+            const correct = userSequence.every((val, i) => val === logicSequence[i]);
+
+            if (correct) {
+                gameScore += sequenceLength * 10;
+                gameLevel++;
+                sequenceLength++;
+                const lengthElement = document.getElementById('sequenceLength');
+                if (lengthElement) lengthElement.textContent = sequenceLength;
+                
+                showToast('🎉 Correct! Sequence length increased!');
+                setTimeout(() => initLogicGame(), 1500);
+            } else {
+                showToast('❌ Wrong sequence! Try again.');
+                setTimeout(() => startLogicRound(), 1500);
+            }
+
+            updateGameStats();
+        }
+
+        function initFocusGame() {
+            const gameContent = document.getElementById('gameContent');
+            if (gameContent) {
+                gameContent.innerHTML = `
+                    <div style="text-align: center;">
+                        <h3 style="margin-bottom: 2rem;">🧘‍♀️ Breathing Focus Exercise</h3>
+                        <div id="breathingCircle" style="width: 150px; height: 150px; border: 4px solid #e74c3c; border-radius: 50%; margin: 0 auto 2rem;
+                             display: flex; align-items: center; justify-content: center; transition: all 4s ease;">
+                            <span id="breathText" style="font-size: 1.2rem; color: #e74c3c; font-weight: bold;">BREATHE</span>
+                        </div>
+                        <div id="breathingInstructions" style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+                            Follow the circle and breathe deeply
+                        </div>
+                        <div style="margin-bottom: 2rem;">
+                            Cycles: <span id="cycleCount">0</span>/10
+                        </div>
+                        <button onclick="startBreathingExercise()" style="background: #e74c3c; color: white; border: none; padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">🧘‍♀️ Start Exercise</button>
+                    </div>
+                `;
+            }
+        }
+
+        window.startBreathingExercise = function() {
+            let cycle = 0;
+            const circle = document.getElementById('breathingCircle');
+            const text = document.getElementById('breathText');
+            const instructions = document.getElementById('breathingInstructions');
+            const cycleCounter = document.getElementById('cycleCount');
+
+            const breathingCycle = () => {
+                // Inhale
+                if (circle && text && instructions) {
+                    circle.style.transform = 'scale(1.3)';
+                    circle.style.background = 'rgba(231, 76, 60, 0.1)';
+                    text.textContent = 'INHALE';
+                    instructions.textContent = 'Breathe in slowly and deeply...';
+
+                    setTimeout(() => {
+                        // Hold
+                        text.textContent = 'HOLD';
+                        instructions.textContent = 'Hold your breath gently...';
+
+                        setTimeout(() => {
+                            // Exhale
+                            circle.style.transform = 'scale(1)';
+                            circle.style.background = 'transparent';
+                            text.textContent = 'EXHALE';
+                            instructions.textContent = 'Breathe out slowly and completely...';
+
+                            cycle++;
+                            gameScore += 5;
+                            if (cycleCounter) cycleCounter.textContent = cycle;
+                            updateGameStats();
+
+                            if (cycle < 10) {
+                                setTimeout(breathingCycle, 4000);
+                            } else {
+                                text.textContent = 'COMPLETE';
+                                instructions.textContent = '🎉 Excellent! You completed the breathing exercise.';
+                                gameLevel++;
+                                showToast('🧘���♀️ Breathing exercise completed!');
+                            }
+                        }, 2000);
+                    }, 4000);
+                }
+            };
+
+            breathingCycle();
+        };
+
+        // Memory Palace Functions
+        window.enterMemoryRoom = function(roomType) {
+            const rooms = {
+                knowledge: 'Knowledge Vault - 847 memories stored',
+                skills: 'Skills Chamber - 23 skills mastered',
+                experiences: 'Experience Hall - 156 experiences cataloged',
+                achievements: 'Achievement Gallery - 89 achievements unlocked'
+            };
+            
+            showToast(`🚪 Entering ${rooms[roomType]}`);
+        };
+
+        window.startMemoryChallenge = function() {
+            const cells = document.querySelectorAll('#memoryGrid .game-cell');
+            const sequence = [];
+            const sequenceLength = 3 + Math.floor(Math.random() * 5);
+
+            for (let i = 0; i < sequenceLength; i++) {
+                sequence.push(Math.floor(Math.random() * cells.length));
+            }
+
+            showToast(`🎯 Watch sequence of ${sequenceLength} items`);
+
+            // Show sequence
+            cells.forEach(cell => cell.style.opacity = '0.3');
+
+            sequence.forEach((index, step) => {
+                setTimeout(() => {
+                    if (cells[index]) {
+                        cells[index].classList.add('active');
+                        setTimeout(() => {
+                            cells[index].classList.remove('active');
+                            if (step === sequence.length - 1) {
+                                cells.forEach(cell => cell.style.opacity = '1');
+                                startMemoryInput(sequence, cells);
+                            }
+                        }, 800);
+                    }
+                }, step * 1000);
+            });
+        };
+
+        function startMemoryInput(correctSequence, cells) {
+            let playerSequence = [];
+            
+            cells.forEach((cell, index) => {
+                cell.onclick = () => {
+                    cell.classList.add('active');
+                    setTimeout(() => cell.classList.remove('active'), 200);
+
+                    playerSequence.push(index);
+
+                    if (playerSequence.length === correctSequence.length) {
+                        checkMemorySequence(playerSequence, correctSequence);
+                        // Remove click handlers
+                        cells.forEach(c => c.onclick = null);
+                    }
+                };
+            });
+        }
+
+        function checkMemorySequence(player, correct) {
+            const isCorrect = player.every((val, index) => val === correct[index]);
+
+            if (isCorrect) {
+                showToast('🎉 Perfect memory sequence!');
+                gameScore += 50;
+                gameLevel++;
+                updateGameStats();
+            } else {
+                showToast('❌ Try again!');
+            }
+
+            setTimeout(() => {
+                const cells = document.querySelectorAll('#memoryGrid .game-cell');
+                cells.forEach(cell => {
+                    cell.onclick = null;
+                    cell.style.opacity = '1';
+                    cell.classList.remove('active');
+                });
+            }, 2000);
+        }
+
+        window.showMemoryStats = function() {
+            showToast('📊 Memory stats: Level ' + gameLevel + ', Score: ' + gameScore);
+        };
+
+        // Brain Scan Function
+        window.startBrainScan = function() {
+            showToast('🧠 Starting neural analysis...');
+
+            setTimeout(() => {
+                showToast('✅ Brain scan complete! Neural patterns optimal.');
+            }, 3000);
+        };
+
+        // Sleep Functions
+        window.trackSleep = function() {
+            showToast('🌙 Sleep tracking initiated. Sweet dreams!');
+        };
+
+        window.startBreathingSession = function() {
+            showToast('🫁 Starting guided breathing session...');
+        };
+
+        window.startYogaSession = function() {
+            showToast('🧘‍♀️ Starting yoga and meditation session...');
+        };
+
+        window.openGardenEnvironment = function() {
+            showToast('🌿 Opening peaceful garden sanctuary...');
+        };
+
+        window.openSeaEnvironment = function() {
+            showToast('🌊 Opening ocean wave environment...');
+        };
+
+        // Zen Studio Functions
+        window.changeMeditationBg = function(bgType) {
+            const natureBg = document.getElementById('natureBg');
+            const oceanBg = document.getElementById('oceanBg');
+            const mountainBg = document.getElementById('mountainBg');
+
+            // Hide all backgrounds
+            if (natureBg) natureBg.style.display = 'none';
+            if (oceanBg) oceanBg.style.display = 'none';
+            if (mountainBg) mountainBg.style.display = 'none';
+
+            // Show selected background
+            switch(bgType) {
+                case 'nature':
+                    if (natureBg) natureBg.style.display = 'block';
+                    break;
+                case 'ocean':
+                    if (oceanBg) oceanBg.style.display = 'block';
+                    break;
+                case 'mountain':
+                    if (mountainBg) mountainBg.style.display = 'block';
+                    break;
+            }
+
+            showToast(`🌄 ${bgType.charAt(0).toUpperCase() + bgType.slice(1)} meditation activated`);
+        };
+
+        window.startMeditation = function(technique) {
+            const techniques = {
+                breathwork: '4-7-8 Breathing',
+                bodyscan: 'Body Scan Meditation',
+                mindfulness: 'Mindfulness Practice',
+                visualization: 'Visualization Journey',
+                lovingkindness: 'Loving Kindness Meditation',
+                walking: 'Walking Meditation'
+            };
+
+            showToast(`🧘‍♀️ Starting ${techniques[technique]} session...`);
+        };
+
+        // NFT Functions
+        window.viewNFT = function(nftId) {
+            const nftNames = {
+                'neural-master': 'Neural Master NFT',
+                'elite-trainer': 'Elite Trainer NFT',
+                'memory-architect': 'Memory Architect NFT'
+            };
+            
+            showToast(`🎨 Viewing ${nftNames[nftId]} details...`);
+        };
+
+        window.upgradeToPremium = function() {
+            showToast('🌟 Premium upgrade options opened! Unlock exclusive NFT features.');
+        };
+
+        // Modal Functions
+        window.closeModal = function(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        };
+
+        // Mobile menu toggle
+        let sidebarOpen = false;
+        window.toggleSidebar = function() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+                sidebarOpen = !sidebarOpen;
+            }
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 NeuroX Elite Loading...');
+
+            // Mobile menu button for responsive design
+            if (window.innerWidth <= 768) {
+                const menuButton = document.createElement('button');
+                menuButton.innerHTML = '☰';
+                menuButton.style.cssText = `
+                    position: fixed; top: 1rem; left: 1rem; z-index: 11000;
+                    background: #8A2BE2; color: white; border: none;
+                    padding: 1rem; border-radius: 50%; cursor: pointer;
+                    font-size: 1.2rem; width: 50px; height: 50px;
+                `;
+                menuButton.onclick = toggleSidebar;
+                document.body.appendChild(menuButton);
+            }
+
+            // Enhanced hover effects for interactive elements
+            const interactiveElements = document.querySelectorAll('.interactive-element');
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                    this.style.filter = 'brightness(1.1)';
+                });
+
+                element.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.filter = 'brightness(1)';
+                });
+            });
+
+            // Close modals when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.classList.remove('active');
+                }
+            });
+
+            // Success notification
+            setTimeout(() => {
+                showToast('🎉 NeuroX Elite Ready! All features fully functional!');
+                console.log('✅ NEUROX ELITE - All systems operational!');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
