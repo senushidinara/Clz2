@@ -1865,16 +1865,48 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg,
-                rgba(138, 43, 226, 0.4) 0%,
-                rgba(75, 0, 130, 0.4) 50%,
-                rgba(106, 90, 205, 0.4) 100%);
-            border: 1px solid rgba(138, 43, 226, 0.8);
-            color: white;
+            color: #2d2d2d;
             transform: translateX(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow:
-                0 10px 30px rgba(138, 43, 226, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                0 10px 30px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* Specific Pastel Colors for Each Nav Item */
+        .nav-item[data-page="home"].active {
+            background: var(--home-gradient);
+            border-color: #B3DBFF;
+        }
+
+        .nav-item[data-page="dashboard"].active {
+            background: var(--dashboard-gradient);
+            border-color: #B3FFE0;
+        }
+
+        .nav-item[data-page="challenges"].active {
+            background: var(--challenges-gradient);
+            border-color: #FFB3D1;
+        }
+
+        .nav-item[data-page="research"].active {
+            background: var(--research-gradient);
+            border-color: #B3FFEF;
+        }
+
+        .nav-item[data-page="memory"].active {
+            background: var(--memory-gradient);
+            border-color: #FFB3B3;
+        }
+
+        .nav-item[data-page="winners"].active {
+            background: var(--winners-gradient);
+            border-color: #FFD1B3;
+        }
+
+        .nav-item[data-page="focus"].active {
+            background: var(--focus-gradient);
+            border-color: #FFF49A;
         }
 
         .nav-item.active::after {
@@ -3301,7 +3333,7 @@
                             position: absolute; top: 50%; left: 20%;
                             color: rgba(255,255,255,0.8); font-size: 1.5rem; animation: walkingMotion 2s ease-in-out infinite;
                         ">👣</div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">🚶‍♀️ Walking</h4>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">���‍♀️ Walking</h4>
                         <p style="text-align: center; color: #006400; font-size: 0.9rem;">Mindful movement meditation</p>
                         <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">Any duration</div>
                     </div>
