@@ -1852,16 +1852,47 @@
         }
 
         .nav-item:hover {
-            background: linear-gradient(135deg,
-                rgba(138, 43, 226, 0.25) 0%,
-                rgba(75, 0, 130, 0.25) 50%,
-                rgba(106, 90, 205, 0.25) 100%);
             transform: translateX(8px) scale(1.02);
-            color: white;
-            border-color: rgba(138, 43, 226, 0.6);
+            color: #2d2d2d;
             box-shadow:
-                0 8px 25px rgba(138, 43, 226, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                0 8px 25px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        /* Pastel Hover Effects for Each Nav Item */
+        .nav-item[data-page="home"]:hover {
+            background: linear-gradient(135deg, rgba(230, 243, 255, 0.7), rgba(204, 231, 255, 0.7));
+            border-color: #CCE7FF;
+        }
+
+        .nav-item[data-page="dashboard"]:hover {
+            background: linear-gradient(135deg, rgba(230, 255, 245, 0.7), rgba(204, 255, 235, 0.7));
+            border-color: #CCFFEB;
+        }
+
+        .nav-item[data-page="challenges"]:hover {
+            background: linear-gradient(135deg, rgba(255, 230, 240, 0.7), rgba(255, 204, 224, 0.7));
+            border-color: #FFCCE0;
+        }
+
+        .nav-item[data-page="research"]:hover {
+            background: linear-gradient(135deg, rgba(230, 255, 250, 0.7), rgba(204, 255, 245, 0.7));
+            border-color: #CCFFF5;
+        }
+
+        .nav-item[data-page="memory"]:hover {
+            background: linear-gradient(135deg, rgba(255, 230, 230, 0.7), rgba(255, 204, 204, 0.7));
+            border-color: #FFCCCC;
+        }
+
+        .nav-item[data-page="winners"]:hover {
+            background: linear-gradient(135deg, rgba(255, 240, 230, 0.7), rgba(255, 224, 204, 0.7));
+            border-color: #FFE0CC;
+        }
+
+        .nav-item[data-page="focus"]:hover {
+            background: linear-gradient(135deg, rgba(255, 250, 205, 0.7), rgba(255, 247, 179, 0.7));
+            border-color: #FFF7B3;
         }
 
         .nav-item.active {
@@ -3333,7 +3364,7 @@
                             position: absolute; top: 50%; left: 20%;
                             color: rgba(255,255,255,0.8); font-size: 1.5rem; animation: walkingMotion 2s ease-in-out infinite;
                         ">👣</div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">���‍♀️ Walking</h4>
+                        <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">🚶‍♀️ Walking</h4>
                         <p style="text-align: center; color: #006400; font-size: 0.9rem;">Mindful movement meditation</p>
                         <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">Any duration</div>
                     </div>
@@ -3908,7 +3939,7 @@
                 },
                 {
                     pattern: ['⭐', '⭐⭐', '⭐���⭐', '?'],
-                    options: ['⭐⭐⭐⭐', '⭐', '⭐⭐', '⭐⭐⭐⭐⭐'],
+                    options: ['⭐⭐⭐⭐', '⭐', '⭐⭐', '⭐⭐⭐���⭐'],
                     answer: 0
                 },
                 {
@@ -4902,7 +4933,7 @@
                                     <strong>Training Impact:</strong> Focus training has enhanced cognitive control networks by 18%.
                                 </div>
                                 <div style="background: rgba(46,204,113,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                                    <strong>💡 Recommendation:</strong> Excellent progress! Try advanced dual-task challenges to further enhance cognitive flexibility.
+                                    <strong>���� Recommendation:</strong> Excellent progress! Try advanced dual-task challenges to further enhance cognitive flexibility.
                                 </div>
                             </div>
                         `
