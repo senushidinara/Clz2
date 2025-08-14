@@ -217,6 +217,430 @@
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
+        /* Advanced AI Features */
+        .ai-insights-panel {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.1));
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-insights-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+            animation: aiScan 3s ease-in-out infinite;
+        }
+
+        @keyframes aiScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .ai-recommendation {
+            background: rgba(138, 43, 226, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            border-left: 4px solid #8A2BE2;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .biometric-indicator {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .heart-rate-monitor {
+            color: #e74c3c;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+
+        .stress-indicator {
+            width: 100px;
+            height: 6px;
+            background: linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c);
+            border-radius: 3px;
+            position: relative;
+            margin: 0 0.5rem;
+        }
+
+        .stress-level {
+            position: absolute;
+            top: -2px;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border: 2px solid #34495e;
+            border-radius: 50%;
+            transition: left 0.3s ease;
+        }
+
+        /* Advanced Cognitive Games */
+        .cognitive-game-container {
+            position: relative;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            min-height: 300px;
+            overflow: hidden;
+        }
+
+        .pattern-matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 1rem 0;
+        }
+
+        .pattern-cell {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .pattern-cell:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .pattern-cell.active {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            color: white;
+            animation: cellPulse 0.5s ease-out;
+        }
+
+        @keyframes cellPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Advanced Analytics Dashboard */
+        .analytics-dashboard {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(52, 152, 219, 0.1));
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .trend-indicator {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+        }
+
+        .trend-down {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        /* Social Features */
+        .social-panel {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
+        }
+
+        .rank-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f1c40f, #f39c12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .rank-badge.first {
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+        }
+
+        .rank-badge.second {
+            background: linear-gradient(45deg, #c0c0c0, #e8e8e8);
+        }
+
+        .rank-badge.third {
+            background: linear-gradient(45deg, #cd7f32, #d4a574);
+        }
+
+        /* Advanced Animations */
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.8), transparent);
+            border-radius: 50%;
+            animation: floatParticle 8s linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .holographic-effect {
+            position: relative;
+            background: linear-gradient(45deg,
+                rgba(138, 43, 226, 0.1) 0%,
+                rgba(75, 0, 130, 0.1) 25%,
+                rgba(106, 90, 205, 0.1) 50%,
+                rgba(138, 43, 226, 0.1) 75%,
+                rgba(75, 0, 130, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: holographicShift 4s ease-in-out infinite;
+        }
+
+        @keyframes holographicShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Voice Recognition Interface */
+        .voice-interface {
+            background: linear-gradient(135deg, rgba(142, 68, 173, 0.1), rgba(74, 144, 226, 0.1));
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            display: inline-flex;
+            align-items: center;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .voice-interface:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(142, 68, 173, 0.3);
+        }
+
+        .voice-wave {
+            width: 30px;
+            height: 30px;
+            margin: 0 0.5rem;
+        }
+
+        .voice-wave div {
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to top, #8e44ad, #4a90e2);
+            margin: 0 1px;
+            display: inline-block;
+            animation: voiceWave 1.2s ease-in-out infinite;
+        }
+
+        .voice-wave div:nth-child(2) { animation-delay: 0.1s; }
+        .voice-wave div:nth-child(3) { animation-delay: 0.2s; }
+        .voice-wave div:nth-child(4) { animation-delay: 0.3s; }
+        .voice-wave div:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes voiceWave {
+            0%, 100% { height: 10px; }
+            50% { height: 30px; }
+        }
+
+        /* Advanced Progress Visualization */
+        .neural-network-viz {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: radial-gradient(ellipse at center, rgba(138, 43, 226, 0.1), transparent);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .neuron {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.9), rgba(75, 0, 130, 0.7));
+            border-radius: 50%;
+            animation: neuronPulse 3s ease-in-out infinite;
+        }
+
+        .neural-connection {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(138, 43, 226, 0.6), rgba(75, 0, 130, 0.4));
+            animation: connectionFlow 2s ease-in-out infinite;
+        }
+
+        @keyframes connectionFlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Gesture Recognition Area */
+        .gesture-area {
+            background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(52, 152, 219, 0.1));
+            border: 2px dashed rgba(26, 188, 156, 0.3);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .gesture-area.active {
+            border-color: #1abc9c;
+            background: linear-gradient(135deg, rgba(26, 188, 156, 0.2), rgba(52, 152, 219, 0.2));
+            box-shadow: 0 0 30px rgba(26, 188, 156, 0.4);
+        }
+
+        /* Real-time Performance Meter */
+        .performance-meter {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            margin: 1rem auto;
+        }
+
+        .meter-arc {
+            stroke: rgba(0, 0, 0, 0.1);
+            stroke-width: 8;
+            fill: none;
+        }
+
+        .meter-progress {
+            stroke: url(#performanceGradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            fill: none;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        /* Predictive Analytics Visualization */
+        .prediction-chart {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .prediction-line {
+            stroke: #3498db;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 5,5;
+            animation: dashMove 2s linear infinite;
+        }
+
+        @keyframes dashMove {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 20; }
+        }
+
+        /* Enhanced Modal Styles */
+        .advanced-modal {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.5s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            0% {
+                transform: scale(0.8) translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
         .nav-tab {
             display: flex;
             flex-direction: column;
@@ -2656,7 +3080,7 @@
             meditationContainer.appendChild(content);
             document.body.appendChild(meditationContainer);
 
-            showToast(`🧘‍♀️ ${currentTechnique.title} opened`);
+            showToast(`🧘‍♀�� ${currentTechnique.title} opened`);
         }
 
         function startMeditationSession(technique) {
