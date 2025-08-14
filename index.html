@@ -3033,8 +3033,50 @@
             </div>
         </div>
 
-        <!-- Elite Memory Palace -->
+        <!-- Elite Memory Palace & NFT Collection -->
         <div class="page" id="memory">
+            <!-- NFT Collection Section -->
+            <div class="card" style="background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,193,7,0.2)); border: 2px solid rgba(255,215,0,0.3);">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #f39c12;">
+                    🎨 NFT Achievement Collection
+                </h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <!-- Neural Master NFT -->
+                    <div onclick="viewNFT('neural-master')" style="
+                        background: linear-gradient(145deg, rgba(255,215,0,0.3), rgba(255,193,7,0.4));
+                        border: 2px solid #ffd700; border-radius: 15px; padding: 1.5rem;
+                        text-align: center; cursor: pointer; transition: all 0.3s ease;
+                    ">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🧠✨</div>
+                        <h4 style="color: #f39c12; margin-bottom: 0.5rem;">Neural Master</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">95%+ Neural Efficiency Achievement</p>
+                        <div style="background: #27ae60; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; display: inline-block;">✅ OWNED</div>
+                    </div>
+                    <!-- Memory Architect NFT -->
+                    <div onclick="viewNFT('memory-architect')" style="
+                        background: linear-gradient(145deg, rgba(155,89,182,0.2), rgba(142,68,173,0.3));
+                        border: 2px solid #9b59b6; border-radius: 15px; padding: 1.5rem;
+                        text-align: center; cursor: pointer; transition: all 0.3s ease;
+                    ">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🏛️💎</div>
+                        <h4 style="color: #8e44ad; margin-bottom: 0.5rem;">Memory Architect</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">Master of Memory Palace Construction</p>
+                        <div style="background: #e74c3c; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; display: inline-block;">🔒 67% Progress</div>
+                    </div>
+                    <!-- Elite Trainer NFT -->
+                    <div onclick="viewNFT('elite-trainer')" style="
+                        background: linear-gradient(145deg, rgba(52,152,219,0.2), rgba(41,128,185,0.3));
+                        border: 2px solid #3498db; border-radius: 15px; padding: 1.5rem;
+                        text-align: center; cursor: pointer; transition: all 0.3s ease;
+                    ">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🚀🏆</div>
+                        <h4 style="color: #3498db; margin-bottom: 0.5rem;">Elite Trainer</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">30-Day Elite Training Completion</p>
+                        <div style="background: #f39c12; color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; display: inline-block;">⏳ 60% Progress</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
                 <h2 style="text-align: center; margin-bottom: 2rem; color: #9b59b6;">
                     🧩 Elite Memory Palace
@@ -5315,7 +5357,7 @@
 
             instructions.innerHTML = `
                 <div style="font-size: 1.5rem; color: rgba(255,255,255,0.9);">
-                    🧘‍♀️ Session in progress...<br>
+                    🧘‍♀��� Session in progress...<br>
                     <small style="opacity: 0.8;">Focus on your ${technique} practice</small>
                 </div>
             `;
@@ -6099,23 +6141,65 @@
             breathingCycle();
         };
 
-        // Additional Brain Training Functions
+        // Enhanced Brain Training Functions with Video
         window.startBrainScan = function() {
             if (window.showToast) {
                 showToast('🧠 Starting neural analysis...');
             }
 
-            // Simulate brain scan with animated feedback
-            const eegContainer = document.getElementById('eegContainer');
-            if (eegContainer) {
-                eegContainer.style.animation = 'pulse 2s ease-in-out infinite';
+            // Create brain scan modal with video background
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.9); z-index: 10000; display: flex;
+                align-items: center; justify-content: center;
+            `;
 
-                setTimeout(() => {
-                    if (window.showToast) {
-                        showToast('✅ Brain scan complete! Neural patterns optimal.');
-                    }
-                    eegContainer.style.animation = '';
-                }, 3000);
+            modal.innerHTML = `
+                <div style="background: rgba(255,255,255,0.95); padding: 3rem; border-radius: 20px;
+                     text-align: center; max-width: 500px; backdrop-filter: blur(10px); position: relative;">
+                    <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 20px; opacity: 0.2;">
+                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F4bb395ff4afe41e689c601e8bf78dbeb?alt=media&token=d6b92c3a-2be8-4ee0-8cc8-1c215d8fa0f9&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                    </video>
+                    <div style="position: relative; z-index: 3;">
+                        <h2 style="color: #3498db; margin-bottom: 2rem;">🧠 Neural Scan in Progress</h2>
+                        <div id="scanProgress" style="width: 100%; height: 20px; background: rgba(52,152,219,0.2); border-radius: 10px; margin-bottom: 2rem; position: relative; overflow: hidden;">
+                            <div style="width: 0%; height: 100%; background: linear-gradient(90deg, #3498db, #2ecc71); border-radius: 10px; transition: width 3s ease;" id="progressBar"></div>
+                        </div>
+                        <p id="scanStatus" style="color: #666; margin-bottom: 2rem;">Analyzing neural patterns...</p>
+                        <button onclick="closeBrainScanModal()" style="background: #e74c3c; color: white; border: none;
+                               padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                            ✕ Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            window.brainScanModal = modal;
+
+            // Animate progress bar
+            setTimeout(() => {
+                document.getElementById('progressBar').style.width = '100%';
+            }, 100);
+
+            // Update status messages
+            setTimeout(() => {
+                document.getElementById('scanStatus').textContent = 'Processing cognitive patterns...';
+            }, 1000);
+
+            setTimeout(() => {
+                document.getElementById('scanStatus').textContent = 'Neural efficiency: 94% - Excellent!';
+                if (window.showToast) {
+                    showToast('✅ Brain scan complete! Neural patterns optimal.');
+                }
+            }, 3000);
+        };
+
+        window.closeBrainScanModal = function() {
+            if (window.brainScanModal) {
+                document.body.removeChild(window.brainScanModal);
+                window.brainScanModal = null;
             }
         };
 
