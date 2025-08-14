@@ -869,6 +869,7 @@
                 </div>
 
                 <div class="game-card" onclick="startGame('working-memory')">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F62b0285fcbc145a082df345f954b1e90?format=webp&width=800'); height: 120px; margin-bottom: 1rem; border-radius: 10px;"></div>
                     <div class="game-icon">💡</div>
                     <h3 class="game-title">Working Memory</h3>
                     <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
@@ -879,6 +880,40 @@
                     </div>
                     <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 62%</p>
                     <button class="btn btn-primary" onclick="startGame('working-memory')" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Training
+                    </button>
+                </div>
+
+                <div class="game-card" onclick="startGame('memory-enhancement')">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F8b60cf430e3340bca4d8b37a2daba5cd?format=webp&width=800'); height: 120px; margin-bottom: 1rem; border-radius: 10px;"></div>
+                    <div class="game-icon">🧺</div>
+                    <h3 class="game-title">Memory Enhancement</h3>
+                    <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
+                        Advanced memory enhancement techniques and brain training
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 73%;"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 73%</p>
+                    <button class="btn btn-primary" onclick="startGame('memory-enhancement')" style="margin-top: 1rem;">
+                        <i class="fas fa-play"></i>
+                        Start Training
+                    </button>
+                </div>
+
+                <div class="game-card" onclick="startGame('cognitive-boost')">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F2cb18b28bf5345578a5d4cd338bb06d7?format=webp&width=800'); height: 120px; margin-bottom: 1rem; border-radius: 10px;"></div>
+                    <div class="game-icon">⚡</div>
+                    <h3 class="game-title">Cognitive Boost</h3>
+                    <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
+                        Comprehensive cognitive enhancement and brain optimization
+                    </p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 58%;"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Progress: 58%</p>
+                    <button class="btn btn-primary" onclick="startGame('cognitive-boost')" style="margin-top: 1rem;">
                         <i class="fas fa-play"></i>
                         Start Training
                     </button>
@@ -1179,7 +1214,7 @@
         <!-- Consultation Page -->
         <div class="page" id="consultation">
             <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem; color: var(--text-white);">
-                👩‍⚕️ Expert Consultation
+                ��‍⚕️ Expert Consultation
             </h2>
 
             <div class="activity-grid">
@@ -1307,13 +1342,15 @@
                             patientProgress: 87
                         },
                         games: {
-                            memory: { progress: 67, lastPlayed: new Date() },
-                            attention: { progress: 84, lastPlayed: new Date() },
-                            reaction: { progress: 56, lastPlayed: new Date() },
-                            logic: { progress: 78, lastPlayed: new Date() },
-                            executive: { progress: 45, lastPlayed: new Date() },
-                            workingMemory: { progress: 62, lastPlayed: new Date() }
-                        },
+                memory: { progress: 67, lastPlayed: new Date() },
+                attention: { progress: 84, lastPlayed: new Date() },
+                reaction: { progress: 56, lastPlayed: new Date() },
+                logic: { progress: 78, lastPlayed: new Date() },
+                executive: { progress: 45, lastPlayed: new Date() },
+                workingMemory: { progress: 62, lastPlayed: new Date() },
+                'memory-enhancement': { progress: 73, lastPlayed: new Date() },
+                'cognitive-boost': { progress: 58, lastPlayed: new Date() }
+            },
                         meditation: {
                             totalSessions: 23,
                             totalMinutes: 456,
@@ -1534,7 +1571,9 @@
                 reaction: 'Quick Response Training',
                 logic: 'Logic Builder Exercise',
                 executive: 'Executive Control Task',
-                'working-memory': 'Working Memory Enhancement'
+                'working-memory': 'Working Memory Enhancement',
+                'memory-enhancement': 'Memory Enhancement Training',
+                'cognitive-boost': 'Cognitive Boost Challenge'
             };
 
             showNotification(`Starting ${gameNames[gameType]}...`);
