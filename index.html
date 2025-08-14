@@ -2694,7 +2694,7 @@
                 </div>
 
                 <div class="card">
-                    <h3>🧘‍♀️ Advanced Binaural Beats</h3>
+                    <h3>🧘‍���️ Advanced Binaural Beats</h3>
                     <div class="binaural-player" style="background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.1)); border-radius: 15px; padding: 2rem; margin: 1rem 0;">
                         <div class="frequency-selector" style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
                             <button class="freq-btn active" data-freq="delta" style="padding: 0.5rem 1rem; border: none; border-radius: 20px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; cursor: pointer; transition: all 0.3s ease;" onclick="selectFrequency('delta')">Delta (0.5-4Hz)</button>
@@ -3746,9 +3746,61 @@
         // Leaderboard Functions
         function filterLeaderboard(category) {
             console.log(`Filtering leaderboard by: ${category}`);
+
+            // Update button states
             const buttons = document.querySelectorAll('.leaderboard-categories .btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
+
+            // Update leaderboard content based on category
+            const leaderboardList = document.querySelector('.leaderboard-list');
+            if (leaderboardList) {
+                const leaderboards = {
+                    overall: [
+                        { name: 'Alex Chen', subtitle: 'Cognitive Elite • Neural Efficiency: 98%', score: '2,847', rank: 1 },
+                        { name: 'Maya Rodriguez', subtitle: 'Memory Master • Accuracy: 96%', score: '2,534', rank: 2 },
+                        { name: 'Jordan Kim', subtitle: 'Focus Champion • Reaction: 142ms', score: '2,297', rank: 3 }
+                    ],
+                    memory: [
+                        { name: 'Maya Rodriguez', subtitle: 'Memory Palace Expert • 98% Accuracy', score: '3,124', rank: 1 },
+                        { name: 'Chen Liu', subtitle: 'Pattern Recognition Master', score: '2,987', rank: 2 },
+                        { name: 'Alex Chen', subtitle: 'Sequential Memory Champion', score: '2,756', rank: 3 }
+                    ],
+                    focus: [
+                        { name: 'Jordan Kim', subtitle: 'Sustained Attention Expert • 142ms Avg', score: '3,456', rank: 1 },
+                        { name: 'Sarah Watson', subtitle: 'Meditation Master • 95% Focus', score: '3,089', rank: 2 },
+                        { name: 'Alex Chen', subtitle: 'Concentration Champion', score: '2,834', rank: 3 }
+                    ],
+                    speed: [
+                        { name: 'Lightning Rodriguez', subtitle: 'Speed Processing Elite • 89ms Avg', score: '4,123', rank: 1 },
+                        { name: 'Quick Thompson', subtitle: 'Reaction Time Master • 94ms', score: '3,876', rank: 2 },
+                        { name: 'Flash Gordon', subtitle: 'Processing Speed Champion', score: '3,654', rank: 3 }
+                    ]
+                };
+
+                const categoryData = leaderboards[category] || leaderboards.overall;
+
+                leaderboardList.innerHTML = categoryData.map(user => {
+                    const rankClass = user.rank === 1 ? 'first' : user.rank === 2 ? 'second' : 'third';
+                    const highlightClass = user.rank === 1 ? 'champion-highlight' : '';
+                    const borderStyle = user.rank === 1 ? 'border: 2px solid #ffd700;' : '';
+
+                    return `
+                        <div class="leaderboard-item ${highlightClass}" style="${user.rank === 1 ? 'background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.3));' : ''} ${borderStyle}">
+                            <div class="rank-badge ${rankClass}">${user.rank}</div>
+                            <div class="champion-info" style="flex: 1;">
+                                <div style="font-weight: bold; font-size: 1.1rem;">${user.name}</div>
+                                <div style="color: #666; font-size: 0.9rem;">${user.subtitle}</div>
+                            </div>
+                            <div class="champion-score" style="text-align: right;">
+                                <div style="font-size: 1.5rem; font-weight: bold; color: ${user.rank === 1 ? '#f1c40f' : '#666'};">${user.score}</div>
+                                <div style="font-size: 0.8rem; color: #666;">Elite Points</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
             showToast(`📊 Viewing ${category} leaderboard`);
         }
 
@@ -4190,7 +4242,7 @@
                                 </div>
                             </div>
                             <div style="display: flex; align-items: center; gap: 1rem;">
-                                <span style="font-size: 2rem;">🌡️</span>
+                                <span style="font-size: 2rem;">🌡��</span>
                                 <div>
                                     <strong>Room Temperature:</strong> Keep your bedroom between 65-68°F (18-20°C) for optimal sleep.
                                 </div>
