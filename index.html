@@ -3499,41 +3499,42 @@
             };
         }
 
-        function joinChallenge() {
-            console.log('Joining challenge');
-            alert('Challenge joined!');
+        window.joinChallenge = function() {
+            console.log('🏆 Joining challenge');
             createConfetti();
-            showToast("🎉 Challenge Joined!");
+            showToast("🎉 Challenge Joined! Welcome to the competition!");
         }
 
-        function showLeaderboard() {
-            console.log('Showing leaderboard');
-            alert('Opening leaderboard!');
+        window.showLeaderboard = function() {
+            console.log('📊 Showing leaderboard');
             const modal = document.getElementById('leaderboardModal');
             if (modal) {
                 modal.classList.add('active');
+                showToast("📊 Leaderboard opened");
+            } else {
+                showToast("❌ Leaderboard unavailable");
             }
         }
 
-        function closeModal(modalId) {
+        window.closeModal = function(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.remove('active');
             }
         }
 
-        function showToast(message) {
+        window.showToast = function(message) {
             let toast = document.getElementById('toast');
             if (!toast) {
                 toast = document.createElement('div');
                 toast.id = 'toast';
                 toast.style.cssText = `
                     position: fixed; top: 150px; right: 2rem;
-                    background: #FBC4AB; color: #2d2d2d;
+                    background: linear-gradient(45deg, #FBC4AB, #F7A693); color: #2d2d2d;
                     padding: 1rem 2rem; border-radius: 12px;
                     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
                     z-index: 1001; transform: translateX(100%);
-                    transition: transform 0.3s ease;
+                    transition: transform 0.3s ease; font-weight: 600;
                 `;
                 document.body.appendChild(toast);
             }
