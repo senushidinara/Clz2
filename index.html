@@ -3383,7 +3383,7 @@
                 },
                 {
                     pattern: ['🔺', '🔻', '🔺', '🔻', '?'],
-                    options: ['��', '🔻', '🔹', '🔸'],
+                    options: ['🔺', '🔻', '🔹', '🔸'],
                     answer: 0
                 }
             ];
@@ -3783,18 +3783,63 @@
             }
         }
 
+        function startBinauralSession() {
+            // Simulate binaural beats effects on metrics
+            const focusLevel = document.getElementById('focusLevel');
+            const heartRate = document.getElementById('heartRate');
+
+            let sessionTime = 0;
+            const sessionInterval = setInterval(() => {
+                if (!isPlaying) {
+                    clearInterval(sessionInterval);
+                    return;
+                }
+
+                sessionTime++;
+
+                // Gradually improve metrics during session
+                if (focusLevel) {
+                    const currentFocus = parseInt(focusLevel.textContent);
+                    const newFocus = Math.min(98, currentFocus + Math.floor(Math.random() * 3));
+                    focusLevel.textContent = `${newFocus}%`;
+                }
+
+                if (heartRate && sessionTime % 10 === 0) {
+                    const currentHR = parseInt(heartRate.textContent);
+                    const newHR = Math.max(60, currentHR - Math.floor(Math.random() * 2));
+                    heartRate.textContent = `${newHR} BPM`;
+                }
+
+                // Show progress notifications
+                if (sessionTime === 30) showToast('🧘 Entering deeper relaxation...');
+                if (sessionTime === 60) showToast('✨ Neural synchronization improving...');
+                if (sessionTime === 120) showToast('🌟 Peak meditation state achieved!');
+
+            }, 1000);
+        }
+
         function animateAudioWaves(ctx, canvas) {
             let frame = 0;
+            const frequencies = {
+                delta: { speed: 0.01, amplitude: 15 },
+                theta: { speed: 0.02, amplitude: 20 },
+                alpha: { speed: 0.03, amplitude: 25 },
+                beta: { speed: 0.04, amplitude: 18 },
+                gamma: { speed: 0.06, amplitude: 12 }
+            };
 
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.strokeStyle = '#8A2BE2';
-                ctx.lineWidth = 2;
+
+                const freq = frequencies[currentFrequency];
+                ctx.strokeStyle = getFrequencyColor(currentFrequency);
+                ctx.lineWidth = 3;
                 ctx.beginPath();
 
                 for (let x = 0; x < canvas.width; x++) {
-                    const y = canvas.height/2 + Math.sin((x + frame) * 0.02) * 20 +
-                              Math.sin((x + frame) * 0.05) * 10;
+                    const y = canvas.height/2 +
+                              Math.sin((x + frame) * freq.speed) * freq.amplitude +
+                              Math.sin((x + frame) * freq.speed * 1.5) * (freq.amplitude * 0.5);
                     if (x === 0) ctx.moveTo(x, y);
                     else ctx.lineTo(x, y);
                 }
@@ -3802,12 +3847,54 @@
                 ctx.stroke();
                 frame += 2;
 
-                if (frame < 1000) {
+                if (isPlaying && frame < 10000) {
                     requestAnimationFrame(draw);
                 }
             }
 
             draw();
+        }
+
+        function getFrequencyColor(frequency) {
+            const colors = {
+                delta: '#667eea',
+                theta: '#764ba2',
+                alpha: '#f093fb',
+                beta: '#f5576c',
+                gamma: '#4facfe'
+            };
+            return colors[frequency] || '#8A2BE2';
+        }
+
+        // Enhanced Meditation Background Functions
+        function changeMeditationBg(bgType) {
+            const natureBg = document.getElementById('natureBg');
+            const oceanBg = document.getElementById('oceanBg');
+            const mountainBg = document.getElementById('mountainBg');
+
+            // Hide all backgrounds
+            if (natureBg) natureBg.style.display = 'none';
+            if (oceanBg) oceanBg.style.display = 'none';
+            if (mountainBg) mountainBg.style.display = 'none';
+
+            // Show selected background
+            switch(bgType) {
+                case 'nature':
+                    if (natureBg) natureBg.style.display = 'block';
+                    break;
+                case 'ocean':
+                    if (oceanBg) oceanBg.style.display = 'block';
+                    break;
+                case 'mountain':
+                    if (mountainBg) mountainBg.style.display = 'block';
+                    break;
+            }
+
+            // Update button states
+            document.querySelectorAll('.bg-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            showToast(`🌄 ${bgType.charAt(0).toUpperCase() + bgType.slice(1)} meditation activated`);
         }
 
         function createConfetti() {
