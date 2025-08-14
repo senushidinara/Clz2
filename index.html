@@ -676,7 +676,7 @@
                 <h1 class="hero-title">NeuroMind Pro</h1>
                 <p class="hero-subtitle">Advanced Cognitive Health & Research Platform</p>
                 
-                <div class="hero-image image-overlay"></div>
+                <div class="hero-image image-overlay" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F960c79f08d0e4c2e8a40553f9e409ef9?format=webp&width=800');"></div>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -787,6 +787,7 @@
 
             <div class="games-grid">
                 <div class="game-card" onclick="startGame('memory')">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fc13d83e5491b441bb7c163822bdf49cf?format=webp&width=800'); height: 120px; margin-bottom: 1rem; border-radius: 10px;"></div>
                     <div class="game-icon">🧩</div>
                     <h3 class="game-title">Memory Palace</h3>
                     <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
@@ -835,6 +836,7 @@
                 </div>
 
                 <div class="game-card" onclick="startGame('logic')">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fd4ef5b8ec26641669e2e9ec530ea14ed?format=webp&width=800'); height: 120px; margin-bottom: 1rem; border-radius: 10px;"></div>
                     <div class="game-icon">🧠</div>
                     <h3 class="game-title">Logic Builder</h3>
                     <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
@@ -913,11 +915,11 @@
 
             <div class="activity-grid">
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F8e4b6cf8d490402e9c2b199bd70a7e87?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F7dd101c765a64885b4642d332ac512cd?format=webp&width=800');"></div>
                     <div class="activity-content">
-                        <h3 class="activity-title">Beach Meditation</h3>
-                        <p class="activity-description">Peaceful beach sounds and guided meditation for stress relief and mental clarity.</p>
-                        <button class="btn btn-primary" onclick="startMeditation('beach')">
+                        <h3 class="activity-title">Mental Wellness</h3>
+                        <p class="activity-description">Comprehensive mental health meditation sessions for overall cognitive wellbeing.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('mental')">
                             <i class="fas fa-play"></i>
                             Start Session
                         </button>
@@ -925,10 +927,46 @@
                 </div>
 
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F60b6318f6255476396456fe7fd21e5b7?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Ff297489dfc3141809f63c385c5bd7fd9?format=webp&width=800');"></div>
                     <div class="activity-content">
-                        <h3 class="activity-title">Garden Tranquility</h3>
-                        <p class="activity-description">Nature-inspired meditation in a serene garden environment for deep relaxation.</p>
+                        <h3 class="activity-title">Mindful Living</h3>
+                        <p class="activity-description">Daily mindfulness practices for improved focus and emotional balance.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('mindful')">
+                            <i class="fas fa-play"></i>
+                            Start Session
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F5d94f4721fb24f75a179b7d27e96eab2?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Physical Wellness</h3>
+                        <p class="activity-description">Body-mind connection exercises for holistic health and vitality.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('physical')">
+                            <i class="fas fa-play"></i>
+                            Start Session
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F96054c407b9143bfac993f547f0cb661?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Wellness Journey</h3>
+                        <p class="activity-description">Guided meditation for personal growth and cognitive enhancement.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('journey')">
+                            <i class="fas fa-play"></i>
+                            Start Session
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F1ef1ac0813784bca90780f9a46112737?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Serenity Garden</h3>
+                        <p class="activity-description">Nature-inspired meditation in a peaceful garden setting for deep relaxation.</p>
                         <button class="btn btn-primary" onclick="startMeditation('garden')">
                             <i class="fas fa-play"></i>
                             Start Session
@@ -937,11 +975,11 @@
                 </div>
 
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F99e28656e082417291f20a3f2669648a?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Ffb0148fe814c4758a7d81a481cbc1173?format=webp&width=800');"></div>
                     <div class="activity-content">
-                        <h3 class="activity-title">Yoga Flow</h3>
-                        <p class="activity-description">Gentle yoga sequences combined with breathing exercises for mind-body harmony.</p>
-                        <button class="btn btn-primary" onclick="startMeditation('yoga')">
+                        <h3 class="activity-title">Mindful Meditation</h3>
+                        <p class="activity-description">Traditional meditation techniques for enhanced mental clarity and focus.</p>
+                        <button class="btn btn-primary" onclick="startMeditation('mindful-traditional')">
                             <i class="fas fa-play"></i>
                             Start Session
                         </button>
@@ -949,11 +987,11 @@
                 </div>
 
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F2b3f0fcb944b410a93f8942ca8cd51cb?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F80528f627d014482bb5341f1bf7e982f?format=webp&width=800');"></div>
                     <div class="activity-content">
-                        <h3 class="activity-title">Breathing Techniques</h3>
+                        <h3 class="activity-title">Advanced Mindfulness</h3>
                         <p class="activity-description">Advanced breathing exercises for anxiety reduction and cognitive enhancement.</p>
-                        <button class="btn btn-primary" onclick="startMeditation('breathing')">
+                        <button class="btn btn-primary" onclick="startMeditation('advanced')">
                             <i class="fas fa-play"></i>
                             Start Session
                         </button>
@@ -1019,11 +1057,11 @@
 
             <div class="activity-grid">
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F44bc7e31c5b94dfe9c4fcdf423d60528?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F8563b81f36cd4c31b7770e311e53e845?format=webp&width=800');"></div>
                     <div class="activity-content">
-                        <h3 class="activity-title">Advanced Neural Lab</h3>
-                        <p class="activity-description">Cutting-edge research in cognitive neuroscience and brain-computer interfaces.</p>
-                        <button class="btn btn-primary" onclick="viewResearch('neural-lab')">
+                        <h3 class="activity-title">Advanced Scientific Lab</h3>
+                        <p class="activity-description">State-of-the-art laboratories for cutting-edge neuroscience research and brain studies.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('advanced-lab')">
                             <i class="fas fa-microscope"></i>
                             View Research
                         </button>
@@ -1031,11 +1069,11 @@
                 </div>
 
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F67db4c138ef448d69a2d234d119437b7?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F343ab474f5e44c65ac8b60a1f18698c6?format=webp&width=800');"></div>
                     <div class="activity-content">
-                        <h3 class="activity-title">Brain Enhancement Studies</h3>
-                        <p class="activity-description">Research on cognitive enhancement techniques and neuroplasticity protocols.</p>
-                        <button class="btn btn-primary" onclick="viewResearch('enhancement')">
+                        <h3 class="activity-title">Brain Research Studies</h3>
+                        <p class="activity-description">Comprehensive brain research by leading scientists in cognitive neuroscience.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('brain-studies')">
                             <i class="fas fa-microscope"></i>
                             View Research
                         </button>
@@ -1043,11 +1081,11 @@
                 </div>
 
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F4e4cc545682a460cb32cf0b69eb71d9e?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F10addaeda2aa47039e05a6a7b59682b9?format=webp&width=800');"></div>
                     <div class="activity-content">
-                        <h3 class="activity-title">Sleep & Memory Research</h3>
-                        <p class="activity-description">Understanding the connection between sleep patterns and memory consolidation.</p>
-                        <button class="btn btn-primary" onclick="viewResearch('sleep-memory')">
+                        <h3 class="activity-title">Memory Challenge Research</h3>
+                        <p class="activity-description">Innovative research on memory enhancement and cognitive training methodologies.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('memory-challenge')">
                             <i class="fas fa-microscope"></i>
                             View Research
                         </button>
@@ -1055,11 +1093,59 @@
                 </div>
 
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F169d5121f3b340878a2f86681ff9f774?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F56ef1e60c50a41bfa6a08d380aad4f98?format=webp&width=800');"></div>
                     <div class="activity-content">
-                        <h3 class="activity-title">Memory Enhancement Activities</h3>
-                        <p class="activity-description">Clinical studies on memory training protocols and cognitive rehabilitation.</p>
-                        <button class="btn btn-primary" onclick="viewResearch('memory-activities')">
+                        <h3 class="activity-title">Research Facility</h3>
+                        <p class="activity-description">Modern research facilities with advanced equipment for cognitive studies.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('research-facility')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F1705ab7020e3474f9b0712c02936201d?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Science Advancement</h3>
+                        <p class="activity-description">Breakthrough research in scientific advancement of cognitive technologies.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('science-advancement')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F691129ecb0c34ab9b74552202bc8ee81?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Advanced Research Lab</h3>
+                        <p class="activity-description">High-tech research laboratory for neurological and cognitive investigations.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('advanced-research')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F76a1a0482fa54415b9c811c4efe79b3c?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Medical Research Team</h3>
+                        <p class="activity-description">Collaborative research with leading doctors and scientists in neurocognitive health.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('medical-team')">
+                            <i class="fas fa-microscope"></i>
+                            View Research
+                        </button>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F4a081ca0657f4a668b85667c14c43779?format=webp&width=800');"></div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">Quantum Neuroscience Lab</h3>
+                        <p class="activity-description">Revolutionary quantum technology applications in neuroscience research.</p>
+                        <button class="btn btn-primary" onclick="viewResearch('quantum-lab')">
                             <i class="fas fa-microscope"></i>
                             View Research
                         </button>
@@ -1500,16 +1586,27 @@
         // Meditation Functions
         function startMeditation(type) {
             const meditationTypes = {
+                mental: 'Mental Wellness Meditation',
+                mindful: 'Mindful Living Session',
+                physical: 'Physical Wellness Session',
+                journey: 'Wellness Journey Meditation',
+                garden: 'Serenity Garden Session',
+                'mindful-traditional': 'Mindful Traditional Meditation',
+                advanced: 'Advanced Mindfulness Session',
                 beach: 'Beach Meditation',
-                garden: 'Garden Tranquility',
                 yoga: 'Yoga Flow',
                 breathing: 'Breathing Techniques'
             };
-            
+
             showNotification(`Starting ${meditationTypes[type]} session...`);
-            
+
             setTimeout(() => {
-                showNotification('Meditation session in progress. Focus on your breathing.');
+                showNotification('Meditation session in progress. Focus on your breathing and achieve mental clarity.');
+                // Update meditation stats
+                const data = dataManager.getData();
+                data.meditation.totalSessions += 1;
+                data.meditation.totalMinutes += Math.floor(Math.random() * 20) + 10;
+                dataManager.saveData(data);
             }, 2000);
         }
 
@@ -1565,13 +1662,25 @@
         // Research Functions
         function viewResearch(researchType) {
             const researchTypes = {
+                'advanced-lab': 'Advanced Scientific Laboratory Research',
+                'brain-studies': 'Brain Research Studies by Scientists',
+                'memory-challenge': 'Memory Challenge Research',
+                'research-facility': 'Research Facility Studies',
+                'science-advancement': 'Science Advancement Research',
+                'advanced-research': 'Advanced Research Laboratory',
+                'medical-team': 'Medical Research Team Studies',
+                'quantum-lab': 'Quantum Neuroscience Laboratory',
                 'neural-lab': 'Advanced Neural Laboratory Research',
                 'enhancement': 'Brain Enhancement Studies',
                 'sleep-memory': 'Sleep & Memory Research',
                 'memory-activities': 'Memory Enhancement Activities'
             };
-            
+
             showNotification(`Opening ${researchTypes[researchType]}...`);
+
+            setTimeout(() => {
+                showNotification('Research data loaded. Analyzing cognitive patterns and findings.');
+            }, 2000);
         }
 
         // Consultation Functions
