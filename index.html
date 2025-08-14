@@ -3383,7 +3383,7 @@
                 },
                 {
                     pattern: ['🔺', '🔻', '🔺', '🔻', '?'],
-                    options: ['🔺', '🔻', '🔹', '🔸'],
+                    options: ['��', '🔻', '🔹', '🔸'],
                     answer: 0
                 }
             ];
@@ -3727,16 +3727,59 @@
             showToast(`📊 Viewing ${category} leaderboard`);
         }
 
-        // Binaural Beats Functions
-        function playBinauralBeats() {
-            console.log('Starting binaural beats session');
-            showToast('🎵 Binaural beats activated');
+        // Enhanced Binaural Beats Functions
+        let currentFrequency = 'delta';
+        let isPlaying = false;
 
-            // Simulate audio visualization
-            const canvas = document.getElementById('audioCanvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                animateAudioWaves(ctx, canvas);
+        function selectFrequency(frequency) {
+            currentFrequency = frequency;
+
+            // Update button states
+            document.querySelectorAll('.freq-btn').forEach(btn => {
+                btn.style.background = 'rgba(255,255,255,0.2)';
+                btn.style.color = '#333';
+            });
+
+            event.target.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+            event.target.style.color = 'white';
+
+            // Update frequency information
+            const frequencyInfo = document.getElementById('frequencyInfo');
+            const frequencyData = {
+                delta: 'Delta Waves (0.5-4Hz): Deep sleep, healing, regeneration. Perfect for rest and recovery sessions.',
+                theta: 'Theta Waves (4-8Hz): Deep meditation, creativity, memory. Ideal for learning and insight.',
+                alpha: 'Alpha Waves (8-13Hz): Relaxed awareness, calm focus. Great for stress reduction and mild meditation.',
+                beta: 'Beta Waves (13-30Hz): Active concentration, alertness. Perfect for cognitive tasks and problem-solving.',
+                gamma: 'Gamma Waves (30+Hz): High-level cognitive processing, peak awareness. Advanced meditation states.'
+            };
+
+            if (frequencyInfo) {
+                frequencyInfo.innerHTML = `<strong>${event.target.textContent}:</strong> ${frequencyData[frequency]}`;
+            }
+
+            console.log(`Frequency selected: ${frequency}`);
+        }
+
+        function playBinauralBeats() {
+            isPlaying = !isPlaying;
+            const button = event.target;
+
+            if (isPlaying) {
+                button.innerHTML = '<i class="fas fa-pause"></i> Stop Session';
+                showToast(`🎵 ${currentFrequency.charAt(0).toUpperCase() + currentFrequency.slice(1)} waves activated`);
+
+                // Start audio visualization
+                const canvas = document.getElementById('audioCanvas');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    animateAudioWaves(ctx, canvas);
+                }
+
+                // Simulate session effects
+                startBinauralSession();
+            } else {
+                button.innerHTML = '<i class="fas fa-play"></i> Start Binaural Session';
+                showToast('🔇 Binaural session stopped');
             }
         }
 
