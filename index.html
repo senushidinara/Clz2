@@ -2637,74 +2637,96 @@
             </div>
         </div>
 
-        <!-- Challenges Page -->
+        <!-- Elite Challenges Page -->
         <div class="page" id="challenges">
-            <div class="card">
-                <h2>Neuro Challenges</h2>
-                <p>Test your cognitive abilities with these engaging challenges</p>
-            </div>
-
-            <div class="challenge-card" onclick="openChallenge('memory')" style="border-left: 4px solid #3498db;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                    <div>
-                        <div class="challenge-title">🧠 Memory Match Challenge</div>
-                        <div class="challenge-description">Test your working memory with pattern matching</div>
+            <div class="challenges-hero" style="background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,248,255,0.8)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Ff14908682d5a45cf8a608079d6c3d1bf?format=webp&width=800') center/cover; border-radius: 20px; padding: 3rem; margin-bottom: 2rem; text-align: center;">
+                <h1 style="font-size: 3rem; color: #2d2d2d; margin-bottom: 1rem;">🏆 Elite Challenges</h1>
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 2rem;">Test your cognitive abilities with our advanced interactive training modules</p>
+                <div class="stats-quick" style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem;">
+                    <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 15px; min-width: 120px;">
+                        <div style="font-size: 2rem; color: #8A2BE2; font-weight: bold;">87</div>
+                        <div style="color: #666; font-size: 0.9rem;">Best Score</div>
                     </div>
-                    <div style="text-align: center; font-size: 2rem; color: #3498db;">65</div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%; background: linear-gradient(90deg, #3498db, #5dade2);"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
-                    <small>Progress: 65% Complete</small>
-                    <small style="color: #3498db; font-weight: 600;">🏆 Best: Level 8</small>
-                </div>
-            </div>
-
-            <div class="challenge-card" onclick="openChallenge('speed')" style="border-left: 4px solid #e74c3c;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                    <div>
-                        <div class="challenge-title">⚡ Speed Processing</div>
-                        <div class="challenge-description">React quickly to visual stimuli</div>
+                    <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 15px; min-width: 120px;">
+                        <div style="font-size: 2rem; color: #1abc9c; font-weight: bold;">15</div>
+                        <div style="color: #666; font-size: 0.9rem;">Streak</div>
                     </div>
-                    <div style="text-align: center; font-size: 2rem; color: #e74c3c;">40</div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 40%; background: linear-gradient(90deg, #e74c3c, #ec7063);"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
-                    <small>Progress: 40% Complete</small>
-                    <small style="color: #e74c3c; font-weight: 600;">⚡ Best: 142ms</small>
-                </div>
-            </div>
-
-            <div class="challenge-card" onclick="openChallenge('logic')" style="border-left: 4px solid #9b59b6;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                    <div>
-                        <div class="challenge-title">🧩 Logic Puzzles</div>
-                        <div class="challenge-description">Solve complex reasoning problems</div>
+                    <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 15px; min-width: 120px;">
+                        <div style="font-size: 2rem; color: #e74c3c; font-weight: bold;">Pro</div>
+                        <div style="color: #666; font-size: 0.9rem;">Level</div>
                     </div>
-                    <div style="text-align: center; font-size: 2rem; color: #9b59b6;">80</div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #9b59b6, #bb8fce);"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
-                    <small>Progress: 80% Complete</small>
-                    <small style="color: #9b59b6; font-weight: 600;">🧩 Best: 15 puzzles</small>
                 </div>
             </div>
 
-            <div class="card">
-                <h3>Leaderboard</h3>
-                <button class="btn btn-challenges" onclick="showLeaderboard()">
-                    <i class="fas fa-trophy"></i>
-                    View Leaderboard
-                </button>
-                <button class="btn btn-primary" onclick="joinChallenge()">
-                    <i class="fas fa-plus"></i>
-                    Join Challenge
-                </button>
+            <div class="challenges-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <!-- Memory Matching Game -->
+                <div class="interactive-challenge-card" style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.2)); border: 2px solid rgba(155, 89, 182, 0.3); border-radius: 20px; padding: 2rem; transition: all 0.3s ease; cursor: pointer;" onclick="startMemoryGame()">
+                    <div style="background: url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Ff14908682d5a45cf8a608079d6c3d1bf?format=webp&width=800') center/cover; width: 60px; height: 60px; border-radius: 15px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: #8e44ad; margin-bottom: 0.5rem; font-size: 1.3rem;">🧠 Memory Matching</h3>
+                    <p style="color: #666; margin-bottom: 1rem;">Advanced spatial memory training with pattern recognition</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="difficulty elite" style="background: linear-gradient(45deg, #8e44ad, #9b59b6); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">ELITE</span>
+                        <div style="color: #8e44ad; font-weight: bold;">Click to Play ▶</div>
+                    </div>
+                </div>
+
+                <!-- Speed Reaction Game -->
+                <div class="interactive-challenge-card" style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.2)); border: 2px solid rgba(52, 152, 219, 0.3); border-radius: 20px; padding: 2rem; transition: all 0.3s ease; cursor: pointer;" onclick="startSpeedGame()">
+                    <div style="background: url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F5f6bb650e76e4b28a86608b322d6c992?format=webp&width=800') center/cover; width: 60px; height: 60px; border-radius: 15px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: #3498db; margin-bottom: 0.5rem; font-size: 1.3rem;">⚡ Neural Speed</h3>
+                    <p style="color: #666; margin-bottom: 1rem;">Reaction time optimization and cognitive speed enhancement</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="difficulty pro" style="background: linear-gradient(45deg, #3498db, #5dade2); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">PRO</span>
+                        <div style="color: #3498db; font-weight: bold;">Click to Play ▶</div>
+                    </div>
+                </div>
+
+                <!-- Logic Puzzle Game -->
+                <div class="interactive-challenge-card" style="background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(22, 160, 133, 0.2)); border: 2px solid rgba(26, 188, 156, 0.3); border-radius: 20px; padding: 2rem; transition: all 0.3s ease; cursor: pointer;" onclick="startLogicGame()">
+                    <div style="background: url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F9eef2b318af34cca841862c4427561e0?format=webp&width=800') center/cover; width: 60px; height: 60px; border-radius: 15px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: #1abc9c; margin-bottom: 0.5rem; font-size: 1.3rem;">🔬 Logic Patterns</h3>
+                    <p style="color: #666; margin-bottom: 1rem;">Analytical thinking and pattern recognition development</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="difficulty expert" style="background: linear-gradient(45deg, #1abc9c, #48c9b0); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">EXPERT</span>
+                        <div style="color: #1abc9c; font-weight: bold;">Click to Play ▶</div>
+                    </div>
+                </div>
+
+                <!-- Focus Training Game -->
+                <div class="interactive-challenge-card" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.2)); border: 2px solid rgba(231, 76, 60, 0.3); border-radius: 20px; padding: 2rem; transition: all 0.3s ease; cursor: pointer;" onclick="startFocusGame()">
+                    <div style="background: url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fb5a20f82efa948b3924d1e6bbf15aecd?format=webp&width=800') center/cover; width: 60px; height: 60px; border-radius: 15px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: #e74c3c; margin-bottom: 0.5rem; font-size: 1.3rem;">🎯 Focus Training</h3>
+                    <p style="color: #666; margin-bottom: 1rem;">Attention span enhancement and mindfulness exercises</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="difficulty advanced" style="background: linear-gradient(45deg, #e74c3c, #ec7063); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">ADVANCED</span>
+                        <div style="color: #e74c3c; font-weight: bold;">Click to Play ▶</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Game Area -->
+            <div id="gameArea" style="display: none; background: rgba(255,255,255,0.95); border-radius: 20px; padding: 2rem; margin: 2rem 0; backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 id="gameTitle" style="color: #2d2d2d; margin: 0;">Game Loading...</h2>
+                    <button onclick="closeGame()" style="background: #e74c3c; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; font-weight: bold;">✕ Close</button>
+                </div>
+                <div id="gameContent" style="min-height: 300px; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                    <!-- Game content will be populated here -->
+                </div>
+                <div id="gameStats" style="display: flex; justify-content: space-around; margin-top: 2rem; padding: 1rem; background: rgba(240,248,255,0.8); border-radius: 15px;">
+                    <div style="text-align: center;">
+                        <div id="gameScore" style="font-size: 1.5rem; font-weight: bold; color: #8A2BE2;">0</div>
+                        <div style="color: #666; font-size: 0.9rem;">Score</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="gameTime" style="font-size: 1.5rem; font-weight: bold; color: #1abc9c;">00:00</div>
+                        <div style="color: #666; font-size: 0.9rem;">Time</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="gameLevel" style="font-size: 1.5rem; font-weight: bold; color: #e74c3c;">1</div>
+                        <div style="color: #666; font-size: 0.9rem;">Level</div>
+                    </div>
+                </div>
             </div>
         </div>
 
