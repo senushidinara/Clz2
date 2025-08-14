@@ -112,19 +112,19 @@
             max-width: 600px;
         }
 
-        /* Advanced Main Content */
+        /* Fixed Main Content Layout */
         .main-content {
-            margin-top: 100px;
+            margin-top: 120px;
             margin-left: 350px;
             margin-bottom: 0;
-            min-height: calc(100vh - 100px);
-            padding: 2.5rem;
+            min-height: calc(100vh - 120px);
+            padding: 2rem;
             animation: fadeInUp 0.8s ease-out;
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.4s ease;
             position: relative;
-            background:
-                radial-gradient(ellipse at top right, rgba(138, 43, 226, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom left, rgba(75, 0, 130, 0.03) 0%, transparent 50%);
+            width: calc(100vw - 350px);
+            background: transparent;
+            z-index: 1;
         }
 
         .main-content::before {
@@ -3218,7 +3218,7 @@
                         padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
                         background: linear-gradient(45deg, #4682B4, #87CEEB); color: white;
                         cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(70,130,180,0.3);
-                    ">���� Ocean</button>
+                    ">🌊 Ocean</button>
                     <button onclick="changeMeditationBg('mountain')" class="bg-btn" data-bg="mountain" style="
                         padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
                         background: linear-gradient(45deg, #4169E1, #9370DB); color: white;
@@ -5211,7 +5211,7 @@
                         </div>
                     `;
                     createConfetti();
-                    showSoundEffect('🧘‍��️ MEDITATION COMPLETE!');
+                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
                 }
             }, 1000);
         }
