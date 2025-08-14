@@ -2872,20 +2872,20 @@
 
             <div class="card-grid">
                 <div class="card">
-                    <h3>Sleep Stages Analysis</h3>
-                    <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.05)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F03218f780ada43fa9271ffcb917e331a?format=webp&width=800') center/cover; height: 150px; border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                    <h3>How Sleep Affects Memory</h3>
+                    <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.05)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Ff8c88dcf74a948d7ae107106b9724d0e?format=webp&width=800') center/cover; height: 150px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openSleepMemoryGuide()">
                         <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 10px; text-align: center;">
-                            <i class="fas fa-chart-pie" style="font-size: 2rem; margin-bottom: 0.5rem; color: #e74c3c;"></i>
-                            <div>Sleep Pattern Analysis</div>
+                            <i class="fas fa-brain" style="font-size: 2rem; margin-bottom: 0.5rem; color: #8e44ad;"></i>
+                            <div>Sleep & Memory Connection</div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
-                    <h3>Wellness Tips</h3>
-                    <div style="background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(22, 160, 133, 0.05)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F7c95936274634d2d8476c99fbf6f058e?format=webp&width=800') center/cover; height: 150px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="expandSleepTips()">
+                    <h3>Brain Sleep Patterns</h3>
+                    <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.05)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F87ef787a08b54e418324ae3fed9fc402?format=webp&width=800') center/cover; height: 150px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="analyzeSleepBrain()">
                         <div style="background: rgba(255,255,255,0.9); padding: 1rem; border-radius: 10px; text-align: center;">
-                            <i class="fas fa-lightbulb" style="font-size: 2rem; margin-bottom: 0.5rem; color: #1abc9c;"></i>
-                            <div>Personalized Sleep Tips</div>
+                            <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 0.5rem; color: #3498db;"></i>
+                            <div>Brain Activity During Sleep</div>
                         </div>
                     </div>
                 </div>
@@ -4946,7 +4946,7 @@
                             if (timerProgress) timerProgress.style.strokeDashoffset = '565';
 
                             createConfetti();
-                            showToast("��� Focus session completed! Great job!");
+                            showToast("🎉 Focus session completed! Great job!");
                             if (window.showSoundEffect) showSoundEffect("🎯 SESSION COMPLETE!");
                         }
                     }, 1000);
@@ -5181,7 +5181,7 @@
                     ]
                 },
                 bodyscan: {
-                    title: '🧘‍���️ Body Scan Meditation',
+                    title: '🧘‍♂️ Body Scan Meditation',
                     background: 'linear-gradient(135deg, #4FC3F7 0%, #81C784 50%, #AED581 100%)',
                     instructions: [
                         '🧠 Start with your head',
@@ -5887,7 +5887,7 @@
         window.speedReaction = function() {
             if (!speedTestActive) {
                 if (window.showToast) {
-                    showToast('⚠️ Too early! Wait for GREEN!');
+                    showToast('⚠��� Too early! Wait for GREEN!');
                 }
                 return;
             }
