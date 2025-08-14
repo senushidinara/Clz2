@@ -2529,14 +2529,22 @@
 
         <!-- Dashboard Page -->
         <div class="page" id="dashboard">
+            <!-- EEG Hero Section -->
+            <div style="background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(22, 160, 133, 0.2)), url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fe9eca55a269846cdbac60422d575e3cf?format=webp&width=800') center/cover; border-radius: 20px; padding: 3rem; margin-bottom: 2rem; text-align: center;">
+                <div style="background: rgba(255,255,255,0.9); border-radius: 15px; padding: 2rem; backdrop-filter: blur(10px);">
+                    <h1 style="font-size: 2.5rem; color: #2d2d2d; margin-bottom: 1rem;">🧠 Advanced Brain Monitor</h1>
+                    <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">Real-time EEG analysis and cognitive performance tracking</p>
+                </div>
+            </div>
+
             <div class="card">
-                <h2>🧠 Advanced Brain Activity Monitor</h2>
+                <h2>Neural Activity Dashboard</h2>
                 <div class="eeg-container" id="eegContainer" style="
                     background:
-                        radial-gradient(circle at 30% 30%, rgba(185,224,216,0.3), transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(185,224,216,0.2), transparent 50%),
-                        linear-gradient(135deg, rgba(0,0,0,0.05), rgba(185,224,216,0.1));
-                    border: 2px solid rgba(185,224,216,0.3);
+                        linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(22, 160, 133, 0.05)),
+                        url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fd86ade42bb904a76b8eb8bd49658c310?format=webp&width=800') center/cover;
+                    border: 2px solid rgba(26, 188, 156, 0.3);
+                    backdrop-filter: blur(5px);
                 ">
                     <div class="eeg-wave" style="background: linear-gradient(90deg, var(--dashboard-color), #4ECDC4, var(--dashboard-color));"></div>
                     <!-- Multiple EEG waves -->
