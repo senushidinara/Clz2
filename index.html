@@ -4149,8 +4149,8 @@
         window.navigateToPage = navigateToPage;
 
         // Additional functions
-        function startBrainScan() {
-            console.log('Starting brain scan');
+        window.startBrainScan = function() {
+            console.log('🧠 Starting brain scan');
 
             const modal = document.getElementById('brainScanModal');
             if (modal) {
@@ -4161,11 +4161,17 @@
                 if (analysisText) {
                     analysisText.style.width = '0';
                     analysisText.textContent = 'Analyzing neural patterns...';
+
+                    // Add loading effect
+                    analysisText.style.borderRight = '2px solid var(--black)';
+                    analysisText.style.animation = 'typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite';
                 }
 
                 // Simulate brain scan process
                 setTimeout(() => {
                     if (analysisText) {
+                        analysisText.style.animation = 'none';
+                        analysisText.style.borderRight = 'none';
                         analysisText.innerHTML = `
                             <div style="text-align: left; line-height: 1.6;">
                                 <h4 style="color: var(--dashboard-color); margin-bottom: 1rem;">🧠 Brain Scan Results</h4>
@@ -4186,10 +4192,13 @@
                                 </div>
                             </div>
                         `;
+                        showToast("📊 Brain scan complete!");
                     }
                 }, 3000);
 
                 showToast("🧠 Brain scan initiated!");
+            } else {
+                showToast("❌ Brain scan unavailable");
             }
         }
 
