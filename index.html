@@ -3455,14 +3455,19 @@
                         padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
                         border: 2px solid rgba(255,182,193,0.5); position: relative; overflow: hidden;
                     ">
-                        <div class="breathing-animation" style="
-                            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                            width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.7);
-                            border-radius: 50%; animation: breathingPulse 4s ease-in-out infinite;
-                        "></div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #8B4513;">🫁 Breathwork</h4>
-                        <p style="text-align: center; color: #654321; font-size: 0.9rem;">4-7-8 breathing technique for relaxation</p>
-                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">5-15 minutes</div>
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 13px; opacity: 0.3;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Ff385f4670ff746bd85347326bd5d8b41?alt=media&token=d598f288-9f35-4670-821f-97310b75e917&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <div style="position: relative; z-index: 2;">
+                            <div class="breathing-animation" style="
+                                position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                                width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.7);
+                                border-radius: 50%; animation: breathingPulse 4s ease-in-out infinite;
+                            "></div>
+                            <h4 style="text-align: center; margin-bottom: 1rem; color: #8B4513;">🫁 Breathwork</h4>
+                            <p style="text-align: center; color: #654321; font-size: 0.9rem;">4-7-8 breathing technique for relaxation</p>
+                            <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">5-15 minutes</div>
+                        </div>
                     </div>
 
                     <div class="meditation-card" onclick="startMeditation('bodyscan')" style="
@@ -3529,13 +3534,18 @@
                         padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
                         border: 2px solid rgba(152,251,152,0.5); position: relative; overflow: hidden;
                     ">
-                        <div class="walking-steps" style="
-                            position: absolute; top: 50%; left: 20%;
-                            color: rgba(255,255,255,0.8); font-size: 1.5rem; animation: walkingMotion 2s ease-in-out infinite;
-                        ">👣</div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">🚶‍♀️ Walking</h4>
-                        <p style="text-align: center; color: #006400; font-size: 0.9rem;">Mindful movement meditation</p>
-                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">Any duration</div>
+                        <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 13px; opacity: 0.3;">
+                            <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fdbae0e453d954380980e29da20f2432e?alt=media&token=c5b8603f-8c2b-4673-ae98-1117b8eb8ea5&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                        </video>
+                        <div style="position: relative; z-index: 2;">
+                            <div class="walking-steps" style="
+                                position: absolute; top: 50%; left: 20%;
+                                color: rgba(255,255,255,0.8); font-size: 1.5rem; animation: walkingMotion 2s ease-in-out infinite;
+                            ">👣</div>
+                            <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">🚶‍♀️ Walking</h4>
+                            <p style="text-align: center; color: #006400; font-size: 0.9rem;">Mindful movement meditation</p>
+                            <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">Any duration</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4113,7 +4123,7 @@
                 },
                 {
                     pattern: ['🔺', '🔻', '🔺', '🔻', '?'],
-                    options: ['🔺', '🔻', '🔹', '🔸'],
+                    options: ['🔺', '��', '🔹', '🔸'],
                     answer: 0
                 }
             ];
@@ -5706,12 +5716,12 @@
                 }
             }, 100);
 
-            // Success notification
+            // Success notification with NFT feature mention
             setTimeout(function() {
                 if (window.showToast) {
-                    showToast('🎉 NeuroX Elite Ready! Enhanced pastel navigation activated!');
+                    showToast('🎉 NeuroX Elite Ready! Enhanced pastel navigation + NFT collection activated!');
                 }
-                console.log('🎉 NEUROX ELITE - Enhanced pastel theme and navigation ready!');
+                console.log('🎉 NEUROX ELITE - Enhanced pastel theme, navigation, and NFT collection ready!');
             }, 1000);
         });
 
@@ -6436,20 +6446,25 @@
             `;
 
             modal.innerHTML = `
-                <div style="background: rgba(255,255,255,0.9); padding: 3rem; border-radius: 20px; text-align: center;
-                     max-width: 500px; backdrop-filter: blur(10px);">
-                    <h2 style="color: #2ecc71; margin-bottom: 2rem;">🌿 Garden Sanctuary</h2>
-                    <p style="color: #666; margin-bottom: 2rem;">Enjoy the peaceful sounds of nature. Close your eyes and breathe deeply.</p>
-                    <div style="margin-bottom: 2rem;">
-                        <button onclick="playGardenSounds()" style="background: #2ecc71; color: white; border: none;
-                               padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🎵 Play Garden Sounds</button>
-                        <button onclick="playBirdSounds()" style="background: #27ae60; color: white; border: none;
-                               padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🐦 Bird Songs</button>
+                <div style="position: relative; padding: 3rem; border-radius: 20px; text-align: center; max-width: 500px; backdrop-filter: blur(10px);">
+                    <video autoplay muted loop style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 20px; z-index: 1;">
+                        <source src="https://cdn.builder.io/o/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fa6cd1d73d2ad48afafbce2ee93ffae7b?alt=media&token=31bac21d-6f86-4661-ac6c-7505a90cdc95&apiKey=c6d8455cd26c4b90a359f3d7d2158396" type="video/mp4">
+                    </video>
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(39, 174, 96, 0.3)); border-radius: 20px; z-index: 2;"></div>
+                    <div style="background: rgba(255,255,255,0.95); padding: 2rem; border-radius: 15px; position: relative; z-index: 3;">
+                        <h2 style="color: #2ecc71; margin-bottom: 2rem;">🌿 Garden Sanctuary</h2>
+                        <p style="color: #666; margin-bottom: 2rem;">Enjoy the peaceful sounds of nature. Close your eyes and breathe deeply.</p>
+                        <div style="margin-bottom: 2rem;">
+                            <button onclick="playGardenSounds()" style="background: #2ecc71; color: white; border: none;
+                                   padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🎵 Play Garden Sounds</button>
+                            <button onclick="playBirdSounds()" style="background: #27ae60; color: white; border: none;
+                                   padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🐦 Bird Songs</button>
+                        </div>
+                        <button onclick="closeGardenModal()" style="background: #e74c3c; color: white; border: none;
+                               padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                            ✕ Close
+                        </button>
                     </div>
-                    <button onclick="closeGardenModal()" style="background: #e74c3c; color: white; border: none;
-                           padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
-                        ✕ Close
-                    </button>
                 </div>
             `;
 
