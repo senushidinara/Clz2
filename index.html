@@ -5017,9 +5017,163 @@
             const data = researchData[researchType];
             if (data) {
                 showToast(`📊 ${data.title} details loaded`);
-                // Could open a modal or expand the card with detailed information
                 console.log('Research details:', data);
             }
+        }
+
+        // Advanced Memory Palace Functions
+        window.enterMemoryRoom = function(roomType) {
+            console.log('🏛️ Entering memory room:', roomType);
+
+            const roomData = {
+                knowledge: {
+                    title: '📚 Knowledge Vault',
+                    description: 'Store and organize your learning achievements',
+                    color: '#FF6B6B'
+                },
+                skills: {
+                    title: '⚡ Skills Chamber',
+                    description: 'Track your cognitive skill development',
+                    color: '#4ECDC4'
+                },
+                experiences: {
+                    title: '🌟 Experience Hall',
+                    description: 'Archive your memorable training moments',
+                    color: '#45B7D1'
+                },
+                achievements: {
+                    title: '🏆 Achievement Gallery',
+                    description: 'Showcase your elite accomplishments',
+                    color: '#96CEB4'
+                }
+            };
+
+            const room = roomData[roomType];
+            if (room) {
+                showToast(`🚪 Entering ${room.title}`);
+                // Create immersive room experience
+                createMemoryRoomExperience(roomType, room);
+            }
+        }
+
+        function createMemoryRoomExperience(roomType, roomData) {
+            const roomContainer = document.createElement('div');
+            roomContainer.id = 'memoryRoomContainer';
+            roomContainer.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: linear-gradient(135deg, ${roomData.color}15, ${roomData.color}25);
+                backdrop-filter: blur(20px); z-index: 2000;
+                display: flex; align-items: center; justify-content: center;
+                animation: fadeIn 0.8s ease-out;
+            `;
+
+            roomContainer.innerHTML = `
+                <div style="
+                    background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px);
+                    border-radius: 25px; padding: 3rem; max-width: 600px; text-align: center;
+                    border: 2px solid rgba(255, 255, 255, 0.2);
+                    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+                ">
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem; color: ${roomData.color};">
+                        ${roomData.title}
+                    </h1>
+                    <p style="font-size: 1.3rem; margin-bottom: 2rem; color: white; opacity: 0.9;">
+                        ${roomData.description}
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <button onclick="exploreRoom('${roomType}')" style="
+                            background: ${roomData.color}; color: white; border: none;
+                            padding: 1rem 2rem; border-radius: 15px; font-size: 1.1rem;
+                            cursor: pointer; transition: all 0.3s ease;
+                        ">🚀 Explore Room</button>
+                        <button onclick="document.body.removeChild(document.getElementById('memoryRoomContainer'))" style="
+                            background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid white;
+                            padding: 1rem 2rem; border-radius: 15px; font-size: 1.1rem;
+                            cursor: pointer; transition: all 0.3s ease;
+                        ">← Exit</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(roomContainer);
+        }
+
+        window.exploreRoom = function(roomType) {
+            showToast(`🔍 Exploring ${roomType} room features...`);
+            // Add room-specific exploration logic here
+        }
+
+        // NFT Functions
+        window.viewNFT = function(nftId) {
+            console.log('🎨 Viewing NFT:', nftId);
+
+            const nftData = {
+                'neural-master': {
+                    name: 'Neural Master NFT',
+                    description: 'Exclusive NFT for achieving 95%+ neural efficiency',
+                    rarity: 'Legendary',
+                    owned: true,
+                    value: '2.5 ETH'
+                },
+                'memory-architect': {
+                    name: 'Memory Architect NFT',
+                    description: 'Master of memory palace construction',
+                    rarity: 'Epic',
+                    owned: false,
+                    progress: 67
+                },
+                'elite-trainer': {
+                    name: 'Elite Trainer NFT',
+                    description: '30-day elite training completion badge',
+                    rarity: 'Rare',
+                    owned: false,
+                    progress: 60
+                }
+            };
+
+            const nft = nftData[nftId];
+            if (nft) {
+                showToast(`🎨 ${nft.name} details loaded`);
+                displayNFTModal(nft);
+            }
+        }
+
+        function displayNFTModal(nft) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(15px);
+                z-index: 3000; display: flex; align-items: center; justify-content: center;
+                animation: fadeIn 0.5s ease-out;
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+                    backdrop-filter: blur(25px); border-radius: 25px; padding: 2.5rem;
+                    border: 2px solid rgba(255, 255, 255, 0.2); max-width: 500px;
+                    text-align: center; color: white;
+                ">
+                    <h2 style="margin-bottom: 1rem; font-size: 2rem;">${nft.name}</h2>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.9;">${nft.description}</p>
+                    <div style="margin-bottom: 2rem;">
+                        <span style="background: rgba(255, 215, 0, 0.2); padding: 0.5rem 1rem; border-radius: 20px; color: #FFD700;">
+                            ${nft.rarity}
+                        </span>
+                    </div>
+                    ${nft.owned ?
+                        `<div style="color: #4ECDC4; font-weight: 700;">✅ Owned • Value: ${nft.value}</div>` :
+                        `<div style="color: #FF6B6B;">🔒 Locked • Progress: ${nft.progress}%</div>`
+                    }
+                    <button onclick="document.body.removeChild(this.closest('div[style*=\"position: fixed\"]'))" style="
+                        background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid white;
+                        padding: 1rem 2rem; border-radius: 15px; margin-top: 2rem;
+                        cursor: pointer; transition: all 0.3s ease;
+                    ">Close</button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
         }
 
         // Make all functions global
