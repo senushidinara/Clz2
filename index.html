@@ -114,15 +114,12 @@
 
         /* Fixed Main Content Layout */
         .main-content {
-            margin-top: 120px;
-            margin-left: 350px;
-            margin-bottom: 0;
-            min-height: calc(100vh - 120px);
+            position: fixed;
+            top: 120px;
+            left: 350px;
+            right: 0;
+            bottom: 0;
             padding: 2rem;
-            animation: fadeInUp 0.8s ease-out;
-            transition: all 0.4s ease;
-            position: relative;
-            width: calc(100vw - 350px);
             background: transparent;
             z-index: 1;
             overflow-y: auto;
@@ -4170,7 +4167,7 @@
 
             const matrix = document.getElementById('memoryMatrix');
             if (!matrix) {
-                showToast("❌ Memory challenge unavailable");
+                showToast("��� Memory challenge unavailable");
                 return;
             }
 
@@ -5530,7 +5527,7 @@
             setTimeout(() => {
                 if (window.navigateToPage) {
                     window.navigateToPage('home');
-                    console.log('�� Forced navigation to home');
+                    console.log('🔄 Forced navigation to home');
                 }
             }, 100);
 
