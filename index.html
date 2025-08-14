@@ -1813,44 +1813,168 @@
                 'cognitive-boost': 'Cognitive Boost Challenge'
             };
 
-            showNotification(`Starting ${gameNames[gameType]}...`);
-            
+            const gameDescriptions = {
+                memory: 'Advanced spatial memory training using cutting-edge visualization techniques and neural pathway optimization.',
+                attention: 'Enhance attention and concentration through scientifically-designed targeted exercises and real-time feedback.',
+                reaction: 'Improve reaction time and processing speed with adaptive difficulty algorithms and performance analytics.',
+                logic: 'Pattern recognition and logical reasoning challenges powered by AI-driven cognitive assessment.',
+                executive: 'Multitasking and cognitive flexibility training with real-time EEG monitoring and biofeedback.',
+                'working-memory': 'N-back tasks and working memory enhancement using advanced neuroplasticity protocols.',
+                'memory-enhancement': 'Advanced memory enhancement techniques with personalized brain training algorithms.',
+                'cognitive-boost': 'Comprehensive cognitive enhancement and brain optimization with AI-powered adaptation.'
+            };
+
+            showNotification(`Initializing ${gameNames[gameType]}...`);
+
             const modal = document.getElementById('gameModal');
             const title = document.getElementById('gameTitle');
             const content = document.getElementById('gameContent');
-            
+
             title.textContent = gameNames[gameType];
             content.innerHTML = `
                 <div style="text-align: center; padding: 2rem;">
-                    <div style="font-size: 4rem; margin-bottom: 2rem;">🎮</div>
-                    <h3 style="color: var(--text-white); margin-bottom: 1rem;">Game Session Active</h3>
-                    <p style="margin-bottom: 2rem; opacity: 0.8;">Training in progress... Focus on the exercises.</p>
+                    <!-- Real-time EEG Visualization -->
+                    <div style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border: 1px solid var(--glass-border);">
+                        <h4 style="color: var(--text-white); margin-bottom: 1rem;">🧠 Real-time Neural Activity</h4>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                            <div style="text-align: center;">
+                                <div id="gameAlpha" style="font-size: 1.5rem; font-weight: 700; color: #3b82f6;">12.4</div>
+                                <div style="font-size: 0.8rem; opacity: 0.7;">Alpha Waves (Hz)</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div id="gameBeta" style="font-size: 1.5rem; font-weight: 700; color: #8b5cf6;">18.7</div>
+                                <div style="font-size: 0.8rem; opacity: 0.7;">Beta Waves (Hz)</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div id="gameFocus" style="font-size: 1.5rem; font-weight: 700; color: #10b981;">87</div>
+                                <div style="font-size: 0.8rem; opacity: 0.7;">Focus Level (%)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎮</div>
+                    <h3 style="color: var(--text-white); margin-bottom: 1rem;">Advanced Training Session</h3>
+                    <p style="margin-bottom: 2rem; opacity: 0.8; line-height: 1.6;">${gameDescriptions[gameType]}</p>
+
+                    <!-- Performance Metrics -->
                     <div style="background: var(--glass-bg); padding: 2rem; border-radius: 15px; margin: 2rem 0;">
-                        <div class="progress-bar">
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                            <div style="text-align: center;">
+                                <div id="gameScore" style="font-size: 2rem; font-weight: 700; color: var(--primary-blue);">0</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">Current Score</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div id="gameLevel" style="font-size: 2rem; font-weight: 700; color: var(--primary-purple);">1</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">Difficulty Level</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-bar" style="margin-bottom: 1rem;">
                             <div class="progress-fill" id="gameProgress" style="width: 0%;"></div>
                         </div>
-                        <p style="margin-top: 1rem;">Progress: <span id="gameProgressText">0%</span></p>
+                        <p style="margin-bottom: 1rem;">Progress: <span id="gameProgressText">0%</span></p>
+
+                        <!-- Real-time Feedback -->
+                        <div id="gameFeedback" style="background: rgba(16, 185, 129, 0.1); padding: 1rem; border-radius: 10px; border-left: 4px solid var(--primary-teal);">
+                            <strong>AI Coach:</strong> <span id="feedbackText">Analyzing your cognitive patterns...</span>
+                        </div>
                     </div>
-                    <button class="btn btn-accent" onclick="completeGame('${gameType}')">
-                        <i class="fas fa-check"></i>
-                        Complete Session
-                    </button>
+
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-accent" onclick="completeGame('${gameType}')">
+                            <i class="fas fa-check"></i>
+                            Complete Session
+                        </button>
+                        <button class="btn btn-outline" onclick="pauseGame()">
+                            <i class="fas fa-pause"></i>
+                            Pause Training
+                        </button>
+                    </div>
                 </div>
             `;
-            
+
             modal.classList.add('active');
-            
-            // Simulate game progress
+
+            // Advanced game simulation with real-time feedback
             let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 15 + 5;
+            let score = 0;
+            let level = 1;
+            let feedbackMessages = [
+                'Excellent focus! Your attention levels are improving.',
+                'Great cognitive flexibility detected. Keep it up!',
+                'Neural efficiency is increasing. Well done!',
+                'Outstanding performance! Your brain is adapting.',
+                'Remarkable progress in working memory capacity.',
+                'Exceptional cognitive control demonstrated.',
+                'Your reaction time is significantly improving.',
+                'Advanced pattern recognition skills developing.'
+            ];
+
+            const gameInterval = setInterval(() => {
+                // Update progress
+                progress += Math.random() * 8 + 2;
                 if (progress >= 100) {
                     progress = 100;
-                    clearInterval(progressInterval);
+                    clearInterval(gameInterval);
+                    showNotification('Training session completed! Outstanding performance!');
                 }
-                document.getElementById('gameProgress').style.width = progress + '%';
-                document.getElementById('gameProgressText').textContent = Math.round(progress) + '%';
-            }, 500);
+
+                // Update score and level
+                score += Math.floor(Math.random() * 50) + 10;
+                if (score > level * 500) {
+                    level++;
+                }
+
+                // Update neural metrics
+                const alpha = 12.4 + (Math.random() - 0.5) * 3;
+                const beta = 18.7 + (Math.random() - 0.5) * 4;
+                const focus = Math.min(100, 87 + progress * 0.1 + (Math.random() - 0.5) * 5);
+
+                // Update UI
+                if (document.getElementById('gameProgress')) {
+                    document.getElementById('gameProgress').style.width = progress + '%';
+                    document.getElementById('gameProgressText').textContent = Math.round(progress) + '%';
+                    document.getElementById('gameScore').textContent = score.toLocaleString();
+                    document.getElementById('gameLevel').textContent = level;
+                    document.getElementById('gameAlpha').textContent = alpha.toFixed(1);
+                    document.getElementById('gameBeta').textContent = beta.toFixed(1);
+                    document.getElementById('gameFocus').textContent = Math.round(focus);
+
+                    // Update feedback every few seconds
+                    if (Math.random() < 0.1) {
+                        const randomFeedback = feedbackMessages[Math.floor(Math.random() * feedbackMessages.length)];
+                        document.getElementById('feedbackText').textContent = randomFeedback;
+                    }
+                }
+            }, 800);
+
+            // Store interval for pausing
+            window.currentGameInterval = gameInterval;
+        }
+
+        function pauseGame() {
+            if (window.currentGameInterval) {
+                clearInterval(window.currentGameInterval);
+                window.currentGameInterval = null;
+                showNotification('Training session paused. Take a break and resume when ready.');
+
+                // Change pause button to resume
+                const pauseBtn = document.querySelector('.btn-outline');
+                if (pauseBtn) {
+                    pauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume Training';
+                    pauseBtn.onclick = resumeGame;
+                }
+            }
+        }
+
+        function resumeGame() {
+            showNotification('Resuming training session...');
+            // This would restart the game logic - simplified for demo
+            const pauseBtn = document.querySelector('.btn-outline');
+            if (pauseBtn) {
+                pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Training';
+                pauseBtn.onclick = pauseGame;
+            }
         }
 
         function completeGame(gameType) {
@@ -2130,6 +2254,8 @@
         window.startBrainScan = startBrainScan;
         window.viewDataset = viewDataset;
         window.updateDatasetProgress = updateDatasetProgress;
+        window.pauseGame = pauseGame;
+        window.resumeGame = resumeGame;
         window.closeModal = closeModal;
     </script>
 </body>
