@@ -128,6 +128,7 @@
             align-items: center;
             gap: 0.5rem;
             white-space: nowrap;
+            position: relative;
         }
 
         .nav-button:hover {
@@ -136,9 +137,25 @@
         }
 
         .nav-button.active {
-            background: var(--primary-blue);
+            background: var(--gradient-primary);
             color: white;
-            box-shadow: var(--shadow-soft);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+            transform: translateY(-2px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-button.active::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-primary);
+            border-radius: 27px;
+            z-index: -1;
+            filter: blur(8px);
+            opacity: 0.7;
         }
 
         .user-profile {
@@ -673,10 +690,10 @@
         
         <div class="user-profile">
             <div style="text-align: right;">
-                <div style="font-weight: 600;">Dr. Sarah Chen</div>
-                <div style="font-size: 0.8rem; opacity: 0.7;">Neurologist</div>
+                <div style="font-weight: 600;">Alex Johnson</div>
+                <div style="font-size: 0.8rem; opacity: 0.7;">Patient</div>
             </div>
-            <img src="https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F1a028164b1bc4199adf6f7768a677c7c?format=webp&width=800" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+            <img src="https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fa7beb5848a4f45ad817357189c7678cc?format=webp&width=800" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
         </div>
     </nav>
 
@@ -805,7 +822,7 @@
             </h2>
 
             <div class="games-grid">
-                <div class="game-card" onclick="startGame('memory')">
+                <div class="game-card">
                     <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fc13d83e5491b441bb7c163822bdf49cf?format=webp&width=800'); height: 120px; margin-bottom: 1rem; border-radius: 10px;"></div>
                     <div class="game-icon">🧩</div>
                     <h3 class="game-title">Memory Palace</h3>
@@ -822,7 +839,7 @@
                     </button>
                 </div>
 
-                <div class="game-card" onclick="startGame('attention')">
+                <div class="game-card">
                     <div class="game-icon">🎯</div>
                     <h3 class="game-title">Focus Master</h3>
                     <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
@@ -838,7 +855,7 @@
                     </button>
                 </div>
 
-                <div class="game-card" onclick="startGame('reaction')">
+                <div class="game-card">
                     <div class="game-icon">⚡</div>
                     <h3 class="game-title">Quick Response</h3>
                     <p style="color: var(--text-light); opacity: 0.8; margin-bottom: 1rem;">
@@ -1238,7 +1255,7 @@
 
             <div class="activity-grid">
                 <div class="activity-card">
-                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F334e3b924cef49d6bc5d1a8297162d14?format=webp&width=800');"></div>
+                    <div class="activity-image" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F1a028164b1bc4199adf6f7768a677c7c?format=webp&width=800');"></div>
                     <div class="activity-content">
                         <h3 class="activity-title">Dr. Sarah Chen</h3>
                         <p class="activity-description">Senior Neurologist specializing in cognitive assessment and brain health optimization.</p>
@@ -1396,13 +1413,13 @@
                 if (!localStorage.getItem(this.storageKey)) {
                     const initialData = {
                         user: {
-                            name: 'Dr. Sarah Chen',
-                            role: 'Neurologist',
-                            cognitiveScore: 94,
-                            focusLevel: 87,
-                            memoryScore: 91,
-                            reactionTime: 245
-                        },
+                    name: 'Alex Johnson',
+                    role: 'Patient',
+                    cognitiveScore: 94,
+                    focusLevel: 87,
+                    memoryScore: 91,
+                    reactionTime: 245
+                },
                         stats: {
                             activeSessions: 2847,
                             researchStudies: 156,
