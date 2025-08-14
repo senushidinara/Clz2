@@ -5470,12 +5470,28 @@
             const pages = document.querySelectorAll('.page');
             console.log(`📄 Found ${navItems.length} navigation items and ${pages.length} pages`);
 
+            // List all navigation items and pages for debugging
+            navItems.forEach((item, index) => {
+                console.log(`Nav ${index + 1}: ${item.dataset.page}`);
+            });
+            pages.forEach((page, index) => {
+                console.log(`Page ${index + 1}: ${page.id}`);
+            });
+
+            // Test navigation function
+            console.log('🔧 Testing navigation function...');
+            if (typeof window.navigateToPage === 'function') {
+                console.log('✅ Navigation function is available');
+            } else {
+                console.error('❌ Navigation function not found');
+            }
+
             // Success notification
             setTimeout(function() {
                 if (window.showToast) {
-                    showToast('🎉 NeuroX Elite Ready! All systems operational!');
+                    showToast('🎉 NeuroX Elite Ready! Enhanced pastel navigation activated!');
                 }
-                console.log('🎉 NEUROX ELITE - All features ready and functional!');
+                console.log('🎉 NEUROX ELITE - Enhanced pastel theme and navigation ready!');
             }, 1000);
         });
     </script>
