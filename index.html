@@ -2666,7 +2666,7 @@
                         animation: mountainMist 10s ease-in-out infinite;
                     ">
                         <!-- Mountain peaks -->
-                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 4rem; color: #696969; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰��</div>
+                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 4rem; color: #696969; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰️</div>
                         <div style="position: absolute; bottom: 20%; right: 20%; font-size: 3.5rem; color: #808080; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🏔️</div>
 
                         <!-- Stars -->
@@ -4472,6 +4472,29 @@
             }, 1000);
         }
 
+        // Volume Control Function
+        function updateVolume(volume) {
+            const volumeDisplay = document.getElementById('volumeDisplay');
+            if (volumeDisplay) {
+                volumeDisplay.textContent = `${volume}%`;
+            }
+
+            // Update volume icons based on level
+            const volumeDown = document.querySelector('.fa-volume-down');
+            const volumeUp = document.querySelector('.fa-volume-up');
+
+            if (volume == 0) {
+                if (volumeDown) volumeDown.className = 'fas fa-volume-mute';
+            } else if (volume < 50) {
+                if (volumeDown) volumeDown.className = 'fas fa-volume-down';
+            } else {
+                if (volumeDown) volumeDown.className = 'fas fa-volume-down';
+            }
+
+            showToast(`🔊 Volume: ${volume}%`);
+            console.log(`Volume updated to: ${volume}%`);
+        }
+
         // Make all functions global
         window.startBrainScan = startBrainScan;
         window.trackSleep = trackSleep;
@@ -4484,6 +4507,7 @@
         window.changeMeditationBg = changeMeditationBg;
         window.startMeditation = startMeditation;
         window.startMeditationSession = startMeditationSession;
+        window.updateVolume = updateVolume;
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
