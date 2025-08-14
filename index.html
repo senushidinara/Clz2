@@ -1281,10 +1281,14 @@
 
             updateGameProgress(gameType, progress) {
                 const data = this.getData();
-                data.games[gameType].progress = Math.min(100, progress + 5);
-                data.games[gameType].lastPlayed = new Date();
-                this.saveData(data);
-                this.updateUI();
+                if (data.games && data.games[gameType]) {
+                    data.games[gameType].progress = Math.min(100, progress + 5);
+                    data.games[gameType].lastPlayed = new Date();
+                    this.saveData(data);
+                    this.updateUI();
+                } else {
+                    console.warn(`Game type '${gameType}' not found in games data`);
+                }
             }
         }
 
@@ -1425,10 +1429,14 @@
         // Assessment
         function startAssessment() {
             showNotification('Starting comprehensive cognitive assessment...');
-            
+
             setTimeout(() => {
                 showNotification('Assessment complete! Results updated in dashboard.');
-                dataManager.updateGameProgress('assessment', 0);
+                // Update cognitive score instead of non-existent assessment game
+                const data = dataManager.getData();
+                data.user.cognitiveScore = Math.min(100, data.user.cognitiveScore + 1);
+                dataManager.saveData(data);
+                dataManager.updateUI();
             }, 3000);
         }
 
