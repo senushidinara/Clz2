@@ -1510,6 +1510,382 @@
             from, to { border-color: transparent; }
             50% { border-color: var(--black); }
         }
+
+        @keyframes researchPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes meditationGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes aiCorePulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes aiRingRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Revolutionary Sidebar */
+        .revolutionary-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(145deg, rgba(10, 10, 25, 0.95), rgba(20, 20, 50, 0.95));
+            backdrop-filter: blur(20px);
+            border-right: 2px solid rgba(138, 43, 226, 0.3);
+            z-index: 1000;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow-y: auto;
+            box-shadow: 5px 0 30px rgba(138, 43, 226, 0.2);
+        }
+
+        .revolutionary-sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            position: relative;
+        }
+
+        .logo-advanced {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #8A2BE2, #4B0082, #6A5ACD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .neural-pulse-indicator {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #8A2BE2, transparent);
+            margin-top: 1rem;
+            animation: neuralPulse 2s ease-in-out infinite;
+        }
+
+        .sidebar-content {
+            padding: 1rem;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item:hover {
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.2));
+            transform: translateX(5px);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.3));
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            color: white;
+        }
+
+        .nav-item i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 20px;
+        }
+
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-left: auto;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+
+        .status-indicator.online {
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .challenge-count {
+            background: linear-gradient(45deg, #ff6b6b, #ff8787);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .research-status {
+            width: 12px;
+            height: 12px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            margin-left: auto;
+            animation: researchPulse 3s ease-in-out infinite;
+        }
+
+        .progress-ring {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            border-top: 2px solid #8A2BE2;
+            border-radius: 50%;
+            margin-left: auto;
+            animation: spin 2s linear infinite;
+        }
+
+        .champion-badge {
+            width: 14px;
+            height: 14px;
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            border-radius: 50%;
+            margin-left: auto;
+            position: relative;
+        }
+
+        .champion-badge::before {
+            content: '👑';
+            position: absolute;
+            top: -2px;
+            left: -1px;
+            font-size: 10px;
+        }
+
+        .meditation-glow {
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            border-radius: 50%;
+            margin-left: auto;
+            animation: meditationGlow 4s ease-in-out infinite;
+        }
+
+        .ai-assistant-section {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.1));
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .ai-avatar {
+            width: 60px;
+            height: 60px;
+            margin: 1rem auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-core {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #8A2BE2, #4B0082);
+            border-radius: 50%;
+            animation: aiCorePulse 2s ease-in-out infinite;
+        }
+
+        .ai-rings {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+            animation: aiRingRotate 8s linear infinite;
+        }
+
+        .ai-rings::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: 50%;
+            animation: aiRingRotate 6s linear infinite reverse;
+        }
+
+        .ai-status {
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-recommendation {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .biometric-section {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(52, 152, 219, 0.1));
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .biometric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .metric-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2ecc71;
+        }
+
+        .metric-item span {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #8A2BE2, #4B0082);
+            border-radius: 0 10px 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            background: linear-gradient(45deg, #9A3BF2, #5B1092);
+            box-shadow: 0 5px 20px rgba(138, 43, 226, 0.4);
+        }
+
+        .elite-header {
+            position: fixed;
+            top: 0;
+            left: 300px;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 255, 0.95));
+            backdrop-filter: blur(20px);
+            z-index: 500;
+            transition: left 0.4s ease;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .elite-header.sidebar-collapsed {
+            left: 50px;
+        }
+
+        .neural-network-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .session-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .session-type {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .session-time {
+            font-size: 1rem;
+            color: var(--gray-medium);
+            font-family: monospace;
+        }
+
+        .performance-text {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: var(--gray-dark);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -2885,7 +3261,7 @@
         function expandSleepTips() {
             console.log('Expanding sleep tips');
             alert('Sleep tips expanded!');
-            showToast("💡 Sleep tips expanded!");
+            showToast("�� Sleep tips expanded!");
         }
 
         function closeSleepTips(button) {
