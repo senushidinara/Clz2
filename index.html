@@ -3532,7 +3532,7 @@
                     </div>
                 `;
                 modal.classList.add('active');
-                showToast(`�� ${challenges[type]} opened`);
+                showToast(`🎮 ${challenges[type]} opened`);
             } else {
                 console.error('Modal elements not found');
                 showToast('❌ Challenge could not be opened');
@@ -5493,6 +5493,17 @@
                 console.error('❌ Navigation function not found');
             }
 
+            // Debug main content area
+            const mainContent = document.getElementById('mainContent');
+            if (mainContent) {
+                console.log('📐 Main content dimensions:', {
+                    width: mainContent.offsetWidth,
+                    height: mainContent.offsetHeight,
+                    display: getComputedStyle(mainContent).display,
+                    position: getComputedStyle(mainContent).position
+                });
+            }
+
             // Force home page to be visible
             console.log('🏠 Forcing home page to be visible...');
             const homePage = document.getElementById('home');
@@ -5502,9 +5513,22 @@
                 homePage.style.visibility = 'visible';
                 homePage.style.opacity = '1';
                 console.log('✅ Home page made visible');
+                console.log('📐 Home page dimensions:', {
+                    width: homePage.offsetWidth,
+                    height: homePage.offsetHeight,
+                    display: getComputedStyle(homePage).display
+                });
             } else {
                 console.error('❌ Home page not found');
             }
+
+            // Force navigate to home to trigger proper setup
+            setTimeout(() => {
+                if (window.navigateToPage) {
+                    window.navigateToPage('home');
+                    console.log('🔄 Forced navigation to home');
+                }
+            }, 100);
 
             // Success notification
             setTimeout(function() {
