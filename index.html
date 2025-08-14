@@ -4148,7 +4148,7 @@
         }
 
         window.showLeaderboard = function() {
-            console.log('📊 Showing leaderboard');
+            console.log('��� Showing leaderboard');
             const modal = document.getElementById('leaderboardModal');
             if (modal) {
                 modal.classList.add('active');
@@ -5887,7 +5887,7 @@
         window.speedReaction = function() {
             if (!speedTestActive) {
                 if (window.showToast) {
-                    showToast('⚠��� Too early! Wait for GREEN!');
+                    showToast('⚠️ Too early! Wait for GREEN!');
                 }
                 return;
             }
@@ -6174,6 +6174,459 @@
             }
         };
 
+        // New Interactive Functions for All Buttons
+        window.startBreathingSession = function() {
+            if (window.showToast) {
+                showToast('🫁 Starting guided breathing session...');
+            }
+
+            // Create breathing exercise modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex;
+                align-items: center; justify-content: center;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.2)),
+                     url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F14afa2845fd04fcaa6f413ba5b8e87ab?format=webp&width=800') center/cover;
+                     padding: 3rem; border-radius: 20px; text-align: center; max-width: 500px; backdrop-filter: blur(10px);">
+                    <div style="background: rgba(255,255,255,0.9); padding: 2rem; border-radius: 15px;">
+                        <h2 style="color: #2ecc71; margin-bottom: 2rem;">🫁 Breathing Exercise</h2>
+                        <div id="breathingCircle" style="width: 120px; height: 120px; border: 4px solid #2ecc71; border-radius: 50%;
+                             margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; transition: all 4s ease;">
+                            <span id="breathText" style="font-size: 1rem; color: #2ecc71; font-weight: bold;">BREATHE</span>
+                        </div>
+                        <p id="breathInstructions" style="color: #666; margin-bottom: 2rem;">Follow the circle and breathe deeply</p>
+                        <button onclick="startBreathingCycle()" style="background: #2ecc71; color: white; border: none;
+                               padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold; margin-right: 1rem;">
+                            🧘‍♀️ Start
+                        </button>
+                        <button onclick="closeBreathingModal()" style="background: #e74c3c; color: white; border: none;
+                               padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                            ✕ Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            window.breathingModal = modal;
+        };
+
+        window.startBreathingCycle = function() {
+            let cycle = 0;
+            const circle = document.getElementById('breathingCircle');
+            const text = document.getElementById('breathText');
+            const instructions = document.getElementById('breathInstructions');
+
+            const breathingCycle = () => {
+                // Inhale
+                circle.style.transform = 'scale(1.4)';
+                circle.style.background = 'rgba(46, 204, 113, 0.1)';
+                text.textContent = 'INHALE';
+                instructions.textContent = 'Breathe in slowly and deeply...';
+
+                setTimeout(() => {
+                    // Hold
+                    text.textContent = 'HOLD';
+                    instructions.textContent = 'Hold your breath gently...';
+
+                    setTimeout(() => {
+                        // Exhale
+                        circle.style.transform = 'scale(1)';
+                        circle.style.background = 'transparent';
+                        text.textContent = 'EXHALE';
+                        instructions.textContent = 'Breathe out slowly and completely...';
+
+                        cycle++;
+
+                        if (cycle < 5) {
+                            setTimeout(breathingCycle, 4000);
+                        } else {
+                            text.textContent = 'COMPLETE';
+                            instructions.textContent = '🎉 Well done! You completed 5 breathing cycles.';
+                            if (window.showToast) {
+                                showToast('🧘‍♀️ Breathing session completed successfully!');
+                            }
+                        }
+                    }, 2000);
+                }, 4000);
+            };
+
+            breathingCycle();
+        };
+
+        window.closeBreathingModal = function() {
+            if (window.breathingModal) {
+                document.body.removeChild(window.breathingModal);
+                window.breathingModal = null;
+            }
+        };
+
+        window.startYogaSession = function() {
+            if (window.showToast) {
+                showToast('🧘‍♀️ Starting yoga and meditation session...');
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex;
+                align-items: center; justify-content: center;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.2)),
+                     url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F0771d46462034bcda6882d979db537bc?format=webp&width=800') center/cover;
+                     padding: 3rem; border-radius: 20px; text-align: center; max-width: 500px; backdrop-filter: blur(10px);">
+                    <div style="background: rgba(255,255,255,0.9); padding: 2rem; border-radius: 15px;">
+                        <h2 style="color: #8e44ad; margin-bottom: 2rem;">🧘‍♀️ Yoga & Meditation</h2>
+                        <div style="margin-bottom: 2rem;">
+                            <h3>Choose Your Practice:</h3>
+                            <div style="display: grid; gap: 1rem; margin-top: 1rem;">
+                                <button onclick="startPose('warrior')" style="background: #8e44ad; color: white; border: none;
+                                       padding: 1rem; border-radius: 10px; cursor: pointer;">🏹 Warrior Pose (5 min)</button>
+                                <button onclick="startPose('lotus')" style="background: #8e44ad; color: white; border: none;
+                                       padding: 1rem; border-radius: 10px; cursor: pointer;">🪷 Lotus Meditation (10 min)</button>
+                                <button onclick="startPose('mountain')" style="background: #8e44ad; color: white; border: none;
+                                       padding: 1rem; border-radius: 10px; cursor: pointer;">⛰️ Mountain Pose (3 min)</button>
+                            </div>
+                        </div>
+                        <button onclick="closeYogaModal()" style="background: #e74c3c; color: white; border: none;
+                               padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                            ✕ Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            window.yogaModal = modal;
+        };
+
+        window.startPose = function(pose) {
+            const poseNames = { warrior: 'Warrior Pose', lotus: 'Lotus Meditation', mountain: 'Mountain Pose' };
+            const duration = { warrior: 5, lotus: 10, mountain: 3 };
+
+            if (window.showToast) {
+                showToast(`🧘‍♀️ Starting ${poseNames[pose]} - ${duration[pose]} minutes`);
+            }
+
+            // Simple timer countdown
+            let timeLeft = duration[pose] * 60; // Convert to seconds
+            const timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (window.showToast) {
+                        showToast(`✅ ${poseNames[pose]} completed! Great work!`);
+                    }
+                    closeYogaModal();
+                } else {
+                    timeLeft--;
+                }
+            }, 1000);
+        };
+
+        window.closeYogaModal = function() {
+            if (window.yogaModal) {
+                document.body.removeChild(window.yogaModal);
+                window.yogaModal = null;
+            }
+        };
+
+        window.openGardenEnvironment = function() {
+            if (window.showToast) {
+                showToast('🌿 Opening peaceful garden sanctuary...');
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2F00f62e7258b749b1b75913e9611b4bc3?format=webp&width=800') center/cover;
+                z-index: 10000; display: flex; align-items: center; justify-content: center;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: rgba(255,255,255,0.9); padding: 3rem; border-radius: 20px; text-align: center;
+                     max-width: 500px; backdrop-filter: blur(10px);">
+                    <h2 style="color: #2ecc71; margin-bottom: 2rem;">🌿 Garden Sanctuary</h2>
+                    <p style="color: #666; margin-bottom: 2rem;">Enjoy the peaceful sounds of nature. Close your eyes and breathe deeply.</p>
+                    <div style="margin-bottom: 2rem;">
+                        <button onclick="playGardenSounds()" style="background: #2ecc71; color: white; border: none;
+                               padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🎵 Play Garden Sounds</button>
+                        <button onclick="playBirdSounds()" style="background: #27ae60; color: white; border: none;
+                               padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🐦 Bird Songs</button>
+                    </div>
+                    <button onclick="closeGardenModal()" style="background: #e74c3c; color: white; border: none;
+                           padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                        ✕ Close
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            window.gardenModal = modal;
+        };
+
+        window.playGardenSounds = function() {
+            if (window.showToast) {
+                showToast('🌿 Playing peaceful garden sounds...');
+            }
+        };
+
+        window.playBirdSounds = function() {
+            if (window.showToast) {
+                showToast('🐦 Playing relaxing bird songs...');
+            }
+        };
+
+        window.closeGardenModal = function() {
+            if (window.gardenModal) {
+                document.body.removeChild(window.gardenModal);
+                window.gardenModal = null;
+            }
+        };
+
+        window.openSeaEnvironment = function() {
+            if (window.showToast) {
+                showToast('🌊 Opening ocean wave environment...');
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fef7d0039c9e24561ad28004e59286a33?format=webp&width=800') center/cover;
+                z-index: 10000; display: flex; align-items: center; justify-content: center;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: rgba(255,255,255,0.9); padding: 3rem; border-radius: 20px; text-align: center;
+                     max-width: 500px; backdrop-filter: blur(10px);">
+                    <h2 style="color: #3498db; margin-bottom: 2rem;">🌊 Ocean Waves</h2>
+                    <p style="color: #666; margin-bottom: 2rem;">Let the rhythm of ocean waves calm your mind and body.</p>
+                    <div style="margin-bottom: 2rem;">
+                        <button onclick="playOceanWaves()" style="background: #3498db; color: white; border: none;
+                               padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🌊 Ocean Waves</button>
+                        <button onclick="playSeagulls()" style="background: #2980b9; color: white; border: none;
+                               padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🕊️ Seagull Calls</button>
+                    </div>
+                    <button onclick="closeSeaModal()" style="background: #e74c3c; color: white; border: none;
+                           padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                        ✕ Close
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            window.seaModal = modal;
+        };
+
+        window.playOceanWaves = function() {
+            if (window.showToast) {
+                showToast('🌊 Playing soothing ocean waves...');
+            }
+        };
+
+        window.playSeagulls = function() {
+            if (window.showToast) {
+                showToast('🕊️ Playing peaceful seagull calls...');
+            }
+        };
+
+        window.closeSeaModal = function() {
+            if (window.seaModal) {
+                document.body.removeChild(window.seaModal);
+                window.seaModal = null;
+            }
+        };
+
+        window.startCounselingSession = function() {
+            if (window.showToast) {
+                showToast('💬 Connecting to counseling services...');
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex;
+                align-items: center; justify-content: center;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, rgba(230, 126, 34, 0.1), rgba(211, 84, 0, 0.2)),
+                     url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Faa8ae6e675b5484294c1214676ba2aca?format=webp&width=800') center/cover;
+                     padding: 3rem; border-radius: 20px; text-align: center; max-width: 500px; backdrop-filter: blur(10px);">
+                    <div style="background: rgba(255,255,255,0.9); padding: 2rem; border-radius: 15px;">
+                        <h2 style="color: #e67e22; margin-bottom: 2rem;">💬 Evening Counseling</h2>
+                        <p style="color: #666; margin-bottom: 2rem;">Professional mental health support and guidance</p>
+                        <div style="margin-bottom: 2rem;">
+                            <button onclick="bookSession()" style="background: #e67e22; color: white; border: none;
+                                   padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">📅 Book Session</button>
+                            <button onclick="emergencyContact()" style="background: #e74c3c; color: white; border: none;
+                                   padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🚨 Emergency Support</button>
+                        </div>
+                        <button onclick="closeCounselingModal()" style="background: #95a5a6; color: white; border: none;
+                               padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                            ✕ Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            window.counselingModal = modal;
+        };
+
+        window.bookSession = function() {
+            if (window.showToast) {
+                showToast('📅 Session booking system opened. Next available: Tomorrow 7 PM');
+            }
+        };
+
+        window.emergencyContact = function() {
+            if (window.showToast) {
+                showToast('🚨 Emergency support: 24/7 Crisis Hotline: 1-800-273-8255');
+            }
+        };
+
+        window.closeCounselingModal = function() {
+            if (window.counselingModal) {
+                document.body.removeChild(window.counselingModal);
+                window.counselingModal = null;
+            }
+        };
+
+        window.startPhysicalActivity = function() {
+            if (window.showToast) {
+                showToast('🏃‍♀️ Opening physical activity and nutrition tracker...');
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex;
+                align-items: center; justify-content: center;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(22, 160, 133, 0.2)),
+                     url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fa30179ec47264a19b488bdb89ffc6848?format=webp&width=800') center/cover;
+                     padding: 3rem; border-radius: 20px; text-align: center; max-width: 600px; backdrop-filter: blur(10px);">
+                    <div style="background: rgba(255,255,255,0.9); padding: 2rem; border-radius: 15px;">
+                        <h2 style="color: #1abc9c; margin-bottom: 2rem;">🏃‍♀️ Physical Activity & Nutrition</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                            <div style="background: rgba(26, 188, 156, 0.1); padding: 1rem; border-radius: 10px;">
+                                <h4>Today's Activity</h4>
+                                <p>30 min brisk walk</p>
+                                <p style="color: #e74c3c; font-size: 0.9rem;">18% below optimal</p>
+                                <p style="font-size: 0.9rem;">Aim for 8,000 steps today</p>
+                            </div>
+                            <div style="background: rgba(26, 188, 156, 0.1); padding: 1rem; border-radius: 10px;">
+                                <h4>Nutrition Focus</h4>
+                                <p>Omega-3 rich foods</p>
+                                <p style="font-size: 0.9rem;">Add salmon or walnuts for brain health</p>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 2rem;">
+                            <button onclick="trackWalk()" style="background: #1abc9c; color: white; border: none;
+                                   padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">👟 Track Walk</button>
+                            <button onclick="logNutrition()" style="background: #27ae60; color: white; border: none;
+                                   padding: 1rem 2rem; border-radius: 10px; cursor: pointer; margin: 0.5rem;">🥗 Log Nutrition</button>
+                        </div>
+                        <button onclick="closeActivityModal()" style="background: #e74c3c; color: white; border: none;
+                               padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                            ✕ Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            window.activityModal = modal;
+        };
+
+        window.trackWalk = function() {
+            if (window.showToast) {
+                showToast('👟 Walk tracking started! Keep moving for brain health.');
+            }
+        };
+
+        window.logNutrition = function() {
+            if (window.showToast) {
+                showToast('🥗 Nutrition logger opened. Remember: Omega-3 foods boost brain power!');
+            }
+        };
+
+        window.closeActivityModal = function() {
+            if (window.activityModal) {
+                document.body.removeChild(window.activityModal);
+                window.activityModal = null;
+            }
+        };
+
+        window.openSleepMemoryGuide = function() {
+            if (window.showToast) {
+                showToast('🧠 Opening sleep and memory connection guide...');
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex;
+                align-items: center; justify-content: center;
+            `;
+
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.2)),
+                     url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Ff8c88dcf74a948d7ae107106b9724d0e?format=webp&width=800') center/cover;
+                     padding: 3rem; border-radius: 20px; text-align: center; max-width: 600px; backdrop-filter: blur(10px);">
+                    <div style="background: rgba(255,255,255,0.9); padding: 2rem; border-radius: 15px;">
+                        <h2 style="color: #8e44ad; margin-bottom: 2rem;">🧠 Sleep & Memory Connection</h2>
+                        <div style="text-align: left; margin-bottom: 2rem;">
+                            <p style="margin-bottom: 1rem;"><strong>During Sleep:</strong></p>
+                            <ul style="margin-left: 1rem;">
+                                <li>Memory consolidation occurs</li>
+                                <li>Brain clears toxins and waste</li>
+                                <li>Neural connections strengthen</li>
+                                <li>Learning pathways optimize</li>
+                            </ul>
+                        </div>
+                        <button onclick="closeSleepMemoryModal()" style="background: #8e44ad; color: white; border: none;
+                               padding: 0.8rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold;">
+                            ✅ Got It
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            window.sleepMemoryModal = modal;
+        };
+
+        window.closeSleepMemoryModal = function() {
+            if (window.sleepMemoryModal) {
+                document.body.removeChild(window.sleepMemoryModal);
+                window.sleepMemoryModal = null;
+            }
+        };
+
+        window.analyzeSleepBrain = function() {
+            if (window.showToast) {
+                showToast('📊 Analyzing brain activity patterns during sleep...');
+            }
+
+            setTimeout(() => {
+                if (window.showToast) {
+                    showToast('✅ Analysis complete: Deep sleep phases optimal for memory consolidation');
+                }
+            }, 2000);
+        };
+
         // Enhanced Animation for Cards
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.interactive-challenge-card');
@@ -6187,6 +6640,22 @@
                     this.style.transform = 'translateY(0)';
                     this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
                 });
+            });
+
+            // Add enhanced hover effects for all feature cards
+            const featureCards = document.querySelectorAll('[onclick]');
+            featureCards.forEach(card => {
+                if (card.style.background && card.style.background.includes('linear-gradient')) {
+                    card.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-3px) scale(1.02)';
+                        this.style.filter = 'brightness(1.1)';
+                    });
+
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateY(0) scale(1)';
+                        this.style.filter = 'brightness(1)';
+                    });
+                }
             });
         });
     </script>
