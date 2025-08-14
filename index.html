@@ -1879,7 +1879,7 @@
         }
 
         .champion-badge::before {
-            content: '���';
+            content: '👑';
             position: absolute;
             top: -2px;
             left: -1px;
@@ -2662,21 +2662,142 @@
             </div>
         </div>
 
-        <!-- Advanced Memory Challenge Page -->
+        <!-- Revolutionary 3D Memory Palace -->
         <div class="page" id="memory">
-            <div class="card holographic-effect">
-                <h2>🧩 Advanced Memory Palace</h2>
-                <div class="memory-hero" style="
-                    background: url('https://cdn.builder.io/api/v1/image/assets%2Fc6d8455cd26c4b90a359f3d7d2158396%2Fe90b3cb6b5c94d92b5f5e0105e1a9d19?format=webp&width=800') center/cover;
-                    height: 300px; border-radius: 15px; position: relative; overflow: hidden; margin: 1rem 0;
+            <div class="card holographic-effect memory-palace-main">
+                <h2 style="
+                    font-size: 2.5rem; text-align: center; margin-bottom: 2rem;
+                    background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+                    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                    animation: gradientShift 3s ease-in-out infinite;
+                ">🏛️ Elite Memory Palace</h2>
+
+                <div class="memory-palace-3d" style="
+                    height: 400px; border-radius: 20px; position: relative; overflow: hidden; margin: 2rem 0;
+                    background:
+                        radial-gradient(ellipse at top, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+                        linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                    perspective: 1000px;
+                    border: 2px solid rgba(255, 107, 107, 0.3);
+                    box-shadow:
+                        0 20px 60px rgba(255, 107, 107, 0.2),
+                        inset 0 0 50px rgba(78, 205, 196, 0.1);
                 ">
-                    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(155, 89, 182, 0.3)); display: flex; align-items: center; justify-content: center;">
-                        <div style="text-align: center; color: white;">
-                            <h3 style="font-size: 2rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Elite Memory Training</h3>
-                            <p style="font-size: 1.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Advanced pattern recognition and cognitive enhancement</p>
+                    <!-- 3D Palace Rooms -->
+                    <div class="palace-rooms-container" style="
+                        position: absolute; width: 100%; height: 100%;
+                        transform-style: preserve-3d;
+                        animation: palaceRotate 20s linear infinite;
+                    ">
+                        <!-- Memory Room 1 -->
+                        <div class="memory-room" style="
+                            position: absolute; width: 200px; height: 150px;
+                            background: linear-gradient(135deg, rgba(255, 107, 107, 0.8), rgba(255, 154, 158, 0.6));
+                            border-radius: 15px; top: 50px; left: 50px;
+                            transform: rotateY(0deg) translateZ(100px);
+                            border: 2px solid rgba(255, 255, 255, 0.3);
+                            backdrop-filter: blur(10px);
+                            display: flex; flex-direction: column; align-items: center; justify-content: center;
+                            cursor: pointer; transition: all 0.3s ease;
+                        " onclick="enterMemoryRoom('knowledge')">
+                            <div style="font-size: 3rem; margin-bottom: 0.5rem; text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);">📚</div>
+                            <div style="color: white; font-weight: 700; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">Knowledge Vault</div>
+                            <div style="font-size: 0.8rem; opacity: 0.9;">Click to enter</div>
+                        </div>
+
+                        <!-- Memory Room 2 -->
+                        <div class="memory-room" style="
+                            position: absolute; width: 200px; height: 150px;
+                            background: linear-gradient(135deg, rgba(78, 205, 196, 0.8), rgba(107, 203, 194, 0.6));
+                            border-radius: 15px; top: 50px; right: 50px;
+                            transform: rotateY(90deg) translateZ(100px);
+                            border: 2px solid rgba(255, 255, 255, 0.3);
+                            backdrop-filter: blur(10px);
+                            display: flex; flex-direction: column; align-items: center; justify-content: center;
+                            cursor: pointer; transition: all 0.3s ease;
+                        " onclick="enterMemoryRoom('skills')">
+                            <div style="font-size: 3rem; margin-bottom: 0.5rem; text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);">⚡</div>
+                            <div style="color: white; font-weight: 700; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">Skills Chamber</div>
+                            <div style="font-size: 0.8rem; opacity: 0.9;">Click to enter</div>
+                        </div>
+
+                        <!-- Memory Room 3 -->
+                        <div class="memory-room" style="
+                            position: absolute; width: 200px; height: 150px;
+                            background: linear-gradient(135deg, rgba(69, 183, 209, 0.8), rgba(103, 186, 203, 0.6));
+                            border-radius: 15px; bottom: 50px; left: 50px;
+                            transform: rotateY(180deg) translateZ(100px);
+                            border: 2px solid rgba(255, 255, 255, 0.3);
+                            backdrop-filter: blur(10px);
+                            display: flex; flex-direction: column; align-items: center; justify-content: center;
+                            cursor: pointer; transition: all 0.3s ease;
+                        " onclick="enterMemoryRoom('experiences')">
+                            <div style="font-size: 3rem; margin-bottom: 0.5rem; text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);">🌟</div>
+                            <div style="color: white; font-weight: 700; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">Experience Hall</div>
+                            <div style="font-size: 0.8rem; opacity: 0.9;">Click to enter</div>
+                        </div>
+
+                        <!-- Memory Room 4 -->
+                        <div class="memory-room" style="
+                            position: absolute; width: 200px; height: 150px;
+                            background: linear-gradient(135deg, rgba(150, 206, 180, 0.8), rgba(173, 216, 188, 0.6));
+                            border-radius: 15px; bottom: 50px; right: 50px;
+                            transform: rotateY(270deg) translateZ(100px);
+                            border: 2px solid rgba(255, 255, 255, 0.3);
+                            backdrop-filter: blur(10px);
+                            display: flex; flex-direction: column; align-items: center; justify-content: center;
+                            cursor: pointer; transition: all 0.3s ease;
+                        " onclick="enterMemoryRoom('achievements')">
+                            <div style="font-size: 3rem; margin-bottom: 0.5rem; text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);">🏆</div>
+                            <div style="color: white; font-weight: 700; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">Achievement Gallery</div>
+                            <div style="font-size: 0.8rem; opacity: 0.9;">Click to enter</div>
                         </div>
                     </div>
+
+                    <!-- Floating Memory Orbs -->
+                    <div class="memory-orb" style="
+                        position: absolute; width: 30px; height: 30px;
+                        background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 107, 107, 0.4));
+                        border-radius: 50%; top: 20%; left: 30%;
+                        animation: floatOrb 4s ease-in-out infinite;
+                        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+                    "></div>
+                    <div class="memory-orb" style="
+                        position: absolute; width: 25px; height: 25px;
+                        background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(78, 205, 196, 0.4));
+                        border-radius: 50%; top: 70%; right: 25%;
+                        animation: floatOrb 5s ease-in-out infinite reverse;
+                        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+                    "></div>
+
+                    <!-- Neural Connections -->
+                    <svg style="position: absolute; width: 100%; height: 100%; pointer-events: none;">
+                        <path d="M 100,100 Q 200,50 300,100" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2" fill="none">
+                            <animate attributeName="stroke-dasharray" values="0,100;50,50;100,0;0,100" dur="4s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M 300,300 Q 200,250 100,300" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2" fill="none">
+                            <animate attributeName="stroke-dasharray" values="100,0;50,50;0,100;100,0" dur="4s" repeatCount="indefinite"/>
+                        </path>
+                    </svg>
                 </div>
+
+                @keyframes palaceRotate {
+                    0% { transform: rotateY(0deg); }
+                    100% { transform: rotateY(360deg); }
+                }
+
+                @keyframes floatOrb {
+                    0%, 100% { transform: translateY(0px) scale(1); }
+                    50% { transform: translateY(-20px) scale(1.1); }
+                }
+
+                <style>
+                    .memory-room:hover {
+                        transform: scale(1.1) rotateY(0deg) translateZ(120px) !important;
+                        box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3) !important;
+                    }
+                </style>
             </div>
 
             <div class="cognitive-game-container">
