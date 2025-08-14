@@ -3532,7 +3532,7 @@
                     </div>
                 `;
                 modal.classList.add('active');
-                showToast(`🎮 ${challenges[type]} opened`);
+                showToast(`�� ${challenges[type]} opened`);
             } else {
                 console.error('Modal elements not found');
                 showToast('❌ Challenge could not be opened');
@@ -5491,6 +5491,19 @@
                 console.log('✅ Navigation function is available');
             } else {
                 console.error('❌ Navigation function not found');
+            }
+
+            // Force home page to be visible
+            console.log('🏠 Forcing home page to be visible...');
+            const homePage = document.getElementById('home');
+            if (homePage) {
+                homePage.classList.add('active');
+                homePage.style.display = 'block';
+                homePage.style.visibility = 'visible';
+                homePage.style.opacity = '1';
+                console.log('✅ Home page made visible');
+            } else {
+                console.error('❌ Home page not found');
             }
 
             // Success notification
