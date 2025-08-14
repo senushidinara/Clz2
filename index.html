@@ -4152,15 +4152,23 @@
             }
         }
 
-        // Make all functions globally available
-        window.openChallenge = openChallenge;
-        window.startChallenge = startChallenge;
-        window.joinChallenge = joinChallenge;
-        window.showLeaderboard = showLeaderboard;
-        window.closeModal = closeModal;
-        window.showToast = showToast;
+        // Make all core functions globally accessible
         window.createConfetti = createConfetti;
-        window.navigateToPage = navigateToPage;
+        window.toggleSidebar = toggleSidebar;
+        window.resetMemoryGame = resetMemoryGame;
+        window.showMemoryStats = showMemoryStats;
+        window.trackSleep = trackSleep;
+        window.startFocusSession = startFocusSession;
+        window.selectFocusMode = selectFocusMode;
+        window.expandSleepTips = expandSleepTips;
+        window.viewSleepHistory = viewSleepHistory;
+        window.showBrainInfo = showBrainInfo;
+        window.changeMeditationBg = changeMeditationBg;
+        window.startMeditation = startMeditation;
+        window.selectFrequency = selectFrequency;
+        window.playBinauralBeats = playBinauralBeats;
+        window.updateVolume = updateVolume;
+        window.filterLeaderboard = filterLeaderboard;
 
         // Additional functions
         window.startBrainScan = function() {
@@ -4646,7 +4654,7 @@
                         </div>
                     `;
                     createConfetti();
-                    showSoundEffect('���‍♀️ MEDITATION COMPLETE!');
+                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
                 }
             }, 1000);
         }
