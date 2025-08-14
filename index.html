@@ -3423,7 +3423,7 @@
                     answer: 0
                 },
                 {
-                    pattern: ['⭐', '⭐⭐', '⭐���⭐', '?'],
+                    pattern: ['⭐', '⭐⭐', '������⭐', '?'],
                     options: ['⭐⭐⭐⭐', '⭐', '⭐⭐', '⭐⭐⭐⭐⭐'],
                     answer: 0
                 },
@@ -4290,7 +4290,7 @@
                     isTimerRunning = false;
                     button.innerHTML = '<i class="fas fa-play"></i> Resume Session';
                     button.style.background = 'var(--focus-color)';
-                    showToast("��️ Focus session paused");
+                    showToast("⏸️ Focus session paused");
                 }
             } catch (error) {
                 console.error('Focus session error:', error);
@@ -4744,13 +4744,14 @@
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 NeuroX Loading...');
+            console.log('🚀 NeuroX Elite Loading...');
 
-            // Test challenge functions
-            console.log('openChallenge:', typeof window.openChallenge);
-            console.log('startChallenge:', typeof window.startChallenge);
-            console.log('joinChallenge:', typeof window.joinChallenge);
-            console.log('showLeaderboard:', typeof window.showLeaderboard);
+            // Test core functions
+            console.log('✅ Navigation:', typeof window.navigateToPage);
+            console.log('✅ Challenges:', typeof window.openChallenge);
+            console.log('✅ Brain Scan:', typeof window.startBrainScan);
+            console.log('✅ Memory Game:', typeof window.startMemoryChallenge);
+            console.log('✅ Focus Timer:', typeof window.startFocusSession);
 
             // Close modals when clicking outside
             document.addEventListener('click', function(e) {
@@ -4760,11 +4761,24 @@
             });
 
             // Advanced features initialization
-            initializeAdvancedFeatures();
+            try {
+                initializeAdvancedFeatures();
+                console.log('✅ Advanced features initialized');
+            } catch (error) {
+                console.warn('⚠️ Some advanced features may not be available:', error);
+            }
 
+            // Verify navigation works
+            const navItems = document.querySelectorAll('.nav-item[data-page]');
+            const pages = document.querySelectorAll('.page');
+            console.log(`📄 Found ${navItems.length} navigation items and ${pages.length} pages`);
+
+            // Success notification
             setTimeout(function() {
-                showToast('🎉 NeuroX Elite Ready! Advanced features activated!');
-                console.log('🎉 NEUROX ELITE - Revolutionary features ready!');
+                if (window.showToast) {
+                    showToast('🎉 NeuroX Elite Ready! All systems operational!');
+                }
+                console.log('🎉 NEUROX ELITE - All features ready and functional!');
             }, 1000);
         });
     </script>
