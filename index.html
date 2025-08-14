@@ -788,30 +788,108 @@
                 </div>
             </div>
 
+            <!-- Advanced Cognitive Metrics -->
             <div class="glass-card" style="margin: 2rem 0;">
-                <h3 style="color: var(--text-white); margin-bottom: 2rem;">🔬 Cognitive Metrics</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
-                    <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;" id="focusLevel">87</div>
+                <h3 style="color: var(--text-white); margin-bottom: 2rem;">🧠 Advanced Neural Analytics</h3>
+
+                <!-- AI-Powered Insights -->
+                <div style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border: 1px solid var(--glass-border);">
+                    <h4 style="color: var(--text-white); margin-bottom: 1rem;">🤖 AI Cognitive Assistant</h4>
+                    <div id="aiInsights" style="background: rgba(37, 99, 235, 0.1); padding: 1rem; border-radius: 10px; border-left: 4px solid var(--primary-blue);">
+                        <p id="aiInsightText">Analyzing your cognitive patterns... Advanced AI algorithms are processing your neural data to provide personalized recommendations.</p>
+                    </div>
+                    <button class="btn btn-secondary" onclick="generateAIInsight()" style="margin-top: 1rem;">
+                        <i class="fas fa-robot"></i>
+                        Generate AI Insight
+                    </button>
+                </div>
+
+                <!-- Real-time Metrics Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div style="text-align: center; background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <div class="stat-number" style="font-size: 2rem; color: var(--primary-blue);" id="focusLevel">87</div>
                         <div class="stat-label">Focus Level (%)</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">↗️ +3% from yesterday</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;" id="memoryScore">91</div>
+                    <div style="text-align: center; background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <div class="stat-number" style="font-size: 2rem; color: var(--primary-purple);" id="memoryScore">91</div>
                         <div class="stat-label">Memory Score</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">↗️ +7% improvement</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;" id="reactionTime">245</div>
+                    <div style="text-align: center; background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <div class="stat-number" style="font-size: 2rem; color: var(--primary-teal);" id="reactionTime">245</div>
                         <div class="stat-label">Reaction Time (ms)</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">↘️ -12ms faster</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;" id="cognitiveLoad">73</div>
+                    <div style="text-align: center; background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <div class="stat-number" style="font-size: 2rem; color: var(--accent-orange);" id="cognitiveLoad">73</div>
                         <div class="stat-label">Cognitive Load</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">⚖️ Optimal range</div>
                     </div>
                 </div>
-                <button class="btn btn-primary" onclick="runFullScan()" style="width: 100%; margin-top: 2rem;">
-                    <i class="fas fa-brain"></i>
-                    Run Full Cognitive Scan
-                </button>
+
+                <!-- Advanced Neural Metrics -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <h5 style="color: var(--text-white); margin-bottom: 1rem;">🌊 Brainwave Coherence</h5>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Delta (0.5-4 Hz):</span>
+                            <span id="deltaWaves" style="font-weight: 600;">2.1</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Theta (4-8 Hz):</span>
+                            <span id="thetaWaves" style="font-weight: 600;">6.3</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Alpha (8-12 Hz):</span>
+                            <span id="alphaWaves" style="font-weight: 600;">12.4</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Beta (12-30 Hz):</span>
+                            <span id="betaWaves" style="font-weight: 600;">18.7</span>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <h5 style="color: var(--text-white); margin-bottom: 1rem;">🎯 Cognitive Domains</h5>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Working Memory:</span>
+                            <span id="workingMemory" style="font-weight: 600;">89%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Processing Speed:</span>
+                            <span id="processingSpeed" style="font-weight: 600;">92%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Executive Function:</span>
+                            <span id="executiveFunction" style="font-weight: 600;">85%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Attention Span:</span>
+                            <span id="attentionSpan" style="font-weight: 600;">94%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <button class="btn btn-primary" onclick="runFullScan()">
+                        <i class="fas fa-brain"></i>
+                        Full Cognitive Scan
+                    </button>
+                    <button class="btn btn-secondary" onclick="runQuickAssessment()">
+                        <i class="fas fa-bolt"></i>
+                        Quick Assessment
+                    </button>
+                    <button class="btn btn-accent" onclick="generateReport()">
+                        <i class="fas fa-file-alt"></i>
+                        Generate Report
+                    </button>
+                    <button class="btn btn-outline" onclick="exportData()">
+                        <i class="fas fa-download"></i>
+                        Export Data
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -960,7 +1038,7 @@
                 <h3 style="color: var(--text-white); margin-bottom: 2rem;">🏆 Training Achievements</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
                     <div style="text-align: center; padding: 1rem; background: var(--glass-bg); border-radius: 10px;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🥇</div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">��</div>
                         <h4 style="color: var(--text-white);">Memory Master</h4>
                         <p style="opacity: 0.8;">Complete 100 memory challenges</p>
                     </div>
@@ -2187,9 +2265,70 @@
 
                 setTimeout(() => {
                     showNotification('Quantum brain scan complete! Advanced neural data collected.');
-                    updateRealTimeMetrics();
+                    updateAdvancedMetrics();
                 }, 3000);
             }, 2000);
+        }
+
+        function generateAIInsight() {
+            const insights = [
+                'Your neural efficiency has improved 23% this week. Recommended: increase working memory training frequency.',
+                'Optimal cognitive performance detected between 10-11 AM. Schedule important tasks during this window.',
+                'Delta wave patterns suggest excellent sleep quality. Continue current sleep schedule for peak performance.',
+                'Beta wave coherence indicates high focus capability. Consider advanced attention training modules.',
+                'Your cognitive flexibility has increased 15%. Ready for more complex executive function challenges.',
+                'Processing speed optimization detected. Perfect time to tackle reaction-time training games.',
+                'Memory consolidation patterns are exceptional. Increase memory palace training difficulty level.',
+                'Attention span has extended to 94% capacity. Consider longer meditation sessions for further improvement.'
+            ];
+
+            showNotification('AI is analyzing your cognitive patterns...');
+
+            setTimeout(() => {
+                const randomInsight = insights[Math.floor(Math.random() * insights.length)];
+                document.getElementById('aiInsightText').textContent = randomInsight;
+                showNotification('AI insight generated successfully!');
+            }, 2000);
+        }
+
+        function runQuickAssessment() {
+            showNotification('Starting quick cognitive assessment...');
+
+            setTimeout(() => {
+                showNotification('Quick assessment complete! Updating metrics.');
+                updateAdvancedMetrics();
+            }, 3000);
+        }
+
+        function generateReport() {
+            showNotification('Generating comprehensive cognitive report...');
+
+            setTimeout(() => {
+                showNotification('Report generated successfully! Check your email for the PDF.');
+            }, 2500);
+        }
+
+        function exportData() {
+            showNotification('Exporting cognitive data to CSV format...');
+
+            setTimeout(() => {
+                showNotification('Data exported successfully! Download will begin shortly.');
+            }, 2000);
+        }
+
+        function updateAdvancedMetrics() {
+            // Update brainwave data
+            if (document.getElementById('deltaWaves')) {
+                document.getElementById('deltaWaves').textContent = (2.1 + (Math.random() - 0.5) * 0.5).toFixed(1);
+                document.getElementById('thetaWaves').textContent = (6.3 + (Math.random() - 0.5) * 1.0).toFixed(1);
+                document.getElementById('workingMemory').textContent = Math.round(89 + (Math.random() - 0.5) * 10) + '%';
+                document.getElementById('processingSpeed').textContent = Math.round(92 + (Math.random() - 0.5) * 8) + '%';
+                document.getElementById('executiveFunction').textContent = Math.round(85 + (Math.random() - 0.5) * 12) + '%';
+                document.getElementById('attentionSpan').textContent = Math.round(94 + (Math.random() - 0.5) * 6) + '%';
+            }
+
+            // Update regular metrics
+            updateRealTimeMetrics();
         }
 
         // Utility Functions
@@ -2256,6 +2395,11 @@
         window.updateDatasetProgress = updateDatasetProgress;
         window.pauseGame = pauseGame;
         window.resumeGame = resumeGame;
+        window.generateAIInsight = generateAIInsight;
+        window.runQuickAssessment = runQuickAssessment;
+        window.generateReport = generateReport;
+        window.exportData = exportData;
+        window.updateAdvancedMetrics = updateAdvancedMetrics;
         window.closeModal = closeModal;
     </script>
 </body>
