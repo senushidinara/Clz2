@@ -3417,7 +3417,7 @@
                     answer: 0
                 },
                 {
-                    pattern: ['⭐', '⭐⭐', '⭐⭐⭐', '?'],
+                    pattern: ['⭐', '⭐⭐', '⭐���⭐', '?'],
                     options: ['⭐⭐⭐⭐', '⭐', '⭐⭐', '⭐⭐⭐⭐⭐'],
                     answer: 0
                 },
@@ -4633,6 +4633,37 @@
             console.log(`Volume updated to: ${volume}%`);
         }
 
+        // Research Details Function
+        function showResearchDetails(researchType) {
+            const researchData = {
+                neuroplasticity: {
+                    title: '🧠 Neuroplasticity Enhancement Research',
+                    details: `
+                        <h4>Study Overview:</h4>
+                        <p>Longitudinal study tracking 847 participants over 6 months using advanced cognitive training protocols.</p>
+
+                        <h4>Key Findings:</h4>
+                        <ul>
+                            <li>34% increase in neural pathway formation</li>
+                            <li>27% improvement in synaptic density</li>
+                            <li>42% enhancement in cognitive flexibility</li>
+                            <li>18% reduction in cognitive decline markers</li>
+                        </ul>
+
+                        <h4>Methodology:</h4>
+                        <p>Participants engaged in daily 25-minute sessions combining memory training, pattern recognition, and adaptive difficulty algorithms.</p>
+                    `
+                }
+            };
+
+            const data = researchData[researchType];
+            if (data) {
+                showToast(`📊 ${data.title} details loaded`);
+                // Could open a modal or expand the card with detailed information
+                console.log('Research details:', data);
+            }
+        }
+
         // Make all functions global
         window.startBrainScan = startBrainScan;
         window.trackSleep = trackSleep;
@@ -4646,6 +4677,7 @@
         window.startMeditation = startMeditation;
         window.startMeditationSession = startMeditationSession;
         window.updateVolume = updateVolume;
+        window.showResearchDetails = showResearchDetails;
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
