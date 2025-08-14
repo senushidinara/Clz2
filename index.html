@@ -3465,6 +3465,273 @@
             }, 3000);
         }
 
+        // Advanced Features Initialization
+        function initializeAdvancedFeatures() {
+            startSessionTimer();
+            initializeNeuralMonitoring();
+            initializeAIAssistant();
+            createFloatingParticles();
+            initializeBiometricMonitoring();
+            console.log('🚀 Advanced features initialized');
+        }
+
+        // Sidebar Toggle Function
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const header = document.querySelector('.elite-header');
+
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('sidebar-collapsed');
+            header.classList.toggle('sidebar-collapsed');
+
+            // Update toggle icon
+            const toggleIcon = sidebar.querySelector('.sidebar-toggle i');
+            if (sidebar.classList.contains('collapsed')) {
+                toggleIcon.className = 'fas fa-chevron-right';
+            } else {
+                toggleIcon.className = 'fas fa-chevron-left';
+            }
+        }
+
+        // Session Timer
+        function startSessionTimer() {
+            let sessionTime = 0;
+            const timer = document.getElementById('sessionTimer');
+
+            setInterval(() => {
+                sessionTime++;
+                const minutes = Math.floor(sessionTime / 60);
+                const seconds = sessionTime % 60;
+                timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Neural Monitoring Functions
+        function initializeNeuralMonitoring() {
+            setInterval(updateNeuralMetrics, 2000);
+        }
+
+        function updateNeuralMetrics() {
+            // Simulate real-time neural monitoring
+            const reactionTime = Math.floor(120 + Math.random() * 80);
+            const neuralSync = Math.floor(85 + Math.random() * 15);
+            const waveTypes = ['Alpha', 'Beta', 'Theta', 'Gamma'];
+            const dominantWave = waveTypes[Math.floor(Math.random() * waveTypes.length)];
+            const peakFreq = (6 + Math.random() * 20).toFixed(1);
+
+            // Update displays if elements exist
+            const reactionDisplay = document.getElementById('reactionTimeDisplay');
+            const syncDisplay = document.getElementById('neuralSyncDisplay');
+            const waveDisplay = document.getElementById('dominantWaveDisplay');
+            const freqDisplay = document.getElementById('peakFreqDisplay');
+
+            if (reactionDisplay) reactionDisplay.textContent = `${reactionTime}ms`;
+            if (syncDisplay) syncDisplay.textContent = `${neuralSync}%`;
+            if (waveDisplay) waveDisplay.textContent = dominantWave;
+            if (freqDisplay) freqDisplay.textContent = `${peakFreq}Hz`;
+        }
+
+        // AI Assistant Functions
+        function initializeAIAssistant() {
+            const recommendations = [
+                "Focus training recommended based on current performance",
+                "Memory enhancement protocol available",
+                "Neural efficiency at optimal levels",
+                "Advanced challenge mode unlocked",
+                "Cognitive state: Highly receptive to training"
+            ];
+
+            setInterval(() => {
+                const aiRecommendation = document.getElementById('aiRecommendation');
+                if (aiRecommendation) {
+                    const randomRec = recommendations[Math.floor(Math.random() * recommendations.length)];
+                    aiRecommendation.textContent = `"${randomRec}"`;
+                }
+            }, 10000);
+        }
+
+        // Biometric Monitoring
+        function initializeBiometricMonitoring() {
+            setInterval(updateBiometrics, 3000);
+        }
+
+        function updateBiometrics() {
+            const heartRate = Math.floor(65 + Math.random() * 25);
+            const focusLevel = Math.floor(75 + Math.random() * 25);
+            const stressLevel = Math.random() * 100;
+
+            const heartDisplay = document.getElementById('heartRate');
+            const focusDisplay = document.getElementById('focusLevel');
+            const stressIndicator = document.querySelector('.stress-level');
+
+            if (heartDisplay) heartDisplay.textContent = `${heartRate} BPM`;
+            if (focusDisplay) focusDisplay.textContent = `${focusLevel}%`;
+            if (stressIndicator) stressIndicator.style.left = `${stressLevel}%`;
+        }
+
+        // Memory Challenge Functions
+        function startMemoryChallenge() {
+            console.log('Starting advanced memory challenge');
+            const matrix = document.getElementById('memoryMatrix');
+            const cells = matrix.querySelectorAll('.pattern-cell');
+
+            // Flash pattern sequence
+            const sequence = [];
+            const sequenceLength = 3 + Math.floor(Math.random() * 5);
+
+            for (let i = 0; i < sequenceLength; i++) {
+                sequence.push(Math.floor(Math.random() * 16));
+            }
+
+            // Show sequence
+            cells.forEach(cell => cell.style.opacity = '0.3');
+
+            sequence.forEach((index, step) => {
+                setTimeout(() => {
+                    cells[index].classList.add('active');
+                    setTimeout(() => {
+                        cells[index].classList.remove('active');
+                        if (step === sequence.length - 1) {
+                            cells.forEach(cell => cell.style.opacity = '1');
+                            startMemoryInput(sequence);
+                        }
+                    }, 800);
+                }, step * 1000);
+            });
+        }
+
+        function startMemoryInput(correctSequence) {
+            let playerSequence = [];
+            const cells = document.querySelectorAll('.pattern-cell');
+
+            cells.forEach((cell, index) => {
+                cell.onclick = () => {
+                    cell.classList.add('active');
+                    setTimeout(() => cell.classList.remove('active'), 200);
+
+                    playerSequence.push(index);
+
+                    if (playerSequence.length === correctSequence.length) {
+                        checkMemorySequence(playerSequence, correctSequence);
+                    }
+                };
+            });
+        }
+
+        function checkMemorySequence(player, correct) {
+            const isCorrect = player.every((val, index) => val === correct[index]);
+
+            if (isCorrect) {
+                showToast('🎉 Perfect memory sequence!');
+                updateMemoryStats('correct');
+            } else {
+                showToast('❌ Try again!');
+                updateMemoryStats('incorrect');
+            }
+
+            setTimeout(resetMemoryGame, 2000);
+        }
+
+        function updateMemoryStats(result) {
+            // Update memory game statistics
+            const levelElement = document.getElementById('memoryLevel');
+            const scoreElement = document.getElementById('memoryScore');
+            const accuracyElement = document.getElementById('memoryAccuracy');
+
+            if (result === 'correct' && levelElement && scoreElement) {
+                const currentLevel = parseInt(levelElement.textContent);
+                const currentScore = parseInt(scoreElement.textContent.replace(',', ''));
+
+                levelElement.textContent = currentLevel + 1;
+                scoreElement.textContent = (currentScore + 150).toLocaleString();
+            }
+        }
+
+        function resetMemoryGame() {
+            const cells = document.querySelectorAll('.pattern-cell');
+            cells.forEach(cell => {
+                cell.onclick = null;
+                cell.style.opacity = '1';
+                cell.classList.remove('active');
+            });
+        }
+
+        function showMemoryStats() {
+            showToast('📊 Memory stats updated!');
+        }
+
+        // Floating Particles Animation
+        function createFloatingParticles() {
+            const particlesContainer = document.querySelector('.floating-particles');
+            if (!particlesContainer) return;
+
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 8 + 's';
+                    particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                    particlesContainer.appendChild(particle);
+
+                    setTimeout(() => particle.remove(), 12000);
+                }, i * 200);
+            }
+
+            // Regenerate particles
+            setTimeout(createFloatingParticles, 15000);
+        }
+
+        // Leaderboard Functions
+        function filterLeaderboard(category) {
+            console.log(`Filtering leaderboard by: ${category}`);
+            const buttons = document.querySelectorAll('.leaderboard-categories .btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            showToast(`📊 Viewing ${category} leaderboard`);
+        }
+
+        // Binaural Beats Functions
+        function playBinauralBeats() {
+            console.log('Starting binaural beats session');
+            showToast('🎵 Binaural beats activated');
+
+            // Simulate audio visualization
+            const canvas = document.getElementById('audioCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                animateAudioWaves(ctx, canvas);
+            }
+        }
+
+        function animateAudioWaves(ctx, canvas) {
+            let frame = 0;
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = '#8A2BE2';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+
+                for (let x = 0; x < canvas.width; x++) {
+                    const y = canvas.height/2 + Math.sin((x + frame) * 0.02) * 20 +
+                              Math.sin((x + frame) * 0.05) * 10;
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+
+                ctx.stroke();
+                frame += 2;
+
+                if (frame < 1000) {
+                    requestAnimationFrame(draw);
+                }
+            }
+
+            draw();
+        }
+
         function createConfetti() {
             // Create celebration burst
             for (let i = 0; i < 50; i++) {
@@ -3733,7 +4000,7 @@
                     instructions: [
                         '💖 Send love to yourself',
                         '👥 Extend to loved ones',
-                        '🌍 Include all beings',
+                        '�� Include all beings',
                         '☮️ Feel universal love'
                     ]
                 },
