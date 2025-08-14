@@ -1618,19 +1618,66 @@
         }
 
         .sidebar-header {
-            padding: 2rem 1.5rem;
-            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+            padding: 2.5rem 1.5rem;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
             position: relative;
+            background: radial-gradient(ellipse at center, rgba(138, 43, 226, 0.08) 0%, transparent 70%);
+        }
+
+        .sidebar-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg,
+                rgba(138, 43, 226, 0.1) 0%,
+                transparent 25%,
+                rgba(75, 0, 130, 0.1) 50%,
+                transparent 75%,
+                rgba(106, 90, 205, 0.1) 100%);
+            animation: headerScan 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes headerScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .logo-advanced {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #8A2BE2, #4B0082, #6A5ACD);
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg,
+                #8A2BE2 0%,
+                #FF6EC7 25%,
+                #4B0082 50%,
+                #9370DB 75%,
+                #8A2BE2 100%);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-align: center;
+            animation: gradientShift 4s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .logo-advanced::after {
+            content: 'ELITE';
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            font-size: 0.5rem;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .neural-pulse-indicator {
