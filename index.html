@@ -1224,24 +1224,177 @@
                 </div>
             </div>
 
+            <!-- Advanced EEG Research Metrics -->
             <div class="glass-card" style="margin-top: 3rem;">
-                <h3 style="color: var(--text-white); margin-bottom: 2rem;">📊 Research Metrics</h3>
+                <h3 style="color: var(--text-white); margin-bottom: 2rem;">🧠 EEG Datasets Integrated from PhysioNet</h3>
+
+                <!-- EEG Video Demo -->
+                <div style="margin-bottom: 2rem;">
+                    <video autoplay loop muted style="width: 100%; max-width: 600px; border-radius: 15px; margin: 0 auto; display: block;">
+                        <source src="https://cdn.builder.io/o/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F316bfb146e8f41048b7671a6bdbb8c28?alt=media&token=7243abef-f60d-4881-9b86-b99dc68133a3&apiKey=2cd11caf4c1b4c3bb3084cd790d2c201" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p style="text-align: center; margin-top: 1rem; opacity: 0.8;">Real-time EEG Signal Processing and Analysis</p>
+                </div>
+
+                <div class="eeg-datasets-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                    <div class="dataset-card" style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <h4 style="color: var(--text-white); margin-bottom: 1rem;">🎯 EEG Motor Movement/Imagery Dataset</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Recordings:</span>
+                            <span style="font-weight: 600;">1,500+</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Volunteers:</span>
+                            <span style="font-weight: 600;">109</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Tasks:</span>
+                            <span style="font-weight: 600;">Motor & Imagery</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="viewDataset('motor-imagery')" style="width: 100%;">
+                            <i class="fas fa-database"></i>
+                            Access Dataset
+                        </button>
+                    </div>
+
+                    <div class="dataset-card" style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <h4 style="color: var(--text-white); margin-bottom: 1rem;">🏥 CHB-MIT Scalp EEG Database</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Patients:</span>
+                            <span style="font-weight: 600;">24 Pediatric</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Condition:</span>
+                            <span style="font-weight: 600;">Epilepsy</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Type:</span>
+                            <span style="font-weight: 600;">Intractable</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="viewDataset('chb-mit')" style="width: 100%;">
+                            <i class="fas fa-database"></i>
+                            Access Dataset
+                        </button>
+                    </div>
+
+                    <div class="dataset-card" style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <h4 style="color: var(--text-white); margin-bottom: 1rem;">🎧 Auditory Evoked-Potential Dataset</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Recordings:</span>
+                            <span style="font-weight: 600;">240+</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Duration:</span>
+                            <span style="font-weight: 600;">2-minute each</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Volunteers:</span>
+                            <span style="font-weight: 600;">20</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="viewDataset('auditory-evoked')" style="width: 100%;">
+                            <i class="fas fa-database"></i>
+                            Access Dataset
+                        </button>
+                    </div>
+
+                    <div class="dataset-card" style="background: var(--glass-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                        <h4 style="color: var(--text-white); margin-bottom: 1rem;">😴 CAP Sleep Database</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Recordings:</span>
+                            <span style="font-weight: 600;">108</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Type:</span>
+                            <span style="font-weight: 600;">Polysomnographic</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>EEG Channels:</span>
+                            <span style="font-weight: 600;">3+ per recording</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="viewDataset('cap-sleep')" style="width: 100%;">
+                            <i class="fas fa-database"></i>
+                            Access Dataset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Additional EEG Resources -->
+                <div style="background: var(--glass-bg); padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-white); margin-bottom: 1.5rem;">📚 Additional EEG Resources on PhysioNet</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div style="padding: 1rem; background: rgba(37, 99, 235, 0.1); border-radius: 10px; border-left: 4px solid var(--primary-blue);">
+                            <h5 style="color: var(--text-white); margin-bottom: 0.5rem;">Siena Scalp EEG Database</h5>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">High-quality EEG recordings from healthy subjects</p>
+                        </div>
+                        <div style="padding: 1rem; background: rgba(124, 58, 237, 0.1); border-radius: 10px; border-left: 4px solid var(--primary-purple);">
+                            <h5 style="color: var(--text-white); margin-bottom: 0.5rem;">EEG Mental Arithmetic Tasks</h5>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Cognitive workload assessment during calculations</p>
+                        </div>
+                        <div style="padding: 1rem; background: rgba(5, 150, 105, 0.1); border-radius: 10px; border-left: 4px solid var(--primary-teal);">
+                            <h5 style="color: var(--text-white); margin-bottom: 0.5rem;">EEG Signals from RSVP Tasks</h5>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Rapid serial visual presentation experiments</p>
+                        </div>
+                        <div style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 10px; border-left: 4px solid var(--accent-orange);">
+                            <h5 style="color: var(--text-white); margin-bottom: 0.5rem;">Motion Artifact Contaminated EEG</h5>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Dataset for artifact removal algorithm testing</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Research Video Demonstrations -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-white); margin-bottom: 1.5rem;">🎬 Research Video Demonstrations</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <div style="background: var(--glass-bg); padding: 1rem; border-radius: 15px;">
+                            <video controls style="width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                                <source src="https://cdn.builder.io/o/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fd73f34abf59546d897a268b7a86dfff0?alt=media&token=72608612-9aa7-4032-95a2-bd539f21e244&apiKey=2cd11caf4c1b4c3bb3084cd790d2c201" type="video/mp4">
+                            </video>
+                            <h5 style="color: var(--text-white);">EEG Signal Analysis</h5>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Advanced signal processing techniques</p>
+                        </div>
+                        <div style="background: var(--glass-bg); padding: 1rem; border-radius: 15px;">
+                            <video controls style="width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                                <source src="https://cdn.builder.io/o/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F2d02e213d95d4c5a9c302a4b27e95de5?alt=media&token=de70063f-94df-464f-b949-01441a5cd2bd&apiKey=2cd11caf4c1b4c3bb3084cd790d2c201" type="video/mp4">
+                            </video>
+                            <h5 style="color: var(--text-white);">Brain Mapping Research</h5>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">3D brain visualization and mapping</p>
+                        </div>
+                        <div style="background: var(--glass-bg); padding: 1rem; border-radius: 15px;">
+                            <video controls style="width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                                <source src="https://cdn.builder.io/o/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2F64fe361330f2475c94955bb2abd939f6?alt=media&token=f02c2a9b-80f8-4732-83d3-d32c32f976e3&apiKey=2cd11caf4c1b4c3bb3084cd790d2c201" type="video/mp4">
+                            </video>
+                            <h5 style="color: var(--text-white);">Cognitive Assessment</h5>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Real-time cognitive performance evaluation</p>
+                        </div>
+                        <div style="background: var(--glass-bg); padding: 1rem; border-radius: 15px;">
+                            <video controls style="width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                                <source src="https://cdn.builder.io/o/assets%2F2cd11caf4c1b4c3bb3084cd790d2c201%2Fcd825e94c50841dfb4e320b87ffdf657?alt=media&token=6948e1a7-4972-444a-91b1-eeda644f1b7a&apiKey=2cd11caf4c1b4c3bb3084cd790d2c201" type="video/mp4">
+                            </video>
+                            <h5 style="color: var(--text-white);">Neural Network Training</h5>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">AI model training on EEG data</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overall Research Metrics -->
+                <h4 style="color: var(--text-white); margin-bottom: 1.5rem;">📊 Overall Research Metrics</h4>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
                     <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;">127</div>
+                        <div class="stat-number" style="font-size: 2rem;">2,847</div>
+                        <div class="stat-label">Total EEG Recordings</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat-number" style="font-size: 2rem;">156</div>
                         <div class="stat-label">Active Studies</div>
                     </div>
                     <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;">5,432</div>
-                        <div class="stat-label">Participants</div>
-                    </div>
-                    <div style="text-align: center;">
                         <div class="stat-number" style="font-size: 2rem;">89%</div>
-                        <div class="stat-label">Success Rate</div>
+                        <div class="stat-label">Data Quality Rate</div>
                     </div>
                     <div style="text-align: center;">
-                        <div class="stat-number" style="font-size: 2rem;">34</div>
-                        <div class="stat-label">Publications</div>
+                        <div class="stat-number" style="font-size: 2rem;">47</div>
+                        <div class="stat-label">Research Publications</div>
                     </div>
                 </div>
             </div>
@@ -1806,6 +1959,42 @@
             }, 2000);
         }
 
+        function viewDataset(datasetType) {
+            const datasets = {
+                'motor-imagery': 'EEG Motor Movement/Imagery Dataset',
+                'chb-mit': 'CHB-MIT Scalp EEG Database',
+                'auditory-evoked': 'Auditory Evoked-Potential EEG-Biometric Dataset',
+                'cap-sleep': 'CAP Sleep Database'
+            };
+
+            showNotification(`Accessing ${datasets[datasetType]} from PhysioNet...`);
+
+            setTimeout(() => {
+                showNotification('Dataset loaded successfully. Ready for analysis.');
+                // Simulate data loading with progress
+                updateDatasetProgress(datasetType);
+            }, 1500);
+        }
+
+        function updateDatasetProgress(datasetType) {
+            const data = dataManager.getData();
+            if (!data.datasets) {
+                data.datasets = {
+                    'motor-imagery': { accessed: 0, analyzed: 0 },
+                    'chb-mit': { accessed: 0, analyzed: 0 },
+                    'auditory-evoked': { accessed: 0, analyzed: 0 },
+                    'cap-sleep': { accessed: 0, analyzed: 0 }
+                };
+            }
+
+            if (data.datasets[datasetType]) {
+                data.datasets[datasetType].accessed += 1;
+                data.datasets[datasetType].analyzed += Math.floor(Math.random() * 5) + 1;
+                dataManager.saveData(data);
+                showNotification(`${datasetType} dataset analysis updated: ${data.datasets[datasetType].analyzed} samples processed`);
+            }
+        }
+
         // Consultation Functions
         function bookConsultation(doctor) {
             const doctors = {
@@ -1939,6 +2128,8 @@
         window.joinGroupTherapy = joinGroupTherapy;
         window.runFullScan = runFullScan;
         window.startBrainScan = startBrainScan;
+        window.viewDataset = viewDataset;
+        window.updateDatasetProgress = updateDatasetProgress;
         window.closeModal = closeModal;
     </script>
 </body>
