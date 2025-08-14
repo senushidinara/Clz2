@@ -1554,20 +1554,63 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Revolutionary Sidebar */
+        /* Revolutionary Ultra-Advanced Sidebar */
         .revolutionary-sidebar {
             position: fixed;
             left: 0;
             top: 0;
-            width: 300px;
+            width: 350px;
             height: 100vh;
-            background: linear-gradient(145deg, rgba(10, 10, 25, 0.95), rgba(20, 20, 50, 0.95));
-            backdrop-filter: blur(20px);
-            border-right: 2px solid rgba(138, 43, 226, 0.3);
+            background:
+                radial-gradient(ellipse at top left, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(75, 0, 130, 0.15) 0%, transparent 50%),
+                linear-gradient(145deg, rgba(5, 5, 15, 0.98), rgba(15, 15, 35, 0.96));
+            backdrop-filter: blur(25px);
+            border-right: 1px solid rgba(138, 43, 226, 0.4);
+            border-image: linear-gradient(45deg, rgba(138, 43, 226, 0.6), rgba(75, 0, 130, 0.4), rgba(106, 90, 205, 0.6)) 1;
             z-index: 1000;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow-y: auto;
-            box-shadow: 5px 0 30px rgba(138, 43, 226, 0.2);
+            box-shadow:
+                8px 0 40px rgba(138, 43, 226, 0.3),
+                inset 0 0 50px rgba(138, 43, 226, 0.05);
+            position: relative;
+        }
+
+        .revolutionary-sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 80%, rgba(75, 0, 130, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 50% 50%, rgba(106, 90, 205, 0.05) 0%, transparent 40%);
+            animation: holographicShift 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .revolutionary-sidebar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(138, 43, 226, 0.8) 25%,
+                rgba(75, 0, 130, 0.8) 50%,
+                rgba(106, 90, 205, 0.8) 75%,
+                transparent 100%);
+            animation: edgePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes edgePulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+            50% { opacity: 1; transform: scaleY(1.1); }
         }
 
         .revolutionary-sidebar.collapsed {
@@ -3423,7 +3466,7 @@
                     answer: 0
                 },
                 {
-                    pattern: ['⭐', '⭐⭐', '������⭐', '?'],
+                    pattern: ['⭐', '⭐⭐', '⭐���⭐', '?'],
                     options: ['⭐⭐⭐⭐', '⭐', '⭐⭐', '⭐⭐⭐⭐⭐'],
                     answer: 0
                 },
