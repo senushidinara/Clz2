@@ -174,10 +174,22 @@
         .btn:hover {
             transform: translateY(-2px) scale(1.02);
             box-shadow: 0 4px 20px var(--shadow);
+            cursor: pointer;
         }
 
         .btn:active {
             transform: translateY(0) scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+            box-shadow: 0 2px 10px var(--shadow-light);
         }
 
         .btn-primary {
@@ -2694,7 +2706,7 @@
                 </div>
 
                 <div class="card">
-                    <h3>🧘‍���️ Advanced Binaural Beats</h3>
+                    <h3>🧘‍♀️ Advanced Binaural Beats</h3>
                     <div class="binaural-player" style="background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.1)); border-radius: 15px; padding: 2rem; margin: 1rem 0;">
                         <div class="frequency-selector" style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
                             <button class="freq-btn active" data-freq="delta" style="padding: 0.5rem 1rem; border: none; border-radius: 20px; background: linear-gradient(45deg, #667eea, #764ba2); color: white; cursor: pointer; transition: all 0.3s ease;" onclick="selectFrequency('delta')">Delta (0.5-4Hz)</button>
@@ -3532,7 +3544,7 @@
             initializeAIAssistant();
             createFloatingParticles();
             initializeBiometricMonitoring();
-            console.log('🚀 Advanced features initialized');
+            console.log('��� Advanced features initialized');
         }
 
         // Sidebar Toggle Function
@@ -4242,7 +4254,7 @@
                                 </div>
                             </div>
                             <div style="display: flex; align-items: center; gap: 1rem;">
-                                <span style="font-size: 2rem;">🌡��</span>
+                                <span style="font-size: 2rem;">🌡️</span>
                                 <div>
                                     <strong>Room Temperature:</strong> Keep your bedroom between 65-68°F (18-20°C) for optimal sleep.
                                 </div>
