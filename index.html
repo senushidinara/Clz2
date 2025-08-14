@@ -4069,7 +4069,56 @@
 
         function expandSleepTips() {
             console.log('Expanding sleep tips');
-            alert('Sleep tips expanded!');
+
+            const tipsElement = event.target.closest('.card');
+            if (tipsElement) {
+                tipsElement.innerHTML = `
+                    <h3>💡 Personalized Sleep Tips</h3>
+                    <div style="background: linear-gradient(135deg, rgba(234, 215, 209, 0.1), rgba(234, 215, 209, 0.2)); padding: 1.5rem; border-radius: 12px; margin: 1rem 0;">
+                        <div style="display: grid; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="font-size: 2rem;">🌙</span>
+                                <div>
+                                    <strong>Optimal Bedtime:</strong> Based on your patterns, try sleeping at 10:30 PM for better recovery.
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="font-size: 2rem;">🌡️</span>
+                                <div>
+                                    <strong>Room Temperature:</strong> Keep your bedroom between 65-68°F (18-20°C) for optimal sleep.
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="font-size: 2rem;">📱</span>
+                                <div>
+                                    <strong>Blue Light:</strong> Avoid screens 1 hour before bed or use blue light filters.
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="font-size: 2rem;">☕</span>
+                                <div>
+                                    <strong>Caffeine Cutoff:</strong> Stop consuming caffeine after 2 PM for better sleep quality.
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="font-size: 2rem;">🧘‍♀️</span>
+                                <div>
+                                    <strong>Wind Down:</strong> Try 10 minutes of meditation or deep breathing before bed.
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="closeSleepTips(this)" style="
+                            background: var(--sleep-color); color: var(--black);
+                            border: none; padding: 0.8rem 1.5rem; border-radius: 8px;
+                            margin-top: 1rem; cursor: pointer; transition: all 0.3s ease;
+                        " onmouseover="this.style.opacity='0.8'"
+                           onmouseout="this.style.opacity='1'">
+                            🔽 Collapse Tips
+                        </button>
+                    </div>
+                `;
+            }
+
             showToast("💡 Sleep tips expanded!");
         }
 
@@ -4263,7 +4312,7 @@
                         transition: all 0.3s ease;
                     " onmouseover="this.style.background='rgba(255,255,255,0.5)'"
                        onmouseout="this.style.background='rgba(255,255,255,0.3)'">
-                        🚀 Start Session
+                        ���� Start Session
                     </button>
                     <button onclick="document.body.removeChild(document.getElementById('meditationContainer'))" style="
                         background: rgba(255,255,255,0.2); color: white; border: 2px solid white;
