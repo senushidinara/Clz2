@@ -5308,7 +5308,7 @@
                         </div>
                     `;
                     createConfetti();
-                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
+                    showSoundEffect('🧘���♀️ MEDITATION COMPLETE!');
                 }
             }, 1000);
         }
@@ -6071,6 +6071,97 @@
 
             breathingCycle();
         };
+
+        // Additional Brain Training Functions
+        window.startBrainScan = function() {
+            if (window.showToast) {
+                showToast('🧠 Starting neural analysis...');
+            }
+
+            // Simulate brain scan with animated feedback
+            const eegContainer = document.getElementById('eegContainer');
+            if (eegContainer) {
+                eegContainer.style.animation = 'pulse 2s ease-in-out infinite';
+
+                setTimeout(() => {
+                    if (window.showToast) {
+                        showToast('✅ Brain scan complete! Neural patterns optimal.');
+                    }
+                    eegContainer.style.animation = '';
+                }, 3000);
+            }
+        };
+
+        window.trackSleep = function() {
+            if (window.showToast) {
+                showToast('🌙 Sleep tracking initiated. Sweet dreams!');
+            }
+        };
+
+        window.expandSleepTips = function() {
+            if (window.showToast) {
+                showToast('💡 Tip: Keep room temperature between 65-68°F for optimal sleep quality.');
+            }
+        };
+
+        window.playAmbientSounds = function() {
+            if (window.showToast) {
+                showToast('🎵 Playing calming nature sounds...');
+            }
+        };
+
+        window.viewSleepHistory = function() {
+            if (window.showToast) {
+                showToast('📊 Opening sleep history dashboard...');
+            }
+        };
+
+        // Memory Palace Functions
+        window.enterMemoryPalace = function() {
+            if (window.showToast) {
+                showToast('🏰 Entering your Memory Palace...');
+            }
+        };
+
+        window.exploreVault = function() {
+            if (window.showToast) {
+                showToast('📚 Exploring Knowledge Vault - 847 memories stored');
+            }
+        };
+
+        window.visitChamber = function() {
+            if (window.showToast) {
+                showToast('🛠️ Visiting Skills Chamber - 23 skills mastered');
+            }
+        };
+
+        window.checkHall = function() {
+            if (window.showToast) {
+                showToast('🎯 Checking Experience Hall - 156 experiences cataloged');
+            }
+        };
+
+        window.openGallery = function() {
+            if (window.showToast) {
+                showToast('🏆 Opening Achievement Gallery - 89 achievements unlocked');
+            }
+        };
+
+        // Enhanced Animation for Cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.interactive-challenge-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.2)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+        });
     </script>
 </body>
 </html>
