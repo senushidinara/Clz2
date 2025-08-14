@@ -3218,7 +3218,7 @@
                         padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
                         background: linear-gradient(45deg, #4682B4, #87CEEB); color: white;
                         cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(70,130,180,0.3);
-                    ">🌊 Ocean</button>
+                    ">���� Ocean</button>
                     <button onclick="changeMeditationBg('mountain')" class="bg-btn" data-bg="mountain" style="
                         padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
                         background: linear-gradient(45deg, #4169E1, #9370DB); color: white;
@@ -5211,7 +5211,7 @@
                         </div>
                     `;
                     createConfetti();
-                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
+                    showSoundEffect('🧘‍��️ MEDITATION COMPLETE!');
                 }
             }, 1000);
         }
@@ -5464,6 +5464,23 @@
             } catch (error) {
                 console.warn('⚠️ Some advanced features may not be available:', error);
             }
+
+            // Add click event listeners as backup for navigation
+            navItems.forEach(item => {
+                const page = item.dataset.page;
+                if (page) {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log('🖱️ Nav item clicked:', page);
+                        if (window.navigateToPage) {
+                            window.navigateToPage(page);
+                        } else {
+                            console.error('Navigation function not available');
+                        }
+                    });
+                    console.log(`✅ Click listener added for: ${page}`);
+                }
+            });
 
             // Verify navigation works
             const navItems = document.querySelectorAll('.nav-item[data-page]');
