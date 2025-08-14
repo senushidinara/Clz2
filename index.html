@@ -2999,9 +2999,8 @@
         let isTimerRunning = false;
 
         // WORKING CHALLENGE FUNCTIONS
-        function openChallenge(type) {
-            console.log('Opening challenge:', type);
-            alert('Opening ' + type + ' challenge!');
+        window.openChallenge = function(type) {
+            console.log('🎮 Opening challenge:', type);
 
             const modal = document.getElementById('challengeModal');
             const title = document.getElementById('challengeTitle');
@@ -3016,12 +3015,19 @@
 
                 title.textContent = challenges[type] || "Challenge";
                 content.innerHTML = `
-                    <p>Ready to start the ${type} challenge?</p>
-                    <button class="btn btn-challenges" onclick="startChallenge('${type}')">
-                        <i class="fas fa-play"></i> Start Challenge
-                    </button>
+                    <div style="text-align: center; padding: 1rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🎯</div>
+                        <p style="font-size: 1.2rem; margin-bottom: 2rem;">Ready to start the ${type} challenge?</p>
+                        <button class="btn btn-challenges" onclick="startChallenge('${type}')" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                            <i class="fas fa-play"></i> Start Challenge
+                        </button>
+                    </div>
                 `;
                 modal.classList.add('active');
+                showToast(`🎮 ${challenges[type]} opened`);
+            } else {
+                console.error('Modal elements not found');
+                showToast('❌ Challenge could not be opened');
             }
         }
 
