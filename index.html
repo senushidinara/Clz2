@@ -4091,8 +4091,56 @@
 
         function startFocusSession() {
             console.log('Starting focus session');
-            alert('Focus session started!');
-            showToast("🎯 Focus session started!");
+
+            const timerText = document.getElementById('timerText');
+            const timerProgress = document.getElementById('timerProgress');
+            const button = event.target;
+
+            if (!isTimerRunning) {
+                isTimerRunning = true;
+                button.innerHTML = '<i class="fas fa-pause"></i> Pause Session';
+                button.style.background = 'linear-gradient(45deg, #e74c3c, #c0392b)';
+
+                showToast("🎯 Focus session started!");
+
+                focusTimer = setInterval(() => {
+                    focusTime--;
+
+                    const minutes = Math.floor(focusTime / 60);
+                    const seconds = focusTime % 60;
+                    timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                    // Update progress circle
+                    const totalTime = 25 * 60;
+                    const progress = ((totalTime - focusTime) / totalTime) * 565;
+                    if (timerProgress) {
+                        timerProgress.style.strokeDashoffset = 565 - progress;
+                    }
+
+                    // Session complete
+                    if (focusTime <= 0) {
+                        clearInterval(focusTimer);
+                        isTimerRunning = false;
+                        button.innerHTML = '<i class="fas fa-play"></i> Begin Focus Session';
+                        button.style.background = 'var(--focus-color)';
+                        focusTime = 25 * 60;
+                        timerText.textContent = '25:00';
+                        if (timerProgress) timerProgress.style.strokeDashoffset = '565';
+
+                        createConfetti();
+                        showToast("🎉 Focus session completed! Great job!");
+                        showSoundEffect("🎯 SESSION COMPLETE!");
+                    }
+                }, 1000);
+
+            } else {
+                // Pause session
+                clearInterval(focusTimer);
+                isTimerRunning = false;
+                button.innerHTML = '<i class="fas fa-play"></i> Resume Session';
+                button.style.background = 'var(--focus-color)';
+                showToast("⏸️ Focus session paused");
+            }
         }
 
         function selectFocusMode(mode) {
