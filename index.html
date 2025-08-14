@@ -3738,10 +3738,16 @@
             document.querySelectorAll('.freq-btn').forEach(btn => {
                 btn.style.background = 'rgba(255,255,255,0.2)';
                 btn.style.color = '#333';
+                btn.classList.remove('active');
             });
 
-            event.target.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
-            event.target.style.color = 'white';
+            // Find and activate the clicked button
+            const activeButton = document.querySelector(`[data-freq="${frequency}"]`);
+            if (activeButton) {
+                activeButton.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+                activeButton.style.color = 'white';
+                activeButton.classList.add('active');
+            }
 
             // Update frequency information
             const frequencyInfo = document.getElementById('frequencyInfo');
@@ -3753,10 +3759,11 @@
                 gamma: 'Gamma Waves (30+Hz): High-level cognitive processing, peak awareness. Advanced meditation states.'
             };
 
-            if (frequencyInfo) {
-                frequencyInfo.innerHTML = `<strong>${event.target.textContent}:</strong> ${frequencyData[frequency]}`;
+            if (frequencyInfo && activeButton) {
+                frequencyInfo.innerHTML = `<strong>${activeButton.textContent}:</strong> ${frequencyData[frequency]}`;
             }
 
+            showToast(`🎵 ${frequency.charAt(0).toUpperCase() + frequency.slice(1)} frequency selected`);
             console.log(`Frequency selected: ${frequency}`);
         }
 
@@ -4180,7 +4187,7 @@
                     background: 'linear-gradient(135deg, #81C784 0%, #A5D6A7 50%, #C8E6C9 100%)',
                     instructions: [
                         '👣 Feel each step',
-                        '🌬️ Sync with breathing',
+                        '🌬��� Sync with breathing',
                         '👀 Stay present',
                         '🧘‍♀️ Move mindfully'
                     ]
