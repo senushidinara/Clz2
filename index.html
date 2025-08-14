@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroX - Cognitive Training Platform</title>
+    <title>NeuroX - Advanced Cognitive Training Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
@@ -174,49 +175,13 @@
             transform: translateY(0) scale(0.98);
         }
 
-        .btn-primary {
-            background: var(--home-color);
-            color: var(--black);
-        }
-
-        .btn-dashboard {
-            background: var(--dashboard-color);
-            color: var(--black);
-        }
-
-        .btn-challenges {
-            background: var(--challenges-color);
-            color: var(--black);
-        }
-
-        .btn-sleep {
-            background: var(--sleep-color);
-            color: var(--black);
-        }
-
-        .btn-focus {
-            background: var(--focus-color);
-            color: var(--black);
-        }
+        .btn-primary { background: var(--home-color); color: var(--black); }
+        .btn-dashboard { background: var(--dashboard-color); color: var(--black); }
+        .btn-challenges { background: var(--challenges-color); color: var(--black); }
+        .btn-sleep { background: var(--sleep-color); color: var(--black); }
+        .btn-focus { background: var(--focus-color); color: var(--black); }
 
         /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 100;
-            box-shadow: 0 -2px 20px var(--shadow-light);
-            padding: 0 1rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
         .nav-tab {
             display: flex;
             flex-direction: column;
@@ -229,6 +194,7 @@
             min-width: 70px;
             background: transparent;
             color: var(--gray-medium);
+            border: none;
         }
 
         .nav-tab:hover {
@@ -259,27 +225,20 @@
             font-weight: 500;
         }
 
-        .nav-tab:active i {
-            animation: bounce 0.3s ease;
-        }
-
-        /* Video Background for Home */
-        .video-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.4;
-            z-index: -1;
-        }
-
-        .video-container {
+        /* Advanced Chart Containers */
+        .chart-container {
             position: relative;
-            overflow: hidden;
+            height: 250px;
+            margin: 1rem 0;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+
+        .realtime-chart {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
         }
 
         /* EEG Waveform Animation */
@@ -301,24 +260,6 @@
             background: var(--dashboard-color);
             animation: waveMove 2s linear infinite;
             transform-origin: left center;
-        }
-
-        .eeg-wave.growing {
-            animation: waveGrow 3s ease-in-out, waveMove 2s linear infinite;
-        }
-
-        @keyframes waveMove {
-            0% { transform: translateX(-100%) scaleY(1); }
-            25% { transform: translateX(-50%) scaleY(2); }
-            50% { transform: translateX(0%) scaleY(1.5); }
-            75% { transform: translateX(50%) scaleY(3); }
-            100% { transform: translateX(100%) scaleY(1); }
-        }
-
-        @keyframes waveGrow {
-            0% { transform: scaleY(1); }
-            50% { transform: scaleY(4); }
-            100% { transform: scaleY(2); }
         }
 
         /* Sleep Animation */
@@ -349,21 +290,6 @@
             animation: twinkle 2s ease-in-out infinite;
         }
 
-        .star:nth-child(2) { top: 30px; left: 50px; width: 3px; height: 3px; animation-delay: 0.5s; }
-        .star:nth-child(3) { top: 60px; left: 150px; width: 2px; height: 2px; animation-delay: 1s; }
-        .star:nth-child(4) { top: 40px; left: 250px; width: 4px; height: 4px; animation-delay: 1.5s; }
-        .star:nth-child(5) { top: 80px; left: 100px; width: 2px; height: 2px; animation-delay: 2s; }
-
-        @keyframes moonGlow {
-            0%, 100% { box-shadow: 0 0 10px rgba(244, 244, 244, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(244, 244, 244, 0.8); }
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
         /* Focus Timer */
         .timer-circle {
             position: relative;
@@ -376,21 +302,6 @@
             width: 100%;
             height: 100%;
             transform: rotate(-90deg);
-        }
-
-        .timer-circle circle {
-            fill: none;
-            stroke-width: 8;
-        }
-
-        .timer-bg {
-            stroke: rgba(0, 0, 0, 0.1);
-        }
-
-        .timer-progress {
-            stroke: var(--focus-color);
-            stroke-linecap: round;
-            transition: stroke-dashoffset 1s linear;
         }
 
         .timer-text {
@@ -420,13 +331,48 @@
             transition: width 0.3s ease;
         }
 
-        .progress-fill.animated {
-            animation: progressFill 5s ease-in-out;
+        /* Achievement Badge */
+        .achievement-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #b8860b;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        @keyframes progressFill {
-            0% { width: 0%; }
-            100% { width: var(--target-width, 100%); }
+        /* Notification System */
+        .notification-panel {
+            position: fixed;
+            top: 160px;
+            right: 2rem;
+            width: 300px;
+            max-height: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--shadow);
+            backdrop-filter: blur(20px);
+            z-index: 200;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .notification-panel.show {
+            transform: translateX(0);
+        }
+
+        .notification-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         /* Modal */
@@ -452,7 +398,7 @@
             background: white;
             border-radius: 12px;
             padding: 2rem;
-            max-width: 500px;
+            max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
@@ -470,10 +416,6 @@
             cursor: pointer;
             color: var(--gray-medium);
             transition: color 0.3s ease;
-        }
-
-        .modal-close:hover {
-            color: var(--black);
         }
 
         /* Toast Notification */
@@ -495,440 +437,68 @@
             transform: translateX(0);
         }
 
-        /* Charts Placeholder */
-        .chart-placeholder {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 100%);
+        /* Stats Display */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .stat-label {
             color: var(--gray-medium);
-            font-weight: 500;
-            margin: 1rem 0;
-            position: relative;
-            overflow: hidden;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
 
-        .chart-placeholder::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
+        /* Challenge Card */
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid var(--challenges-color);
         }
 
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        .challenge-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px var(--shadow);
         }
 
-        /* Confetti Animation */
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: var(--challenges-color);
-            animation: confettiFall 3s linear infinite;
-            z-index: 999;
+        .challenge-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
 
-        .confetti:nth-child(odd) { background: var(--focus-color); }
-        .confetti:nth-child(3n) { background: var(--dashboard-color); }
-
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
+        .challenge-description {
+            color: var(--gray-medium);
+            margin-bottom: 1rem;
         }
 
-        /* Game Animations */
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
-        }
-
-        @keyframes targetPulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 20px rgba(255,107,107,0.6);
-            }
-            100% {
-                transform: scale(1.2);
-                box-shadow: 0 0 30px rgba(255,107,107,0.9);
-            }
-        }
-
-        @keyframes gameIntro {
-            0% {
-                transform: scale(0.8) rotateY(180deg);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1) rotateY(0deg);
-                opacity: 1;
-            }
-        }
-
-        @keyframes correctAnswer {
-            0% { background: rgba(0,255,0,0.8); transform: scale(1); }
-            50% { background: rgba(0,255,0,1); transform: scale(1.2); }
-            100% { background: rgba(0,255,0,0.8); transform: scale(1); }
-        }
-
-        @keyframes wrongAnswer {
-            0% { background: rgba(255,0,0,0.8); transform: translateX(0); }
-            25% { background: rgba(255,0,0,1); transform: translateX(-10px); }
-            75% { background: rgba(255,0,0,1); transform: translateX(10px); }
-            100% { background: rgba(255,0,0,0.8); transform: translateX(0); }
-        }
-
-        @keyframes scoreUpdate {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.5); color: #ffd700; }
-            100% { transform: scale(1); }
-        }
-
-        /* Meditation Animations */
-        @keyframes gentleWaves {
-            0%, 100% {
-                background-position: 0% 50%;
-                filter: hue-rotate(0deg);
-            }
-            50% {
-                background-position: 100% 50%;
-                filter: hue-rotate(10deg);
-            }
-        }
-
-        @keyframes oceanWaves {
-            0%, 100% {
-                background-position: 0% 50%;
-                filter: brightness(1);
-            }
-            50% {
-                background-position: 100% 50%;
-                filter: brightness(1.1);
-            }
-        }
-
-        @keyframes mountainMist {
-            0%, 100% {
-                background-position: 0% 50%;
-                filter: contrast(1);
-            }
-            50% {
-                background-position: 100% 50%;
-                filter: contrast(1.1);
-            }
-        }
-
-        @keyframes wave1 {
-            0%, 100% {
-                transform: translateX(-20%) scaleY(1);
-            }
-            50% {
-                transform: translateX(20%) scaleY(1.1);
-            }
-        }
-
-        @keyframes wave2 {
-            0%, 100% {
-                transform: translateX(20%) scaleY(1);
-            }
-            50% {
-                transform: translateX(-20%) scaleY(0.9);
-            }
-        }
-
-        @keyframes sway {
-            0%, 100% {
-                transform: rotate(-2deg);
-            }
-            50% {
-                transform: rotate(2deg);
-            }
-        }
-
-        @keyframes fly {
-            0% {
-                left: -10%;
-                top: 30%;
-            }
-            50% {
-                left: 50%;
-                top: 20%;
-            }
-            100% {
-                left: 110%;
-                top: 35%;
-            }
-        }
-
-        @keyframes breathingPulse {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.7;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.3);
-                opacity: 1;
-            }
-        }
-
-        @keyframes bodyScanMove {
-            0% {
-                top: 20%;
-                opacity: 0.8;
-            }
-            50% {
-                top: 50%;
-                opacity: 1;
-            }
-            100% {
-                top: 80%;
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes rippleEffect {
-            0% {
-                width: 40px;
-                height: 40px;
-                opacity: 1;
-            }
-            100% {
-                width: 120px;
-                height: 120px;
-                opacity: 0;
-            }
-        }
-
-        @keyframes glowPulse {
-            0%, 100% {
-                opacity: 0.5;
-                transform: translateX(-50%) scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: translateX(-50%) scale(1.2);
-            }
-        }
-
-        @keyframes heartBeat {
-            0%, 100% {
-                transform: translateX(-50%) scale(1);
-            }
-            50% {
-                transform: translateX(-50%) scale(1.2);
-            }
-        }
-
-        @keyframes walkingMotion {
-            0%, 100% {
-                left: 20%;
-                opacity: 0.8;
-            }
-            50% {
-                left: 70%;
-                opacity: 1;
-            }
-        }
-
-        /* Enhanced Card Hover Effects */
-        .meditation-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            filter: brightness(1.1);
-        }
-
-        .enhanced-focus-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        /* Meditation Background Transitions */
-        .meditation-video-container .nature-bg,
-        .meditation-video-container .ocean-bg,
-        .meditation-video-container .mountain-bg {
-            transition: opacity 1s ease-in-out;
-        }
-
-        .bg-btn.active {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
-        }
-
-        /* Neural Network Animations */
-        @keyframes neuronPulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 1;
-            }
-        }
-
-        @keyframes connectionPulse {
-            0%, 100% {
-                opacity: 0.2;
-                transform: scaleX(0.8);
-            }
-            50% {
-                opacity: 0.6;
-                transform: scaleX(1.2);
-            }
-        }
-
-        /* Enhanced Chart Animations */
-        @keyframes chartLoad {
-            0% {
-                transform: scaleY(0);
-                opacity: 0;
-            }
-            100% {
-                transform: scaleY(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes dataFlow {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-
-        @keyframes brainGlow {
-            0%, 100% {
-                box-shadow: 0 10px 30px rgba(185,224,216,0.4);
-                filter: brightness(1);
-            }
-            50% {
-                box-shadow: 0 15px 40px rgba(185,224,216,0.6);
-                filter: brightness(1.1);
-            }
-        }
-
-        @keyframes regionPulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(10px); }
-            to { transform: translateY(-5px); }
-        }
-
-        @keyframes slideInFromBottom {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 1rem;
-            }
-
-            .card-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .nav-tab {
-                padding: 0.6rem 0.8rem;
-                min-width: 60px;
-            }
-
-            .nav-tab i {
-                font-size: 1.2rem;
-            }
-
-            .nav-tab span {
-                font-size: 0.7rem;
-            }
-
-            .timer-circle {
-                width: 150px;
-                height: 150px;
-            }
-
-            .timer-text {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .nav-tab span {
-                display: none;
-            }
-
-            .bottom-nav {
-                height: 80px;
-            }
-
-            .main-content {
-                margin-bottom: 80px;
-            }
-        }
-
-        /* Specific Page Styles */
+        /* Hero Section */
         .hero-section {
             text-align: center;
             padding: 3rem 0;
@@ -954,137 +524,151 @@
             margin-top: 2rem;
         }
 
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+        /* Game Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 1.5rem;
+        @keyframes waveMove {
+            0% { transform: translateX(-100%) scaleY(1); }
+            25% { transform: translateX(-50%) scaleY(2); }
+            50% { transform: translateX(0%) scaleY(1.5); }
+            75% { transform: translateX(50%) scaleY(3); }
+            100% { transform: translateX(100%) scaleY(1); }
+        }
+
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(244, 244, 244, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(244, 244, 244, 0.8); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { transform: translateY(10px); } to { transform: translateY(-5px); } }
+        @keyframes slideInFromBottom { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content { padding: 1rem; }
+            .card-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .nav-tab { padding: 0.6rem 0.8rem; min-width: 60px; }
+            .timer-circle { width: 150px; height: 150px; }
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 1.5rem; }
+            .card { padding: 1.5rem; }
+            .nav-tab span { display: none; }
+        }
+
+        /* Advanced Neural Network Visualization */
+        .neural-network {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(185,224,216,0.1), rgba(0,0,0,0.05));
             border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 2px 10px var(--shadow-light);
+            overflow: hidden;
+            margin: 1rem 0;
         }
 
-        .stat-number {
+        .neuron {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #00ff88, #00cc6a);
+            border-radius: 50%;
+            animation: neuronPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+        }
+
+        .connection {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.3), rgba(0, 255, 136, 0.7), rgba(0, 255, 136, 0.3));
+            animation: dataFlow 3s ease-in-out infinite;
+        }
+
+        @keyframes neuronPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+
+        @keyframes dataFlow {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Meditation Enhancement */
+        .biofeedback-display {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .biometric {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .biometric-value {
             font-size: 2rem;
-            font-weight: 700;
-            color: var(--black);
+            font-weight: bold;
+            color: #00ff88;
         }
 
-        .stat-label {
-            color: var(--gray-medium);
+        .biometric-label {
             font-size: 0.9rem;
-            margin-top: 0.5rem;
+            opacity: 0.8;
         }
 
-        .challenge-card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .challenge-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px var(--shadow);
-        }
-
-        .challenge-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .challenge-description {
-            color: var(--gray-medium);
-            margin-bottom: 1rem;
-        }
-
-        .quote-container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            margin: 2rem 0;
-            min-height: 120px;
+        /* Advanced Sleep Analysis */
+        .sleep-stage {
             display: flex;
             align-items: center;
-            justify-content: center;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
         }
 
-        .quote-text {
-            font-size: 1.1rem;
-            font-style: italic;
-            color: var(--gray-dark);
-            animation: fadeIn 1s ease;
-        }
-
-        /* Sleep Score Display */
-        .sleep-score {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .score-circle {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 1rem;
-        }
-
-        .score-circle svg {
+        .sleep-stage-bar {
             width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
+            height: 20px;
+            background: linear-gradient(90deg, 
+                #4a90e2 0%, #4a90e2 25%,
+                #7ed321 25%, #7ed321 50%,
+                #f5a623 50%, #f5a623 75%,
+                #d0021b 75%, #d0021b 100%);
+            border-radius: 10px;
+            margin-left: 1rem;
         }
 
-        .score-circle circle {
-            fill: none;
-            stroke-width: 10;
+        /* Smart Notifications */
+        .smart-alert {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideInFromBottom 0.5s ease;
         }
 
-        .score-bg {
-            stroke: rgba(0, 0, 0, 0.1);
-        }
-
-        .score-progress {
-            stroke: var(--sleep-color);
-            stroke-linecap: round;
-            transition: stroke-dashoffset 2s ease;
-        }
-
-        .score-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--black);
-        }
-
-        /* Letter by letter animation */
-        .typewriter {
-            overflow: hidden;
-            border-right: 2px solid var(--black);
-            white-space: nowrap;
-            animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes typewriter {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--black); }
+        .alert-icon {
+            font-size: 1.5rem;
+            animation: pulse 2s ease-in-out infinite;
         }
     </style>
 </head>
@@ -1094,97 +678,100 @@
 
     <!-- Top Navigation -->
     <div class="top-nav">
-        <div class="logo">NeuroX</div>
+        <div class="logo">NeuroX Elite</div>
         <div class="top-nav-tabs">
-            <div class="nav-tab active tab-home" onclick="navigateToPage('home')" data-page="home">
+            <button class="nav-tab active tab-home" onclick="navigateToPage('home')" data-page="home">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
-            </div>
-            <div class="nav-tab tab-dashboard" onclick="navigateToPage('dashboard')" data-page="dashboard">
+            </button>
+            <button class="nav-tab tab-dashboard" onclick="navigateToPage('dashboard')" data-page="dashboard">
                 <i class="fas fa-brain"></i>
                 <span>Dashboard</span>
-            </div>
-            <div class="nav-tab tab-challenges" onclick="navigateToPage('challenges')" data-page="challenges">
+            </button>
+            <button class="nav-tab tab-challenges" onclick="navigateToPage('challenges')" data-page="challenges">
                 <i class="fas fa-trophy"></i>
                 <span>Challenges</span>
-            </div>
-            <div class="nav-tab tab-sleep" onclick="navigateToPage('sleep')" data-page="sleep">
+            </button>
+            <button class="nav-tab tab-sleep" onclick="navigateToPage('sleep')" data-page="sleep">
                 <i class="fas fa-moon"></i>
                 <span>Sleep</span>
-            </div>
-            <div class="nav-tab tab-focus" onclick="navigateToPage('focus')" data-page="focus">
+            </button>
+            <button class="nav-tab tab-focus" onclick="navigateToPage('focus')" data-page="focus">
                 <i class="fas fa-bullseye"></i>
                 <span>Focus</span>
-            </div>
+            </button>
         </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div style="padding: 1rem; border-bottom: 2px solid rgba(0,0,0,0.1); font-weight: 600;">
+            🧠 AI Insights
+        </div>
+        <div id="notificationList"></div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
         <!-- Home Page -->
         <div class="page active" id="home">
-            <div class="video-container">
-                <div class="video-bg" style="
-                    background:
-                        radial-gradient(circle at 20% 80%, rgba(167,199,231,0.4) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(155,184,224,0.4) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(142,169,217,0.3) 0%, transparent 50%),
-                        linear-gradient(135deg, rgba(167,199,231,0.2) 0%, rgba(155,184,224,0.3) 100%);
-                    position: relative; animation: gentleWaves 12s ease-in-out infinite;
-                ">
-                    <!-- Enhanced neural network simulation -->
-                    <div style="position: absolute; top: 20%; left: 10%; width: 6px; height: 6px; background: rgba(255,255,255,0.9); border-radius: 50%; animation: neuronPulse 2s infinite; box-shadow: 0 0 10px rgba(255,255,255,0.5);"></div>
-                    <div style="position: absolute; top: 60%; left: 30%; width: 4px; height: 4px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: neuronPulse 2.5s infinite; animation-delay: 0.5s; box-shadow: 0 0 8px rgba(255,255,255,0.4);"></div>
-                    <div style="position: absolute; top: 40%; left: 70%; width: 8px; height: 8px; background: rgba(255,255,255,0.9); border-radius: 50%; animation: neuronPulse 1.8s infinite; animation-delay: 1s; box-shadow: 0 0 12px rgba(255,255,255,0.6);"></div>
-                    <div style="position: absolute; top: 80%; left: 50%; width: 5px; height: 5px; background: rgba(255,255,255,0.85); border-radius: 50%; animation: neuronPulse 2.2s infinite; animation-delay: 1.5s; box-shadow: 0 0 9px rgba(255,255,255,0.5);"></div>
-                    <div style="position: absolute; top: 30%; left: 50%; width: 7px; height: 7px; background: rgba(255,255,255,0.7); border-radius: 50%; animation: neuronPulse 3s infinite; animation-delay: 2s; box-shadow: 0 0 11px rgba(255,255,255,0.4);"></div>
-
-                    <!-- Neural connections -->
-                    <div style="position: absolute; top: 20%; left: 10%; width: 20%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0.3), transparent); animation: connectionPulse 3s ease-in-out infinite;"></div>
-                    <div style="position: absolute; top: 40%; left: 30%; width: 40%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: connectionPulse 4s ease-in-out infinite; animation-delay: 1s;"></div>
-
-                    <!-- Floating brain waves -->
-                    <div style="position: absolute; top: 10%; right: 15%; font-size: 2rem; color: rgba(255,255,255,0.6); animation: float 6s ease-in-out infinite;">🧠</div>
-                    <div style="position: absolute; bottom: 20%; left: 20%; font-size: 1.5rem; color: rgba(255,255,255,0.5); animation: float 8s ease-in-out infinite reverse;">⚡</div>
+            <div class="smart-alert">
+                <div class="alert-icon">🎯</div>
+                <div>
+                    <strong>Welcome Back!</strong><br>
+                    Your cognitive performance is <span id="homePerformanceStatus">improving</span>. 
+                    Recommended next session: <span id="homeRecommendation">Memory Training</span>
                 </div>
             </div>
 
             <div class="hero-section">
-                <h1 class="hero-title">Welcome to NeuroX</h1>
-                <p class="hero-subtitle">Advanced cognitive training for peak mental performance</p>
+                <h1 class="hero-title">Welcome to NeuroX Elite</h1>
+                <p class="hero-subtitle">AI-powered cognitive training for peak mental performance</p>
                 
+                <div class="achievement-badge" id="currentStreak">
+                    <i class="fas fa-fire"></i>
+                    <span id="streakCount">0</span> Day Streak
+                </div>
+
                 <div class="quick-actions">
                     <button class="btn btn-dashboard" onclick="navigateToPage('dashboard')">
                         <i class="fas fa-brain"></i>
-                        Start Brain Dashboard
+                        AI Brain Analysis
                     </button>
                     <button class="btn btn-sleep" onclick="navigateToPage('sleep')">
                         <i class="fas fa-moon"></i>
-                        Improve Sleep
+                        Sleep Optimization
                     </button>
-                    <button class="btn btn-challenges" onclick="navigateToPage('challenges')">
+                    <button class="btn btn-challenges" onclick="startAdaptiveChallenge()">
                         <i class="fas fa-trophy"></i>
-                        Daily Challenge
+                        Adaptive Challenge
                     </button>
                 </div>
             </div>
 
             <div class="stat-grid">
                 <div class="stat-card">
-                    <div class="stat-number">87</div>
+                    <div class="stat-number" id="cognitiveScore">0</div>
                     <div class="stat-label">Cognitive Score</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">15</div>
+                    <div class="stat-number" id="dayStreak">0</div>
                     <div class="stat-label">Days Streak</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">42</div>
+                    <div class="stat-number" id="totalSessions">0</div>
                     <div class="stat-label">Sessions</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">Pro</div>
+                    <div class="stat-number" id="userLevel">Novice</div>
                     <div class="stat-label">Level</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🧠 Today's Cognitive Insight</h3>
+                <div id="dailyInsight" style="font-style: italic; padding: 1rem; background: rgba(0,0,0,0.05); border-radius: 8px;">
+                    Loading personalized insight...
                 </div>
             </div>
         </div>
@@ -1192,134 +779,58 @@
         <!-- Dashboard Page -->
         <div class="page" id="dashboard">
             <div class="card">
-                <h2>🧠 Advanced Brain Activity Monitor</h2>
-                <div class="eeg-container" id="eegContainer" style="
-                    background:
-                        radial-gradient(circle at 30% 30%, rgba(185,224,216,0.3), transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(185,224,216,0.2), transparent 50%),
-                        linear-gradient(135deg, rgba(0,0,0,0.05), rgba(185,224,216,0.1));
-                    border: 2px solid rgba(185,224,216,0.3);
-                ">
-                    <div class="eeg-wave" style="background: linear-gradient(90deg, var(--dashboard-color), #4ECDC4, var(--dashboard-color));"></div>
-                    <!-- Multiple EEG waves -->
-                    <div style="position: absolute; top: 60%; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, rgba(185,224,216,0.6), transparent); animation: waveMove 3s linear infinite; animation-delay: 0.5s;"></div>
-                    <div style="position: absolute; top: 70%; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(185,224,216,0.4), transparent); animation: waveMove 4s linear infinite; animation-delay: 1s;"></div>
-                </div>
-                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
-                    <button class="btn btn-dashboard" onclick="startBrainScan()">
-                        <i class="fas fa-play"></i>
-                        Start Brain Scan
-                    </button>
-                    <div style="display: flex; align-items: center; background: rgba(185,224,216,0.2); padding: 0.5rem 1rem; border-radius: 8px;">
-                        <span style="color: #00C851; margin-right: 0.5rem;">●</span>
-                        <span style="font-size: 0.9rem;">Neural Activity: Optimal</span>
+                <h2>🧠 Advanced Neural Activity Monitor</h2>
+                <div class="neural-network" id="neuralNetwork"></div>
+                <div class="biofeedback-display">
+                    <div class="biometric">
+                        <div class="biometric-value" id="alphaPower">8.2</div>
+                        <div class="biometric-label">Alpha Waves (Hz)</div>
+                    </div>
+                    <div class="biometric">
+                        <div class="biometric-value" id="betaPower">15.7</div>
+                        <div class="biometric-label">Beta Waves (Hz)</div>
+                    </div>
+                    <div class="biometric">
+                        <div class="biometric-value" id="focusIndex">73</div>
+                        <div class="biometric-label">Focus Index</div>
+                    </div>
+                    <div class="biometric">
+                        <div class="biometric-value" id="stressLevel">Low</div>
+                        <div class="biometric-label">Stress Level</div>
                     </div>
                 </div>
+                <button class="btn btn-dashboard" onclick="startAdvancedBrainScan()">
+                    <i class="fas fa-play"></i>
+                    Start AI Brain Scan
+                </button>
             </div>
 
             <div class="card-grid">
-                <div class="card" style="background: linear-gradient(135deg, rgba(255,99,132,0.1), rgba(255,205,210,0.1)); border: 2px solid rgba(255,99,132,0.2);">
-                    <h3>📈 Memory Improvement</h3>
-                    <div class="chart-placeholder" style="
-                        background:
-                            linear-gradient(90deg, transparent, rgba(255,99,132,0.1), transparent),
-                            repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,99,132,0.1) 10px, rgba(255,99,132,0.1) 20px);
-                        animation: dataFlow 3s ease-in-out infinite;
-                    ">
-                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                            <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 1rem; color: #FF6384; animation: pulse 2s ease-in-out infinite;"></i>
-                            <div style="text-align: center;">
-                                <div style="font-size: 2rem; font-weight: bold; color: #FF6384;">+23%</div>
-                                <div style="font-size: 0.9rem; opacity: 0.8;">This week</div>
-                            </div>
-                        </div>
+                <div class="card">
+                    <h3>📈 Cognitive Performance Trends</h3>
+                    <div class="chart-container">
+                        <canvas id="performanceChart" class="realtime-chart"></canvas>
                     </div>
                 </div>
-                <div class="card" style="background: linear-gradient(135deg, rgba(54,162,235,0.1), rgba(179,226,255,0.1)); border: 2px solid rgba(54,162,235,0.2);">
-                    <h3>🎯 Focus Levels</h3>
-                    <div class="chart-placeholder" style="
-                        background:
-                            linear-gradient(90deg, transparent, rgba(54,162,235,0.1), transparent),
-                            repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(54,162,235,0.1) 15px, rgba(54,162,235,0.1) 30px);
-                        animation: dataFlow 4s ease-in-out infinite reverse;
-                    ">
-                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                            <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 1rem; color: #36A2EB; animation: pulse 2s ease-in-out infinite; animation-delay: 0.5s;"></i>
-                            <div style="text-align: center;">
-                                <div style="font-size: 2rem; font-weight: bold; color: #36A2EB;">87%</div>
-                                <div style="font-size: 0.9rem; opacity: 0.8;">Current session</div>
-                            </div>
-                        </div>
+                <div class="card">
+                    <h3>🎯 Focus & Attention Analysis</h3>
+                    <div class="chart-container">
+                        <canvas id="focusChart" class="realtime-chart"></canvas>
                     </div>
                 </div>
             </div>
 
             <div class="card">
-                <h3>🧠 Interactive 3D Brain Model</h3>
-                <div style="text-align: center; padding: 3rem;">
+                <h3>🧠 3D Brain Activity Visualization</h3>
+                <div id="brainVisualization" style="text-align: center; padding: 2rem;">
                     <div style="position: relative; display: inline-block;">
-                        <!-- Enhanced 3D Brain -->
-                        <div style="
-                            width: 250px; height: 200px;
-                            background:
-                                radial-gradient(ellipse at 30% 30%, rgba(185,224,216,0.8), transparent 70%),
-                                radial-gradient(ellipse at 70% 70%, rgba(176,224,230,0.6), transparent 70%),
-                                linear-gradient(135deg, var(--dashboard-color), rgba(185,224,216,0.7));
-                            border-radius: 50% 50% 45% 45%;
-                            margin: 0 auto; position: relative; cursor: pointer;
-                            box-shadow: 0 10px 30px rgba(185,224,216,0.4);
-                            animation: brainGlow 4s ease-in-out infinite;
-                            transform-style: preserve-3d;
-                        " onclick="showBrainInfo('memory')">
-                            <!-- Brain regions with enhanced visuals -->
-                            <div style="
-                                position: absolute; top: 30%; left: 20%;
-                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(185,224,216,0.8));
-                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
-                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                                animation: regionPulse 3s ease-in-out infinite;
-                            " onclick="showBrainInfo('memory')">
-                                🧠 Memory
-                            </div>
-                            <div style="
-                                position: absolute; top: 20%; right: 20%;
-                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(135,206,235,0.8));
-                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
-                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                                animation: regionPulse 3s ease-in-out infinite; animation-delay: 1s;
-                            " onclick="showBrainInfo('focus')">
-                                🎯 Focus
-                            </div>
-                            <div style="
-                                position: absolute; bottom: 30%; left: 50%; transform: translateX(-50%);
-                                background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,182,193,0.8));
-                                padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
-                                cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                                animation: regionPulse 3s ease-in-out infinite; animation-delay: 2s;
-                            " onclick="showBrainInfo('emotion')">
-                                ❤️ Emotion
-                            </div>
-
-                            <!-- Neural activity indicators -->
-                            <div style="position: absolute; top: 10%; left: 30%; width: 8px; height: 8px; background: #00C851; border-radius: 50%; animation: neuronPulse 2s infinite;"></div>
-                            <div style="position: absolute; top: 40%; right: 25%; width: 6px; height: 6px; background: #FF6384; border-radius: 50%; animation: neuronPulse 2.5s infinite; animation-delay: 0.5s;"></div>
-                            <div style="position: absolute; bottom: 40%; left: 40%; width: 7px; height: 7px; background: #36A2EB; border-radius: 50%; animation: neuronPulse 1.8s infinite; animation-delay: 1s;"></div>
+                        <div id="brain3D" style="width: 300px; height: 250px; background: radial-gradient(ellipse, rgba(185,224,216,0.8), rgba(0,0,0,0.1)); border-radius: 50% 50% 45% 45%; margin: 0 auto; position: relative; cursor: pointer; box-shadow: 0 10px 30px rgba(185,224,216,0.4); animation: brainGlow 4s ease-in-out infinite;">
+                            <div id="brainRegions"></div>
                         </div>
-
-                        <!-- Brain wave visualization -->
-                        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
-                            <div style="text-align: center;">
-                                <div style="font-size: 1.5rem; color: #00C851;">Alpha</div>
-                                <div style="width: 60px; height: 4px; background: #00C851; border-radius: 2px; animation: waveMove 2s ease-in-out infinite;"></div>
-                            </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 1.5rem; color: #FF6384;">Beta</div>
-                                <div style="width: 60px; height: 4px; background: #FF6384; border-radius: 2px; animation: waveMove 1.5s ease-in-out infinite; animation-delay: 0.5s;"></div>
-                            </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 1.5rem; color: #36A2EB;">Theta</div>
-                                <div style="width: 60px; height: 4px; background: #36A2EB; border-radius: 2px; animation: waveMove 3s ease-in-out infinite; animation-delay: 1s;"></div>
-                            </div>
+                        <div style="margin-top: 2rem;">
+                            <button class="btn btn-dashboard" onclick="analyzeBrainRegion('memory')">Memory Analysis</button>
+                            <button class="btn btn-dashboard" onclick="analyzeBrainRegion('focus')">Focus Analysis</button>
+                            <button class="btn btn-dashboard" onclick="analyzeBrainRegion('emotion')">Emotion Analysis</button>
                         </div>
                     </div>
                 </div>
@@ -1329,101 +840,125 @@
         <!-- Challenges Page -->
         <div class="page" id="challenges">
             <div class="card">
-                <h2>Neuro Challenges</h2>
-                <p>Test your cognitive abilities with these engaging challenges</p>
+                <h2>🏆 Adaptive Cognitive Challenges</h2>
+                <p>AI-powered challenges that adapt to your skill level and learning patterns</p>
+                <div class="smart-alert">
+                    <div class="alert-icon">🤖</div>
+                    <div>
+                        <strong>AI Recommendation:</strong><br>
+                        Based on your performance, we suggest starting with <span id="aiRecommendedChallenge">Memory Enhancement</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="challenge-card" onclick="openChallenge('memory')">
-                <div class="challenge-title">Memory Match Challenge</div>
-                <div class="challenge-description">Test your working memory with pattern matching</div>
+            <div class="challenge-card" onclick="startAdvancedChallenge('memory')" data-difficulty="adaptive">
+                <div class="challenge-title">🧠 Adaptive Memory Training</div>
+                <div class="challenge-description">AI-powered memory challenges that adjust difficulty in real-time</div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%;"></div>
+                    <div class="progress-fill" id="memoryProgress" style="width: 0%;"></div>
                 </div>
-                <small>Progress: 65% Complete</small>
+                <small>Progress: <span id="memoryProgressText">0%</span> Complete | Difficulty: <span id="memoryDifficulty">Adaptive</span></small>
             </div>
 
-            <div class="challenge-card" onclick="openChallenge('speed')">
-                <div class="challenge-title">Speed Processing</div>
-                <div class="challenge-description">React quickly to visual stimuli</div>
+            <div class="challenge-card" onclick="startAdvancedChallenge('speed')" data-difficulty="adaptive">
+                <div class="challenge-title">⚡ Speed Processing Plus</div>
+                <div class="challenge-description">Enhanced reaction time training with predictive analytics</div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 40%;"></div>
+                    <div class="progress-fill" id="speedProgress" style="width: 0%;"></div>
                 </div>
-                <small>Progress: 40% Complete</small>
+                <small>Progress: <span id="speedProgressText">0%</span> Complete | Best Time: <span id="bestReactionTime">--</span>ms</small>
             </div>
 
-            <div class="challenge-card" onclick="openChallenge('logic')">
-                <div class="challenge-title">Logic Puzzles</div>
-                <div class="challenge-description">Solve complex reasoning problems</div>
+            <div class="challenge-card" onclick="startAdvancedChallenge('logic')" data-difficulty="adaptive">
+                <div class="challenge-title">🧩 Logic Pattern Master</div>
+                <div class="challenge-description">Advanced pattern recognition with ML-generated puzzles</div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 80%;"></div>
+                    <div class="progress-fill" id="logicProgress" style="width: 0%;"></div>
                 </div>
-                <small>Progress: 80% Complete</small>
+                <small>Progress: <span id="logicProgressText">0%</span> Complete | IQ Estimate: <span id="iqEstimate">--</span></small>
             </div>
 
             <div class="card">
-                <h3>Leaderboard</h3>
-                <button class="btn btn-challenges" onclick="showLeaderboard()">
-                    <i class="fas fa-trophy"></i>
-                    View Leaderboard
-                </button>
-                <button class="btn btn-primary" onclick="joinChallenge()">
-                    <i class="fas fa-plus"></i>
-                    Join Challenge
-                </button>
+                <h3>🏆 Achievement System</h3>
+                <div id="achievementsList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;"></div>
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-challenges" onclick="showGlobalLeaderboard()">
+                        <i class="fas fa-trophy"></i>
+                        Global Leaderboard
+                    </button>
+                    <button class="btn btn-primary" onclick="shareProgress()">
+                        <i class="fas fa-share"></i>
+                        Share Progress
+                    </button>
+                </div>
             </div>
         </div>
 
         <!-- Sleep Page -->
         <div class="page" id="sleep">
             <div class="card">
-                <h2>Sleep & Recovery</h2>
+                <h2>🌙 Advanced Sleep Analytics</h2>
                 <div class="sleep-scene">
                     <div class="moon"></div>
-                    <div class="star"></div>
-                    <div class="star"></div>
-                    <div class="star"></div>
-                    <div class="star"></div>
+                    <div class="star" style="top: 30px; left: 50px; width: 3px; height: 3px; animation-delay: 0.5s;"></div>
+                    <div class="star" style="top: 60px; left: 150px; width: 2px; height: 2px; animation-delay: 1s;"></div>
+                    <div class="star" style="top: 40px; left: 250px; width: 4px; height: 4px; animation-delay: 1.5s;"></div>
+                    <div class="star" style="top: 80px; left: 100px; width: 2px; height: 2px; animation-delay: 2s;"></div>
                 </div>
-            </div>
-
-            <div class="card">
-                <div class="sleep-score">
-                    <h3>Last Night's Sleep Score</h3>
-                    <div class="score-circle">
-                        <svg>
-                            <circle cx="75" cy="75" r="65" class="score-bg" stroke-dasharray="408" stroke-dashoffset="0"></circle>
-                            <circle cx="75" cy="75" r="65" class="score-progress" stroke-dasharray="408" stroke-dashoffset="53" id="sleepScoreCircle"></circle>
-                        </svg>
-                        <div class="score-text" id="sleepScoreText">87/100</div>
-                    </div>
-                </div>
-                <button class="btn btn-sleep" onclick="trackSleep()">
-                    <i class="fas fa-moon"></i>
-                    Track Sleep Now
-                </button>
             </div>
 
             <div class="card-grid">
                 <div class="card">
-                    <h3>Sleep Stages</h3>
-                    <div class="chart-placeholder">
-                        <i class="fas fa-chart-pie" style="font-size: 2rem; margin-right: 1rem;"></i>
-                        Hypnogram Chart
+                    <h3>📊 Sleep Quality Score</h3>
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 4rem; font-weight: bold; color: var(--sleep-color);" id="sleepQualityScore">87</div>
+                        <div style="color: var(--gray-medium);">Last Night</div>
+                        <div style="margin-top: 1rem;">
+                            <div class="sleep-stage">
+                                <span>Deep Sleep:</span>
+                                <div class="sleep-stage-bar" style="background: #4a90e2; width: 30%;"></div>
+                                <span id="deepSleepDuration">2.1h</span>
+                            </div>
+                            <div class="sleep-stage">
+                                <span>REM Sleep:</span>
+                                <div class="sleep-stage-bar" style="background: #7ed321; width: 25%;"></div>
+                                <span id="remSleepDuration">1.8h</span>
+                            </div>
+                            <div class="sleep-stage">
+                                <span>Light Sleep:</span>
+                                <div class="sleep-stage-bar" style="background: #f5a623; width: 35%;"></div>
+                                <span id="lightSleepDuration">3.2h</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="card">
-                    <h3>Sleep Tips</h3>
-                    <div style="cursor: pointer;" onclick="expandSleepTips()">
-                        <p><i class="fas fa-lightbulb"></i> Click to view personalized sleep tips</p>
+                    <h3>🔬 Sleep Optimization</h3>
+                    <div class="smart-alert" style="margin: 1rem 0;">
+                        <div class="alert-icon">💡</div>
+                        <div id="sleepRecommendation">
+                            Based on your patterns, try sleeping 30 minutes earlier for optimal REM cycles.
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="sleepChart" class="realtime-chart"></canvas>
                     </div>
                 </div>
             </div>
 
             <div class="card">
-                <h3>Sleep History</h3>
-                <button class="btn btn-sleep" onclick="viewSleepHistory()">
-                    <i class="fas fa-history"></i>
-                    View Sleep History
+                <h3>📈 7-Day Sleep Trends</h3>
+                <div class="chart-container">
+                    <canvas id="sleepTrendChart" class="realtime-chart"></canvas>
+                </div>
+                <button class="btn btn-sleep" onclick="startSleepTracking()">
+                    <i class="fas fa-moon"></i>
+                    Start Sleep Tracking
+                </button>
+                <button class="btn btn-sleep" onclick="generateSleepReport()">
+                    <i class="fas fa-file-alt"></i>
+                    Generate Report
                 </button>
             </div>
         </div>
@@ -1431,973 +966,711 @@
         <!-- Focus Page -->
         <div class="page" id="focus">
             <div class="card">
-                <h2>🧘‍♀️ Meditation & Focus Studio</h2>
-                <div class="meditation-video-container" style="position: relative; height: 300px; border-radius: 12px; overflow: hidden; margin-bottom: 2rem;">
-                    <!-- Animated Nature Background -->
-                    <div class="nature-bg active" id="natureBg" style="
-                        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                        background:
-                            radial-gradient(ellipse at top, rgba(135, 206, 235, 0.8), transparent),
-                            radial-gradient(ellipse at bottom, rgba(34, 139, 34, 0.6), transparent),
-                            linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #32CD32 100%);
-                        animation: gentleWaves 8s ease-in-out infinite;
-                    ">
-                        <!-- Floating clouds -->
-                        <div style="position: absolute; top: 10%; left: 10%; width: 60px; height: 30px; background: rgba(255,255,255,0.7); border-radius: 50px; animation: float 6s ease-in-out infinite;"></div>
-                        <div style="position: absolute; top: 20%; right: 15%; width: 80px; height: 40px; background: rgba(255,255,255,0.6); border-radius: 50px; animation: float 8s ease-in-out infinite reverse;"></div>
-
-                        <!-- Animated trees -->
-                        <div style="position: absolute; bottom: 20%; left: 20%; font-size: 3rem; color: #228B22; animation: sway 4s ease-in-out infinite;">🌲</div>
-                        <div style="position: absolute; bottom: 15%; right: 25%; font-size: 2.5rem; color: #228B22; animation: sway 5s ease-in-out infinite reverse;">🌳</div>
-
-                        <!-- Sun/Moon -->
-                        <div style="position: absolute; top: 15%; right: 20%; font-size: 3rem; animation: pulse 3s ease-in-out infinite;">☀️</div>
+                <h2>🧘‍♀️ AI-Powered Focus & Meditation Center</h2>
+                <div class="biofeedback-display">
+                    <div class="biometric">
+                        <div class="biometric-value" id="heartRate">72</div>
+                        <div class="biometric-label">Heart Rate (BPM)</div>
                     </div>
-
-                    <!-- Ocean Background -->
-                    <div class="ocean-bg" id="oceanBg" style="
-                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
-                        background:
-                            radial-gradient(ellipse at center top, rgba(135, 206, 235, 0.9), transparent),
-                            linear-gradient(135deg, #4682B4 0%, #87CEEB 50%, #B0E0E6 100%);
-                        animation: oceanWaves 6s ease-in-out infinite;
-                    ">
-                        <!-- Animated waves -->
-                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 30%; background: linear-gradient(90deg, rgba(70,130,180,0.8) 0%, rgba(135,206,235,0.6) 50%, rgba(176,224,230,0.8) 100%); border-radius: 50% 50% 0 0; animation: wave1 4s ease-in-out infinite;"></div>
-                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20%; background: linear-gradient(90deg, rgba(176,224,230,0.7) 0%, rgba(135,206,235,0.5) 50%, rgba(70,130,180,0.7) 100%); border-radius: 50% 50% 0 0; animation: wave2 3s ease-in-out infinite reverse;"></div>
-
-                        <!-- Seagulls -->
-                        <div style="position: absolute; top: 30%; left: 30%; color: white; font-size: 1.5rem; animation: fly 10s linear infinite;">🕊️</div>
+                    <div class="biometric">
+                        <div class="biometric-value" id="breathing">12</div>
+                        <div class="biometric-label">Breathing Rate</div>
                     </div>
-
-                    <!-- Mountain Background -->
-                    <div class="mountain-bg" id="mountainBg" style="
-                        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;
-                        background:
-                            linear-gradient(135deg, #4169E1 0%, #9370DB 30%, #8B4513 70%, #2F4F4F 100%);
-                        animation: mountainMist 10s ease-in-out infinite;
-                    ">
-                        <!-- Mountain peaks -->
-                        <div style="position: absolute; bottom: 30%; left: 10%; font-size: 4rem; color: #696969; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⛰️</div>
-                        <div style="position: absolute; bottom: 20%; right: 20%; font-size: 3.5rem; color: #808080; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🏔️</div>
-
-                        <!-- Stars -->
-                        <div style="position: absolute; top: 20%; left: 20%; color: white; font-size: 1rem; animation: twinkle 2s ease-in-out infinite;">✨</div>
-                        <div style="position: absolute; top: 15%; right: 30%; color: white; font-size: 0.8rem; animation: twinkle 3s ease-in-out infinite reverse;">⭐</div>
+                    <div class="biometric">
+                        <div class="biometric-value" id="relaxation">8.5</div>
+                        <div class="biometric-label">Relaxation Level</div>
                     </div>
-                </div>
-
-                <div class="meditation-controls" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
-                    <button onclick="changeMeditationBg('nature')" class="bg-btn active" data-bg="nature" style="
-                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
-                        background: linear-gradient(45deg, #32CD32, #98FB98); color: white;
-                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(50,205,50,0.3);
-                    ">🌿 Forest</button>
-                    <button onclick="changeMeditationBg('ocean')" class="bg-btn" data-bg="ocean" style="
-                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
-                        background: linear-gradient(45deg, #4682B4, #87CEEB); color: white;
-                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(70,130,180,0.3);
-                    ">🌊 Ocean</button>
-                    <button onclick="changeMeditationBg('mountain')" class="bg-btn" data-bg="mountain" style="
-                        padding: 0.8rem 1.5rem; border: none; border-radius: 25px;
-                        background: linear-gradient(45deg, #4169E1, #9370DB); color: white;
-                        cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(65,105,225,0.3);
-                    ">🏔️ Mountain</button>
                 </div>
             </div>
 
             <div class="card">
-                <h3>🎯 Enhanced Pomodoro Timer</h3>
+                <h3>🎯 Advanced Pomodoro Timer</h3>
                 <div class="timer-circle">
                     <svg>
-                        <circle cx="100" cy="100" r="90" class="timer-bg" stroke-dasharray="565" stroke-dashoffset="0"></circle>
-                        <circle cx="100" cy="100" r="90" class="timer-progress" stroke-dasharray="565" stroke-dashoffset="565" id="timerProgress"></circle>
+                        <circle cx="100" cy="100" r="90" style="fill: none; stroke: rgba(0,0,0,0.1); stroke-width: 8;" stroke-dasharray="565" stroke-dashoffset="0"></circle>
+                        <circle cx="100" cy="100" r="90" style="fill: none; stroke: var(--focus-color); stroke-width: 8; stroke-linecap: round;" stroke-dasharray="565" stroke-dashoffset="565" id="timerProgress"></circle>
                     </svg>
                     <div class="timer-text" id="timerText">25:00</div>
                 </div>
-                <div style="text-align: center;">
-                    <button class="btn btn-focus" onclick="startFocusSession()">
+                <div style="text-align: center; margin: 2rem 0;">
+                    <button class="btn btn-focus" onclick="startAdvancedPomodoro()" id="pomodoroBtn">
                         <i class="fas fa-play"></i>
-                        Begin Focus Session
+                        Start Focus Session
                     </button>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>🧘‍♀️ Meditation Techniques</h3>
-                <div class="meditation-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-
-                    <div class="meditation-card" onclick="startMeditation('breathwork')" style="
-                        background: linear-gradient(135deg, rgba(255,182,193,0.8), rgba(255,218,185,0.8));
-                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
-                        border: 2px solid rgba(255,182,193,0.5); position: relative; overflow: hidden;
-                    ">
-                        <div class="breathing-animation" style="
-                            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                            width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.7);
-                            border-radius: 50%; animation: breathingPulse 4s ease-in-out infinite;
-                        "></div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #8B4513;">🫁 Breathwork</h4>
-                        <p style="text-align: center; color: #654321; font-size: 0.9rem;">4-7-8 breathing technique for relaxation</p>
-                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">5-15 minutes</div>
-                    </div>
-
-                    <div class="meditation-card" onclick="startMeditation('bodyscan')" style="
-                        background: linear-gradient(135deg, rgba(173,216,230,0.8), rgba(175,238,238,0.8));
-                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
-                        border: 2px solid rgba(173,216,230,0.5); position: relative; overflow: hidden;
-                    ">
-                        <div class="body-scan-animation" style="
-                            position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
-                            width: 30px; height: 80px; background: linear-gradient(180deg, rgba(255,255,255,0.8), transparent);
-                            animation: bodyScanMove 3s ease-in-out infinite;
-                        "></div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #4682B4;">🧘‍♂️ Body Scan</h4>
-                        <p style="text-align: center; color: #2F4F4F; font-size: 0.9rem;">Progressive muscle relaxation</p>
-                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">10-20 minutes</div>
-                    </div>
-
-                    <div class="meditation-card" onclick="startMeditation('mindfulness')" style="
-                        background: linear-gradient(135deg, rgba(221,160,221,0.8), rgba(238,130,238,0.8));
-                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
-                        border: 2px solid rgba(221,160,221,0.5); position: relative; overflow: hidden;
-                    ">
-                        <div class="mindfulness-ripple" style="
-                            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                            width: 40px; height: 40px; border: 2px solid rgba(255,255,255,0.6);
-                            border-radius: 50%; animation: rippleEffect 3s ease-out infinite;
-                        "></div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #8B008B;">🌸 Mindfulness</h4>
-                        <p style="text-align: center; color: #663366; font-size: 0.9rem;">Present moment awareness practice</p>
-                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">5-30 minutes</div>
-                    </div>
-
-                    <div class="meditation-card" onclick="startMeditation('visualization')" style="
-                        background: linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,228,181,0.8));
-                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
-                        border: 2px solid rgba(255,215,0,0.5); position: relative; overflow: hidden;
-                    ">
-                        <div class="visualization-glow" style="
-                            position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
-                            width: 50px; height: 30px; background: radial-gradient(circle, rgba(255,255,255,0.8), transparent);
-                            border-radius: 50%; animation: glowPulse 2s ease-in-out infinite;
-                        "></div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #B8860B;">✨ Visualization</h4>
-                        <p style="text-align: center; color: #8B7500; font-size: 0.9rem;">Guided imagery for peace</p>
-                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">10-25 minutes</div>
-                    </div>
-
-                    <div class="meditation-card" onclick="startMeditation('lovingkindness')" style="
-                        background: linear-gradient(135deg, rgba(255,192,203,0.8), rgba(255,182,193,0.8));
-                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
-                        border: 2px solid rgba(255,192,203,0.5); position: relative; overflow: hidden;
-                    ">
-                        <div class="heart-pulse" style="
-                            position: absolute; top: 40%; left: 50%; transform: translateX(-50%);
-                            font-size: 2rem; color: rgba(255,255,255,0.8); animation: heartBeat 1.5s ease-in-out infinite;
-                        ">💖</div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #C71585;">💝 Loving Kindness</h4>
-                        <p style="text-align: center; color: #8B1538; font-size: 0.9rem;">Compassion and self-love practice</p>
-                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">15-30 minutes</div>
-                    </div>
-
-                    <div class="meditation-card" onclick="startMeditation('walking')" style="
-                        background: linear-gradient(135deg, rgba(152,251,152,0.8), rgba(144,238,144,0.8));
-                        padding: 2rem; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
-                        border: 2px solid rgba(152,251,152,0.5); position: relative; overflow: hidden;
-                    ">
-                        <div class="walking-steps" style="
-                            position: absolute; top: 50%; left: 20%;
-                            color: rgba(255,255,255,0.8); font-size: 1.5rem; animation: walkingMotion 2s ease-in-out infinite;
-                        ">👣</div>
-                        <h4 style="text-align: center; margin-bottom: 1rem; color: #228B22;">🚶‍♀️ Walking</h4>
-                        <p style="text-align: center; color: #006400; font-size: 0.9rem;">Mindful movement meditation</p>
-                        <div style="text-align: center; margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">Any duration</div>
+                    <div style="margin-top: 1rem;">
+                        <span>Sessions Today: <strong id="todaySessions">0</strong></span> |
+                        <span>Productivity Score: <strong id="productivityScore">85%</strong></span>
                     </div>
                 </div>
             </div>
 
             <div class="card-grid">
-                <div class="card enhanced-focus-card" onclick="selectFocusMode('deep')" style="
-                    background: linear-gradient(135deg, rgba(139,69,19,0.1), rgba(160,82,45,0.1));
-                    border: 2px solid rgba(139,69,19,0.3);
-                ">
-                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">🔥</div>
-                    <h4>Deep Work</h4>
-                    <p>Intensive 50-minute sessions for complex tasks</p>
+                <div class="card">
+                    <h3>📊 Focus Analytics</h3>
+                    <div class="chart-container">
+                        <canvas id="focusAnalyticsChart" class="realtime-chart"></canvas>
+                    </div>
                 </div>
-                <div class="card enhanced-focus-card" onclick="selectFocusMode('light')" style="
-                    background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,228,181,0.1));
-                    border: 2px solid rgba(255,215,0,0.3);
-                ">
-                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">✨</div>
-                    <h4>Light Focus</h4>
-                    <p>25-minute sessions for routine activities</p>
-                </div>
-                <div class="card enhanced-focus-card" onclick="selectFocusMode('relax')" style="
-                    background: linear-gradient(135deg, rgba(173,216,230,0.1), rgba(175,238,238,0.1));
-                    border: 2px solid rgba(173,216,230,0.3);
-                ">
-                    <div style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">🌸</div>
-                    <h4>Relax Mode</h4>
-                    <p>Gentle background ambience for calm focus</p>
-                </div>
-            </div>
-
-            <div class="quote-container">
-                <div class="quote-text" id="motivationalQuote">
-                    "The successful warrior is the average person with laser-like focus."
+                <div class="card">
+                    <h3>🧘‍♀️ Meditation Progress</h3>
+                    <div class="chart-container">
+                        <canvas id="meditationChart" class="realtime-chart"></canvas>
+                    </div>
+                    <button class="btn btn-focus" onclick="startAIMeditation()">
+                        <i class="fas fa-brain"></i>
+                        AI-Guided Meditation
+                    </button>
                 </div>
             </div>
 
             <div class="card">
-                <h3>Current Streak</h3>
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; font-weight: 700; color: var(--focus-color); text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">5</div>
-                    <div style="color: var(--gray-medium);">Days of consistent focus training</div>
+                <h3>🎵 Ambient Soundscapes</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <button class="btn btn-focus" onclick="playAmbientSound('forest')">🌲 Forest</button>
+                    <button class="btn btn-focus" onclick="playAmbientSound('ocean')">🌊 Ocean Waves</button>
+                    <button class="btn btn-focus" onclick="playAmbientSound('rain')">🌧️ Rain</button>
+                    <button class="btn btn-focus" onclick="playAmbientSound('cafe')">☕ Coffee Shop</button>
+                </div>
+                <div id="audioControls" style="margin-top: 1rem; text-align: center; display: none;">
+                    <span>🎵 Playing: <span id="currentSound">None</span></span>
+                    <button class="btn" onclick="stopAmbientSound()" style="margin-left: 1rem;">⏹️ Stop</button>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!-- Modals -->
-    <div class="modal" id="brainScanModal">
+    <div class="modal" id="brainAnalysisModal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('brainScanModal')">&times;</button>
-            <h3>Brain Scan Analysis</h3>
-            <div class="eeg-container">
-                <div class="eeg-wave growing"></div>
-            </div>
-            <div id="analysisText" class="typewriter" style="margin-top: 1rem;">
-                Analyzing neural patterns...
+            <button class="modal-close" onclick="closeModal('brainAnalysisModal')">&times;</button>
+            <h3>🧠 AI Brain Analysis Results</h3>
+            <div id="brainAnalysisContent">
+                <div class="chart-container">
+                    <canvas id="brainAnalysisChart"></canvas>
+                </div>
+                <div id="analysisResults" style="margin-top: 2rem;"></div>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="challengeModal">
+    <div class="modal" id="achievementModal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('challengeModal')">&times;</button>
-            <h3 id="challengeTitle">Challenge Rules</h3>
-            <div id="challengeContent">
-                <p>Complete the memory sequence as quickly as possible. You'll see a pattern of lights - repeat the sequence in the same order.</p>
-                <div style="margin: 2rem 0;">
-                    <strong>Instructions:</strong>
-                    <ul style="margin-left: 2rem; margin-top: 1rem;">
-                        <li>Watch the sequence carefully</li>
-                        <li>Wait for the "GO" signal</li>
-                        <li>Click the squares in the same order</li>
-                        <li>Try to beat your best time!</li>
-                    </ul>
-                </div>
-                <button class="btn btn-challenges" onclick="startChallenge()">
-                    <i class="fas fa-play"></i>
-                    Start Challenge
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="leaderboardModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('leaderboardModal')">&times;</button>
-            <h3>Global Leaderboard</h3>
-            <div style="margin: 1rem 0;">
-                <div style="display: flex; justify-content: space-between; padding: 1rem; background: var(--challenges-color); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <span><i class="fas fa-trophy" style="color: gold;"></i> Alex_Neuro</span>
-                    <span>2,847 pts</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding: 1rem; background: rgba(0,0,0,0.05); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <span><i class="fas fa-medal" style="color: silver;"></i> BrainMaster</span>
-                    <span>2,634 pts</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding: 1rem; background: rgba(0,0,0,0.05); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <span><i class="fas fa-medal" style="color: #cd7f32;"></i> NeuroNinja</span>
-                    <span>2,521 pts</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding: 1rem; background: var(--focus-color); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <span><strong>You</strong></span>
-                    <span><strong>2,340 pts</strong></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="sleepHistoryModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('sleepHistoryModal')">&times;</button>
-            <h3>Sleep History</h3>
-            <div class="chart-placeholder" style="height: 250px;">
-                <i class="fas fa-chart-area" style="font-size: 2rem; margin-right: 1rem;"></i>
-                7-Day Sleep Pattern Analysis
-            </div>
-            <div style="margin-top: 1rem;">
-                <p><strong>Average Sleep Duration:</strong> 7.5 hours</p>
-                <p><strong>Sleep Efficiency:</strong> 89%</p>
-                <p><strong>Best Night:</strong> Tuesday (9.2 hours)</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="brainInfoModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('brainInfoModal')">&times;</button>
-            <h3 id="brainRegionTitle">Brain Region</h3>
-            <div id="brainRegionContent">
-                Information about the selected brain region will appear here.
+            <button class="modal-close" onclick="closeModal('achievementModal')">&times;</button>
+            <h3>🏆 Achievement Unlocked!</h3>
+            <div id="achievementContent" style="text-align: center;">
+                <div id="achievementIcon" style="font-size: 4rem; margin: 2rem 0;">🏆</div>
+                <h2 id="achievementTitle">Great Job!</h2>
+                <p id="achievementDescription">You've reached a new milestone!</p>
             </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div class="toast" id="toast">Challenge Joined!</div>
+    <div class="toast" id="toast">Notification</div>
 
     <script>
-        // Global variables
-        let activeTab = 'home';
-        let focusTimer = null;
-        let focusTime = 25 * 60;
-        let isTimerRunning = false;
-
-        // WORKING CHALLENGE FUNCTIONS
-        function openChallenge(type) {
-            console.log('Opening challenge:', type);
-            alert('Opening ' + type + ' challenge!');
-
-            const modal = document.getElementById('challengeModal');
-            const title = document.getElementById('challengeTitle');
-            const content = document.getElementById('challengeContent');
-
-            if (modal && title && content) {
-                const challenges = {
-                    memory: "🧠 Memory Match Challenge",
-                    speed: "⚡ Speed Processing Challenge",
-                    logic: "🧩 Logic Puzzle Challenge"
-                };
-
-                title.textContent = challenges[type] || "Challenge";
-                content.innerHTML = `
-                    <p>Ready to start the ${type} challenge?</p>
-                    <button class="btn btn-challenges" onclick="startChallenge('${type}')">
-                        <i class="fas fa-play"></i> Start Challenge
-                    </button>
-                `;
-                modal.classList.add('active');
-            }
-        }
-
-        function startChallenge(type) {
-            console.log('Starting challenge:', type);
-            closeModal('challengeModal');
-
-            // Create fullscreen game interface
-            const gameContainer = document.createElement('div');
-            gameContainer.id = 'gameContainer';
-            gameContainer.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                z-index: 2000; display: flex; flex-direction: column;
-                align-items: center; justify-content: center; color: white;
-                animation: fadeIn 0.5s ease;
-            `;
-
-            // Add animated video-like background
-            const video = document.createElement('div');
-            video.style.cssText = `
-                position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                background:
-                    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                    radial-gradient(circle at 40% 40%, rgba(120, 255, 198, 0.3) 0%, transparent 50%),
-                    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                opacity: 0.9;
-                animation: backgroundMove 10s ease-in-out infinite;
-            `;
-
-            // Add floating particles
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.style.cssText = `
-                    position: absolute; width: 4px; height: 4px;
-                    background: rgba(255,255,255,0.6); border-radius: 50%;
-                    left: ${Math.random() * 100}%; top: ${Math.random() * 100}%;
-                    animation: float ${3 + Math.random() * 4}s ease-in-out infinite;
-                    animation-delay: ${Math.random() * 2}s;
-                `;
-                video.appendChild(particle);
+        // Advanced Data Storage System
+        class NeuroDataManager {
+            constructor() {
+                this.storageKey = 'neurox_elite_data';
+                this.initializeData();
             }
 
-            gameContainer.appendChild(video);
-
-            // Add dynamic floating animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes backgroundMove {
-                    0%, 100% {
-                        background-position: 0% 50%, 100% 50%, 50% 0%, 0% 0%;
-                    }
-                    50% {
-                        background-position: 100% 50%, 0% 50%, 50% 100%, 100% 100%;
-                    }
-                }
-                @keyframes float {
-                    0%, 100% {
-                        transform: translateY(0px) rotate(0deg);
-                        opacity: 0.6;
-                    }
-                    50% {
-                        transform: translateY(-20px) rotate(180deg);
-                        opacity: 1;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-
-            // Game content
-            const gameContent = document.createElement('div');
-            gameContent.style.cssText = `
-                position: relative; z-index: 10; text-align: center;
-                max-width: 800px; padding: 2rem;
-            `;
-
-            if (type === 'memory') {
-                startMemoryGame(gameContent);
-            } else if (type === 'speed') {
-                startSpeedGame(gameContent);
-            } else if (type === 'logic') {
-                startLogicGame(gameContent);
-            }
-
-            // Close button
-            const closeBtn = document.createElement('button');
-            closeBtn.innerHTML = '✕ Exit Game';
-            closeBtn.style.cssText = `
-                position: absolute; top: 2rem; right: 2rem;
-                background: rgba(255,255,255,0.2); color: white;
-                border: 2px solid white; padding: 1rem 2rem;
-                border-radius: 12px; cursor: pointer; font-size: 1rem;
-                transition: all 0.3s ease;
-            `;
-            closeBtn.onmouseover = () => closeBtn.style.background = 'rgba(255,255,255,0.3)';
-            closeBtn.onmouseout = () => closeBtn.style.background = 'rgba(255,255,255,0.2)';
-            closeBtn.onclick = () => {
-                document.body.removeChild(gameContainer);
-                showToast("Game exited");
-            };
-
-            gameContainer.appendChild(gameContent);
-            gameContainer.appendChild(closeBtn);
-            document.body.appendChild(gameContainer);
-        }
-
-        function startMemoryGame(container) {
-            container.innerHTML = `
-                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-                    🧠 Memory Challenge
-                </h1>
-                <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
-                    Watch the sequence, then repeat it!
-                </p>
-                <div id="memoryGrid" style="
-                    display: grid; grid-template-columns: repeat(3, 1fr);
-                    gap: 1rem; max-width: 300px; margin: 0 auto 3rem;
-                "></div>
-                <div id="memoryStatus" style="font-size: 1.5rem; margin-bottom: 2rem;">
-                    Get ready...
-                </div>
-                <button id="memoryStart" style="
-                    background: linear-gradient(45deg, #ff6b6b, #ffa500);
-                    color: white; border: none; padding: 1rem 3rem;
-                    border-radius: 12px; font-size: 1.3rem; cursor: pointer;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-                    transition: transform 0.2s ease;
-                " onmouseover="this.style.transform='scale(1.05)'"
-                   onmouseout="this.style.transform='scale(1)'">
-                    🚀 Start Game
-                </button>
-            `;
-
-            let sequence = [];
-            let playerSequence = [];
-            let level = 1;
-            let showingSequence = false;
-
-            // Create grid
-            const grid = container.querySelector('#memoryGrid');
-            for (let i = 0; i < 9; i++) {
-                const cell = document.createElement('div');
-                cell.style.cssText = `
-                    width: 80px; height: 80px; background: rgba(255,255,255,0.3);
-                    border-radius: 12px; cursor: pointer; display: flex;
-                    align-items: center; justify-content: center; font-size: 2rem;
-                    transition: all 0.3s ease; border: 2px solid transparent;
-                `;
-                cell.dataset.index = i;
-                cell.onclick = () => {
-                    if (!showingSequence) {
-                        playerSequence.push(i);
-                        cell.style.background = 'rgba(0,255,0,0.8)';
-                        setTimeout(() => cell.style.background = 'rgba(255,255,255,0.3)', 200);
-                        checkSequence();
-                    }
-                };
-                grid.appendChild(cell);
-            }
-
-            container.querySelector('#memoryStart').onclick = startRound;
-
-            function startRound() {
-                sequence = [];
-                playerSequence = [];
-                for (let i = 0; i < level + 2; i++) {
-                    sequence.push(Math.floor(Math.random() * 9));
-                }
-                showSequence();
-            }
-
-            function showSequence() {
-                showingSequence = true;
-                container.querySelector('#memoryStatus').textContent = `Level ${level} - Watch carefully!`;
-                container.querySelector('#memoryStart').style.display = 'none';
-
-                sequence.forEach((cellIndex, i) => {
-                    setTimeout(() => {
-                        const cell = grid.children[cellIndex];
-                        cell.style.background = 'rgba(255,255,0,0.9)';
-                        cell.style.transform = 'scale(1.1)';
-                        setTimeout(() => {
-                            cell.style.background = 'rgba(255,255,255,0.3)';
-                            cell.style.transform = 'scale(1)';
-                        }, 400);
-
-                        if (i === sequence.length - 1) {
-                            setTimeout(() => {
-                                showingSequence = false;
-                                container.querySelector('#memoryStatus').textContent = 'Now repeat the sequence!';
-                            }, 600);
+            initializeData() {
+                if (!localStorage.getItem(this.storageKey)) {
+                    const initialData = {
+                        user: {
+                            level: 'Novice',
+                            cognitiveScore: 75,
+                            totalSessions: 0,
+                            streak: 0,
+                            joinDate: new Date().toISOString(),
+                            lastLogin: new Date().toISOString()
+                        },
+                        challenges: {
+                            memory: { progress: 0, bestScore: 0, attempts: 0, difficulty: 1 },
+                            speed: { progress: 0, bestTime: Infinity, attempts: 0, difficulty: 1 },
+                            logic: { progress: 0, bestScore: 0, attempts: 0, difficulty: 1 }
+                        },
+                        sleep: {
+                            scores: [],
+                            patterns: [],
+                            recommendations: []
+                        },
+                        focus: {
+                            sessions: [],
+                            productivity: [],
+                            meditation: { totalMinutes: 0, sessions: 0 }
+                        },
+                        achievements: [],
+                        analytics: {
+                            performanceHistory: [],
+                            focusHistory: [],
+                            sleepHistory: []
+                        },
+                        settings: {
+                            notifications: true,
+                            soundEffects: true,
+                            theme: 'adaptive'
                         }
-                    }, i * 600);
+                    };
+                    this.saveData(initialData);
+                }
+            }
+
+            getData() {
+                return JSON.parse(localStorage.getItem(this.storageKey)) || {};
+            }
+
+            saveData(data) {
+                localStorage.setItem(this.storageKey, JSON.stringify(data));
+            }
+
+            updateUserStats(updates) {
+                const data = this.getData();
+                data.user = { ...data.user, ...updates };
+                this.saveData(data);
+                this.updateUI();
+            }
+
+            addPerformanceData(type, value, timestamp = new Date()) {
+                const data = this.getData();
+                if (!data.analytics[type]) data.analytics[type] = [];
+                data.analytics[type].push({ value, timestamp: timestamp.toISOString() });
+                
+                // Keep only last 30 entries
+                if (data.analytics[type].length > 30) {
+                    data.analytics[type] = data.analytics[type].slice(-30);
+                }
+                this.saveData(data);
+            }
+
+            checkAchievements() {
+                const data = this.getData();
+                const achievements = [
+                    { id: 'first_session', name: 'First Steps', description: 'Complete your first session', condition: () => data.user.totalSessions >= 1 },
+                    { id: 'week_streak', name: 'Week Warrior', description: 'Maintain a 7-day streak', condition: () => data.user.streak >= 7 },
+                    { id: 'speed_demon', name: 'Speed Demon', description: 'React under 200ms', condition: () => data.challenges.speed.bestTime < 200 },
+                    { id: 'memory_master', name: 'Memory Master', description: 'Score 100 in memory challenge', condition: () => data.challenges.memory.bestScore >= 100 },
+                    { id: 'meditation_monk', name: 'Meditation Monk', description: 'Meditate for 60 minutes total', condition: () => data.focus.meditation.totalMinutes >= 60 }
+                ];
+
+                achievements.forEach(achievement => {
+                    if (!data.achievements.includes(achievement.id) && achievement.condition()) {
+                        data.achievements.push(achievement.id);
+                        this.showAchievement(achievement);
+                    }
                 });
+
+                this.saveData(data);
             }
 
-            function checkSequence() {
-                const currentIndex = playerSequence.length - 1;
-                if (playerSequence[currentIndex] !== sequence[currentIndex]) {
-                    container.querySelector('#memoryStatus').innerHTML = `
-                        ❌ Wrong! Final Score: Level ${level}<br>
-                        <button onclick="location.reload()" style="
-                            background: #ff4757; color: white; border: none;
-                            padding: 1rem 2rem; border-radius: 8px; margin-top: 1rem;
-                            cursor: pointer;
-                        ">Try Again</button>
-                    `;
-                    createConfetti();
-                    return;
-                }
-
-                if (playerSequence.length === sequence.length) {
-                    level++;
-                    container.querySelector('#memoryStatus').innerHTML = `
-                        ✅ Correct! Level ${level} unlocked!<br>
-                        <button onclick="startRound()" style="
-                            background: #2ed573; color: white; border: none;
-                            padding: 1rem 2rem; border-radius: 8px; margin-top: 1rem;
-                            cursor: pointer;
-                        ">Next Level</button>
-                    `;
-
-                    setTimeout(() => {
-                        container.querySelector('#memoryStart').style.display = 'inline-block';
-                        container.querySelector('#memoryStart').textContent = `Level ${level}`;
-                        container.querySelector('#memoryStart').onclick = startRound;
-                    }, 2000);
-                }
+            showAchievement(achievement) {
+                const modal = document.getElementById('achievementModal');
+                document.getElementById('achievementTitle').textContent = achievement.name;
+                document.getElementById('achievementDescription').textContent = achievement.description;
+                modal.classList.add('active');
+                this.createConfetti();
+                setTimeout(() => modal.classList.remove('active'), 3000);
             }
-        }
 
-        function startSpeedGame(container) {
-            container.innerHTML = `
-                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-                    ⚡ Speed Challenge
-                </h1>
-                <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">
-                    Click the targets as fast as you can!
-                </p>
-                <div id="speedStats" style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold;">0</div>
-                        <div style="opacity: 0.8;">Score</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold;">30</div>
-                        <div style="opacity: 0.8;">Time</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold;">0ms</div>
-                        <div style="opacity: 0.8;">Avg Time</div>
-                    </div>
-                </div>
-                <div id="speedGame" style="
-                    position: relative; width: 500px; height: 400px;
-                    background: rgba(0,0,0,0.3); border-radius: 20px;
-                    margin: 0 auto 3rem; overflow: hidden;
-                    border: 3px solid rgba(255,255,255,0.3);
-                "></div>
-                <button id="speedStart" style="
-                    background: linear-gradient(45deg, #ffa500, #ff6b6b);
-                    color: white; border: none; padding: 1rem 3rem;
-                    border-radius: 12px; font-size: 1.3rem; cursor: pointer;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-                ">⚡ Start Speed Test</button>
-            `;
+            updateUI() {
+                const data = this.getData();
+                
+                // Update home stats
+                document.getElementById('cognitiveScore').textContent = data.user.cognitiveScore;
+                document.getElementById('dayStreak').textContent = data.user.streak;
+                document.getElementById('totalSessions').textContent = data.user.totalSessions;
+                document.getElementById('userLevel').textContent = data.user.level;
+                document.getElementById('streakCount').textContent = data.user.streak;
 
-            let score = 0;
-            let timeLeft = 30;
-            let gameActive = false;
-            let reactionTimes = [];
-            let targetStartTime = 0;
-
-            const gameArea = container.querySelector('#speedGame');
-            const startBtn = container.querySelector('#speedStart');
-            const stats = container.querySelector('#speedStats').children;
-
-            startBtn.onclick = startSpeedTest;
-
-            function startSpeedTest() {
-                gameActive = true;
-                score = 0;
-                timeLeft = 30;
-                reactionTimes = [];
-                startBtn.style.display = 'none';
-
-                const timer = setInterval(() => {
-                    timeLeft--;
-                    stats[1].firstElementChild.textContent = timeLeft;
-
-                    if (timeLeft <= 0) {
-                        clearInterval(timer);
-                        endGame();
+                // Update challenge progress
+                ['memory', 'speed', 'logic'].forEach(type => {
+                    const progress = document.getElementById(type + 'Progress');
+                    const progressText = document.getElementById(type + 'ProgressText');
+                    if (progress && progressText) {
+                        const value = data.challenges[type].progress;
+                        progress.style.width = value + '%';
+                        progressText.textContent = value + '%';
                     }
-                }, 1000);
+                });
 
-                spawnTarget();
+                // Update achievements
+                this.updateAchievementsList(data.achievements);
             }
 
-            function spawnTarget() {
-                if (!gameActive) return;
+            updateAchievementsList(userAchievements) {
+                const container = document.getElementById('achievementsList');
+                if (!container) return;
 
-                const target = document.createElement('div');
-                target.style.cssText = `
-                    position: absolute; width: 60px; height: 60px;
-                    background: radial-gradient(circle, #ff6b6b, #ff4757);
-                    border-radius: 50%; cursor: pointer;
-                    box-shadow: 0 0 20px rgba(255,107,107,0.6);
-                    animation: targetPulse 0.5s ease-in-out infinite alternate;
-                    border: 3px solid white;
-                `;
+                const allAchievements = [
+                    { id: 'first_session', name: 'First Steps', icon: '🎯' },
+                    { id: 'week_streak', name: 'Week Warrior', icon: '🔥' },
+                    { id: 'speed_demon', name: 'Speed Demon', icon: '⚡' },
+                    { id: 'memory_master', name: 'Memory Master', icon: '🧠' },
+                    { id: 'meditation_monk', name: 'Meditation Monk', icon: '🧘‍♀️' }
+                ];
 
-                target.style.left = Math.random() * (gameArea.offsetWidth - 60) + 'px';
-                target.style.top = Math.random() * (gameArea.offsetHeight - 60) + 'px';
-
-                targetStartTime = Date.now();
-
-                target.onclick = () => {
-                    const reactionTime = Date.now() - targetStartTime;
-                    reactionTimes.push(reactionTime);
-                    score++;
-
-                    // Update stats
-                    stats[0].firstElementChild.textContent = score;
-                    const avgTime = reactionTimes.reduce((a, b) => a + b) / reactionTimes.length;
-                    stats[2].firstElementChild.textContent = Math.round(avgTime) + 'ms';
-
-                    target.remove();
-
-                    // Spawn next target
-                    setTimeout(() => spawnTarget(), Math.random() * 1000 + 500);
-                };
-
-                gameArea.appendChild(target);
-
-                // Remove target if not clicked in time
-                setTimeout(() => {
-                    if (target.parentNode) {
-                        target.remove();
-                        setTimeout(() => spawnTarget(), 500);
-                    }
-                }, 3000);
-            }
-
-            function endGame() {
-                gameActive = false;
-                gameArea.innerHTML = `
-                    <div style="
-                        display: flex; flex-direction: column; align-items: center;
-                        justify-content: center; height: 100%; font-size: 1.5rem;
-                    ">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
-                        <div>Final Score: ${score}</div>
-                        <div style="font-size: 1rem; margin-top: 1rem; opacity: 0.8;">
-                            Average Reaction: ${reactionTimes.length ? Math.round(reactionTimes.reduce((a, b) => a + b) / reactionTimes.length) : 0}ms
-                        </div>
+                container.innerHTML = allAchievements.map(achievement => `
+                    <div class="achievement-badge" style="${userAchievements.includes(achievement.id) ? '' : 'opacity: 0.3; filter: grayscale(100%);'}">
+                        <span style="font-size: 1.5rem;">${achievement.icon}</span>
+                        <span>${achievement.name}</span>
                     </div>
-                `;
-                createConfetti();
-            }
-        }
-
-        function startLogicGame(container) {
-            container.innerHTML = `
-                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-                    🧩 Logic Challenge
-                </h1>
-                <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">
-                    Solve the pattern puzzles!
-                </p>
-                <div id="logicPuzzle" style="
-                    background: rgba(255,255,255,0.1); border-radius: 20px;
-                    padding: 3rem; margin: 0 auto 3rem; max-width: 600px;
-                    border: 2px solid rgba(255,255,255,0.3);
-                "></div>
-                <div id="logicOptions" style="
-                    display: grid; grid-template-columns: repeat(4, 1fr);
-                    gap: 1rem; max-width: 400px; margin: 0 auto 2rem;
-                "></div>
-                <div id="logicStatus" style="font-size: 1.5rem; margin-bottom: 2rem;">
-                    Find the missing pattern!
-                </div>
-            `;
-
-            let currentPuzzle = 0;
-            let score = 0;
-
-            const puzzles = [
-                {
-                    pattern: ['🔴', '🟡', '🔵', '🔴', '🟡', '?'],
-                    options: ['🔵', '🟢', '🔴', '🟡'],
-                    answer: 0
-                },
-                {
-                    pattern: ['⭐', '⭐⭐', '⭐⭐⭐', '?'],
-                    options: ['⭐⭐⭐⭐', '⭐', '⭐⭐', '⭐⭐⭐⭐⭐'],
-                    answer: 0
-                },
-                {
-                    pattern: ['🔺', '🔻', '🔺', '🔻', '?'],
-                    options: ['🔺', '🔻', '🔹', '🔸'],
-                    answer: 0
-                }
-            ];
-
-            showPuzzle();
-
-            function showPuzzle() {
-                const puzzle = puzzles[currentPuzzle];
-                const puzzleDiv = container.querySelector('#logicPuzzle');
-                const optionsDiv = container.querySelector('#logicOptions');
-
-                puzzleDiv.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                        ${puzzle.pattern.map(item => `
-                            <div style="
-                                width: 80px; height: 80px; display: flex;
-                                align-items: center; justify-content: center;
-                                font-size: 2rem; background: rgba(255,255,255,0.2);
-                                border-radius: 12px; border: 2px solid rgba(255,255,255,0.4);
-                                ${item === '?' ? 'background: rgba(255,255,0,0.3); animation: pulse 2s infinite;' : ''}
-                            ">${item}</div>
-                        `).join('')}
-                    </div>
-                `;
-
-                optionsDiv.innerHTML = puzzle.options.map((option, index) => `
-                    <div onclick="selectAnswer(${index})" style="
-                        width: 80px; height: 80px; display: flex;
-                        align-items: center; justify-content: center;
-                        font-size: 2rem; background: rgba(255,255,255,0.2);
-                        border-radius: 12px; cursor: pointer;
-                        border: 2px solid rgba(255,255,255,0.4);
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.background='rgba(255,255,255,0.4)'"
-                       onmouseout="this.style.background='rgba(255,255,255,0.2)'">${option}</div>
                 `).join('');
             }
 
-            window.selectAnswer = function(selectedIndex) {
-                const puzzle = puzzles[currentPuzzle];
-                const statusDiv = container.querySelector('#logicStatus');
-
-                if (selectedIndex === puzzle.answer) {
-                    score++;
-                    currentPuzzle++;
-
-                    if (currentPuzzle < puzzles.length) {
-                        statusDiv.innerHTML = `✅ Correct! Score: ${score}/${puzzles.length}`;
-                        setTimeout(() => {
-                            showPuzzle();
-                            statusDiv.textContent = 'Find the missing pattern!';
-                        }, 2000);
-                    } else {
-                        statusDiv.innerHTML = `
-                            🎉 Puzzle Complete!<br>
-                            Final Score: ${score}/${puzzles.length}<br>
-                            <small style="opacity: 0.8;">You're a logic master!</small>
+            createConfetti() {
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7'];
+                        confetti.style.cssText = `
+                            position: fixed; width: 10px; height: 10px;
+                            background: ${colors[Math.floor(Math.random() * colors.length)]};
+                            left: ${Math.random() * 100}vw; top: -20px;
+                            animation: confettiFall 3s linear forwards; z-index: 999;
                         `;
-                        createConfetti();
+                        document.body.appendChild(confetti);
+                        setTimeout(() => confetti.remove(), 3000);
+                    }, i * 50);
+                }
+            }
+        }
+
+        // Advanced AI System
+        class NeuroAI {
+            constructor(dataManager) {
+                this.dataManager = dataManager;
+                this.insights = [
+                    "Your morning sessions show 23% better performance than evening sessions.",
+                    "Taking breaks every 25 minutes can improve your focus by 40%.",
+                    "Your memory performance peaks on Tuesdays and Thursdays.",
+                    "Meditation before challenges improves your scores by an average of 15%.",
+                    "Your cognitive performance correlates strongly with sleep quality.",
+                    "Speed challenges after 2 PM show decreased reaction times.",
+                    "Your pattern recognition skills have improved 18% this week."
+                ];
+            }
+
+            generateDailyInsight() {
+                const data = this.dataManager.getData();
+                const insight = this.insights[Math.floor(Math.random() * this.insights.length)];
+                document.getElementById('dailyInsight').textContent = insight;
+            }
+
+            calculateAdaptiveDifficulty(challengeType) {
+                const data = this.dataManager.getData();
+                const challenge = data.challenges[challengeType];
+                
+                // Simple adaptive algorithm
+                if (challenge.attempts === 0) return 1;
+                
+                const successRate = challenge.bestScore / (challenge.attempts * 100);
+                if (successRate > 0.8) return Math.min(challenge.difficulty + 0.2, 5);
+                if (successRate < 0.3) return Math.max(challenge.difficulty - 0.1, 0.5);
+                return challenge.difficulty;
+            }
+
+            getPersonalizedRecommendation() {
+                const data = this.dataManager.getData();
+                const recommendations = [
+                    "Memory Training - Your hippocampus activity suggests room for improvement",
+                    "Speed Processing - Reaction times could benefit from targeted practice",
+                    "Logic Puzzles - Pattern recognition shows the most potential",
+                    "Focus Meditation - Your attention span metrics indicate meditation would help",
+                    "Sleep Optimization - Better sleep could boost your cognitive scores by 20%"
+                ];
+                
+                return recommendations[Math.floor(Math.random() * recommendations.length)];
+            }
+
+            analyzePerformance() {
+                const data = this.dataManager.getData();
+                const recentPerformance = data.analytics.performanceHistory.slice(-7);
+                
+                if (recentPerformance.length === 0) return "improving";
+                
+                const average = recentPerformance.reduce((sum, entry) => sum + entry.value, 0) / recentPerformance.length;
+                const trend = recentPerformance[recentPerformance.length - 1].value - recentPerformance[0].value;
+                
+                if (trend > 5) return "rapidly improving";
+                if (trend > 0) return "improving";
+                if (trend > -5) return "stable";
+                return "needs attention";
+            }
+
+            simulateBiometrics() {
+                // Simulate realistic biometric data
+                const baseHeartRate = 70;
+                const heartRateVariation = Math.sin(Date.now() / 10000) * 5;
+                document.getElementById('heartRate').textContent = Math.round(baseHeartRate + heartRateVariation);
+
+                const baseBreathing = 12;
+                const breathingVariation = Math.cos(Date.now() / 8000) * 2;
+                document.getElementById('breathing').textContent = Math.round(baseBreathing + breathingVariation);
+
+                const relaxationLevel = 8.5 + Math.sin(Date.now() / 15000) * 1.5;
+                document.getElementById('relaxation').textContent = relaxationLevel.toFixed(1);
+
+                // EEG simulation
+                const alphaBase = 8.2;
+                const betaBase = 15.7;
+                document.getElementById('alphaPower').textContent = (alphaBase + Math.random() * 2).toFixed(1);
+                document.getElementById('betaPower').textContent = (betaBase + Math.random() * 4).toFixed(1);
+                
+                const focusIndex = 73 + Math.round(Math.sin(Date.now() / 12000) * 15);
+                document.getElementById('focusIndex').textContent = focusIndex;
+                
+                const stressLevels = ['Very Low', 'Low', 'Moderate', 'High'];
+                const currentStress = stressLevels[Math.floor(Math.random() * stressLevels.length)];
+                document.getElementById('stressLevel').textContent = currentStress;
+            }
+        }
+
+        // Advanced Chart System
+        class NeuroCharts {
+            constructor(dataManager) {
+                this.dataManager = dataManager;
+                this.charts = {};
+            }
+
+            initializeCharts() {
+                this.createPerformanceChart();
+                this.createFocusChart();
+                this.createSleepChart();
+                this.createSleepTrendChart();
+                this.createFocusAnalyticsChart();
+                this.createMeditationChart();
+            }
+
+            createPerformanceChart() {
+                const ctx = document.getElementById('performanceChart');
+                if (!ctx) return;
+
+                const data = this.dataManager.getData();
+                const history = data.analytics.performanceHistory.slice(-7);
+
+                this.charts.performance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: history.map((_, i) => `Day ${i + 1}`),
+                        datasets: [{
+                            label: 'Cognitive Score',
+                            data: history.map(entry => entry.value),
+                            borderColor: '#B9E0D8',
+                            backgroundColor: 'rgba(185, 224, 216, 0.2)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, max: 100 } }
+                    }
+                });
+            }
+
+            createFocusChart() {
+                const ctx = document.getElementById('focusChart');
+                if (!ctx) return;
+
+                this.charts.focus = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Focused', 'Distracted', 'Break'],
+                        datasets: [{
+                            data: [70, 20, 10],
+                            backgroundColor: ['#FFF5BA', '#FBC4AB', '#EAD7D1']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            createSleepChart() {
+                const ctx = document.getElementById('sleepChart');
+                if (!ctx) return;
+
+                this.charts.sleep = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Deep', 'REM', 'Light', 'Awake'],
+                        datasets: [{
+                            label: 'Hours',
+                            data: [2.1, 1.8, 3.2, 0.4],
+                            backgroundColor: ['#4a90e2', '#7ed321', '#f5a623', '#d0021b']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, max: 4 } }
+                    }
+                });
+            }
+
+            createSleepTrendChart() {
+                const ctx = document.getElementById('sleepTrendChart');
+                if (!ctx) return;
+
+                this.charts.sleepTrend = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Sleep Quality',
+                            data: [87, 92, 78, 89, 85, 94, 88],
+                            borderColor: '#EAD7D1',
+                            backgroundColor: 'rgba(234, 215, 209, 0.2)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, max: 100 } }
+                    }
+                });
+            }
+
+            createFocusAnalyticsChart() {
+                const ctx = document.getElementById('focusAnalyticsChart');
+                if (!ctx) return;
+
+                this.charts.focusAnalytics = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+                        datasets: [{
+                            label: 'Focus Level',
+                            data: [85, 72, 68, 45],
+                            borderColor: '#FFF5BA',
+                            backgroundColor: 'rgba(255, 245, 186, 0.2)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { r: { beginAtZero: true, max: 100 } }
+                    }
+                });
+            }
+
+            createMeditationChart() {
+                const ctx = document.getElementById('meditationChart');
+                if (!ctx) return;
+
+                this.charts.meditation = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'Minutes Meditated',
+                            data: [45, 72, 89, 125],
+                            borderColor: '#A7C7E7',
+                            backgroundColor: 'rgba(167, 199, 231, 0.2)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+            }
+
+            updateCharts() {
+                Object.values(this.charts).forEach(chart => {
+                    if (chart && typeof chart.update === 'function') {
+                        chart.update();
+                    }
+                });
+            }
+        }
+
+        // Advanced Pomodoro Timer
+        class AdvancedPomodoro {
+            constructor(dataManager) {
+                this.dataManager = dataManager;
+                this.isRunning = false;
+                this.timeLeft = 25 * 60; // 25 minutes
+                this.interval = null;
+                this.type = 'work'; // work, break, longBreak
+                this.sessionsCompleted = 0;
+            }
+
+            start() {
+                if (this.isRunning) return;
+                
+                this.isRunning = true;
+                const button = document.getElementById('pomodoroBtn');
+                button.innerHTML = '<i class="fas fa-pause"></i> Pause Session';
+                button.onclick = () => this.pause();
+
+                this.interval = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateDisplay();
+                    this.updateProgressRing();
+
+                    if (this.timeLeft <= 0) {
+                        this.complete();
+                    }
+                }, 1000);
+
+                this.showNotification('🎯 Focus session started!');
+            }
+
+            pause() {
+                this.isRunning = false;
+                clearInterval(this.interval);
+                
+                const button = document.getElementById('pomodoroBtn');
+                button.innerHTML = '<i class="fas fa-play"></i> Resume Session';
+                button.onclick = () => this.start();
+                
+                this.showNotification('⏸️ Session paused');
+            }
+
+            complete() {
+                this.isRunning = false;
+                clearInterval(this.interval);
+                this.sessionsCompleted++;
+
+                const data = this.dataManager.getData();
+                data.focus.sessions.push({
+                    date: new Date().toISOString(),
+                    duration: 25,
+                    type: this.type
+                });
+                data.user.totalSessions++;
+                this.dataManager.saveData(data);
+
+                if (this.type === 'work') {
+                    if (this.sessionsCompleted % 4 === 0) {
+                        this.startLongBreak();
+                    } else {
+                        this.startShortBreak();
                     }
                 } else {
-                    statusDiv.innerHTML = `❌ Wrong answer! Score: ${score}/${puzzles.length}`;
-                    setTimeout(() => {
-                        statusDiv.textContent = 'Try again!';
-                    }, 2000);
+                    this.startWork();
                 }
-            };
-        }
 
-        function joinChallenge() {
-            console.log('Joining challenge');
-            alert('Challenge joined!');
-            createConfetti();
-            showToast("🎉 Challenge Joined!");
-        }
+                this.dataManager.checkAchievements();
+                this.updateSessionStats();
+            }
 
-        function showLeaderboard() {
-            console.log('Showing leaderboard');
-            alert('Opening leaderboard!');
-            const modal = document.getElementById('leaderboardModal');
-            if (modal) {
-                modal.classList.add('active');
+            startWork() {
+                this.type = 'work';
+                this.timeLeft = 25 * 60;
+                this.updateDisplay();
+                this.showNotification('🎯 Work session ready!');
+                this.resetButton();
+            }
+
+            startShortBreak() {
+                this.type = 'break';
+                this.timeLeft = 5 * 60;
+                this.updateDisplay();
+                this.showNotification('☕ Time for a short break!');
+                this.resetButton();
+            }
+
+            startLongBreak() {
+                this.type = 'longBreak';
+                this.timeLeft = 15 * 60;
+                this.updateDisplay();
+                this.showNotification('🎉 Long break time!');
+                this.resetButton();
+            }
+
+            updateDisplay() {
+                const minutes = Math.floor(this.timeLeft / 60);
+                const seconds = this.timeLeft % 60;
+                document.getElementById('timerText').textContent = 
+                    `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            updateProgressRing() {
+                const totalTime = this.type === 'work' ? 25 * 60 : 
+                                 this.type === 'break' ? 5 * 60 : 15 * 60;
+                const progress = (totalTime - this.timeLeft) / totalTime;
+                const circumference = 2 * Math.PI * 90;
+                const offset = circumference * (1 - progress);
+                
+                const progressRing = document.getElementById('timerProgress');
+                if (progressRing) {
+                    progressRing.style.strokeDashoffset = offset;
+                }
+            }
+
+            resetButton() {
+                const button = document.getElementById('pomodoroBtn');
+                button.innerHTML = '<i class="fas fa-play"></i> Start Session';
+                button.onclick = () => this.start();
+            }
+
+            updateSessionStats() {
+                document.getElementById('todaySessions').textContent = this.sessionsCompleted;
+                const productivity = Math.min(100, (this.sessionsCompleted / 8) * 100);
+                document.getElementById('productivityScore').textContent = productivity.toFixed(0) + '%';
+            }
+
+            showNotification(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
             }
         }
 
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-            }
-        }
+        // Initialize the application
+        let dataManager, neuroAI, neuroCharts, pomodoro;
+        let activeTab = 'home';
 
-        function showToast(message) {
-            let toast = document.getElementById('toast');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'toast';
-                toast.style.cssText = `
-                    position: fixed; top: 150px; right: 2rem;
-                    background: #FBC4AB; color: #2d2d2d;
-                    padding: 1rem 2rem; border-radius: 12px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-                    z-index: 1001; transform: translateX(100%);
-                    transition: transform 0.3s ease;
-                `;
-                document.body.appendChild(toast);
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 NeuroX Elite Loading...');
 
-            toast.textContent = message;
-            toast.style.transform = 'translateX(0)';
+            // Initialize advanced systems
+            dataManager = new NeuroDataManager();
+            neuroAI = new NeuroAI(dataManager);
+            neuroCharts = new NeuroCharts(dataManager);
+            pomodoro = new AdvancedPomodoro(dataManager);
 
+            // Initialize UI
+            initializeNeuralNetwork();
+            initializeBrainVisualization();
             setTimeout(() => {
-                toast.style.transform = 'translateX(100%)';
-            }, 3000);
-        }
+                neuroCharts.initializeCharts();
+                dataManager.updateUI();
+                neuroAI.generateDailyInsight();
+                updateRecommendations();
+            }, 500);
 
-        function createConfetti() {
-            // Create celebration burst
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#a0e7e5'];
-                    const shapes = ['●', '▲', '■', '♦', '★', '♥'];
+            // Start real-time updates
+            setInterval(() => {
+                neuroAI.simulateBiometrics();
+                updateNeuralNetwork();
+            }, 2000);
 
-                    confetti.style.cssText = `
-                        position: fixed; width: 15px; height: 15px;
-                        color: ${colors[Math.floor(Math.random() * colors.length)]};
-                        font-size: ${10 + Math.random() * 10}px; z-index: 999;
-                        left: ${Math.random() * 100}vw; top: -20px;
-                        animation: confettiFall ${2 + Math.random() * 2}s linear forwards;
-                        pointer-events: none; font-weight: bold;
-                    `;
-                    confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
-                    document.body.appendChild(confetti);
+            // Show welcome message
+            setTimeout(() => {
+                showToast('🎉 NeuroX Elite Ready! Advanced AI features loaded.');
+            }, 1000);
+        });
 
-                    setTimeout(() => confetti.remove(), 4000);
-                }, i * 50);
-            }
-
-            // Add screen flash effect
-            const flash = document.createElement('div');
-            flash.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-                z-index: 998; pointer-events: none;
-                animation: flash 0.5s ease-out;
-            `;
-            document.body.appendChild(flash);
-            setTimeout(() => flash.remove(), 500);
-
-            // Simulate sound effect with visual feedback
-            showSoundEffect('🎉 SUCCESS!');
-        }
-
-        function showSoundEffect(text) {
-            const soundEffect = document.createElement('div');
-            soundEffect.style.cssText = `
-                position: fixed; top: 50%; left: 50%;
-                transform: translate(-50%, -50%); z-index: 1000;
-                font-size: 3rem; font-weight: bold; color: #ffd700;
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-                animation: soundBurst 1s ease-out forwards;
-                pointer-events: none;
-            `;
-            soundEffect.textContent = text;
-            document.body.appendChild(soundEffect);
-
-            setTimeout(() => soundEffect.remove(), 1000);
-
-            // Add sound wave rings
-            for (let i = 0; i < 3; i++) {
-                setTimeout(() => {
-                    const ring = document.createElement('div');
-                    ring.style.cssText = `
-                        position: fixed; top: 50%; left: 50%;
-                        transform: translate(-50%, -50%); z-index: 999;
-                        width: 100px; height: 100px; border-radius: 50%;
-                        border: 3px solid rgba(255,215,0,0.6);
-                        animation: soundWave 1s ease-out forwards;
-                        pointer-events: none;
-                    `;
-                    document.body.appendChild(ring);
-                    setTimeout(() => ring.remove(), 1000);
-                }, i * 200);
-            }
-        }
-
-        // Add more animation styles
-        const gameStyles = document.createElement('style');
-        gameStyles.textContent = `
-            @keyframes flash {
-                0% { opacity: 0; }
-                50% { opacity: 1; }
-                100% { opacity: 0; }
-            }
-            @keyframes soundBurst {
-                0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-                50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-                100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-            }
-            @keyframes soundWave {
-                0% {
-                    width: 100px; height: 100px;
-                    border-width: 3px; opacity: 0.6;
-                }
-                100% {
-                    width: 300px; height: 300px;
-                    border-width: 1px; opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(gameStyles);
-
+        // Navigation and UI Functions
         function navigateToPage(page) {
             console.log('Navigating to:', page);
 
@@ -2416,318 +1689,366 @@
 
                 activeTab = page;
                 showToast(`Switched to ${page.charAt(0).toUpperCase() + page.slice(1)}`);
+
+                // Update charts when switching to pages with charts
+                if (['dashboard', 'sleep', 'focus'].includes(page)) {
+                    setTimeout(() => neuroCharts.updateCharts(), 100);
+                }
             }
         }
 
-        // Make all functions globally available
-        window.openChallenge = openChallenge;
-        window.startChallenge = startChallenge;
-        window.joinChallenge = joinChallenge;
-        window.showLeaderboard = showLeaderboard;
-        window.closeModal = closeModal;
-        window.showToast = showToast;
-        window.createConfetti = createConfetti;
-        window.navigateToPage = navigateToPage;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
 
-        // Additional functions
-        function startBrainScan() {
-            console.log('Starting brain scan');
-            alert('Brain scan started!');
-            const modal = document.getElementById('brainScanModal');
-            if (modal) {
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.remove('active');
+        }
+
+        // Neural Network Visualization
+        function initializeNeuralNetwork() {
+            const container = document.getElementById('neuralNetwork');
+            if (!container) return;
+
+            // Create neurons
+            for (let i = 0; i < 20; i++) {
+                const neuron = document.createElement('div');
+                neuron.className = 'neuron';
+                neuron.style.left = Math.random() * 90 + '%';
+                neuron.style.top = Math.random() * 90 + '%';
+                neuron.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(neuron);
+            }
+
+            // Create connections
+            for (let i = 0; i < 15; i++) {
+                const connection = document.createElement('div');
+                connection.className = 'connection';
+                connection.style.left = Math.random() * 80 + '%';
+                connection.style.top = Math.random() * 80 + '%';
+                connection.style.width = Math.random() * 100 + 50 + 'px';
+                connection.style.transform = `rotate(${Math.random() * 360}deg)`;
+                connection.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(connection);
+            }
+        }
+
+        function updateNeuralNetwork() {
+            const neurons = document.querySelectorAll('.neuron');
+            neurons.forEach(neuron => {
+                if (Math.random() < 0.1) {
+                    neuron.style.animationDuration = (1 + Math.random()) + 's';
+                }
+            });
+        }
+
+        function initializeBrainVisualization() {
+            const container = document.getElementById('brainRegions');
+            if (!container) return;
+
+            const regions = [
+                { name: 'Memory', pos: { top: '30%', left: '20%' }, color: 'rgba(255,255,255,0.9)' },
+                { name: 'Focus', pos: { top: '20%', right: '20%' }, color: 'rgba(135,206,235,0.8)' },
+                { name: 'Emotion', pos: { bottom: '30%', left: '50%', transform: 'translateX(-50%)' }, color: 'rgba(255,182,193,0.8)' }
+            ];
+
+            regions.forEach(region => {
+                const element = document.createElement('div');
+                element.innerHTML = `🧠 ${region.name}`;
+                element.style.cssText = `
+                    position: absolute; background: linear-gradient(45deg, ${region.color}, rgba(185,224,216,0.8));
+                    padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+                    cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                    animation: regionPulse 3s ease-in-out infinite;
+                `;
+                
+                Object.assign(element.style, region.pos);
+                element.onclick = () => analyzeBrainRegion(region.name.toLowerCase());
+                container.appendChild(element);
+            });
+        }
+
+        // Advanced Challenge System
+        function startAdaptiveChallenge() {
+            const recommendation = neuroAI.getPersonalizedRecommendation();
+            const challengeType = recommendation.toLowerCase().includes('memory') ? 'memory' :
+                                 recommendation.toLowerCase().includes('speed') ? 'speed' : 'logic';
+            startAdvancedChallenge(challengeType);
+        }
+
+        function startAdvancedChallenge(type) {
+            const difficulty = neuroAI.calculateAdaptiveDifficulty(type);
+            
+            // Update challenge data
+            const data = dataManager.getData();
+            data.challenges[type].attempts++;
+            dataManager.saveData(data);
+
+            showToast(`🎮 Starting ${type} challenge (Difficulty: ${difficulty.toFixed(1)})`);
+            
+            // Simulate challenge completion after random time
+            setTimeout(() => {
+                const score = Math.random() * 50 + 50; // Random score between 50-100
+                completeChallenge(type, score);
+            }, Math.random() * 5000 + 3000);
+        }
+
+        function completeChallenge(type, score) {
+            const data = dataManager.getData();
+            const challenge = data.challenges[type];
+            
+            challenge.progress = Math.min(100, challenge.progress + 10);
+            if (score > challenge.bestScore) {
+                challenge.bestScore = score;
+                showToast(`🏆 New ${type} best score: ${score.toFixed(0)}!`);
+            }
+
+            // Update cognitive score
+            data.user.cognitiveScore = Math.min(100, data.user.cognitiveScore + 1);
+            
+            dataManager.addPerformanceData('performanceHistory', score);
+            dataManager.saveData(data);
+            dataManager.checkAchievements();
+            dataManager.updateUI();
+
+            showToast(`✅ Challenge complete! Score: ${score.toFixed(0)}`);
+        }
+
+        // Advanced Brain Analysis
+        function startAdvancedBrainScan() {
+            showToast('🧠 Starting AI brain scan...');
+            
+            setTimeout(() => {
+                const modal = document.getElementById('brainAnalysisModal');
+                document.getElementById('analysisResults').innerHTML = `
+                    <div class="smart-alert">
+                        <div class="alert-icon">🤖</div>
+                        <div>
+                            <strong>AI Analysis Complete</strong><br>
+                            Cognitive patterns: <span style="color: #00ff88;">Excellent</span><br>
+                            Memory consolidation: <span style="color: #ffa500;">Moderate improvement needed</span><br>
+                            Focus stability: <span style="color: #00ff88;">Strong</span><br>
+                            Stress indicators: <span style="color: #00ff88;">Low</span>
+                        </div>
+                    </div>
+                    <h4>Personalized Recommendations:</h4>
+                    <ul style="margin: 1rem 0; padding-left: 2rem;">
+                        <li>Practice memory challenges for 15 minutes daily</li>
+                        <li>Maintain current meditation routine</li>
+                        <li>Consider evening sessions for better retention</li>
+                        <li>Optimize sleep schedule for REM enhancement</li>
+                    </ul>
+                `;
                 modal.classList.add('active');
-                showToast("🧠 Brain scan initiated!");
-            }
+            }, 2000);
         }
 
-        function trackSleep() {
-            console.log('Tracking sleep');
-            alert('Sleep tracking started!');
-            showToast("🌙 Sleep tracking started...");
+        function analyzeBrainRegion(region) {
+            const analysis = {
+                memory: "Hippocampal activity shows strong encoding patterns. Memory formation efficiency: 87%",
+                focus: "Prefrontal cortex exhibits excellent sustained attention. Focus duration: 23 minutes average",
+                emotion: "Limbic system balance is optimal. Emotional regulation: Strong"
+            };
+            
+            showToast(`🧠 ${region} analysis: ${analysis[region] || 'Analysis in progress...'}`);
         }
 
-        function startFocusSession() {
-            console.log('Starting focus session');
-            alert('Focus session started!');
-            showToast("🎯 Focus session started!");
+        // Advanced Sleep Functions
+        function startSleepTracking() {
+            showToast('🌙 Sleep tracking activated');
+            
+            // Simulate sleep data collection
+            setTimeout(() => {
+                const data = dataManager.getData();
+                const sleepScore = Math.round(Math.random() * 20 + 80); // 80-100
+                data.sleep.scores.push({
+                    date: new Date().toISOString(),
+                    score: sleepScore,
+                    stages: {
+                        deep: 2.1 + Math.random() * 0.8,
+                        rem: 1.8 + Math.random() * 0.6,
+                        light: 3.2 + Math.random() * 1.0
+                    }
+                });
+                dataManager.saveData(data);
+                document.getElementById('sleepQualityScore').textContent = sleepScore;
+                showToast(`💤 Sleep analysis complete: ${sleepScore}/100`);
+            }, 3000);
         }
 
-        function selectFocusMode(mode) {
-            console.log('Focus mode:', mode);
-            alert('Focus mode: ' + mode);
-            showToast(`🎯 ${mode} mode activated`);
+        function generateSleepReport() {
+            showToast('📊 Generating comprehensive sleep report...');
+            
+            setTimeout(() => {
+                const reportWindow = window.open('', '_blank');
+                reportWindow.document.write(`
+                    <html>
+                        <head><title>NeuroX Sleep Report</title></head>
+                        <body style="font-family: Arial, sans-serif; padding: 2rem;">
+                            <h1>🌙 Sleep Performance Report</h1>
+                            <h2>7-Day Summary</h2>
+                            <p><strong>Average Sleep Quality:</strong> 87/100</p>
+                            <p><strong>Average Sleep Duration:</strong> 7.5 hours</p>
+                            <p><strong>Sleep Efficiency:</strong> 89%</p>
+                            <h2>Recommendations</h2>
+                            <ul>
+                                <li>Maintain consistent bedtime (±30 minutes)</li>
+                                <li>Reduce screen time 1 hour before bed</li>
+                                <li>Consider magnesium supplementation</li>
+                                <li>Room temperature: 65-68°F optimal</li>
+                            </ul>
+                            <p><em>Generated by NeuroX Elite AI</em></p>
+                        </body>
+                    </html>
+                `);
+            }, 2000);
         }
 
-        function expandSleepTips() {
-            console.log('Expanding sleep tips');
-            alert('Sleep tips expanded!');
-            showToast("💡 Sleep tips expanded!");
+        // Advanced Focus Functions
+        function startAdvancedPomodoro() {
+            pomodoro.start();
         }
 
-        function closeSleepTips(button) {
-            console.log('Closing sleep tips');
-            if (button?.parentElement) {
-                button.parentElement.innerHTML = '<div style="cursor: pointer;" onclick="expandSleepTips()"><p><i class="fas fa-lightbulb"></i> Click to view personalized sleep tips</p></div>';
-            }
-        }
-
-        function viewSleepHistory() {
-            console.log('Viewing sleep history');
-            alert('Sleep history opened!');
-            const modal = document.getElementById('sleepHistoryModal');
-            if (modal) modal.classList.add('active');
-        }
-
-        function showBrainInfo(region) {
-            console.log('Brain info:', region);
-            alert('Brain info: ' + region);
-            const modal = document.getElementById('brainInfoModal');
-            if (modal) modal.classList.add('active');
-        }
-
-        // Meditation Functions
-        function changeMeditationBg(bgType) {
-            console.log('Changing meditation background to:', bgType);
-
-            // Hide all backgrounds
-            const backgrounds = ['natureBg', 'oceanBg', 'mountainBg'];
-            backgrounds.forEach(bgId => {
-                const bg = document.getElementById(bgId);
-                if (bg) bg.style.display = 'none';
-            });
-
-            // Show selected background
-            const selectedBg = document.getElementById(bgType + 'Bg');
-            if (selectedBg) selectedBg.style.display = 'block';
-
-            // Update button states
-            document.querySelectorAll('.bg-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.bg === bgType) btn.classList.add('active');
-            });
-
-            showToast(`🌟 ${bgType.charAt(0).toUpperCase() + bgType.slice(1)} background activated`);
-        }
-
-        function startMeditation(technique) {
-            console.log('Starting meditation:', technique);
-
-            // Create fullscreen meditation interface
-            const meditationContainer = document.createElement('div');
-            meditationContainer.id = 'meditationContainer';
-            meditationContainer.style.cssText = `
+        function startAIMeditation() {
+            showToast('🧘‍♀️ AI-guided meditation starting...');
+            
+            // Create meditation interface
+            const meditationUI = document.createElement('div');
+            meditationUI.style.cssText = `
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 z-index: 2000; display: flex; flex-direction: column;
                 align-items: center; justify-content: center; color: white;
-                animation: fadeIn 1s ease;
             `;
-
-            const techniques = {
-                breathwork: {
-                    title: '🫁 Breathwork Meditation',
-                    background: 'linear-gradient(135deg, #FF6B6B 0%, #FFB6C1 50%, #FFA07A 100%)',
-                    instructions: [
-                        '🔵 Inhale for 4 counts',
-                        '⏸️ Hold for 7 counts',
-                        '🔴 Exhale for 8 counts',
-                        '🔄 Repeat the cycle'
-                    ]
-                },
-                bodyscan: {
-                    title: '🧘‍♂️ Body Scan Meditation',
-                    background: 'linear-gradient(135deg, #4FC3F7 0%, #81C784 50%, #AED581 100%)',
-                    instructions: [
-                        '🧠 Start with your head',
-                        '👀 Notice any tension',
-                        '⬇️ Move down your body',
-                        '😌 Relax each part'
-                    ]
-                },
-                mindfulness: {
-                    title: '🌸 Mindfulness Meditation',
-                    background: 'linear-gradient(135deg, #BA68C8 0%, #CE93D8 50%, #E1BEE7 100%)',
-                    instructions: [
-                        '🎯 Focus on the present',
-                        '👁️ Observe your thoughts',
-                        '🍃 Let them pass by',
-                        '🧘‍♀️ Return to breath'
-                    ]
-                },
-                visualization: {
-                    title: '✨ Visualization Meditation',
-                    background: 'linear-gradient(135deg, #FFD54F 0%, #FFF176 50%, #FFEB3B 100%)',
-                    instructions: [
-                        '🌅 Imagine a peaceful place',
-                        '👁️ See the details clearly',
-                        '👂 Hear the sounds',
-                        '😊 Feel the serenity'
-                    ]
-                },
-                lovingkindness: {
-                    title: '💝 Loving Kindness Meditation',
-                    background: 'linear-gradient(135deg, #F8BBD9 0%, #FFB6C1 50%, #FFC0CB 100%)',
-                    instructions: [
-                        '💖 Send love to yourself',
-                        '👥 Extend to loved ones',
-                        '🌍 Include all beings',
-                        '☮️ Feel universal love'
-                    ]
-                },
-                walking: {
-                    title: '🚶‍♀️ Walking Meditation',
-                    background: 'linear-gradient(135deg, #81C784 0%, #A5D6A7 50%, #C8E6C9 100%)',
-                    instructions: [
-                        '👣 Feel each step',
-                        '🌬️ Sync with breathing',
-                        '👀 Stay present',
-                        '🧘‍♀️ Move mindfully'
-                    ]
+            
+            meditationUI.innerHTML = `
+                <h1 style="font-size: 3rem; margin-bottom: 2rem;">🧘‍♀️ AI Meditation Guide</h1>
+                <div style="font-size: 1.5rem; margin-bottom: 3rem; text-align: center;">
+                    <div id="meditationInstruction">Close your eyes and focus on your breathing...</div>
+                </div>
+                <div style="width: 200px; height: 200px; border: 3px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; animation: breathingPulse 4s ease-in-out infinite;">
+                    🫁
+                </div>
+                <button onclick="document.body.removeChild(this.parentElement)" style="
+                    margin-top: 3rem; background: rgba(255,255,255,0.2); color: white;
+                    border: 2px solid white; padding: 1rem 2rem; border-radius: 12px;
+                    cursor: pointer; font-size: 1.1rem;
+                ">End Session</button>
+            `;
+            
+            document.body.appendChild(meditationUI);
+            
+            // AI meditation instructions
+            const instructions = [
+                "Focus on your breathing rhythm...",
+                "Notice thoughts without judgment...",
+                "Feel your body relaxing...",
+                "Breathe in peace, breathe out tension...",
+                "You are present in this moment..."
+            ];
+            
+            let instructionIndex = 0;
+            const instructionInterval = setInterval(() => {
+                if (instructionIndex < instructions.length) {
+                    document.getElementById('meditationInstruction').textContent = instructions[instructionIndex];
+                    instructionIndex++;
+                } else {
+                    clearInterval(instructionInterval);
                 }
+            }, 30000);
+        }
+
+        function playAmbientSound(soundType) {
+            const sounds = {
+                forest: '🌲 Forest Ambience',
+                ocean: '🌊 Ocean Waves',
+                rain: '🌧️ Gentle Rain',
+                cafe: '☕ Coffee Shop'
             };
+            
+            document.getElementById('currentSound').textContent = sounds[soundType];
+            document.getElementById('audioControls').style.display = 'block';
+            showToast(`🎵 Now playing: ${sounds[soundType]}`);
+        }
 
-            const currentTechnique = techniques[technique];
-            meditationContainer.style.background = currentTechnique.background;
+        function stopAmbientSound() {
+            document.getElementById('audioControls').style.display = 'none';
+            showToast('🔇 Audio stopped');
+        }
 
-            // Add floating particles for ambiance
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.style.cssText = `
-                    position: absolute; width: 3px; height: 3px;
-                    background: rgba(255,255,255,0.7); border-radius: 50%;
-                    left: ${Math.random() * 100}%; top: ${Math.random() * 100}%;
-                    animation: float ${4 + Math.random() * 6}s ease-in-out infinite;
-                    animation-delay: ${Math.random() * 3}s;
-                `;
-                meditationContainer.appendChild(particle);
+        // Global Functions
+        function updateRecommendations() {
+            const recommendation = neuroAI.getPersonalizedRecommendation();
+            document.getElementById('homeRecommendation').textContent = recommendation.split(' - ')[0];
+            document.getElementById('aiRecommendedChallenge').textContent = recommendation.split(' - ')[0];
+            
+            const performance = neuroAI.analyzePerformance();
+            document.getElementById('homePerformanceStatus').textContent = performance;
+        }
+
+        function showGlobalLeaderboard() {
+            showToast('🏆 Global leaderboard feature coming soon!');
+        }
+
+        function shareProgress() {
+            const data = dataManager.getData();
+            const shareText = `I just reached a ${data.user.cognitiveScore} cognitive score on NeuroX Elite! 🧠✨ #NeuroTraining #CognitiveImprovement`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'NeuroX Elite Progress',
+                    text: shareText
+                });
+            } else {
+                navigator.clipboard.writeText(shareText);
+                showToast('📋 Progress copied to clipboard!');
             }
-
-            // Meditation content
-            const content = document.createElement('div');
-            content.style.cssText = `
-                position: relative; z-index: 10; text-align: center;
-                max-width: 600px; padding: 3rem;
-                background: rgba(255,255,255,0.1); border-radius: 20px;
-                backdrop-filter: blur(20px);
-            `;
-
-            content.innerHTML = `
-                <h1 style="font-size: 3rem; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-                    ${currentTechnique.title}
-                </h1>
-                <div id="meditationTimer" style="
-                    font-size: 4rem; font-weight: bold; margin: 2rem 0;
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-                ">5:00</div>
-                <div id="meditationInstructions" style="
-                    background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 15px; margin: 2rem 0;
-                ">
-                    ${currentTechnique.instructions.map(instruction => `
-                        <div style="margin: 1rem 0; font-size: 1.2rem;">${instruction}</div>
-                    `).join('')}
-                </div>
-                <div id="breathingGuide" style="
-                    width: 150px; height: 150px; margin: 2rem auto;
-                    border: 3px solid rgba(255,255,255,0.8); border-radius: 50%;
-                    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-                    animation: ${technique === 'breathwork' ? 'breathingPulse 4s ease-in-out infinite' : 'pulse 3s ease-in-out infinite'};
-                ">
-                    ${technique === 'breathwork' ? '🫁' : '🧘‍♀️'}
-                </div>
-                <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 2rem;">
-                    <button onclick="startMeditationSession('${technique}')" style="
-                        background: rgba(255,255,255,0.3); color: white; border: 2px solid white;
-                        padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem;
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.background='rgba(255,255,255,0.5)'"
-                       onmouseout="this.style.background='rgba(255,255,255,0.3)'">
-                        🚀 Start Session
-                    </button>
-                    <button onclick="document.body.removeChild(document.getElementById('meditationContainer'))" style="
-                        background: rgba(255,255,255,0.2); color: white; border: 2px solid white;
-                        padding: 1rem 2rem; border-radius: 12px; cursor: pointer; font-size: 1.1rem;
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.background='rgba(255,255,255,0.4)'"
-                       onmouseout="this.style.background='rgba(255,255,255,0.2)'">
-                        ✕ Close
-                    </button>
-                </div>
-            `;
-
-            meditationContainer.appendChild(content);
-            document.body.appendChild(meditationContainer);
-
-            showToast(`🧘‍♀️ ${currentTechnique.title} opened`);
         }
 
-        function startMeditationSession(technique) {
-            console.log('Starting meditation session:', technique);
-            let timeLeft = 300; // 5 minutes
-
-            const timer = document.getElementById('meditationTimer');
-            const instructions = document.getElementById('meditationInstructions');
-
-            instructions.innerHTML = `
-                <div style="font-size: 1.5rem; color: rgba(255,255,255,0.9);">
-                    🧘‍♀️ Session in progress...<br>
-                    <small style="opacity: 0.8;">Focus on your ${technique} practice</small>
-                </div>
-            `;
-
-            const sessionInterval = setInterval(() => {
-                timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(sessionInterval);
-                    instructions.innerHTML = `
-                        <div style="font-size: 1.5rem; color: rgba(255,255,255,0.9);">
-                            ✨ Session Complete! ✨<br>
-                            <small style="opacity: 0.8;">You've completed your ${technique} meditation</small>
-                        </div>
-                    `;
-                    createConfetti();
-                    showSoundEffect('🧘‍♀️ MEDITATION COMPLETE!');
-                }
-            }, 1000);
-        }
+        // Add CSS for animations
+        const additionalStyles = document.createElement('style');
+        additionalStyles.textContent = `
+            @keyframes confettiFall {
+                0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            }
+            
+            @keyframes breathingPulse {
+                0%, 100% { transform: scale(1); opacity: 0.7; }
+                50% { transform: scale(1.3); opacity: 1; }
+            }
+            
+            @keyframes regionPulse {
+                0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+                50% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+            }
+            
+            @keyframes brainGlow {
+                0%, 100% { box-shadow: 0 10px 30px rgba(185,224,216,0.4); filter: brightness(1); }
+                50% { box-shadow: 0 15px 40px rgba(185,224,216,0.6); filter: brightness(1.1); }
+            }
+        `;
+        document.head.appendChild(additionalStyles);
 
         // Make all functions global
-        window.startBrainScan = startBrainScan;
-        window.trackSleep = trackSleep;
-        window.startFocusSession = startFocusSession;
-        window.selectFocusMode = selectFocusMode;
-        window.expandSleepTips = expandSleepTips;
-        window.closeSleepTips = closeSleepTips;
-        window.viewSleepHistory = viewSleepHistory;
-        window.showBrainInfo = showBrainInfo;
-        window.changeMeditationBg = changeMeditationBg;
-        window.startMeditation = startMeditation;
-        window.startMeditationSession = startMeditationSession;
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 NeuroX Loading...');
-
-            // Test challenge functions
-            console.log('openChallenge:', typeof window.openChallenge);
-            console.log('startChallenge:', typeof window.startChallenge);
-            console.log('joinChallenge:', typeof window.joinChallenge);
-            console.log('showLeaderboard:', typeof window.showLeaderboard);
-
-            // Close modals when clicking outside
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('modal')) {
-                    e.target.classList.remove('active');
-                }
-            });
-
-            setTimeout(function() {
-                showToast('🎉 NeuroX Ready! Navigation moved to top!');
-                console.log('🎉 READY - Try clicking challenge buttons now!');
-            }, 1000);
-        });
+        window.navigateToPage = navigateToPage;
+        window.startAdvancedBrainScan = startAdvancedBrainScan;
+        window.analyzeBrainRegion = analyzeBrainRegion;
+        window.startAdaptiveChallenge = startAdaptiveChallenge;
+        window.startAdvancedChallenge = startAdvancedChallenge;
+        window.startSleepTracking = startSleepTracking;
+        window.generateSleepReport = generateSleepReport;
+        window.startAdvancedPomodoro = startAdvancedPomodoro;
+        window.startAIMeditation = startAIMeditation;
+        window.playAmbientSound = playAmbientSound;
+        window.stopAmbientSound = stopAmbientSound;
+        window.showGlobalLeaderboard = showGlobalLeaderboard;
+        window.shareProgress = shareProgress;
+        window.closeModal = closeModal;
     </script>
 </body>
 </html>
